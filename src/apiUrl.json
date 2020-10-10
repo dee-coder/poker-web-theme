@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://localhost:1234",
+  "signinSponsor": "/login/sponser",
+  "signinPlayer": "/login/player",
+  "signupSponsor": "/signup/sponser",
+  "signupPlayer": "/signup/player",
+  "getTournamentById": "/tournaments/getTournamentById",
+  "getRegisteringTournaments": "/tournaments/all",
+  "getTournamentFromSpacificNetwork": "/filters/all",
+  "getGamesByDate": "/filters/games-by-date"
+}
