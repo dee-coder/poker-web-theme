@@ -8,6 +8,7 @@ import { Card, Row, Col, Form, Spinner } from "react-bootstrap";
 import JsonUrl from "../../apiUrl.json";
 import axios from "axios";
 import TournamentItem from "../mycomponents/tournamentItem";
+import BoxItem from "../mycomponents/tournamentBoxItem";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -146,9 +147,11 @@ const FindTournamentPage = () => {
               <span className="sr-only">Loading...</span>
             </Spinner>
           )}
-          {tournamentList.length > 0 && (
+
+          <BoxItem/>
+          {/* {tournamentList.length > 0 && (
             <TournamentItem tournamentList={tournamentList} />
-          )}
+          )} */}
         </Col>
       </Row>
     </Box>
