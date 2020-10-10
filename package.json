@@ -6,6 +6,7 @@
         "start": "react-scripts start -o",
         "build": "react-scripts build",
         "test": "react-scripts test",
+        "react-scripts": "2.0.0-next.3e165448",
         "eject": "react-scripts eject",
         "lint": "eslint src",
         "format": "prettier --write \"src/**/*.{js,css,scss,html}\"",
