@@ -330,26 +330,35 @@ const MultipleInputField = ({
   const [single, setSingle] = React.useState(null);
   const [multi, setMulti] = React.useState(null);
   const [prizepool, setPrizePool] = useState([
-    { value: "BETWEEN 100 AND 500", label: "$100 To $500", key: "gaurantee" },
+    {
+      value: "BETWEEN 100 AND 500",
+      label: "$100 To $500",
+      key: "guarantee",
+      type: "b",
+    },
     {
       value: " BETWEEN 500 AND 1000",
       label: "$500 To $1000",
-      key: "gaurantee",
+      key: "guarantee",
+      type: "b",
     },
     {
       value: " BETWEEN 1000 AND 2000",
       label: "$1000 To $2000",
-      key: "gaurantee",
+      key: "guarantee",
+      type: "b",
     },
     {
       value: " BETWEEN 2000 AND 5000",
       label: "$2000 To $5000",
-      key: "gaurantee",
+      key: "guarantee",
+      type: "b",
     },
     {
       value: " BETWEEN 5000 AND 10000",
       label: "$5000 To $10000",
-      key: "gaurantee",
+      key: "guarantee",
+      type: "b",
     },
   ]);
 
@@ -371,27 +380,41 @@ const MultipleInputField = ({
   ]);
 
   const [enrollment, setEnrollment] = useState([
-    { label: " 10 To 50", value: "BETWEEN 10 To 50", key: "currentEntrants" },
-    { label: " 50 To 100", value: "BETWEEN 50 To 100", key: "currentEntrants" },
+    {
+      label: " 10 To 50",
+      value: "BETWEEN 10 AND 50",
+      key: "currentEntrants",
+      type: "b",
+    },
+    {
+      label: " 50 To 100",
+      value: "BETWEEN 50 AND 100",
+      key: "currentEntrants",
+      type: "b",
+    },
     {
       label: " 100 To 1000",
-      value: "BETWEEN 100 To 1000",
+      value: "BETWEEN 100 AND 1000",
       key: "currentEntrants",
+      type: "b",
     },
     {
       label: " 1000 To 2000",
-      value: "BETWEEN 1000 To 2000",
+      value: "BETWEEN 1000 AND 2000",
       key: "currentEntrants",
+      type: "b",
     },
     {
       label: " 2000 To 5000",
-      value: "BETWEEN 2000 To 5000",
+      value: "BETWEEN 2000 AND 5000",
       key: "currentEntrants",
+      type: "b",
     },
     {
       label: " 5000 To 10000",
-      value: "BETWEEN 5000 To 10000",
+      value: "BETWEEN 5000 AND 10000",
       key: "currentEntrants",
+      type: "b",
     },
   ]);
 
@@ -515,10 +538,14 @@ const MultipleInputField = ({
         <Col lg={2}>
           <Form.Group controlId="exampleForm.ControlInput1">
             <Form.Label style={styles.selects}>Date</Form.Label>
-            <ReactMultiSelectCheckboxes
-              options={speed}
-              width="150px"
-              onChange={(e) => setSpeedWhichSelected(e)}
+            <TextField
+              id="date"
+              type="date"
+              defaultValue="2017-05-24"
+              className={classes.textField}
+              InputLabelProps={{
+                shrink: true,
+              }}
             />
           </Form.Group>
           {/* <Form.Control placeholder="First name" /> */}
