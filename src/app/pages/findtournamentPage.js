@@ -3,7 +3,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
 import Typography from "@material-ui/core/Typography";
 import MultipleInputField from "../mycomponents/multipleInputField";
-import { Box, Divider } from "@material-ui/core";
+import { Box, Divider, Drawer } from "@material-ui/core";
 import Select from "react-select";
 import _ from "lodash";
 import {
@@ -23,10 +23,17 @@ import JsonUrl from "../../apiUrl.json";
 import axios from "axios";
 import TournamentItem from "../mycomponents/tournamentItem";
 import BoxItem from "../mycomponents/tournamentBoxItem";
+import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
 
 const useStyles = makeStyles((theme) => ({
   root: {
     padding: theme.spacing(3, 2),
+  },
+  list: {
+    width: 750,
+  },
+  viewBoxCont: {
+    width: "auto",
   },
 }));
 
@@ -51,6 +58,8 @@ const FindTournamentPage = () => {
   const [pages, setPages] = useState([]);
   const [activePage, setActivePages] = useState(1);
   const [viewType, setViewType] = useState("box");
+  const [viewTournamentMode, setViewTournamentMode] = useState(false);
+  const [currentViewTournament, setCurrentViewTournaments] = useState(null);
 
   const [sortingKey, setSortingKey] = useState();
 
@@ -180,6 +189,10 @@ const FindTournamentPage = () => {
     { label: "Sort By Scheduled Date  (Late)", value: "late_date" },
   ];
 
+  const openTournamentView = (obj) => {
+    setCurrentViewTournaments(obj);
+    setViewTournamentMode(true);
+  };
   const handleSorting = (e) => {
     console.log(e.target.value);
     setHoldedList(tournamentList);
@@ -432,7 +445,12 @@ const FindTournamentPage = () => {
               holdedList
                 .slice(startPaginationValues, endPaginationValue)
                 .map((obj) => {
-                  return <BoxItem obj={obj} />;
+                  return (
+                    <BoxItem
+                      obj={obj}
+                      setViewTournamentMode={openTournamentView}
+                    />
+                  );
                 })
             : holdedList.length > 0 && (
                 <TournamentItem tournamentList={holdedList} />
@@ -449,6 +467,16 @@ const FindTournamentPage = () => {
               )} */}
         </Col>
       </Row>
+      <Drawer
+        anchor="right"
+        open={viewTournamentMode}
+        onClose={() => setViewTournamentMode(false)}
+      >
+        <DrawerTournamentsView
+          setViewTournamentMode={setViewTournamentMode}
+          obj={currentViewTournament}
+        />
+      </Drawer>
     </Box>
   );
 };

@@ -8,43 +8,24 @@ import RoleTabes from "../mycomponents/signupRoleTabs";
 
 const SingupPage = () => {
   const classes = useStyles();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [role, setRole] = useState("player");
-  const [tncAgree, setTncAgree] = useState("");
+  const [roleKey, setRoleKey] = useState(1);
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [fullname, setFullName] = useState();
+  const [username, setUserName] = useState();
+  const [confirmPassword, setConfirmPassword] = useState();
+  const [network, setNetwork] = useState();
+  const [firstName, setFirstName] = useState();
+  const [lastName, setLastName] = useState();
+  const [tnc, setTnc] = useState(false);
   const [goAhead, setGoAhead] = useState(false);
-  const [key, setKey] = useState(1);
+
   useEffect(() => {
-    console.log("email:", email);
-    console.log("password:", password);
-    console.log("role:", role);
-    console.log("tncAgree:", tncAgree);
-    console.log("goAhead:", goAhead);
+    ///^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email) &&
+  }, []);
 
-    if (
-      /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email) &&
-      password.length > 6 &&
-      role != "" &&
-      tncAgree != ""
-    ) {
-      // /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email)
-      setGoAhead(true);
-    } else {
-      setGoAhead(false);
-    }
-  }, [email, password, role, tncAgree, goAhead]);
-
-  const handleCheck = (checked) => {
-    if (checked) {
-      setTncAgree(true);
-    } else {
-      setTncAgree(false);
-    }
-  };
-
-  const handleLogin = (e) => {
-    e.preventDefault();
-    alert("I am working.");
+  const handleSignup = () => {
+    console.log("Hi. I am signup.");
   };
 
   return (
@@ -56,17 +37,27 @@ const SingupPage = () => {
               <Card>
                 <Card.Body>
                   <RoleTabes
-                    key={key}
-                    setKey={setKey}
+                    roleKey={roleKey}
+                    setRoleKey={setRoleKey}
                     email={email}
-                    setEmail={setEmail}
-                    setPassword={setPassword}
-                    CustomizedSwitches={CustomizedSwitches}
-                    role={role}
-                    setRole={setRole}
-                    handleCheck={handleCheck}
+                    password={password}
+                    firstName={firstName}
+                    lastName={lastName}
+                    username={username}
+                    network={network}
+                    handleSignup={handleSignup}
+                    tnc={tnc}
+                    setTnc={setTnc}
                     goAhead={goAhead}
-                    handleLogin={handleLogin}
+                    setGoAhead={setGoAhead}
+                    setNetwork={setNetwork}
+                    setUserName={setUserName}
+                    setPassword={setPassword}
+                    setFirstName={setFirstName}
+                    setLastName={setLastName}
+                    setEmail={setEmail}
+                    confirmPassword={confirmPassword}
+                    setConfirmPassword={setConfirmPassword}
                   />
                 </Card.Body>
               </Card>

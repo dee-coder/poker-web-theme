@@ -6,7 +6,7 @@ import ApexCharts from "apexcharts";
 import { DropdownCustomToggler, DropdownMenu2 } from "../../dropdowns";
 import { useHtmlClassService } from "../../../layout";
 
-export function MixedWidget6({ className, chartColor = "danger" }) {
+export function MixedWidget6({ className, chartColor = "success" }) {
   const uiService = useHtmlClassService();
   const layoutProps = useMemo(() => {
     return {
@@ -54,7 +54,7 @@ export function MixedWidget6({ className, chartColor = "danger" }) {
         {/* begin::Header */}
         <div className="card-header border-0 pt-5">
           <h3 className="card-title font-weight-bolder text-white">
-            Sales Progress
+            Tournament Details
           </h3>
           <div className="card-toolbar">
             <Dropdown className="dropdown-inline" alignRight>
@@ -90,15 +90,15 @@ export function MixedWidget6({ className, chartColor = "danger" }) {
             <div className="row m-0">
               <div className="col px-8 py-6 mr-8">
                 <div className="font-size-sm text-muted font-weight-bold">
-                  Average Sale
+                  Flags
                 </div>
-                <div className="font-size-h4 font-weight-bolder">$650</div>
+                <div className="font-size-h4 font-weight-bolder">sck</div>
               </div>
               <div className="col px-8 py-6">
                 <div className="font-size-sm text-muted font-weight-bold">
-                  Commission
+                  Currency
                 </div>
-                <div className="font-size-h4 font-weight-bolder">$233,600</div>
+                <div className="font-size-h4 font-weight-bolder">lsknc</div>
               </div>
             </div>
             {/* end::Row */}
@@ -106,17 +106,18 @@ export function MixedWidget6({ className, chartColor = "danger" }) {
             <div className="row m-0">
               <div className="col px-8 py-6 mr-8">
                 <div className="font-size-sm text-muted font-weight-bold">
-                  Annual Taxes
+                  Game
                 </div>
-                <div className="font-size-h4 font-weight-bolder">$29,004</div>
+                <div className="font-size-h4 font-weight-bolder">nxkls</div>
               </div>
               <div className="col px-8 py-6">
                 <div className="font-size-sm text-muted font-weight-bold">
-                  Annual Income
+                  Game Class
                 </div>
-                <div className="font-size-h4 font-weight-bolder">$1,480,00</div>
+                <div className="font-size-h4 font-weight-bolder">ksjcnjs</div>
               </div>
             </div>
+
             {/* end::Row */}
           </div>
           {/* end::Stats */}

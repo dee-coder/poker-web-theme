@@ -6,7 +6,7 @@ import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import { Card, Badge, Row, Col, Button, Form } from "react-bootstrap";
 import MailIcon from "@material-ui/icons/Mail";
 
-const BoxItem = ({ obj }) => {
+const BoxItem = ({ obj, setViewTournamentMode }) => {
   const classes = useStyles();
 
   return (
@@ -38,7 +38,7 @@ const BoxItem = ({ obj }) => {
           <Row style={{ marginTop: "10px" }}>
             <Col>
               <a
-                href="#"
+                onClick={() => setViewTournamentMode(obj)}
                 className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
               >
                 {obj.name}
@@ -144,6 +144,13 @@ const BoxItem = ({ obj }) => {
                 </Button>
                 <Button style={{ marginLeft: "20px" }} variant="primary">
                   Get Sponsors
+                </Button>
+                <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
+                  Add To Calender
+                  <i
+                    style={{ fontSize: "12px", marginLeft: "5px" }}
+                    class="fas fa-calendar-check"
+                  ></i>
                 </Button>
               </Form>
             </Col>

@@ -4,62 +4,117 @@ import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
 const RoleTabs = ({
-  key,
-  setKey,
+  roleKey,
+  setRoleKey,
   email,
-  setEmail,
-  setPassword,
-  CustomizedSwitches,
-  role,
-  setRole,
-  handleCheck,
+  password,
+  firstName,
+  lastName,
+  username,
+  network,
+  handleSignup,
+  tnc,
+  setTnc,
   goAhead,
-  handleLogin,
+  setGoAhead,
+  setNetwork,
+  setUserName,
+  setPassword,
+  setFirstName,
+  setLastName,
+  setEmail,
+  confirmPassword,
+  setConfirmPassword,
 }) => {
-  const handleSelect = (key) => {
+  const onSubmit = (key) => {
     //setKey(key);
   };
   return (
-    <Tabs activeKey={key} onSelect={handleSelect}>
+    <Tabs activeKey={roleKey} onSelect={setRoleKey}>
       <Tab eventKey={1} title="Player">
         <div style={{ marginTop: "50px" }}>
-          <Form onSubmit={(e) => this.handleSubmit(e)}>
+          <Form>
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="validationCustom01">
                 <Form.Label>First name</Form.Label>
-                <Form.Control required type="text" placeholder="First name" />
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
+                />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom02">
                 <Form.Label>Last name</Form.Label>
-                <Form.Control required type="text" placeholder="Last name" />
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Last name"
+                  value={lastName}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} md="12" controlId="validationCustom01">
                 <Form.Label>Email</Form.Label>
-                <Form.Control required type="text" placeholder="Email" />
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="validationCustom01">
                 <Form.Label>Password</Form.Label>
-                <Form.Control required type="text" placeholder="Password" />
+                <Form.Control
+                  required
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
+                />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom02">
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   required
-                  type="text"
+                  type="password"
                   placeholder="Confirm Password"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
+                  //value={password}
+                  //onChange = {}
                 />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="formGridState">
                 <Form.Label>Network</Form.Label>
-                <Form.Control as="select">
-                  <option>Choose...</option>
-                  <option>...</option>
+                <Form.Control
+                  as="select"
+                  onChange={(e) => setNetwork(e.target.value)}
+                >
+                  <option value={null}>Select Network</option>
+                  <option value="skypoker">SkyPoker</option>
+                  <option value="partypoker">PartyPoker</option>
+                  <option value="pokerstars">PokerStars</option>
+                  <option value="888poker">888Poker</option>
+                  <option value="fulltilt">FullTilt</option>
                 </Form.Control>
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustomUsername">
@@ -73,6 +128,9 @@ const RoleTabs = ({
                     placeholder="Username"
                     aria-describedby="inputGroupPrepend"
                     required
+                    onChange={(e) => {
+                      setUserName(e.target.value);
+                    }}
                   />
                 </InputGroup>
               </Form.Group>
@@ -85,7 +143,10 @@ const RoleTabs = ({
                   style={{ marginTop: "10px" }}
                   type="checkbox"
                   label="I Agree"
-                  onChange={(e) => handleCheck(e.target.checked)}
+                  checked={tnc ? true : false}
+                  onChange={(e) => {
+                    e.target.checked ? setTnc(true) : setTnc(false);
+                  }}
                 />
                 <Form.Label
                   style={{
@@ -104,7 +165,7 @@ const RoleTabs = ({
                 variant="primary"
                 type="submit"
                 disabled={!goAhead && true}
-                onClick={(e) => handleLogin(e)}
+                onClick={(e) => handleSignup(e)}
               >
                 Signup
               </Button>
@@ -127,23 +188,47 @@ const RoleTabs = ({
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="validationCustom01">
                 <Form.Label>First name</Form.Label>
-                <Form.Control required type="text" placeholder="First name" />
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="First name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom02">
                 <Form.Label>Last name</Form.Label>
-                <Form.Control required type="text" placeholder="Last name" />
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Last name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} md="12" controlId="validationCustom01">
                 <Form.Label>Email</Form.Label>
-                <Form.Control required type="text" placeholder="Email" />
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
               </Form.Group>
             </Form.Row>
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="validationCustom01">
                 <Form.Label>Password</Form.Label>
-                <Form.Control required type="text" placeholder="Password" />
+                <Form.Control
+                  required
+                  type="text"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom02">
                 <Form.Label>Confirm Password</Form.Label>
@@ -151,6 +236,8 @@ const RoleTabs = ({
                   required
                   type="text"
                   placeholder="Confirm Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Form.Group>
             </Form.Row>
@@ -161,7 +248,10 @@ const RoleTabs = ({
                   style={{ marginTop: "10px" }}
                   type="checkbox"
                   label="I Agree"
-                  onChange={(e) => handleCheck(e.target.checked)}
+                  checked={tnc ? true : false}
+                  onChange={(e) => {
+                    e.target.checked ? setTnc(true) : setTnc(false);
+                  }}
                 />
                 <Form.Label
                   style={{
@@ -180,7 +270,7 @@ const RoleTabs = ({
                 variant="primary"
                 type="submit"
                 disabled={!goAhead && true}
-                onClick={(e) => handleLogin(e)}
+                onClick={(e) => handleSignup(e)}
               >
                 Signup
               </Button>
