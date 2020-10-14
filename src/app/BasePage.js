@@ -8,6 +8,7 @@ import TournamentByDate from "./pages/TournamentByDate";
 import FindTournamentPage from "./pages/findtournamentPage";
 import LoginPage from "./pages/loginPage";
 import SingupPage from "./pages/signupPage";
+import PlayerProfilePage from "./pages/PlayerProfilePage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -42,6 +43,7 @@ export default function BasePage() {
         <ContentRoute path="/findtournaments" component={FindTournamentPage} />
         <ContentRoute path="/login-new" component={LoginPage} />
         <ContentRoute path="/signup-new" component={SingupPage} />
+        <ContentRoute path="/player-profile" component={PlayerProfilePage} />
 
         <Route path="/google-material" component={GoogleMaterialPage} />
         <Route path="/react-bootstrap" component={ReactBootstrapPage} />

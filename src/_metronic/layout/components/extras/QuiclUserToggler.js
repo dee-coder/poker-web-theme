@@ -9,6 +9,11 @@ import { UserProfileDropdown } from "./dropdowns/UserProfileDropdown";
 
 export function QuickUserToggler() {
   const { user } = useSelector((state) => state.auth);
+  var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  // userInfo = {
+  //   players_name: "Deepak",
+  // };
+  //console.log(userInfo);
   const uiService = useHtmlClassService();
   const layoutProps = useMemo(() => {
     return {
@@ -34,11 +39,11 @@ export function QuickUserToggler() {
                   Hi,
                 </span>
                 <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
-                  {user.fullname}
+                  {userInfo === undefined ? "User" : userInfo.players_name}
                 </span>
                 <span className="symbol symbol-35 symbol-light-success">
                   <span className="symbol-label font-size-h5 font-weight-bold">
-                    {user.fullname[0]}
+                    {userInfo === undefined ? "U" : userInfo.players_name[0]}
                   </span>
                 </span>
               </>
@@ -47,7 +52,11 @@ export function QuickUserToggler() {
         </OverlayTrigger>
       )}
 
-      {!layoutProps.offcanvas && <UserProfileDropdown />}
+      {!layoutProps.offcanvas && (
+        <UserProfileDropdown
+          userInfo={JSON.parse(localStorage.getItem("userInfo"))}
+        />
+      )}
     </>
   );
 }

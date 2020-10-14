@@ -1,5 +1,5 @@
 import { Tabs, Tab, Form, Button, Col, InputGroup } from "react-bootstrap";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Nav } from "react-bootstrap";
 import { Link } from "react-router-dom";
 
@@ -25,15 +25,70 @@ const RoleTabs = ({
   setEmail,
   confirmPassword,
   setConfirmPassword,
+  showAlert,
+  setShowAlert,
+  handleSwitch,
+  errorContent,
 }) => {
+  useEffect(() => {
+    if (roleKey === 1) {
+      if (
+        email !== "" &&
+        firstName !== "" &&
+        lastName !== "" &&
+        password !== "" &&
+        confirmPassword !== "" &&
+        network !== "" &&
+        username !== "" &&
+        tnc
+      ) {
+        setGoAhead(true);
+      } else {
+        setGoAhead(false);
+      }
+    } else {
+      if (
+        email !== "" &&
+        firstName !== "" &&
+        lastName !== "" &&
+        password !== "" &&
+        confirmPassword !== "" &&
+        tnc
+      ) {
+        setGoAhead(true);
+      } else {
+        setGoAhead(false);
+      }
+    }
+  }, [
+    email,
+    firstName,
+    lastName,
+    password,
+    confirmPassword,
+    network,
+    username,
+    tnc,
+    roleKey,
+  ]);
   const onSubmit = (key) => {
     //setKey(key);
   };
+
   return (
-    <Tabs activeKey={roleKey} onSelect={setRoleKey}>
+    <Tabs activeKey={roleKey} onSelect={(e) => handleSwitch(e)}>
       <Tab eventKey={1} title="Player">
         <div style={{ marginTop: "50px" }}>
           <Form>
+            {showAlert && (
+              <div>
+                <Form.Label style={{ fontSize: "12px", color: "red" }}>
+                  {" "}
+                  {errorContent}
+                </Form.Label>
+                <br />
+              </div>
+            )}
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="validationCustom01">
                 <Form.Label>First name</Form.Label>
@@ -164,7 +219,7 @@ const RoleTabs = ({
                 style={{ minWidth: "100px" }}
                 variant="primary"
                 type="submit"
-                disabled={!goAhead && true}
+                disabled={!goAhead ? true : false}
                 onClick={(e) => handleSignup(e)}
               >
                 Signup
@@ -185,6 +240,15 @@ const RoleTabs = ({
       <Tab eventKey={2} title="Sponsor">
         <div style={{ marginTop: "50px" }}>
           <Form>
+            {showAlert && (
+              <div>
+                <Form.Label style={{ fontSize: "12px", color: "red" }}>
+                  {" "}
+                  {errorContent}
+                </Form.Label>
+                <br />
+              </div>
+            )}
             <Form.Row>
               <Form.Group as={Col} md="6" controlId="validationCustom01">
                 <Form.Label>First name</Form.Label>
@@ -193,7 +257,9 @@ const RoleTabs = ({
                   type="text"
                   placeholder="First name"
                   value={firstName}
-                  onChange={(e) => setFirstName(e.target.value)}
+                  onChange={(e) => {
+                    setFirstName(e.target.value);
+                  }}
                 />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom02">
@@ -203,7 +269,9 @@ const RoleTabs = ({
                   type="text"
                   placeholder="Last name"
                   value={lastName}
-                  onChange={(e) => setLastName(e.target.value)}
+                  onChange={(e) => {
+                    setLastName(e.target.value);
+                  }}
                 />
               </Form.Group>
             </Form.Row>
@@ -215,7 +283,9 @@ const RoleTabs = ({
                   type="text"
                   placeholder="Email"
                   value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                  }}
                 />
               </Form.Group>
             </Form.Row>
@@ -224,23 +294,30 @@ const RoleTabs = ({
                 <Form.Label>Password</Form.Label>
                 <Form.Control
                   required
-                  type="text"
+                  type="password"
                   placeholder="Password"
                   value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                  }}
                 />
               </Form.Group>
               <Form.Group as={Col} md="6" controlId="validationCustom02">
                 <Form.Label>Confirm Password</Form.Label>
                 <Form.Control
                   required
-                  type="text"
+                  type="password"
                   placeholder="Confirm Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                  }}
+                  //value={password}
+                  //onChange = {}
                 />
               </Form.Group>
             </Form.Row>
+
             <Form.Row>
               <Form.Group controlId="formBasicChecbox">
                 <Form.Label>Agree T&C and Privacy Policy</Form.Label>
@@ -269,7 +346,7 @@ const RoleTabs = ({
                 style={{ minWidth: "100px" }}
                 variant="primary"
                 type="submit"
-                disabled={!goAhead && true}
+                disabled={!goAhead ? true : false}
                 onClick={(e) => handleSignup(e)}
               >
                 Signup

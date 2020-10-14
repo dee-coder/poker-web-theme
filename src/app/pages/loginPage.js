@@ -1,9 +1,10 @@
 import { Box, Paper } from "@material-ui/core";
 import { useStyles } from "@material-ui/pickers/views/Calendar/SlideTransition";
-import { Row, Col, Card, Form, Button } from "react-bootstrap";
+import { Row, Col, Card, Form, Button, Modal } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import CustomizedSwitches from "../mycomponents/roleSwitch";
+import JsonUrl from "../../apiUrl.json";
 
 const LoginPage = () => {
   const classes = useStyles();
@@ -12,6 +13,9 @@ const LoginPage = () => {
   const [role, setRole] = useState("player");
   const [tncAgree, setTncAgree] = useState("");
   const [goAhead, setGoAhead] = useState(false);
+  const [errorModal, showErrorModal] = useState(false);
+  const [redirect, setRedirect] = useState(false);
+  const [responseError, setResponseError] = useState("");
   useEffect(() => {
     console.log("email:", email);
     console.log("password:", password);
@@ -21,7 +25,7 @@ const LoginPage = () => {
 
     if (
       /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email) &&
-      password.length > 6 &&
+      password.length > 2 &&
       role != "" &&
       tncAgree != ""
     ) {
@@ -42,12 +46,55 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
-    alert("I am working.");
+    var url = JsonUrl.baseUrl;
+    var body = {
+      email: email,
+      password: password,
+    };
+
+    if (role === "player") {
+      url = url + JsonUrl.signinPlayer;
+    } else {
+      url = url + JsonUrl.signinSponsor;
+    }
+
+    console.log(url);
+
+    fetch(url, {
+      method: "POST", // or 'PUT'
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        if (json.status === "user_found") {
+          localStorage.setItem("userInfo", JSON.stringify(json.result));
+          setRedirect(true);
+        } else {
+          setResponseError("No user registered on given email.");
+          showErrorModal(true);
+        }
+      })
+      .catch((err) => console.log(err));
   };
 
   return (
     <Box>
       <div className={classes.root}>
+        {redirect && <Redirect to="/dashboard" />}
+        {errorModal && (
+          <Modal.Dialog>
+            <Modal.Header closeButton>
+              <Modal.Title>Login</Modal.Title>
+            </Modal.Header>
+
+            <Modal.Body>
+              <p>{responseError}</p>
+            </Modal.Body>
+          </Modal.Dialog>
+        )}
         <Row className="justify-content-lg-center">
           <Col lg={6}>
             <Paper className={classes.paper}>

@@ -1,6 +1,6 @@
 /* eslint-disable no-restricted-imports */
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid */
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { useSelector } from "react-redux";
@@ -9,9 +9,11 @@ import { useHtmlClassService } from "../../../_core/MetronicLayout";
 import { toAbsoluteUrl } from "../../../../_helpers";
 import { DropdownTopbarItemToggler } from "../../../../_partials/dropdowns";
 
-export function UserProfileDropdown() {
+export function UserProfileDropdown(props) {
   const { user } = useSelector((state) => state.auth);
-  const [loggedIn, setLoggedIn] = useState(false);
+
+  var userInfo = props.userInfo;
+  //console.log("info:", userInfo);
 
   const uiService = useHtmlClassService();
   const layoutProps = useMemo(() => {
@@ -22,7 +24,33 @@ export function UserProfileDropdown() {
     };
   }, [uiService]);
 
-  if (loggedIn) {
+  if (props.userInfo === "undefined") {
+    return (
+      <Dropdown drop="down" alignRight>
+        <Dropdown.Toggle
+          as={DropdownTopbarItemToggler}
+          id="dropdown-toggle-user-profile"
+        >
+          <Link to="/login-new">
+            <div
+              className={
+                "btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto"
+              }
+            >
+              <span className="text-white opacity-90 font-weight-bolder font-size-base d-none d-md-inline mr-4">
+                Login
+              </span>
+              <span className="symbol symbol-35">
+                <span className="symbol-label text-white font-size-h5 font-weight-bold bg-white-o-30">
+                  <i class="fas fa-sign-in-alt"></i>
+                </span>
+              </span>
+            </div>
+          </Link>
+        </Dropdown.Toggle>
+      </Dropdown>
+    );
+  } else {
     return (
       <Dropdown drop="down" alignRight>
         <Dropdown.Toggle
@@ -35,14 +63,14 @@ export function UserProfileDropdown() {
             }
           >
             <span className="text-white opacity-70 font-weight-bold font-size-base d-none d-md-inline mr-1">
-              Hi,
+              Hiii,
             </span>
             <span className="text-white opacity-90 font-weight-bolder font-size-base d-none d-md-inline mr-4">
-              {user.fullname}
+              {userInfo.player_name}
             </span>
             <span className="symbol symbol-35">
               <span className="symbol-label text-white font-size-h5 font-weight-bold bg-white-o-30">
-                {user.fullname[0]}
+                {userInfo.player_name[0]}
               </span>
             </span>
           </div>
@@ -60,7 +88,7 @@ export function UserProfileDropdown() {
                     />
                   </div>
                   <div className="text-dark m-0 flex-grow-1 mr-3 font-size-h5">
-                    Sean Stone
+                    {userInfo.player_name}
                   </div>
                   <span className="label label-light-success label-lg font-weight-bold label-inline">
                     3 messages
@@ -86,7 +114,7 @@ export function UserProfileDropdown() {
                   {/*<img alt="Pic" className="hidden" src={user.pic} />*/}
                 </div>
                 <div className="text-white m-0 flex-grow-1 mr-3 font-size-h5">
-                  Sean Stone
+                  {userInfo.player_name}
                 </div>
                 <span className="label label-success label-lg font-weight-bold label-inline">
                   3 messages
@@ -96,22 +124,24 @@ export function UserProfileDropdown() {
           </>
 
           <div className="navi navi-spacer-x-0 pt-5">
-            <a className="navi-item px-8">
-              <div className="navi-link">
-                <div className="navi-icon mr-2">
-                  <i className="flaticon2-calendar-3 text-success" />
-                </div>
-                <div className="navi-text">
-                  <div className="font-weight-bold">My Profile</div>
-                  <div className="text-muted">
-                    Account settings and more{` `}
-                    <span className="label label-light-danger label-inline font-weight-bold">
-                      update
-                    </span>
+            <Link to="/player-profile">
+              <a className="navi-item px-8">
+                <div className="navi-link">
+                  <div className="navi-icon mr-2">
+                    <i className="flaticon2-calendar-3 text-success" />
+                  </div>
+                  <div className="navi-text">
+                    <div className="font-weight-bold">My Profile</div>
+                    <div className="text-muted">
+                      Account settings and more{` `}
+                      <span className="label label-light-danger label-inline font-weight-bold">
+                        update
+                      </span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </Link>
 
             <a className="navi-item px-8">
               <div className="navi-link">
@@ -163,32 +193,6 @@ export function UserProfileDropdown() {
             </div>
           </div>
         </Dropdown.Menu>
-      </Dropdown>
-    );
-  } else {
-    return (
-      <Dropdown drop="down" alignRight>
-        <Dropdown.Toggle
-          as={DropdownTopbarItemToggler}
-          id="dropdown-toggle-user-profile"
-        >
-          <Link to="/login-new">
-            <div
-              className={
-                "btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto"
-              }
-            >
-              <span className="text-white opacity-90 font-weight-bolder font-size-base d-none d-md-inline mr-4">
-                Login
-              </span>
-              <span className="symbol symbol-35">
-                <span className="symbol-label text-white font-size-h5 font-weight-bold bg-white-o-30">
-                  <i class="fas fa-sign-in-alt"></i>
-                </span>
-              </span>
-            </div>
-          </Link>
-        </Dropdown.Toggle>
       </Dropdown>
     );
   }
