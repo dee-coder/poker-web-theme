@@ -86,7 +86,7 @@ const SingupPage = () => {
     if (roleKey === 1) {
       url = url + JsonUrl.signupPlayer;
       body = {
-        name: fullname + lastName,
+        name: first + lastName,
         email: email,
         password: password,
         network: network,
