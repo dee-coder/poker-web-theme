@@ -68,15 +68,14 @@ const DrawerTournamentsView = ({ setViewTournamentMode, obj }) => {
               </Badge>
             </Col>
           </Row>
-
           <Row style={{ marginTop: "30px" }}>
             <Col>
-              <MixedWidgetCustom className="card-stretch gutter-b" obj={obj} />
+              <TournamentHeader className="card-stretch gutter-b" obj={obj} />
             </Col>
           </Row>
           <Row style={{ marginTop: "30px" }}>
             <Col>
-              <TournamentHeader className="card-stretch gutter-b" obj={obj} />
+              <MixedWidgetCustom className="card-stretch gutter-b" obj={obj} />
             </Col>
           </Row>
         </Container>

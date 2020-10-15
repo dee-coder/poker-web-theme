@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState } from "react";
 import { Card, Dropdown, Row, Col } from "react-bootstrap";
 import objectPath from "object-path";
 import ApexCharts from "apexcharts";
@@ -15,6 +15,45 @@ import { Avatar, Divider, makeStyles } from "@material-ui/core";
 import { ListsWidget10 } from "../../_metronic/_partials/widgets";
 
 export function ProfileBoxPlayer({ className, statistics }) {
+  var url = "";
+  const [href, setHref] = useState();
+  const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    switch (userInfo.player_network) {
+      case "PartyPoker" || "partypoker":
+        url = "/media/poker-logos/partypoker-logo.jpg";
+        // setUrl(string);
+        // setHref("https://pokerstars.com");
+
+        break;
+
+      case "PokerStars" || "pokerstars":
+        url = "/media/poker-logos/pokerstars-logo.jpg";
+        // setUrl(string);
+        // setHref("https://pokerstars.com");
+        break;
+
+      case "SkyPoker" || "skypoker":
+        url = "/media/poker-logos/skypoker-logo.jpg";
+        // setUrl(string);
+        // setHref("https://skypoker.com");
+        break;
+
+      case "888Poker" || "888poker":
+        url = "/media/poker-logos/888poker-logo.png";
+        // setUrl(string);
+        // setHref("https://888poker.com");
+        break;
+
+      case "FullTilt" || "fulltilt":
+        url = "/media/poker-logos/fulltilt-logo.png";
+        // setUrl(string);
+        // setHref("https://fullltilt.com");
+        break;
+    }
+  }, []);
   const useStyles = makeStyles({
     avatar: {
       margin: 10,
@@ -26,6 +65,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
     },
   });
   console.log(statistics);
+
   const classes = useStyles();
   //   var row1 = statistics[0];
   //   var row2 = statistics[1];
@@ -51,7 +91,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
             <span className="symbol-label bg-light-light">
               <SVG
                 style={{ height: "30px", width: "30px" }}
-                src={toAbsoluteUrl("/media/svg/misc/006-plurk.svg")}
+                src={toAbsoluteUrl(url)}
                 className="h-60 align-self-right"
               ></SVG>{" "}
             </span>
@@ -64,11 +104,11 @@ export function ProfileBoxPlayer({ className, statistics }) {
               href="#"
               className="text-dark font-weight-bolder text-hover-primary font-size-h2"
             >
-              Deepak Suthar
+              {userInfo.player_name}
             </a>
             <br />
             <p className="text-muted font-weight-bolder text-hover-primary font-size-h5">
-              dpk05
+              {userInfo.player_network_username}
             </p>
           </Col>
         </Row>
