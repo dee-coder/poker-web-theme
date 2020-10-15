@@ -39,11 +39,11 @@ export function QuickUserToggler() {
                   Hi,
                 </span>
                 <span className="text-dark-50 font-weight-bolder font-size-base d-none d-md-inline mr-3">
-                  {userInfo === undefined ? "User" : userInfo.players_name}
+                  Name
                 </span>
                 <span className="symbol symbol-35 symbol-light-success">
                   <span className="symbol-label font-size-h5 font-weight-bold">
-                    {userInfo === undefined ? "U" : userInfo.players_name[0]}
+                    S
                   </span>
                 </span>
               </>

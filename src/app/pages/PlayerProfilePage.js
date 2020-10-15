@@ -1,6 +1,9 @@
 import { Box, Paper } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { Row, Col, Tabs, Tab } from "react-bootstrap";
+import { Row, Col, Tabs, Tab, Badge } from "react-bootstrap";
+import _ from "lodash";
+import SVG from "react-inlinesvg";
+
 import {
   ListsWidget10,
   ListsWidget11,
@@ -22,10 +25,14 @@ import { PlayerStatisticsGraph } from "../mycomponents/playerStatisticsGraph";
 import { ProfileBoxPlayer } from "../mycomponents/profileBoxPlayer";
 import JsonUrl from "../../apiUrl.json";
 import CompletedTournamentsTable from "../mycomponents/completedTournamentsTable";
+import { toAbsoluteUrl } from "../../_metronic/_helpers";
+import CompletedTournamentBoxItem from "../mycomponents/completedTournamentItemBox";
 const PlayerProfilePage = () => {
-  const [statisticsSetData, setStatisticsSetData] = useState([]);
-  const [states, setStates] = useState([]);
-  const [completedTournaments, setCompletedTournaments] = useState([]);
+  const [statistics, setStatistics] = useState([]);
+  const [recentTournaments, setRecentTournaments] = useState([]);
+  const [dataSet, setDataSet] = useState([]);
+  const [event, setEvents] = useState([]);
+  const [graphData, setGraphData] = useState([]);
 
   useEffect(() => {
     var info = JSON.parse(localStorage.getItem("userInfo"));
@@ -43,23 +50,32 @@ const PlayerProfilePage = () => {
       .then((json) => {
         console.log(json);
         var stats = JSON.parse(json.result.player_details_json);
-        //console.log(stats);
-        // console.log(stats.playerDetails.Statistics.StatisticalDataSet);
-        setStates(stats.playerDetails.Statistics.Statistic);
+        console.log(stats);
+        setRecentTournaments(stats.playerDetails.RecentTournaments.Tournament);
+        setDataSet(stats.playerDetails.Statistics.StatisticalDataSet);
+        setStatistics(stats.playerDetails.Statistics.Statistic);
 
-        setStatisticsSetData(stats.playerDetails.Statistics.StatisticalDataSet);
-        //console.log(statisticsSetData);
+        setEvents(stats.playerDetails.Statistics.Timeline.Event);
 
-        //console.log(states);
+        var ar = stats.playerDetails.Statistics.StatisticalDataSet;
+        var ob = ar[0];
+        console.log(ob.Data);
+        setGraphData(ob.Data);
 
-        setCompletedTournaments(
-          stats.playerDetails.RecentTournaments.Tournament
-        );
+        //setGraphData(stats.playerDetails.Statistics.StatisticalDataSet[0]);
+        //console.log(stats.playerDetails.Statistics.StatisticalDataSet[0]);
 
         //console.log(statistics);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  function getHumanDate(date) {
+    var theDate = new Date(date * 1000);
+    var dateString = theDate.toGMTString();
+
+    return dateString;
+  }
 
   return (
     <Box>
@@ -69,7 +85,7 @@ const PlayerProfilePage = () => {
             <ProfileBoxPlayer
               className="gutter-b card-stretch"
               chartColor="danger"
-              stat={states}
+              statistics={statistics}
             />
           </Paper>
         </Col>
@@ -82,54 +98,220 @@ const PlayerProfilePage = () => {
       <Row>
         <Col lg={12}>
           <Paper style={{ padding: "20px" }}>
-            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+            <Tabs defaultActiveKey="graph" id="uncontrolled-tab-example">
               <Tab
                 eventKey="graph"
                 title="Graph"
                 style={{ paddingTop: "20px", paddingBottom: "20px" }}
               >
-                <PlayerStatisticsGraph className="gutter-b card-stretch" />
+                <PlayerStatisticsGraph
+                  data={graphData}
+                  className="gutter-b card-stretch"
+                />
               </Tab>
               <Tab
                 eventKey="tournaments"
                 title="Tournaments"
                 style={{ paddingTop: "20px", paddingBottom: "20px" }}
               >
-                <CompletedTournamentsTable
-                  tournamentList={completedTournaments}
-                />
+                {recentTournaments.map((game) => {
+                  return <CompletedTournamentBoxItem obj={game} />;
+                })}
               </Tab>
               <Tab
                 eventKey="statistics"
                 title="Statistics"
                 style={{ paddingTop: "20px", paddingBottom: "20px" }}
               >
-                <p>
-                  Donec sollicitudin molestie malesuada. Praesent sapien massa,
-                  convallis a pellentesque nec, egestas non nisi. Nulla
-                  porttitor accumsan tincidunt. Proin eget tortor risus. Donec
-                  rutrum congue leo eget malesuada. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit. Pellentesque in ipsum id orci
-                  porta dapibus. Sed porttitor lectus nibh. Curabitur non nulla
-                  sit amet nisl tempus convallis quis ac lectus. Curabitur
-                  aliquet quam id dui posuere blandit.
-                </p>
+                <Row style={{ marginTop: "20px" }}>
+                  <Col lg={4}>
+                    {statistics.slice(0, statistics.length / 3).map((row) => {
+                      return (
+                        <Row style={{ marginTop: "20px" }}>
+                          <Col lg={12}>
+                            <span className="text-dark font-weight-bolder text-hover-primary font-size-h6">
+                              {row["@id"]} :
+                            </span>
+
+                            <span
+                              style={{ marginLeft: "10px" }}
+                              className="text-dark font-weight-normal text-hover-primary "
+                            >
+                              {row["$"]}
+                            </span>
+                          </Col>
+                        </Row>
+                      );
+                    })}
+                  </Col>
+                  <Col lg={4}>
+                    {statistics
+                      .slice(statistics.length / 3, (statistics.length / 3) * 2)
+                      .map((row) => {
+                        return (
+                          <Row style={{ marginTop: "20px" }}>
+                            <Col lg={12}>
+                              <span className="text-dark font-weight-bolder text-hover-primary font-size-h6">
+                                {row["@id"]} :
+                              </span>
+
+                              <span
+                                style={{ marginLeft: "10px" }}
+                                className="text-dark font-weight-norml text-hover-primary "
+                              >
+                                {row["$"]}
+                              </span>
+                            </Col>
+                          </Row>
+                        );
+                      })}
+                  </Col>
+                  <Col lg={4}>
+                    {statistics
+                      .slice((statistics.length / 3) * 2, statistics.length)
+                      .map((row) => {
+                        return (
+                          <Row style={{ marginTop: "20px" }}>
+                            <Col lg={12}>
+                              <span className="text-dark font-weight-bolder text-hover-primary font-size-h6">
+                                {row["@id"]} :
+                              </span>
+
+                              <span
+                                style={{ marginLeft: "10px" }}
+                                className="text-dark font-weight-normal text-hover-primary "
+                              >
+                                {row["$"]}
+                              </span>
+                            </Col>
+                          </Row>
+                        );
+                      })}
+                  </Col>
+                </Row>
               </Tab>
               <Tab
                 eventKey="event"
                 title="Event"
                 style={{ paddingTop: "20px", paddingBottom: "20px" }}
               >
-                <p>
-                  Donec sollicitudin molestie malesuada. Praesent sapien massa,
-                  convallis a pellentesque nec, egestas non nisi. Nulla
-                  porttitor accumsan tincidunt. Proin eget tortor risus. Donec
-                  rutrum congue leo eget malesuada. Lorem ipsum dolor sit amet,
-                  consectetur adipiscing elit. Pellentesque in ipsum id orci
-                  porta dapibus. Sed porttitor lectus nibh. Curabitur non nulla
-                  sit amet nisl tempus convallis quis ac lectus. Curabitur
-                  aliquet quam id dui posuere blandit.
-                </p>
+                {/* {event.map((ev) => {
+                  {
+                    return(_.has(ev, "@code") && (
+                     
+                    );
+                   
+                    }
+                    );
+                })} */}
+                <Row>
+                  <Col lg={6}>
+                    {event.slice(0, event.length / 2).map((ev) => {
+                      return (
+                        <div>
+                          {_.has(ev, "@code") && (
+                            <div className="bg-light-primary rounded p-5 mb-9">
+                              <Row>
+                                <Col lg={12}>
+                                  <Row>
+                                    <Col lg={6}>
+                                      <Badge variant="primary">
+                                        {ev["@category"]}
+                                      </Badge>
+                                    </Col>
+                                    <Col lg={6} style={{ textAlign: "right" }}>
+                                      <span className="text-muted font-weight-normal">
+                                        {getHumanDate(ev["@date"])}
+                                      </span>
+                                    </Col>
+                                  </Row>
+                                  <Row style={{ marginTop: "15px" }}>
+                                    <Col lg={8}>
+                                      <div className="d-flex flex-column flex-grow-1 mr-2">
+                                        <a
+                                          href="#"
+                                          className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                                        >
+                                          {ev["@name"]}
+                                        </a>
+                                        <span className="text-muted font-weight-bold">
+                                          {ev["@description"]}
+                                        </span>
+                                      </div>
+                                    </Col>
+                                    <Col lg={4} style={{ textAlign: "right" }}>
+                                      <div className="d-flex flex-column flex-grow-1 mr-2">
+                                        <span
+                                          className="font-weight-bolder text-success py-1 font-size-lg"
+                                          style={{ float: "right" }}
+                                        >
+                                          {ev["@network"]}
+                                        </span>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              </Row>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </Col>
+                  <Col lg={6}>
+                    {event.slice(event.length / 2, event.length).map((ev) => {
+                      return (
+                        <div>
+                          {_.has(ev, "@code") && (
+                            <div className="bg-light-primary rounded p-5 mb-9">
+                              <Row>
+                                <Col lg={12}>
+                                  <Row>
+                                    <Col lg={6}>
+                                      <Badge variant="primary">
+                                        {ev["@category"]}
+                                      </Badge>
+                                    </Col>
+                                    <Col lg={6} style={{ textAlign: "right" }}>
+                                      <span className="text-muted font-weight-normal">
+                                        {getHumanDate(ev["@date"])}
+                                      </span>
+                                    </Col>
+                                  </Row>
+                                  <Row style={{ marginTop: "15px" }}>
+                                    <Col lg={8}>
+                                      <div className="d-flex flex-column flex-grow-1 mr-2">
+                                        <a
+                                          href="#"
+                                          className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                                        >
+                                          {ev["@name"]}
+                                        </a>
+                                        <span className="text-muted font-weight-bold">
+                                          {ev["@description"]}
+                                        </span>
+                                      </div>
+                                    </Col>
+                                    <Col lg={4} style={{ textAlign: "right" }}>
+                                      <div className="d-flex flex-column flex-grow-1 mr-2">
+                                        <span
+                                          className="font-weight-bolder text-success py-1 font-size-lg"
+                                          style={{ float: "right" }}
+                                        >
+                                          {ev["@network"]}
+                                        </span>
+                                      </div>
+                                    </Col>
+                                  </Row>
+                                </Col>
+                              </Row>
+                            </div>
+                          )}
+                        </div>
+                      );
+                    })}
+                  </Col>
+                </Row>
               </Tab>
             </Tabs>
           </Paper>

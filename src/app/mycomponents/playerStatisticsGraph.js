@@ -10,8 +10,24 @@ import { Dropdown } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import { useHtmlClassService } from "../../_metronic/layout";
 import { DropdownMenu2 } from "../../_metronic/_partials/dropdowns";
+import _ from "lodash";
 
-export function PlayerStatisticsGraph({ className }) {
+export function PlayerStatisticsGraph({ className, data }) {
+  const [xaxis, setxAXis] = useState();
+  const [yaxis, setYAxis] = useState();
+  useEffect(() => {
+    console.log(data);
+    var x = [];
+    var y = [];
+    _.forEach(data, (v, i) => {
+      x.push(parseFloat(v["@x"]));
+      var value = v.Y[2];
+      y.push(parseFloat(value["$"]));
+    });
+    console.log(x, y);
+    setxAXis(x);
+    setYAxis(y);
+  }, [data]);
   //const uiService = useHtmlClassService();
 
   //   const layoutProps = useMemo(() => {
@@ -50,18 +66,18 @@ export function PlayerStatisticsGraph({ className }) {
   //       chart.destroy();
   //     };
   //   }, [layoutProps]);
-  const [series, setSeries] = useState([
+  const series = [
     {
-      name: "Game 1",
-      data: [475, 243, 133, 68, 40, 21, 14],
+      name: "Profit",
+      data: yaxis,
     },
-  ]);
-  const [options, setOptions] = useState({
+  ];
+  const options = {
     chart: {
       type: "area",
       height: 350,
       zoom: {
-        enabled: false,
+        enabled: true,
       },
     },
     dataLabels: {
@@ -71,7 +87,7 @@ export function PlayerStatisticsGraph({ className }) {
       curve: "straight",
     },
 
-    labels: [1991, 1992, 1993, 1994, 1995, 1996, 1997],
+    labels: xaxis,
 
     yaxis: {
       opposite: false,
@@ -80,9 +96,9 @@ export function PlayerStatisticsGraph({ className }) {
       horizontalAlign: "left",
     },
     xaxis: {
-      categories: [1991, 1992, 1993, 1994, 1995, 1996, 1997, 1998, 1999],
+      categories: xaxis,
     },
-  });
+  };
 
   return (
     <div className={`card card-custom bg-gray-100 ${className}`}>

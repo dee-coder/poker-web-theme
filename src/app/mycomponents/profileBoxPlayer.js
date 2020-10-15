@@ -11,10 +11,10 @@ import {
 } from "../../_metronic/_partials/dropdowns";
 import { useHtmlClassService } from "../../_metronic/layout";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
-import { Avatar, makeStyles } from "@material-ui/core";
+import { Avatar, Divider, makeStyles } from "@material-ui/core";
 import { ListsWidget10 } from "../../_metronic/_partials/widgets";
 
-export function ProfileBoxPlayer({ className, stat }) {
+export function ProfileBoxPlayer({ className, statistics }) {
   const useStyles = makeStyles({
     avatar: {
       margin: 10,
@@ -25,9 +25,10 @@ export function ProfileBoxPlayer({ className, stat }) {
       height: 100,
     },
   });
-  console.log(stat);
+  console.log(statistics);
   const classes = useStyles();
-  //   var one = stat[0];
+  //   var row1 = statistics[0];
+  //   var row2 = statistics[1];
   //   var two = stat[1];
   //   var three = stat[2];
   //   var four = stat[3];
@@ -71,26 +72,45 @@ export function ProfileBoxPlayer({ className, stat }) {
             </p>
           </Col>
         </Row>
-        {/* <Row>
+        <Divider />
+        <Row style={{ marginTop: "20px" }}>
           <Col lg={6}>
-            <span className="text-dark font-weight-bolder text-hover-primary font-size-h4">
-              {one["@id"]}
-            </span>
-            <br />
-            <span className="text-muted font-weight-bolder text-hover-primary font-size-h6">
-              {one["$"]}
-            </span>
+            {statistics.slice(0, 4).map((row) => {
+              return (
+                <Row style={{ margin: "10px" }}>
+                  <Col lg={12}>
+                    <span className="text-dark font-weight-bolder text-hover-primary font-size-h6">
+                      {row["@id"]}
+                    </span>
+                    <br />
+                    <span className="text-muted font-weight-bolder text-hover-primary ">
+                      {row["$"]}
+                    </span>
+                  </Col>
+                </Row>
+              );
+            })}
           </Col>
           <Col lg={6}>
-            <span className="text-dark font-weight-bolder text-hover-primary font-size-h4">
-              {two["@id"]}
-            </span>
-            <br />
-            <span className="text-muted font-weight-bolder text-hover-primary font-size-h6">
-              {two["$"]}
-            </span>
+            {statistics.slice(4, 8).map((row) => {
+              return (
+                <Row style={{ margin: "10px" }}>
+                  <Col lg={12}>
+                    <span className="text-dark font-weight-bolder text-hover-primary font-size-h6">
+                      {row["@id"]}
+                    </span>
+                    <br />
+                    <span className="text-muted font-weight-bolder text-hover-primary ">
+                      {row["$"]}
+                    </span>
+                  </Col>
+                </Row>
+              );
+            })}
           </Col>
         </Row>
+
+        {/*
         <Row>
           <Col lg={6}>
             <span className="text-dark font-weight-bolder text-hover-primary font-size-h4">
