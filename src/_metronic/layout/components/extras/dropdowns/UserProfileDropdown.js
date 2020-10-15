@@ -13,7 +13,7 @@ export function UserProfileDropdown(props) {
   const { user } = useSelector((state) => state.auth);
 
   var userInfo = props.userInfo;
-  //console.log("info:", userInfo);
+  console.log("info:", props.userInfo);
 
   const uiService = useHtmlClassService();
   const layoutProps = useMemo(() => {
