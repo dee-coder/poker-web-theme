@@ -9,6 +9,7 @@ import FindTournamentPage from "./pages/findtournamentPage";
 import LoginPage from "./pages/loginPage";
 import SingupPage from "./pages/signupPage";
 import PlayerProfilePage from "./pages/PlayerProfilePage";
+import Logout from "./mycomponents/logoutComponent";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -27,29 +28,25 @@ export default function BasePage() {
   // https://reactjs.org/docs/hooks-reference.html#useeffect
 
   return (
-    <Suspense fallback={<LayoutSplashScreen />}>
-      <Switch>
-        {
-          /* Redirect from root URL to /dashboard. */
-          <Redirect exact from="/" to="/dashboard" />
-        }
-        <ContentRoute path="/dashboard" component={DashboardPage} />
-        <ContentRoute path="/builder" component={BuilderPage} />
-        <ContentRoute path="/my-page" component={MyPage} />
-        <ContentRoute
-          path="/games-by-date/:date"
-          component={TournamentByDate}
-        />
-        <ContentRoute path="/findtournaments" component={FindTournamentPage} />
-        <ContentRoute path="/login-new" component={LoginPage} />
-        <ContentRoute path="/signup-new" component={SingupPage} />
-        <ContentRoute path="/player-profile" component={PlayerProfilePage} />
+    <Switch>
+      {
+        /* Redirect from root URL to /dashboard. */
+        <Redirect exact from="/" to="/dashboard" />
+      }
+      <ContentRoute path="/dashboard" component={DashboardPage} />
+      <ContentRoute path="/builder" component={BuilderPage} />
+      <ContentRoute path="/my-page" component={MyPage} />
+      <ContentRoute path="/games-by-date/:date" component={TournamentByDate} />
+      <ContentRoute path="/findtournaments" component={FindTournamentPage} />
+      <ContentRoute path="/login-new" component={LoginPage} />
+      <ContentRoute path="/signup-new" component={SingupPage} />
+      <ContentRoute path="/player-profile" component={PlayerProfilePage} />
+      <Route path="/logout" component={Logout} />
 
-        <Route path="/google-material" component={GoogleMaterialPage} />
-        <Route path="/react-bootstrap" component={ReactBootstrapPage} />
-        <Route path="/e-commerce" component={ECommercePage} />
-        <Redirect to="error/error-v1" />
-      </Switch>
-    </Suspense>
+      <Route path="/google-material" component={GoogleMaterialPage} />
+      <Route path="/react-bootstrap" component={ReactBootstrapPage} />
+      <Route path="/e-commerce" component={ECommercePage} />
+      <Redirect to="error/error-v1" />
+    </Switch>
   );
 }
