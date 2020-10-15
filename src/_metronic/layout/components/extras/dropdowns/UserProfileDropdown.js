@@ -24,7 +24,7 @@ export function UserProfileDropdown(props) {
     };
   }, [uiService]);
 
-  if (props.userInfo === "undefined") {
+  if (props.userInfo === "undefined" || props.userInfo === undefined) {
     return (
       <Dropdown drop="down" alignRight>
         <Dropdown.Toggle
