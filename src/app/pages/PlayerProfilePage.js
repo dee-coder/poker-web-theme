@@ -27,12 +27,14 @@ import JsonUrl from "../../apiUrl.json";
 import CompletedTournamentsTable from "../mycomponents/completedTournamentsTable";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import CompletedTournamentBoxItem from "../mycomponents/completedTournamentItemBox";
+import MyActiveTournaments from "../mycomponents/MyActiveTournamentProfile";
 const PlayerProfilePage = () => {
   const [statistics, setStatistics] = useState([]);
   const [recentTournaments, setRecentTournaments] = useState([]);
   const [dataSet, setDataSet] = useState([]);
   const [event, setEvents] = useState([]);
   const [graphData, setGraphData] = useState([]);
+  const [activeTournaments, setActiveTournaments] = useState([]);
 
   useEffect(() => {
     var info = JSON.parse(localStorage.getItem("userInfo"));
@@ -54,6 +56,8 @@ const PlayerProfilePage = () => {
         setRecentTournaments(stats.playerDetails.RecentTournaments.Tournament);
         setDataSet(stats.playerDetails.Statistics.StatisticalDataSet);
         setStatistics(stats.playerDetails.Statistics.Statistic);
+        console.log(json.tournaments);
+        setActiveTournaments(json.tournaments);
 
         setEvents(stats.playerDetails.Statistics.Timeline.Event);
 
@@ -91,7 +95,10 @@ const PlayerProfilePage = () => {
         </Col>
         <Col lg={8}>
           <Paper>
-            <ListsWidget10 className="card-stretch gutter-b" />
+            <MyActiveTournaments
+              className="card-stretch gutter-b"
+              activeTournaments={activeTournaments}
+            />
           </Paper>
         </Col>
       </Row>

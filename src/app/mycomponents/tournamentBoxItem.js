@@ -5,9 +5,19 @@ import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import { Card, Badge, Row, Col, Button, Form } from "react-bootstrap";
 import MailIcon from "@material-ui/icons/Mail";
+import AddToCalendar from "react-add-to-calendar";
 
 const BoxItem = ({ obj, setViewTournamentMode }) => {
   const classes = useStyles();
+  let state = {
+    event: {
+      title: "Sample Event",
+      description: "This is the sample event provided as an example only",
+      location: "Portland, OR",
+      startTime: "2016-09-16T20:15:00-04:00",
+      endTime: "2016-09-16T21:45:00-04:00",
+    },
+  };
 
   return (
     <div className={classes.root} style={{ marginTop: "25px" }}>
@@ -145,13 +155,26 @@ const BoxItem = ({ obj, setViewTournamentMode }) => {
                 <Button style={{ marginLeft: "20px" }} variant="primary">
                   Get Sponsors
                 </Button>
-                <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
+
+                <Button
+                  style={{ marginLeft: "20px" }}
+                  variant="primary"
+                  onClick={() => setViewTournamentMode(obj)}
+                >
+                  More info{" "}
+                  <i
+                    style={{ fontSize: "12px", marginLeft: "5px" }}
+                    class="fas fa-info"
+                  ></i>
+                </Button>
+                {/* <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
                   Add To Calender
                   <i
                     style={{ fontSize: "12px", marginLeft: "5px" }}
                     class="fas fa-calendar-check"
                   ></i>
-                </Button>
+                </Button> */}
+                <AddToCalendar event={state.event} />
               </Form>
             </Col>
           </Row>

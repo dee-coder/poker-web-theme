@@ -10,6 +10,7 @@ import LoginPage from "./pages/loginPage";
 import SingupPage from "./pages/signupPage";
 import PlayerProfilePage from "./pages/PlayerProfilePage";
 import Logout from "./mycomponents/logoutComponent";
+import AdminSection from "./admin/adminSection";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -46,6 +47,7 @@ export default function BasePage() {
       <Route path="/google-material" component={GoogleMaterialPage} />
       <Route path="/react-bootstrap" component={ReactBootstrapPage} />
       <Route path="/e-commerce" component={ECommercePage} />
+      <Route path="/admin" component={AdminSection} />
       <Redirect to="error/error-v1" />
     </Switch>
   );

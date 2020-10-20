@@ -14,6 +14,7 @@ import { AuthPage } from "./modules/Auth";
 import ErrorsPage from "./modules/ErrorsExamples/ErrorsPage";
 import { Dashboard } from "../_metronic/_partials";
 import Logout from "../app/mycomponents/logoutComponent";
+import AdminSection from "./admin/adminSection";
 
 export function Routes() {
   const { isAuthorized } = useSelector(
