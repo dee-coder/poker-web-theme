@@ -53,7 +53,6 @@ const AddSponsorsDrawer = ({ setViewAddSponsorsMode, obj }) => {
   };
 
   const addSponsorsAPI = (e) => {
-    e.preventDefault();
     var userInfo = JSON.parse(localStorage.getItem("userInfo"));
     const url = API.baseUrl + API.addSponsors;
     var body = {
@@ -81,12 +80,15 @@ const AddSponsorsDrawer = ({ setViewAddSponsorsMode, obj }) => {
         console.log(json);
         if (json.status === "ok") {
           setViewAddSponsorsMode(false);
+          window.location.reload(false);
         } else {
           setViewAddSponsorsMode(false);
+          window.location.reload(false);
         }
       })
       .catch((err) => {
         console.log(err);
+        window.location.reload(false);
       });
   };
 

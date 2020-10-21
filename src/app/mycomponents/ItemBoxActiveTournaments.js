@@ -1,4 +1,4 @@
-import { Box, Paper } from "@material-ui/core";
+import { Box, Paper, Typography } from "@material-ui/core";
 import { useStyles } from "@material-ui/pickers/views/Calendar/SlideTransition";
 import React from "react";
 import SVG from "react-inlinesvg";
@@ -11,6 +11,7 @@ const BoxItemActiveTournaments = ({
   obj,
   setViewAddSponsorsMode,
   setCurrentAllot,
+  allot,
 }) => {
   const classes = useStyles();
   let state = {
@@ -141,53 +142,172 @@ const BoxItemActiveTournaments = ({
             </Col>
           </Row>
 
-          <Row style={{ marginTop: "25px" }}>
-            <Col lg={12}>
-              <Form inline style={{ float: "left" }}>
-                <Button variant="primary">
-                  {obj.network}{" "}
-                  <i
-                    style={{ fontSize: "12px", marginLeft: "5px" }}
-                    class="fas fa-external-link-alt"
-                  ></i>
-                </Button>
-                <Button
-                  style={{ marginLeft: "20px" }}
-                  variant="primary"
-                  onClick={() => {
-                    setViewAddSponsorsMode(true);
-                    setCurrentAllot(obj);
-                  }}
-                >
-                  Add Sponsors
-                  <i
-                    style={{
-                      color: "#fff",
-                      fontSize: "12px",
-                      marginLeft: "5px",
-                    }}
-                    class="fas fa-plus"
-                  ></i>
-                </Button>
+          {allot !== null && (
+            <div>
+              <Row style={{ marginTop: "30px" }}>
+                <Col lg={12}>
+                  <span className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
+                    Sponsors Allotment
+                  </span>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: "20px" }}>
+                <Col lg={3}>
+                  <label>
+                    NUMBER OF SPONSORS{" "}
+                    <i
+                      style={{
+                        color: "#000",
+                        fontSize: "12px",
+                        marginLeft: "5px",
+                      }}
+                      class="fas fa-info-circle"
+                    ></i>
+                  </label>
+                  <br />
+                  <span className="text-muted font-weight-bold">
+                    {allot.number_of_sponsor}
+                  </span>
+                </Col>
+                <Col lg={3}>
+                  <label>
+                    SPONSORING{" "}
+                    <i
+                      style={{
+                        color: "#000",
+                        fontSize: "12px",
+                        marginLeft: "5px",
+                      }}
+                      class="fas fa-info-circle"
+                    ></i>
+                  </label>
+                  <br />
+                  <span className="text-muted font-weight-bold">0</span>
+                </Col>
+                <Col lg={2}>
+                  <label>
+                    PERCENTAGE{" "}
+                    <i
+                      style={{
+                        color: "#000",
+                        fontSize: "12px",
+                        marginLeft: "5px",
+                      }}
+                      class="fas fa-info-circle"
+                    ></i>
+                  </label>
+                  <br />
+                  <span className="text-muted font-weight-bold">
+                    {allot.percent_to_each} %
+                  </span>
+                </Col>
+                <Col lg={2}>
+                  <label>
+                    TOTAL{" "}
+                    <i
+                      style={{
+                        color: "#000",
+                        fontSize: "12px",
+                        marginLeft: "5px",
+                      }}
+                      class="fas fa-info-circle"
+                    ></i>
+                  </label>
+                  <br />
+                  <span className="text-muted font-weight-bold">
+                    {allot.total_parcent} %
+                  </span>
+                </Col>
+                <Col lg={2}>
+                  <label>
+                    AMOUNT{" "}
+                    <i
+                      style={{
+                        color: "#000",
+                        fontSize: "12px",
+                        marginLeft: "5px",
+                      }}
+                      class="fas fa-info-circle"
+                    ></i>
+                  </label>
+                  <br />
+                  <span className="text-muted font-weight-bold">
+                    {parseFloat(allot.amount_of_each)}
+                  </span>
+                </Col>
+              </Row>
+              <Row style={{ marginTop: "25px" }}>
+                <Col lg={12}>
+                  <Form inline style={{ float: "left" }}>
+                    <Button variant="primary">
+                      {obj.network}{" "}
+                      <i
+                        style={{ fontSize: "12px", marginLeft: "5px" }}
+                        class="fas fa-external-link-alt"
+                      ></i>
+                    </Button>
 
-                <Button style={{ marginLeft: "20px" }} variant="primary">
-                  More info{" "}
-                  <i
-                    style={{ fontSize: "12px", marginLeft: "5px" }}
-                    class="fas fa-info"
-                  ></i>
-                </Button>
-                {/* <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
+                    <Button style={{ marginLeft: "20px" }} variant="primary">
+                      More info{" "}
+                      <i
+                        style={{ fontSize: "12px", marginLeft: "5px" }}
+                        class="fas fa-info"
+                      ></i>
+                    </Button>
+                  </Form>
+                </Col>
+              </Row>
+            </div>
+          )}
+          {allot === null && (
+            <Row style={{ marginTop: "25px" }}>
+              <Col lg={12}>
+                <Form inline style={{ float: "left" }}>
+                  <Button variant="primary">
+                    {obj.network}{" "}
+                    <i
+                      style={{ fontSize: "12px", marginLeft: "5px" }}
+                      class="fas fa-external-link-alt"
+                    ></i>
+                  </Button>
+                  <Button
+                    style={{ marginLeft: "20px" }}
+                    variant="primary"
+                    onClick={() => {
+                      setViewAddSponsorsMode(true);
+                      setCurrentAllot(obj);
+                    }}
+                  >
+                    Add Sponsors
+                    <i
+                      style={{
+                        color: "#fff",
+                        fontSize: "12px",
+                        marginLeft: "5px",
+                      }}
+                      class="fas fa-plus"
+                    ></i>
+                  </Button>
+
+                  <Button style={{ marginLeft: "20px" }} variant="primary">
+                    More info{" "}
+                    <i
+                      style={{ fontSize: "12px", marginLeft: "5px" }}
+                      class="fas fa-info"
+                    ></i>
+                  </Button>
+                  {/* <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
                   Add To Calender
                   <i
                     style={{ fontSize: "12px", marginLeft: "5px" }}
                     class="fas fa-calendar-check"
                   ></i>
                 </Button> */}
-                <AddToCalendar event={state.event} />
-              </Form>
-            </Col>
-          </Row>
+                  <AddToCalendar event={state.event} />
+                </Form>
+              </Col>
+            </Row>
+          )}
         </div>
       </Paper>
     </div>

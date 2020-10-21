@@ -32,7 +32,8 @@ const MyActiveTournaments = ({
             <Row>
               <Col lg={12}>
                 <BoxItemActiveTournaments
-                  obj={game}
+                  obj={game.data}
+                  allot={game.allot}
                   setCurrentAllot={setCurrentAllot}
                   setViewAddSponsorsMode={setViewAddSponsorsMode}
                 />
