@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
-import { Button } from "react-bootstrap";
+import { Button, Row, Col } from "react-bootstrap";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 
@@ -79,30 +79,133 @@ export function TournamentHeader({ className, obj }) {
           {/* end::Desc */}
         </div>
         {/* begin::Team */}
-        <div className="d-flex align-items-center">
-          <Button variant={"primary"}>Get Sponsored</Button>
 
-          <a href={href} target="_blank">
-            <Button variant={"secondary"} style={{ marginLeft: "10px" }}>
-              {obj.network}{" "}
-              <i
-                style={{ fontSize: "12px", marginLeft: "5px" }}
-                class="fas fa-external-link-alt"
-              ></i>
-            </Button>
-          </a>
-
-          <a href={href} target="_blank">
-            <Button variant={"secondary"} style={{ marginLeft: "10px" }}>
-              Add To Calender
-              <i
-                style={{ fontSize: "12px", marginLeft: "5px" }}
-                class="fas fa-calendar-check"
-              ></i>
-            </Button>
-          </a>
-        </div>
         {/* end::Team */}
+
+        {/* begin::Row */}
+        <Row>
+          <Col lg={6}>
+            <span>FLAGS</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.flags || ""}
+            </span>
+          </Col>
+          <Col lg={6}>
+            <span>CURRENCY</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.currency || ""}
+            </span>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "15px" }}>
+          <Col lg={6}>
+            <span>GAME</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.game || ""}
+            </span>
+          </Col>
+          <Col lg={6}>
+            <span>GAME CLASS</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.gameClass || ""}
+            </span>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "15px" }}>
+          <Col lg={6}>
+            <span>GUARANTEE</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.guarentee || "-"}
+            </span>
+          </Col>
+          <Col lg={6}>
+            <span>OVERLAY</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.overlay || "-"}
+            </span>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "15px" }}>
+          <Col lg={6}>
+            <span>PLAYERS</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.playerParTable || "-"}
+            </span>
+          </Col>
+          <Col lg={6}>
+            <span>STATE</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.state || "-"}
+            </span>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "15px" }}>
+          <Col lg={6}>
+            <span>RAKE</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.rake || "-"}
+            </span>
+          </Col>
+          <Col lg={6}>
+            <span>STAKE</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.stake || "-"}
+            </span>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "15px" }}>
+          <Col lg={6}>
+            <span>CURRENT ENTRANTS</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.currentEntrants || "-"}
+            </span>
+          </Col>
+          <Col lg={6}>
+            <span>TOTAL ENTRANTS</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.totalEntrants || "-"}
+            </span>
+          </Col>
+        </Row>
+        <Row style={{ marginTop: "15px" }}>
+          <Col lg={6}>
+            <span>STRUCTURE</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.structure || "-"}
+            </span>
+          </Col>
+          <Col lg={6}>
+            <span>LAST UPDATED</span> <br />
+            <span className="font-size-sm text-muted font-weight-bold">
+              {obj.lastUpdateTime || "-"}
+            </span>
+          </Col>
+        </Row>
+
+        {/* end::Row */}
+        <Row style={{ marginTop: "15px" }}>
+          <Col lg={12}>
+            <a href={href} target="_blank" style={{ float: "left" }}>
+              <Button variant={"secondary"}>
+                {obj.network}{" "}
+                <i
+                  style={{ fontSize: "12px", marginLeft: "5px" }}
+                  class="fas fa-external-link-alt"
+                ></i>
+              </Button>
+            </a>
+
+            <a href={href} target="_blank" style={{ marginLeft: "15px" }}>
+              <Button variant={"secondary"}>
+                Add To
+                <i
+                  style={{ fontSize: "12px", marginLeft: "5px" }}
+                  class="fas fa-calendar-check"
+                ></i>
+              </Button>
+            </a>
+          </Col>
+        </Row>
       </div>
       {/* end::Body */}
     </div>

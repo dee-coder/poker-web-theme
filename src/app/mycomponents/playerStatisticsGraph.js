@@ -21,7 +21,7 @@ export function PlayerStatisticsGraph({ className, data }) {
     var y = [];
     _.forEach(data, (v, i) => {
       x.push(parseFloat(v["@x"]));
-      var value = v.Y[2];
+      var value = v.Y[1];
       y.push(parseFloat(value["$"]));
     });
     console.log(x, y);

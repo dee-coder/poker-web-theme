@@ -1,5 +1,5 @@
 {
-  "baseUrl": "http://localhost:1234",
+  "baseUrl": "https://api.pokerswapping.com",
   "signinSponsor": "/login/sponser",
   "signinPlayer": "/login/player",
   "signupSponsor": "/signup/sponser",
@@ -8,5 +8,6 @@
   "getTournamentById": "/tournaments/getTournamentById",
   "getRegisteringTournaments": "/tournaments/all",
   "getTournamentFromSpacificNetwork": "/filters/all",
-  "getGamesByDate": "/filters/games-by-date"
+  "getGamesByDate": "/filters/games-by-date",
+  "addSponsors":"/addsponsor/add"
 }

@@ -1,4 +1,4 @@
-import { Box, Paper } from "@material-ui/core";
+import { Box, Drawer, Paper } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { Row, Col, Tabs, Tab, Badge } from "react-bootstrap";
 import _ from "lodash";
@@ -28,6 +28,7 @@ import CompletedTournamentsTable from "../mycomponents/completedTournamentsTable
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import CompletedTournamentBoxItem from "../mycomponents/completedTournamentItemBox";
 import MyActiveTournaments from "../mycomponents/MyActiveTournamentProfile";
+import AddSponsorsDrawer from "../mycomponents/addSponsorsDrawer";
 const PlayerProfilePage = () => {
   const [statistics, setStatistics] = useState([]);
   const [recentTournaments, setRecentTournaments] = useState([]);
@@ -35,6 +36,8 @@ const PlayerProfilePage = () => {
   const [event, setEvents] = useState([]);
   const [graphData, setGraphData] = useState([]);
   const [activeTournaments, setActiveTournaments] = useState([]);
+  const [viewAddSponsorsMode, setViewAddSponsorsMode] = useState(false);
+  const [currerntAllot, setCurrentAllot] = useState("");
 
   useEffect(() => {
     var info = JSON.parse(localStorage.getItem("userInfo"));
@@ -98,6 +101,8 @@ const PlayerProfilePage = () => {
             <MyActiveTournaments
               className="card-stretch gutter-b"
               activeTournaments={activeTournaments}
+              setCurrentAllot={setCurrentAllot}
+              setViewAddSponsorsMode={setViewAddSponsorsMode}
             />
           </Paper>
         </Col>
@@ -324,6 +329,16 @@ const PlayerProfilePage = () => {
           </Paper>
         </Col>
       </Row>
+      <Drawer
+        anchor="right"
+        open={viewAddSponsorsMode}
+        onClose={() => setViewAddSponsorsMode(false)}
+      >
+        <AddSponsorsDrawer
+          setViewAddSponsorsMode={setViewAddSponsorsMode}
+          obj={currerntAllot}
+        />
+      </Drawer>
     </Box>
 
     // <>

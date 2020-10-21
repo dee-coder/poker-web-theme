@@ -1,9 +1,14 @@
 import { Paper } from "@material-ui/core";
 import React from "react";
 import { Row, Col, Container } from "react-bootstrap";
+import BoxItemActiveTournaments from "./ItemBoxActiveTournaments";
 import BoxItem from "./tournamentBoxItem";
 
-const MyActiveTournaments = ({ activeTournaments }) => {
+const MyActiveTournaments = ({
+  activeTournaments,
+  setViewAddSponsorsMode,
+  setCurrentAllot,
+}) => {
   return (
     <Paper style={{ padding: "30px" }}>
       <Row>
@@ -13,7 +18,7 @@ const MyActiveTournaments = ({ activeTournaments }) => {
           </span>
         </Col>
       </Row>
-      {activeTournaments.length === 0 ? (
+      {activeTournaments.length === 0 || activeTournaments === null ? (
         <Row>
           <Col lg={12} style={{ textAlign: "center", paddingTop: "50px" }}>
             <span className="text-muted font-weight-bolder font-size-h5">
@@ -26,7 +31,11 @@ const MyActiveTournaments = ({ activeTournaments }) => {
           return (
             <Row>
               <Col lg={12}>
-                <BoxItem obj={game} />
+                <BoxItemActiveTournaments
+                  obj={game}
+                  setCurrentAllot={setCurrentAllot}
+                  setViewAddSponsorsMode={setViewAddSponsorsMode}
+                />
               </Col>
             </Row>
           );

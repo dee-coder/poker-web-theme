@@ -51,15 +51,13 @@ export function MixedWidgetCustom({ className, chartColor = "success", obj }) {
   return (
     <>
       {/* begin::Tiles Widget 1 */}
-      <div
-        className={`card card-custom bg-radial-gradient-danger ${className}`}
-      >
+      <div className={`card card-custom  ${className}`}>
         {/* begin::Header */}
         <div className="card-header border-0 pt-5">
-          <h3 className="card-title font-weight-bolder text-white">
+          {/* <h3 className="card-title font-weight-bolder text-white">
             Tournament Details
-          </h3>
-          <div className="card-toolbar">
+          </h3> */}
+          {/* <div className="card-toolbar">
             <Dropdown className="dropdown-inline" alignRight>
               <Dropdown.Toggle
                 className="btn btn-text-white btn-hover-white btn-sm btn-icon border-0"
@@ -73,18 +71,18 @@ export function MixedWidgetCustom({ className, chartColor = "success", obj }) {
                 <DropdownMenu2 />
               </Dropdown.Menu>
             </Dropdown>
-          </div>
+          </div> */}
         </div>
         {/* end::Header */}
 
         {/* begin::Body */}
         <div className="card-body d-flex flex-column p-0">
           {/* begin::Chart */}
-          <div
+          {/* <div
             id="kt_mixed_widget_6_chart"
             data-color={chartColor}
             style={{ height: "200px" }}
-          />
+          /> */}
           {/* end::Chart */}
 
           {/* begin::Stats */}
