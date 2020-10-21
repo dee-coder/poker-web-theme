@@ -6,7 +6,24 @@ import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import { Card, Badge, Row, Col, Button, Form } from "react-bootstrap";
 import MailIcon from "@material-ui/icons/Mail";
 import AddToCalendar from "react-add-to-calendar";
+import Countdown from "react-countdown";
 
+const Completionist = () => <span>This tournament has been finished.</span>;
+const renderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <span>
+        {days}
+        {" day(s) "}
+        {hours}:{minutes}:{seconds}
+      </span>
+    );
+  }
+};
 const BoxItem = ({ obj, setViewTournamentMode }) => {
   const classes = useStyles();
   let state = {
@@ -29,20 +46,41 @@ const BoxItem = ({ obj, setViewTournamentMode }) => {
               <Badge variant="success">#{obj.sharkscope_id}</Badge>
             </Col>
             <Col lg={6}>
-              <Badge
-                variant="primary"
-                style={{ textAlign: "right", float: "right" }}
-              >
-                <i
-                  class="far fa-clock"
+              <Form inline style={{ textAlign: "right", float: "right" }}>
+                <Badge variant="primary">
+                  <i
+                    class="far fa-calendar"
+                    style={{
+                      color: "#fff",
+                      fontSize: "12px",
+                      marginRight: "5px",
+                    }}
+                  ></i>
+
+                  {obj.scheduledStartTime}
+                </Badge>
+                <Badge
+                  variant="danger"
                   style={{
-                    color: "#fff",
-                    fontSize: "12px",
-                    marginRight: "5px",
+                    marginLeft: "10px",
+                    color: "#FFF",
+                    fontWeight: "600",
                   }}
-                ></i>
-                {obj.scheduledStartTime}
-              </Badge>
+                >
+                  <i
+                    class="far fa-clock"
+                    style={{
+                      color: "#fff",
+                      fontSize: "12px",
+                      marginRight: "5px",
+                    }}
+                  ></i>
+                  <Countdown
+                    date={new Date(obj.scheduledStartTime)}
+                    renderer={renderer}
+                  />
+                </Badge>
+              </Form>
             </Col>
           </Row>
           <Row style={{ marginTop: "10px" }}>

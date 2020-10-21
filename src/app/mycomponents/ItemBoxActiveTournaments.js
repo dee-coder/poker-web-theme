@@ -1,11 +1,29 @@
 import { Box, Paper, Typography } from "@material-ui/core";
 import { useStyles } from "@material-ui/pickers/views/Calendar/SlideTransition";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import { Card, Badge, Row, Col, Button, Form } from "react-bootstrap";
 import MailIcon from "@material-ui/icons/Mail";
 import AddToCalendar from "react-add-to-calendar";
+import Countdown from "react-countdown";
+
+const Completionist = () => <span>This tournament has been finished.</span>;
+const renderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <span>
+        {days}
+        {" day(s) "}
+        {hours}:{minutes}:{seconds}
+      </span>
+    );
+  }
+};
 
 const BoxItemActiveTournaments = ({
   obj,
@@ -13,6 +31,7 @@ const BoxItemActiveTournaments = ({
   setCurrentAllot,
   allot,
 }) => {
+  const timerComponents = [];
   const classes = useStyles();
   let state = {
     event: {
@@ -31,23 +50,44 @@ const BoxItemActiveTournaments = ({
         <div className="bg-light-primay rounded " style={{ padding: "20px" }}>
           <Row>
             <Col lg={6}>
-              <Badge variant="success">#{obj.sharkscope_id}</Badge>
+              <Badge variant="success">#{obj.sharkscope_id} </Badge>
             </Col>
             <Col lg={6}>
-              <Badge
-                variant="primary"
-                style={{ textAlign: "right", float: "right" }}
-              >
-                <i
-                  class="far fa-clock"
+              <Form inline style={{ textAlign: "right", float: "right" }}>
+                <Badge variant="primary">
+                  <i
+                    class="far fa-calendar"
+                    style={{
+                      color: "#fff",
+                      fontSize: "12px",
+                      marginRight: "5px",
+                    }}
+                  ></i>
+
+                  {obj.scheduledStartTime}
+                </Badge>
+                <Badge
+                  variant="danger"
                   style={{
-                    color: "#fff",
-                    fontSize: "12px",
-                    marginRight: "5px",
+                    marginLeft: "10px",
+                    color: "#FFF",
+                    fontWeight: "600",
                   }}
-                ></i>
-                {obj.scheduledStartTime}
-              </Badge>
+                >
+                  <i
+                    class="far fa-clock"
+                    style={{
+                      color: "#fff",
+                      fontSize: "12px",
+                      marginRight: "5px",
+                    }}
+                  ></i>
+                  <Countdown
+                    date={new Date(obj.scheduledStartTime)}
+                    renderer={renderer}
+                  />
+                </Badge>
+              </Form>
             </Col>
           </Row>
           <Row style={{ marginTop: "10px" }}>
@@ -296,6 +336,7 @@ const BoxItemActiveTournaments = ({
                       class="fas fa-info"
                     ></i>
                   </Button>
+
                   {/* <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
                   Add To Calender
                   <i

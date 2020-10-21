@@ -68,6 +68,7 @@
         "react-bootstrap": "1.0.1",
         "react-bootstrap-table-next": "4.0.2",
         "react-bootstrap-table2-paginator": "2.1.2",
+        "react-countdown": "^2.3.0",
         "react-datepicker": "2.16.0",
         "react-dom": "16.12.0",
         "react-draggable": "4.4.2",
