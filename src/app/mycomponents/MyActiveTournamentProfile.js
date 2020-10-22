@@ -8,6 +8,8 @@ const MyActiveTournaments = ({
   activeTournaments,
   setViewAddSponsorsMode,
   setCurrentAllot,
+  setViewTournamentDetails,
+  setCurrentTournamentShowObj,
 }) => {
   return (
     <Paper style={{ padding: "30px" }}>
@@ -36,6 +38,8 @@ const MyActiveTournaments = ({
                   allot={game.allot}
                   setCurrentAllot={setCurrentAllot}
                   setViewAddSponsorsMode={setViewAddSponsorsMode}
+                  setViewTournamentDetails={setViewTournamentDetails}
+                  setCurrentTournamentShowObj={setCurrentTournamentShowObj}
                 />
               </Col>
             </Row>

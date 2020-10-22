@@ -29,6 +29,7 @@ import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import CompletedTournamentBoxItem from "../mycomponents/completedTournamentItemBox";
 import MyActiveTournaments from "../mycomponents/MyActiveTournamentProfile";
 import AddSponsorsDrawer from "../mycomponents/addSponsorsDrawer";
+import ViewTournamentDrawer from "../mycomponents/ViewTournamentDetailsDrawer";
 const PlayerProfilePage = () => {
   const [statistics, setStatistics] = useState([]);
   const [recentTournaments, setRecentTournaments] = useState([]);
@@ -38,6 +39,8 @@ const PlayerProfilePage = () => {
   const [activeTournaments, setActiveTournaments] = useState([]);
   const [viewAddSponsorsMode, setViewAddSponsorsMode] = useState(false);
   const [currerntAllot, setCurrentAllot] = useState("");
+  const [viewTournamentDetails, setViewTournamentDetails] = useState(false);
+  const [currentTournamentShowObj, setCurrentTournamentShowObj] = useState({});
 
   useEffect(() => {
     var info = JSON.parse(localStorage.getItem("userInfo"));
@@ -103,6 +106,8 @@ const PlayerProfilePage = () => {
               activeTournaments={activeTournaments}
               setCurrentAllot={setCurrentAllot}
               setViewAddSponsorsMode={setViewAddSponsorsMode}
+              setViewTournamentDetails={setViewTournamentDetails}
+              setCurrentTournamentShowObj={setCurrentTournamentShowObj}
             />
           </Paper>
         </Col>
@@ -337,6 +342,16 @@ const PlayerProfilePage = () => {
         <AddSponsorsDrawer
           setViewAddSponsorsMode={setViewAddSponsorsMode}
           obj={currerntAllot}
+        />
+      </Drawer>
+      <Drawer
+        anchor="right"
+        open={viewTournamentDetails}
+        onClose={() => setViewTournamentDetails(false)}
+      >
+        <ViewTournamentDrawer
+          setViewTournamentDetails={setViewTournamentDetails}
+          obj={currentTournamentShowObj}
         />
       </Drawer>
     </Box>

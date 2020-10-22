@@ -30,6 +30,8 @@ const BoxItemActiveTournaments = ({
   setViewAddSponsorsMode,
   setCurrentAllot,
   allot,
+  setViewTournamentDetails,
+  setCurrentTournamentShowObj,
 }) => {
   const timerComponents = [];
   const classes = useStyles();
@@ -92,7 +94,13 @@ const BoxItemActiveTournaments = ({
           </Row>
           <Row style={{ marginTop: "10px" }}>
             <Col>
-              <a className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
+              <a
+                className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                onClick={(e) => {
+                  setCurrentTournamentShowObj(obj);
+                  setViewTournamentDetails(true);
+                }}
+              >
                 {obj.name}
               </a>
               <br />
