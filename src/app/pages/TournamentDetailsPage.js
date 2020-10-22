@@ -11,9 +11,9 @@ const TournamentDetailsPage = (props) => {
   const [network, setNetwork] = useState("");
   const [details, setDetails] = useState({});
   useEffect(() => {
-    var info = queryString.parse(props.location.search);
+    var info = props.match.params;
     setId(info.id);
-    setNetwork(info.network);
+    //setNetwork(info.network);
     // console.log(
     //   API.baseUrl +
     //     API.getTournamentById +
@@ -23,20 +23,12 @@ const TournamentDetailsPage = (props) => {
     //     info.network
     // );
 
-    fetch(
-      API.baseUrl +
-        API.getTournamentById +
-        "?id=" +
-        info.id +
-        "&network=" +
-        info.network,
-      {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
+    fetch(API.baseUrl + API.getTournamentById + "?id=" + info.id, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
       .then((response) => response.json())
       .then((json) => {
         console.log(json);

@@ -43,7 +43,7 @@ export default function BasePage() {
       <ContentRoute path="/login-new" component={LoginPage} />
       <ContentRoute path="/signup-new" component={SingupPage} />
       <ContentRoute path="/player-profile" component={PlayerProfilePage} />
-      <ContentRoute path="/details" component={TournamentDetailsPage} />
+      <ContentRoute path="/details/:id" component={TournamentDetailsPage} />
 
       <Route path="/logout" component={Logout} />
 

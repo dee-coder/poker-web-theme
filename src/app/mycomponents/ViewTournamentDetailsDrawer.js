@@ -50,9 +50,7 @@ const ViewTournamentDrawer = ({ setViewTournamentDetails, obj }) => {
         <Container>
           <Row>
             <Col lg={8}>
-              <Link
-                to={`/details?id=${obj.sharkscope_id}&network=${obj.network}`}
-              >
+              <Link to={`/details/${obj.sharkscope_id}`}>
                 <span className="text-success">
                   <i
                     class="fas fa-external-link-alt"
