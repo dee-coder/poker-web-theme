@@ -20,6 +20,8 @@ import {
   FormControl,
 } from "react-bootstrap";
 import JsonUrl from "../../apiUrl.json";
+import API from "../../apiUrl.json";
+
 import axios from "axios";
 import TournamentItem from "../mycomponents/tournamentItem";
 import BoxItem from "../mycomponents/tournamentBoxItem";
@@ -43,6 +45,7 @@ const FindTournamentPage = () => {
   const [showSpinner, setShowSpinner] = useState(false);
   const [tournamentList, setTournamentList] = useState([]);
   const [noData, setNoData] = useState(false);
+  const [organicNetworks, setOrganicNetworks] = useState([]);
 
   const [networkWhichSelected, setNeworksWhichSelected] = useState([]);
   const [enrolmentWhichSelected, setEnrolmentWhichSelected] = useState([]);
@@ -71,10 +74,10 @@ const FindTournamentPage = () => {
     setShowSpinner(true);
     setTournamentList([]);
     var list = [];
-    console.log("URL:", urlNetwork);
+    //console.log("URL:", urlNetwork);
 
     //data
-    console.log(selectedNetwork);
+    //console.log(selectedNetwork);
     if (selectedNetwork === null || selectedNetwork.length === 0) {
       var data = {
         networks: "",
@@ -91,23 +94,24 @@ const FindTournamentPage = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Axios Response:", data);
+          // console.log("Axios Response:", data);
           setShowSpinner(false);
           if (data.status === "ok") {
-            console.log("Response:", data.result);
+            //console.log("Response:", data.result);
             setTournamentList(data.result);
             setHoldedList(data.result);
             setNoData(false);
             setShowSpinner(false);
             var lenght = data.result.length;
-            console.log(lenght);
+            //console.log(lenght);
             var sets = lenght / 30;
-            console.log(sets);
+            //console.log(sets);
             var pagess = Math.ceil(sets);
-            console.log(pagess);
+            //console.log(pagess);
             list = Array(pagess - 1 + 1)
               .fill()
               .map((_, idx) => 1 + idx);
+
             //var list = Array.from(Array(pagess).keys());
           } else if (data.status === "failed") {
             setNoData(true);
@@ -115,7 +119,8 @@ const FindTournamentPage = () => {
             setShowSpinner(false);
           }
           setPages(list);
-          console.log("Pages:", list);
+          setOrganicNetworks(data.networks);
+          //console.log("Pages:", list);
         })
         .catch((error) => {
           console.log(error);
@@ -136,19 +141,19 @@ const FindTournamentPage = () => {
       })
         .then((response) => response.json())
         .then((data) => {
-          console.log("Axios Response:", data);
+          //console.log("Axios Response:", data);
           setShowSpinner(false);
           if (data.status === "ok") {
-            console.log("Response:", data.result);
+            //console.log("Response:", data.result);
             setTournamentList(data.result);
             setNoData(false);
             setShowSpinner(false);
             var lenght = data.result.length;
-            console.log(lenght);
+            //console.log(lenght);
             var sets = lenght / 30;
-            console.log(sets);
+            //console.log(sets);
             var pagess = Math.ceil(sets);
-            console.log(pagess);
+            //console.log(pagess);
             list = Array(pagess - 1 + 1)
               .fill()
               .map((_, idx) => 1 + idx);
@@ -159,7 +164,8 @@ const FindTournamentPage = () => {
             setShowSpinner(false);
           }
           setPages(list);
-          console.log("Pages:", list);
+          setOrganicNetworks(data.networks);
+          //console.log("Pages:", list);
         })
         .catch((error) => {
           console.log(error);
@@ -313,12 +319,12 @@ const FindTournamentPage = () => {
 
   const handlePaginationValue = (page) => {
     setActivePages(page);
-    console.log(page);
+    //console.log(page);
     setStartPaginationValues(activePage * 10);
-    console.log(startPaginationValues);
+    //console.log(startPaginationValues);
 
     setEndPaginationValue(activePage * 10 + 10);
-    console.log(endPaginationValue);
+    //console.log(endPaginationValue);
   };
 
   return (
@@ -449,6 +455,7 @@ const FindTournamentPage = () => {
                     <BoxItem
                       obj={obj}
                       setViewTournamentMode={openTournamentView}
+                      networks={organicNetworks}
                     />
                   );
                 })

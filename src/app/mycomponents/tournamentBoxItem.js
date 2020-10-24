@@ -1,12 +1,14 @@
 import { Box, Paper } from "@material-ui/core";
 import { useStyles } from "@material-ui/pickers/views/Calendar/SlideTransition";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import { Card, Badge, Row, Col, Button, Form } from "react-bootstrap";
 import MailIcon from "@material-ui/icons/Mail";
 import AddToCalendar from "react-add-to-calendar";
 import Countdown from "react-countdown";
+import _ from "lodash";
+import { Link } from "react-router-dom";
 
 const Completionist = () => <span>This tournament has been finished.</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -24,7 +26,21 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
     );
   }
 };
-const BoxItem = ({ obj, setViewTournamentMode }) => {
+const BoxItem = ({ obj, setViewTournamentMode, networks }) => {
+  const [redirect, setRedirect] = useState("");
+  console.log(networks);
+  useEffect(() => {
+    var url = "";
+    Promise.all(
+      networks.map((n) => {
+        if (n.name === obj.network) {
+          url = n.page_slug;
+        }
+      })
+    );
+    console.log(url);
+    setRedirect(url);
+  });
   const classes = useStyles();
   let state = {
     event: {
@@ -183,13 +199,18 @@ const BoxItem = ({ obj, setViewTournamentMode }) => {
           <Row style={{ marginTop: "25px" }}>
             <Col lg={12}>
               <Form inline style={{ float: "left" }}>
-                <Button variant="primary">
-                  {obj.network}{" "}
-                  <i
-                    style={{ fontSize: "12px", marginLeft: "5px" }}
-                    class="fas fa-external-link-alt"
-                  ></i>
-                </Button>
+                <a
+                  href={`https://pokerswapping.com/network/${redirect}`}
+                  target="_blank"
+                >
+                  <Button variant="primary">
+                    {obj.network}{" "}
+                    <i
+                      style={{ fontSize: "12px", marginLeft: "5px" }}
+                      class="fas fa-external-link-alt"
+                    ></i>
+                  </Button>
+                </a>
                 <Button style={{ marginLeft: "20px" }} variant="primary">
                   Get Sponsors
                 </Button>
@@ -205,7 +226,7 @@ const BoxItem = ({ obj, setViewTournamentMode }) => {
                     class="fas fa-info"
                   ></i>
                 </Button>
-                {/* <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
+                {/* <Bautton variant={"secondary"} style={{ marginLeft: "25px" }}>
                   Add To Calender
                   <i
                     style={{ fontSize: "12px", marginLeft: "5px" }}

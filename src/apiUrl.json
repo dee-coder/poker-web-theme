@@ -10,6 +10,8 @@
   "getTournamentFromSpacificNetwork": "/filters/all",
   "getGamesByDate": "/filters/games-by-date",
   "addSponsors":"/addsponsor/add",
-  "getPageDetails":"/admin/pages/get"
+  "getPageDetails":"/admin/pages/get",
+  "getAllNetworks":"/admin/networks/all"
+
 }
 
