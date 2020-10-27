@@ -11,6 +11,7 @@
   "getGamesByDate": "/filters/games-by-date",
   "addSponsors":"/addsponsor/add",
   "getPageDetails":"/admin/pages/get",
+  "getNetworkDetails":"/admin/networks/get",
   "getAllNetworks":"/admin/networks/all"
 
 }

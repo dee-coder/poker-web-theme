@@ -2,14 +2,17 @@ import { Box, Paper } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import API from "../../apiUrl.json";
 import renderHTML from "react-render-html";
-import { Col, Row } from "react-bootstrap";
+import { Col, Image, Row } from "react-bootstrap";
 
 const NetworkDetailsPage = (props) => {
   const [data, setData] = useState("");
+  const [content, setContent] = useState("");
+  const [bannerTop, setBannerTop] = useState();
+  const [bannerBottom, setBannerBottom] = useState();
   useEffect(() => {
     var data = props.match.params;
     var body = { slug: data.slug };
-    fetch(API.baseUrl + API.getPageDetails, {
+    fetch(API.baseUrl + API.getNetworkDetails, {
       method: "post",
       headers: {
         "Content-Type": "application/json",
@@ -19,15 +22,51 @@ const NetworkDetailsPage = (props) => {
       .then((res) => res.json())
       .then((json) => {
         console.log(json);
-        setData(json.result.content);
+
+        setData(json.network);
+        setBannerTop(json.network.banners[0].path);
+        setBannerBottom(json.network.banners[1].path);
+        setContent(json.network.details.content);
+
+        console.log(content);
       });
-  });
+  }, []);
   return (
     <Box>
       <Row>
         <Col lg={9}>
           <Paper style={{ padding: "50px" }}>
-            <div>{renderHTML(data)}</div>
+            <Row>
+              <Col lg={12} style={{ overflow: "hidden" }}>
+                <Image
+                  src={bannerTop}
+                  rounded
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                  }}
+                />
+              </Col>
+            </Row>
+            <Row style={{ marginTop: "30px", marginBottom: "30px" }}>
+              <Col lg={12}>
+                <div>{renderHTML(content)}</div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12} style={{ overflow: "hidden" }}>
+                {" "}
+                <Image
+                  src={bannerBottom}
+                  rounded
+                  style={{
+                    maxHeight: "200px",
+                    maxWidth: "100%",
+                    minWidth: "100%",
+                  }}
+                />
+              </Col>
+            </Row>
           </Paper>
         </Col>
         <Col lg={3}>

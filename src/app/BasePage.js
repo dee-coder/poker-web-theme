@@ -13,6 +13,7 @@ import Logout from "./mycomponents/logoutComponent";
 import AdminSection from "./admin/adminSection";
 import TournamentDetailsPage from "./pages/TournamentDetailsPage";
 import NetworkDetailsPage from "./pages/NetworkDetailsPage";
+import PagesDetailsPage from "./pages/PagesDetailsPage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -45,8 +46,8 @@ export default function BasePage() {
       <ContentRoute path="/signup-new" component={SingupPage} />
       <ContentRoute path="/player-profile" component={PlayerProfilePage} />
       <ContentRoute path="/details/:id" component={TournamentDetailsPage} />
-      <ContentRoute path="/network/:slug" component={NetworkDetailsPage} />
-
+      <ContentRoute path="/networks/:slug" component={NetworkDetailsPage} />
+      <ContentRoute path="/:slug" component={PagesDetailsPage} />
 
       <Route path="/logout" component={Logout} />
 
