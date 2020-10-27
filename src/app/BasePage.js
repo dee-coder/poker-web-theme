@@ -47,7 +47,7 @@ export default function BasePage() {
       <ContentRoute path="/player-profile" component={PlayerProfilePage} />
       <ContentRoute path="/details/:id" component={TournamentDetailsPage} />
       <ContentRoute path="/networks/:slug" component={NetworkDetailsPage} />
-      <ContentRoute path="/:slug" component={PagesDetailsPage} />
+      <ContentRoute path="/pages/:slug" component={PagesDetailsPage} />
 
       <Route path="/logout" component={Logout} />
 
