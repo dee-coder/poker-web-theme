@@ -8,8 +8,10 @@ import queryString from "query-string";
 
 const TournamentDetailsPage = (props) => {
   const [id, setId] = useState("");
-  const [network, setNetwork] = useState("");
+  const [networks, setNetworks] = useState();
+  const [dataa, setData] = useState([]);
   const [details, setDetails] = useState({});
+  const Json = {};
   useEffect(() => {
     var info = props.match.params;
     setId(info.id);
@@ -31,9 +33,10 @@ const TournamentDetailsPage = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        //setData(json.networks);
         setDetails(json.result);
       });
+    //setNetworks(Json);
   }, []);
   if (id === "") {
     return (
@@ -46,7 +49,11 @@ const TournamentDetailsPage = (props) => {
       <Box component="span" m={5}>
         <Row style={{ marginTop: "30px" }}>
           <Col lg={9}>
-            <TournamentHeader className="card-stretch gutter-b" obj={details} />
+            <TournamentHeader
+              className="card-stretch gutter-b"
+              obj={details}
+              networks={dataa}
+            />
           </Col>
 
           <Col lg={3}>

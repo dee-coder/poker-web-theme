@@ -4,21 +4,39 @@ import { Button, Row, Col } from "react-bootstrap";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import _ from "lodash";
+import API from "../../apiUrl.json";
 
 export function TournamentHeader({ className, obj, networks }) {
   const [url, setUrl] = useState();
   const [href, setHref] = useState();
   const [icon, setIcon] = useState();
+  const [networksAll, setNetworksAll] = useState([]);
 
   useEffect(() => {
+    console.log(obj);
     // var obj = _.find(networks, ["name", obj.network]);
     // var url = "https://pokerswapping.com/networks/" + obj.page_slug;
     // setUrl(url);
     // setIcon(obj.icon);
-    var data = _.find(networks, ["name", obj.network]);
-    var url = "https://pokerswapping.com/networks/" + data.page_slug;
-    setUrl(url);
-    setIcon(data.icon);
+    fetch(API.baseUrl + API.getAllNetworks, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+
+        setNetworksAll(json.tournaments);
+        console.log(obj.network);
+        var data = _.find(json.tournaments, ["name", obj.network]);
+        console.log(data);
+        var url = "https://pokerswapping.com/networks/" + data.page_slug;
+        setUrl(url);
+        setIcon(data.icon);
+      })
+      .catch((err) => console.log(err));
 
     // switch (obj.network) {
     //   case "PartyPoker":
@@ -52,7 +70,7 @@ export function TournamentHeader({ className, obj, networks }) {
     //     setHref("https://fullltilt.com");
     //     break;
     // }
-  }, []);
+  }, [obj]);
 
   return (
     <div className={`card card-custom ${className}`}>
