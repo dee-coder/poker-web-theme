@@ -26,6 +26,7 @@ import axios from "axios";
 import TournamentItem from "../mycomponents/tournamentItem";
 import BoxItem from "../mycomponents/tournamentBoxItem";
 import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
+import CustomPagination from "../mycomponents/CustomPagination";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -63,6 +64,8 @@ const FindTournamentPage = () => {
   const [viewType, setViewType] = useState("box");
   const [viewTournamentMode, setViewTournamentMode] = useState(false);
   const [currentViewTournament, setCurrentViewTournaments] = useState(null);
+
+  const [pageOfItems, setPageOfItems] = useState([]);
 
   const [sortingKey, setSortingKey] = useState();
 
@@ -317,6 +320,11 @@ const FindTournamentPage = () => {
     // setHoldedList(arr);
   };
 
+  const onChangePage = (pageOfItems) => {
+    // update state with new page of items
+    setPageOfItems(pageOfItems);
+  };
+
   const handlePaginationValue = (page) => {
     setActivePages(page);
     //console.log(page);
@@ -394,7 +402,7 @@ const FindTournamentPage = () => {
                   <Form style={{ float: "right" }}>
                     <label style={{ float: "right" }}>Pages</label>
                     <br />
-                    <Pagination style={{ marginTop: "10px" }}>
+                    {/* <Pagination style={{ marginTop: "10px" }}>
                       <Pagination.First />
                       <Pagination.Prev />
                       {pages.length > 15 &&
@@ -412,7 +420,12 @@ const FindTournamentPage = () => {
                       <Pagination.Ellipsis />;
                       <Pagination.Next />
                       <Pagination.Last />
-                    </Pagination>
+                    </Pagination> */}
+
+                    <CustomPagination
+                      items={holdedList}
+                      onChangePage={onChangePage}
+                    />
                   </Form>
                 </Col>
                 <Col lg={4}>
@@ -448,17 +461,26 @@ const FindTournamentPage = () => {
           )}
           {viewType === "box"
             ? holdedList.length > 0 &&
-              holdedList
-                .slice(startPaginationValues, endPaginationValue)
-                .map((obj) => {
-                  return (
-                    <BoxItem
-                      obj={obj}
-                      setViewTournamentMode={openTournamentView}
-                      networks={organicNetworks}
-                    />
-                  );
-                })
+              // holdedList
+              //   .slice(startPaginationValues, endPaginationValue)
+              //   .map((obj) => {
+              //     return (
+              //       <BoxItem
+              //         obj={obj}
+              //         setViewTournamentMode={openTournamentView}
+              //         networks={organicNetworks}
+              //       />
+              //     );
+              //   })
+              pageOfItems.map((obj) => {
+                return (
+                  <BoxItem
+                    obj={obj}
+                    setViewTournamentMode={openTournamentView}
+                    networks={organicNetworks}
+                  />
+                );
+              })
             : holdedList.length > 0 && (
                 <TournamentItem tournamentList={holdedList} />
               )}
