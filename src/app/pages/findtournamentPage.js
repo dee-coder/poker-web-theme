@@ -32,7 +32,7 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(3, 2),
   },
   list: {
-    width: 750,
+    width: 1200,
   },
   viewBoxCont: {
     width: "auto",
@@ -482,6 +482,7 @@ const FindTournamentPage = () => {
         <DrawerTournamentsView
           setViewTournamentMode={setViewTournamentMode}
           obj={currentViewTournament}
+          networks={organicNetworks}
         />
       </Drawer>
     </Box>

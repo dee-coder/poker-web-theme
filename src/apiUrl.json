@@ -12,7 +12,8 @@
   "addSponsors":"/addsponsor/add",
   "getPageDetails":"/admin/pages/get",
   "getNetworkDetails":"/admin/networks/get",
-  "getAllNetworks":"/admin/networks/all"
+  "getAllNetworks":"/admin/networks/all",
+  "getSponsorDetails":"/sponsorship/details"
 
 }
 

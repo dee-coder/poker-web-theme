@@ -3,44 +3,55 @@ import React, { useState, useEffect } from "react";
 import { Button, Row, Col } from "react-bootstrap";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
+import _ from "lodash";
 
-export function TournamentHeader({ className, obj }) {
+export function TournamentHeader({ className, obj, networks }) {
   const [url, setUrl] = useState();
   const [href, setHref] = useState();
+  const [icon, setIcon] = useState();
 
   useEffect(() => {
-    switch (obj.network) {
-      case "PartyPoker":
-        var string = "/media/poker-logos/partypoker-logo.jpg";
-        setUrl(string);
-        setHref("https://pokerstars.com");
+    // var obj = _.find(networks, ["name", obj.network]);
+    // var url = "https://pokerswapping.com/networks/" + obj.page_slug;
+    // setUrl(url);
+    // setIcon(obj.icon);
+    var data = _.find(networks, ["name", obj.network]);
+    var url = "https://pokerswapping.com/networks/" + data.page_slug;
+    setUrl(url);
+    setIcon(data.icon);
 
-        break;
+    // switch (obj.network) {
+    //   case "PartyPoker":
+    //     var string = "/media/poker-logos/partypoker-logo.jpg";
+    //     setUrl(string);
+    //     setHref("https://pokerstars.com");
 
-      case "PokerStars":
-        var string = "/media/poker-logos/pokerstars-logo.jpg";
-        setUrl(string);
-        setHref("https://pokerstars.com");
-        break;
+    //     break;
 
-      case "SkyPoker":
-        var string = "/media/poker-logos/skypoker-logo.jpg";
-        setUrl(string);
-        setHref("https://skypoker.com");
-        break;
+    //   case "PokerStars":
+    //     var string = "/media/poker-logos/pokerstars-logo.jpg";
+    //     setUrl(string);
+    //     setHref("https://pokerstars.com");
+    //     break;
 
-      case "888Poker":
-        var string = "/media/poker-logos/888poker-logo.png";
-        setUrl(string);
-        setHref("https://888poker.com");
-        break;
+    //   case "SkyPoker":
+    //     var string = "/media/poker-logos/skypoker-logo.jpg";
+    //     setUrl(string);
+    //     setHref("https://skypoker.com");
+    //     break;
 
-      case "FullTilt":
-        var string = "/media/poker-logos/fulltilt-logo.png";
-        setUrl(string);
-        setHref("https://fullltilt.com");
-        break;
-    }
+    //   case "888Poker":
+    //     var string = "/media/poker-logos/888poker-logo.png";
+    //     setUrl(string);
+    //     setHref("https://888poker.com");
+    //     break;
+
+    //   case "FullTilt":
+    //     var string = "/media/poker-logos/fulltilt-logo.png";
+    //     setUrl(string);
+    //     setHref("https://fullltilt.com");
+    //     break;
+    // }
   }, []);
 
   return (
@@ -56,7 +67,7 @@ export function TournamentHeader({ className, obj }) {
             <div className="symbol symbol-50">
               <span className="symbol-label bg-light-light">
                 <img
-                  src={toAbsoluteUrl(url)}
+                  src={toAbsoluteUrl(icon)}
                   className="h-50 align-self-center"
                 ></img>{" "}
               </span>
@@ -185,7 +196,7 @@ export function TournamentHeader({ className, obj }) {
         {/* end::Row */}
         <Row style={{ marginTop: "15px" }}>
           <Col lg={12}>
-            <a href={href} target="_blank" style={{ float: "left" }}>
+            <a href={url} target="_blank" style={{ float: "left" }}>
               <Button variant={"secondary"}>
                 {obj.network}{" "}
                 <i
@@ -195,7 +206,7 @@ export function TournamentHeader({ className, obj }) {
               </Button>
             </a>
 
-            <a href={href} target="_blank" style={{ marginLeft: "15px" }}>
+            <a href={url} target="_blank" style={{ marginLeft: "15px" }}>
               <Button variant={"secondary"}>
                 Add To
                 <i

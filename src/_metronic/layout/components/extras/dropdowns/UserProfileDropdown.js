@@ -147,6 +147,25 @@ export function UserProfileDropdown(props) {
               </a>
             </Link>
 
+            <Link to="/player-profile">
+              <a className="navi-item px-8">
+                <div className="navi-link">
+                  <div className="navi-icon mr-2">
+                    <i className="flaticon2-calendar-3 text-success" />
+                  </div>
+                  <div className="navi-text">
+                    <div className="font-weight-bold">My Profile</div>
+                    <div className="text-muted">
+                      Account settings and more{` `}
+                      <span className="label label-light-danger label-inline font-weight-bold">
+                        update
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </a>
+            </Link>
+
             <a className="navi-item px-8">
               <div className="navi-link">
                 <div className="navi-icon mr-2">

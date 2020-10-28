@@ -14,6 +14,7 @@ import AdminSection from "./admin/adminSection";
 import TournamentDetailsPage from "./pages/TournamentDetailsPage";
 import NetworkDetailsPage from "./pages/NetworkDetailsPage";
 import PagesDetailsPage from "./pages/PagesDetailsPage";
+import SponsorsPage from "./pages/SponsorPage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -48,6 +49,7 @@ export default function BasePage() {
       <ContentRoute path="/details/:id" component={TournamentDetailsPage} />
       <ContentRoute path="/networks/:slug" component={NetworkDetailsPage} />
       <ContentRoute path="/pages/:slug" component={PagesDetailsPage} />
+      <ContentRoute path="/sponsors/:id" component={SponsorsPage} />
 
       <Route path="/logout" component={Logout} />
 
