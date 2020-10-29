@@ -292,7 +292,7 @@ const FindTournamentPage = () => {
       case "game_id_low_to_high":
         var arr = [...holdedList];
         arr.sort((a, b) => {
-          return b.sharkscope_id - a.sharkscope_id;
+          return a.sharkscope_id - b.sharkscope_id;
         });
         setHoldedList(arr);
         break;
