@@ -10,11 +10,12 @@ import Chip from "@material-ui/core/Chip";
 import MenuItem from "@material-ui/core/MenuItem";
 import CancelIcon from "@material-ui/icons/Cancel";
 import PropTypes from "prop-types";
-import { Col, Form, Row } from "react-bootstrap";
+import { Button, Col, Form, InputGroup, Row } from "react-bootstrap";
 import ReactMultiSelectCheckboxes from "react-multiselect-checkboxes";
 import { Divider, IconButton, InputBase } from "@material-ui/core";
 import CustomizedInputBase from "./customSearchComponent";
 import IntegrationDownshift from "./customSearchComponent";
+import API from "../../apiUrl.json";
 
 const suggestions = [
   { label: "Afghanistan" },
@@ -305,7 +306,18 @@ const MultipleInputField = ({
   setGameTypeWhichSelected,
   prizePoolWhichSelected,
   setPrizePoolWhichSelected,
+  tournamentId,
+  setTournamentId,
+  handleSingleIdTournamentQuery,
 }) => {
+  const [networks, setNetwork] = useState([
+    { label: "PartyPoker", value: "partypoker", key: "1" },
+    { label: "SkyPoker", value: "skypoker", key: "2" },
+    { label: "888Poker", value: "888poker", key: "3" },
+    { label: "PokerStars", value: "pokerstars", key: "4" },
+    { label: "Fullfilt", value: "fullfilt", key: "5" },
+  ]);
+
   useEffect(() => {
     setSelectedNetworks(networkWhichSelected);
     setSelectedFilters([
@@ -316,6 +328,27 @@ const MultipleInputField = ({
       ...speedWhichSelected,
       ...gameTypeWhichSelected,
     ]);
+    fetch(API.baseUrl + API.getAllNetworks, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        var arr = [];
+        json.tournaments.map((network, index) => {
+          arr.push({
+            label: network.name,
+            value: network.slug,
+            key: "" + index,
+          });
+        });
+        //console.log(arr);
+        //console.log(organicNetworks);
+        setNetwork(arr);
+      })
+      .catch((err) => console.log(err));
   }, [
     networkWhichSelected,
     prizePoolWhichSelected,
@@ -418,14 +451,6 @@ const MultipleInputField = ({
     },
   ]);
 
-  const [networks, setNetwork] = useState([
-    { label: "PartyPoker", value: "partypoker", key: "1" },
-    { label: "SkyPoker", value: "skypoker", key: "2" },
-    { label: "888Poker", value: "888poker", key: "3" },
-    { label: "PokerStars", value: "pokerstars", key: "4" },
-    { label: "Fullfilt", value: "fullfilt", key: "5" },
-  ]);
-
   function applyfilters(obj) {
     setSelectedFilters([...selectedFilters, obj]);
   }
@@ -467,7 +492,30 @@ const MultipleInputField = ({
               Search By ID
             </Form.Label>
 
-            <TextField
+            <InputGroup className="mb-3">
+              <Form.Control
+                aria-label="Recipient's username"
+                aria-describedby="basic-addon2"
+                id="outlined-bare"
+                className={classes.textField}
+                placeholder="eg. 29727927"
+                margin="dense"
+                variant="outlined"
+                inputProps={{ "aria-label": "bare" }}
+                value={tournamentId}
+                onChange={(e) => setTournamentId(e.target.value)}
+              />
+              <InputGroup.Append>
+                <Button
+                  variant="primary"
+                  onClick={(e) => handleSingleIdTournamentQuery(e)}
+                >
+                  Search
+                </Button>
+              </InputGroup.Append>
+            </InputGroup>
+
+            {/* <TextField
               id="outlined-bare"
               className={classes.textField}
               placeholder="eg. 29727927"
@@ -475,7 +523,7 @@ const MultipleInputField = ({
               margin="dense"
               variant="outlined"
               inputProps={{ "aria-label": "bare" }}
-            />
+            /> */}
           </Form.Group>
         </Col>
       </Row>

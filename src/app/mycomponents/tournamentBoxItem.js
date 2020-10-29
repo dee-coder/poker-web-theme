@@ -28,7 +28,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
 };
 const BoxItem = ({ obj, setViewTournamentMode, networks }) => {
   const [redirect, setRedirect] = useState("");
-  console.log(networks);
+  //console.log(networks);
   useEffect(() => {
     var url = "";
     Promise.all(
@@ -38,7 +38,7 @@ const BoxItem = ({ obj, setViewTournamentMode, networks }) => {
         }
       })
     );
-    console.log(url);
+    //console.log(url);
     setRedirect(url);
   });
   const classes = useStyles();

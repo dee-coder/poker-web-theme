@@ -19,6 +19,8 @@ import {
   Dropdown,
   FormControl,
 } from "react-bootstrap";
+
+import moment from "moment";
 import JsonUrl from "../../apiUrl.json";
 import API from "../../apiUrl.json";
 
@@ -71,6 +73,8 @@ const FindTournamentPage = () => {
 
   const [holdedList, setHoldedList] = useState([]);
 
+  const [tournamentId, setTournamentId] = useState();
+
   var urlNetwork = JsonUrl.baseUrl + JsonUrl.getTournamentFromSpacificNetwork;
 
   useEffect(() => {
@@ -82,6 +86,7 @@ const FindTournamentPage = () => {
     //data
     //console.log(selectedNetwork);
     if (selectedNetwork === null || selectedNetwork.length === 0) {
+      //setHoldedList([]);
       var data = {
         networks: "",
         filters: "",
@@ -101,6 +106,7 @@ const FindTournamentPage = () => {
           setShowSpinner(false);
           if (data.status === "ok") {
             //console.log("Response:", data.result);
+
             setTournamentList(data.result);
             setHoldedList(data.result);
             setNoData(false);
@@ -129,6 +135,7 @@ const FindTournamentPage = () => {
           console.log(error);
         });
     } else {
+      //setHoldedList([]);
       var data = {
         networks: selectedNetwork || "",
         filters: selectedFilters,
@@ -149,6 +156,7 @@ const FindTournamentPage = () => {
           if (data.status === "ok") {
             //console.log("Response:", data.result);
             setTournamentList(data.result);
+            setHoldedList(data.result);
             setNoData(false);
             setShowSpinner(false);
             var lenght = data.result.length;
@@ -168,6 +176,9 @@ const FindTournamentPage = () => {
           }
           setPages(list);
           setOrganicNetworks(data.networks);
+          // _.find(pageOfItems, function(o) {
+          //   return new Date(o.scheduledStartTime * 1000) > new Date();
+          // });
           //console.log("Pages:", list);
         })
         .catch((error) => {
@@ -203,7 +214,7 @@ const FindTournamentPage = () => {
     setViewTournamentMode(true);
   };
   const handleSorting = (e) => {
-    console.log(e.target.value);
+    //console.log(e.target.value);
     setHoldedList(tournamentList);
 
     switch (e.target.value) {
@@ -217,7 +228,7 @@ const FindTournamentPage = () => {
         break;
 
       case "prize_pool_high_to_low":
-        console.log("running");
+        //console.log("running");
         var arr = [...holdedList];
 
         arr.sort((a, b) => {
@@ -297,9 +308,9 @@ const FindTournamentPage = () => {
       case "recent_date":
         var arr = [...holdedList];
         arr.sort((a, b) => {
-          let da = new Date(a.scheduledStartUnixTime),
-            db = new Date(b.scheduledStartUnixTime);
-          return da - db;
+          let da = new Date(a.scheduledStartTime),
+            db = new Date(b.scheduledStartTime);
+          return db - da;
         });
         setHoldedList(arr);
         break;
@@ -307,8 +318,8 @@ const FindTournamentPage = () => {
       case "late_date":
         var arr = [...holdedList];
         arr.sort((a, b) => {
-          let da = new Date(a.scheduledStartUnixTime),
-            db = new Date(b.scheduledStartUnixTime);
+          let da = new Date(a.scheduledStartTime),
+            db = new Date(b.scheduledStartTime);
           return da - db;
         });
         setHoldedList(arr);
@@ -333,6 +344,34 @@ const FindTournamentPage = () => {
 
     setEndPaginationValue(activePage * 10 + 10);
     //console.log(endPaginationValue);
+  };
+
+  const handleSingleIdTournamentQuery = async (e) => {
+    setShowSpinner(true);
+    e.preventDefault();
+    await fetch(API.baseUrl + API.getTournamentById + "?id=" + tournamentId, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then(async (json) => {
+        console.log(json);
+        // var arr = [];
+        if (json.status === "ok") {
+          console.log(json);
+          await setHoldedList([]);
+          await setHoldedList([...holdedList, json.result]);
+          setShowSpinner(false);
+          console.log(holdedList);
+          console.log(json.result);
+        } else {
+          setNoData(true);
+          //setHoldedList([]);
+          setShowSpinner(true);
+        }
+      });
   };
 
   return (
@@ -366,6 +405,9 @@ const FindTournamentPage = () => {
                 setGameTypeWhichSelected={setGameTypeWhichSelected}
                 prizePoolWhichSelected={prizePoolWhichSelected}
                 setPrizePoolWhichSelected={setPrizePoolWhichSelected}
+                tournamentId={tournamentId}
+                setTournamentId={setTournamentId}
+                handleSingleIdTournamentQuery={handleSingleIdTournamentQuery}
               />
             </Card.Body>
           </Card>
@@ -423,7 +465,7 @@ const FindTournamentPage = () => {
                     </Pagination> */}
 
                     <CustomPagination
-                      items={holdedList}
+                      items={holdedList.reverse()}
                       onChangePage={onChangePage}
                     />
                   </Form>
@@ -481,8 +523,16 @@ const FindTournamentPage = () => {
                   />
                 );
               })
-            : holdedList.length > 0 && (
-                <TournamentItem tournamentList={holdedList} />
+            : // pageOfItems.map((obj) => {
+
+              // })
+              pageOfItems.length > 0 && (
+                <TournamentItem
+                  tournamentList={pageOfItems.filter(
+                    (item) =>
+                      new Date(item.scheduledStartUnixTime * 1000) > new Date()
+                  )}
+                />
               )}
 
           {/* {tournamentList.length > 0 &&
