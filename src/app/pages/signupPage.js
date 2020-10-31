@@ -82,6 +82,7 @@ const SingupPage = () => {
 
   function hitApiForRegistration(roleKey) {
     var url = JsonUrl.baseUrl;
+    var role = "";
     var body = {};
     if (roleKey === 1) {
       url = url + JsonUrl.signupPlayer;
@@ -92,8 +93,10 @@ const SingupPage = () => {
         network: network,
         username: username,
       };
+      role = "player";
     } else {
       url = url + JsonUrl.signupSponsor;
+      role = "sponsor";
     }
     fetch(url, {
       method: "POST", // or 'PUT'
@@ -105,7 +108,9 @@ const SingupPage = () => {
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
+
         localStorage.setItem("userInfo", JSON.stringify(json.data));
+        localStorage.setItem("role", role);
 
         setRedirectPage(true);
       })

@@ -13,7 +13,10 @@
   "getPageDetails":"/admin/pages/get",
   "getNetworkDetails":"/admin/networks/get",
   "getAllNetworks":"/admin/networks/all",
-  "getSponsorDetails":"/sponsorship/details"
+  "getSponsorDetails":"/sponsorship/details",
+  "getPlayersPlans":"/admin/subscription/all",
+  "paymentSession":"/payment/create-checkout-session",
+  "getSessionRes":"/payment/checkout-session"
 
 }
 

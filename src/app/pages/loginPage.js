@@ -46,6 +46,7 @@ const LoginPage = () => {
 
   const handleLogin = (e) => {
     e.preventDefault();
+    //var role = "";
     var url = JsonUrl.baseUrl;
     var body = {
       email: email,
@@ -54,8 +55,10 @@ const LoginPage = () => {
 
     if (role === "player") {
       url = url + JsonUrl.signinPlayer;
+      //role = "player";
     } else {
       url = url + JsonUrl.signinSponsor;
+      //role = "sponsor";
     }
 
     console.log(url);
@@ -71,6 +74,7 @@ const LoginPage = () => {
       .then((json) => {
         if (json.status === "user_found") {
           localStorage.setItem("userInfo", JSON.stringify(json.result));
+          localStorage.setItem("role", role);
           setRedirect(true);
         } else {
           setResponseError("No user registered on given email.");
