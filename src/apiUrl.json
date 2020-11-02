@@ -16,7 +16,9 @@
   "getSponsorDetails":"/sponsorship/details",
   "getPlayersPlans":"/admin/subscription/all",
   "paymentSession":"/payment/create-checkout-session",
-  "getSessionRes":"/payment/checkout-session"
+  "getSessionRes":"/payment/checkout-session",
+  "getSponsoredDetails":"/addsponsor/getdetails"
+
 
 }
 

@@ -55,7 +55,8 @@ export function Layout({ children }) {
               id="kt_content"
               className={`content ${layoutProps.contentCssClasses} d-flex flex-column flex-column-fluid`}
             >
-              {layoutProps.subheaderDisplay && <SubHeader />}
+              <div style={{ paddingTop: "50px", paddingBottom: "30px" }}></div>
+              {/* {layoutProps.subheaderDisplay && <SubHeader />} */}
               {/*begin::Entry*/}
               {layoutProps.contentExtended && (
                 <>
@@ -67,7 +68,6 @@ export function Layout({ children }) {
                   )}
 
                   {!layoutProps.asideDisplay && <>{children}</>}
-
                 </>
               )}
 
@@ -89,7 +89,6 @@ export function Layout({ children }) {
                 </div>
               )}
 
-              
               {/*end::Entry*/}
             </div>
             {/*end::Content*/}
