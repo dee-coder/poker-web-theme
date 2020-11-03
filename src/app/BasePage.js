@@ -19,6 +19,8 @@ import PlayerPlusPage from "./pages/PlayerPlusPage";
 import SuccessSubscription from "./pages/SuccessSubscriptionPage";
 import AddSponsorPage from "./pages/AddSponsorPage";
 import ViewSponsorsPage from "./pages/ViewSponsorsPage";
+import AddSwapperPage from "./pages/AddSwapperPage";
+import ViewSwapperPage from "./pages/ViewSwapperPage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -62,6 +64,9 @@ export default function BasePage() {
       />
       <ContentRoute exact path="/add-sponsor/:id" component={AddSponsorPage} />
       <ContentRoute path="/view-sponsors" component={ViewSponsorsPage} />
+
+      <ContentRoute exact path="/add-swap/:id" component={AddSwapperPage} />
+      <ContentRoute path="/view-swap" component={ViewSwapperPage} />
 
       <Route path="/logout" component={Logout} />
 

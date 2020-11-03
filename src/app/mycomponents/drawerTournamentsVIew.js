@@ -2,6 +2,7 @@ import { Box, Divider, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React from "react";
 import { Row, Col, Container, Badge, Form, Button } from "react-bootstrap";
+import { Link } from "react-router-dom";
 import {
   MixedWidget1,
   MixedWidget10,
@@ -107,50 +108,54 @@ const DrawerTournamentsView = ({ setViewTournamentMode, obj, networks }) => {
 
                   <Col lg={3}>
                     <Paper style={{ padding: "30px" }}>
-                      <Button
-                        variant="primary"
-                        style={{
-                          marginTop: "20px",
-                          width: "100%",
-                          textAlign: "center",
-                          fontSize: "12px",
-                        }}
-                      >
-                        Poker Swapping{" "}
-                        <i
-                          class="fas fa-exchange-alt"
+                      <Link to={`/add-swap/${obj.sharkscope_id}`}>
+                        <Button
+                          variant="primary"
                           style={{
-                            color: "#FFF",
-                            marginLeft: "15px",
+                            marginTop: "20px",
+                            width: "100%",
+                            textAlign: "center",
+                            fontSize: "12px",
+                          }}
+                        >
+                          Swapping{" "}
+                          <i
+                            class="fas fa-exchange-alt"
+                            style={{
+                              color: "#FFF",
+                              marginLeft: "15px",
 
-                            fontSize: "13px",
-                            float: "right",
-                            marginRight: "15px",
-                          }}
-                        ></i>
-                      </Button>
+                              fontSize: "13px",
+                              float: "right",
+                              marginRight: "15px",
+                            }}
+                          ></i>
+                        </Button>
+                      </Link>
                       <br />
-                      <Button
-                        variant="primary"
-                        style={{
-                          marginTop: "20px",
-                          width: "100%",
-                          textAlign: "center",
-                          fontSize: "12px",
-                        }}
-                      >
-                        Add sponsors{" "}
-                        <i
-                          class="fas fa-plus"
+                      <Link to={`/add-sponsor/${obj.sharkscope_id}`}>
+                        <Button
+                          variant="primary"
                           style={{
-                            color: "#FFF",
-                            marginLeft: "15px",
-                            fontSize: "13px",
-                            float: "right",
-                            marginRight: "15px",
+                            marginTop: "20px",
+                            width: "100%",
+                            textAlign: "center",
+                            fontSize: "12px",
                           }}
-                        ></i>
-                      </Button>
+                        >
+                          Add sponsors{" "}
+                          <i
+                            class="fas fa-plus"
+                            style={{
+                              color: "#FFF",
+                              marginLeft: "15px",
+                              fontSize: "13px",
+                              float: "right",
+                              marginRight: "15px",
+                            }}
+                          ></i>
+                        </Button>
+                      </Link>
                       <br />
                       <Button
                         variant="primary"

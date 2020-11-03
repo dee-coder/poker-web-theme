@@ -5,6 +5,7 @@ import { MixedWidgetCustom } from "../mycomponents/mixWidgetComponent";
 import { TournamentHeader } from "../mycomponents/tournamentHeaderComponent";
 import API from "../../apiUrl.json";
 import queryString from "query-string";
+import { Link } from "react-router-dom";
 
 const TournamentDetailsPage = (props) => {
   const [id, setId] = useState("");
@@ -58,50 +59,54 @@ const TournamentDetailsPage = (props) => {
 
           <Col lg={3}>
             <Paper style={{ padding: "30px" }}>
-              <Button
-                variant="primary"
-                style={{
-                  marginTop: "20px",
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "12px",
-                }}
-              >
-                Poker Swapping{" "}
-                <i
-                  class="fas fa-exchange-alt"
+              <Link to={`/add-swap/${details.sharkscope_id}`}>
+                <Button
+                  variant="primary"
                   style={{
-                    color: "#FFF",
-                    marginLeft: "15px",
+                    marginTop: "20px",
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: "12px",
+                  }}
+                >
+                  Poker Swapping{" "}
+                  <i
+                    class="fas fa-exchange-alt"
+                    style={{
+                      color: "#FFF",
+                      marginLeft: "15px",
 
-                    fontSize: "13px",
-                    float: "right",
-                    marginRight: "15px",
-                  }}
-                ></i>
-              </Button>
+                      fontSize: "13px",
+                      float: "right",
+                      marginRight: "15px",
+                    }}
+                  ></i>
+                </Button>
+              </Link>
               <br />
-              <Button
-                variant="primary"
-                style={{
-                  marginTop: "20px",
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "12px",
-                }}
-              >
-                Add sponsors{" "}
-                <i
-                  class="fas fa-plus"
+              <Link to={`/add-sponsor/${details.sharkscope_id}`}>
+                <Button
+                  variant="primary"
                   style={{
-                    color: "#FFF",
-                    marginLeft: "15px",
-                    fontSize: "13px",
-                    float: "right",
-                    marginRight: "15px",
+                    marginTop: "20px",
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: "12px",
                   }}
-                ></i>
-              </Button>
+                >
+                  Add sponsors{" "}
+                  <i
+                    class="fas fa-plus"
+                    style={{
+                      color: "#FFF",
+                      marginLeft: "15px",
+                      fontSize: "13px",
+                      float: "right",
+                      marginRight: "15px",
+                    }}
+                  ></i>
+                </Button>
+              </Link>
               <br />
               <Button
                 variant="primary"
