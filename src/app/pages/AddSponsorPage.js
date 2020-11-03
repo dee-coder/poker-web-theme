@@ -26,6 +26,7 @@ const AddSponsorPage = (props) => {
   const [forDates, setForDates] = useState();
   const [loadSpinner, setLoadSpinner] = useState(false);
   const [successRedirect, setSuccessRedirect] = useState(false);
+  const [userINFO, setUserINFO] = useState({});
 
   const [totalPercentage, setTotalPercentage] = useState("");
   const [totalPercentageState, setTotalPercentageState] = useState(false);
@@ -47,9 +48,13 @@ const AddSponsorPage = (props) => {
   const [agreeTnc, setAgreeTnc] = useState(false);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
 
+  const [callBackId, setCallBackId] = useState();
+
   useEffect(() => {
     const params = props.match.params;
     setTournamentId(params.id);
+    var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setUserINFO(userInfo);
     if (JSON.parse(localStorage.getItem("userInfo")) === null) {
       setRedirectToLogin(true);
     } else {
@@ -110,6 +115,7 @@ const AddSponsorPage = (props) => {
       .then((json) => {
         console.log(json);
         if (json.status === "ok") {
+          setCallBackId(json.result.id);
           setSuccessRedirect(true);
           //setViewAddSponsorsMode(false);
           //window.location.reload(false);
@@ -168,7 +174,7 @@ const AddSponsorPage = (props) => {
     <Box>
       {redirectToLogin && <Redirect to="/login-new" />}
       {successRedirect && (
-        <Redirect to={`/view-sponsors?id=${tournamentId}&status=new`} />
+        <Redirect to={`/view-sponsors?id=${callBackId}&status=new`} />
       )}
       <Row>
         <Col lg={8}>
