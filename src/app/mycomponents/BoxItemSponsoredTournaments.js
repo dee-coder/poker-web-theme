@@ -7,6 +7,8 @@ import { Card, Badge, Row, Col, Button, Form } from "react-bootstrap";
 import MailIcon from "@material-ui/icons/Mail";
 import AddToCalendar from "react-add-to-calendar";
 import Countdown from "react-countdown";
+import API from "../../apiUrl.json";
+import _ from "lodash";
 
 const Completionist = () => <span>This tournament has been finished.</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -30,6 +32,28 @@ const BoxItemSponsoredTournments = ({
 
   allot,
 }) => {
+  const [url, setUrl] = useState();
+  const [networks, setNetworks] = useState([]);
+
+  useEffect(() => {
+    fetch(API.baseUrl + API.getAllNetworks, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json())
+      .then((json) => {
+        console.log(json);
+
+        setNetworks(json.tournaments);
+        var data = _.find(json.tournaments, ["name", obj.network]);
+
+        var url = "https://pokerswapping.com/networks/" + data.page_slug;
+        setUrl(url);
+      })
+      .catch((err) => console.log(err));
+  });
   const timerComponents = [];
   const classes = useStyles();
   let state = {
@@ -302,13 +326,15 @@ const BoxItemSponsoredTournments = ({
               <Row style={{ marginTop: "25px" }}>
                 <Col lg={12}>
                   <Form inline style={{ float: "left" }}>
-                    <Button variant="primary">
-                      {obj.network}{" "}
-                      <i
-                        style={{ fontSize: "12px", marginLeft: "5px" }}
-                        class="fas fa-external-link-alt"
-                      ></i>
-                    </Button>
+                    <a href={url}>
+                      <Button variant="primary">
+                        {obj.network}{" "}
+                        <i
+                          style={{ fontSize: "12px", marginLeft: "5px" }}
+                          class="fas fa-external-link-alt"
+                        ></i>
+                      </Button>
+                    </a>
 
                     <Button style={{ marginLeft: "20px" }} variant="primary">
                       More info{" "}

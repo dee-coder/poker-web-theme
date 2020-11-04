@@ -1,8 +1,9 @@
 import { Box, Divider, Paper } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Container, Badge, Form, Button } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import _ from "lodash";
 import {
   MixedWidget1,
   MixedWidget10,
@@ -27,6 +28,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 const DrawerTournamentsView = ({ setViewTournamentMode, obj, networks }) => {
   const classes = useStyles();
+  const [url, seturl] = useState();
+
+  useEffect(() => {
+    var data = _.find(networks, ["name", obj.network]);
+    console.log(data);
+    var url = "https://pokerswapping.com/networks/" + data.page_slug;
+    seturl(url);
+  });
 
   return (
     <div className={classes.list}>
@@ -178,28 +187,29 @@ const DrawerTournamentsView = ({ setViewTournamentMode, obj, networks }) => {
                           }}
                         ></i>
                       </Button>
-
-                      <Button
-                        variant="primary"
-                        style={{
-                          marginTop: "20px",
-                          width: "100%",
-                          textAlign: "center",
-                          fontSize: "12px",
-                        }}
-                      >
-                        {obj.network}{" "}
-                        <i
-                          class="fas fa-external-link-alt"
+                      <a href={url}>
+                        <Button
+                          variant="primary"
                           style={{
-                            color: "#FFF",
-                            marginLeft: "15px",
-                            fontSize: "13px",
-                            float: "right",
-                            marginRight: "15px",
+                            marginTop: "20px",
+                            width: "100%",
+                            textAlign: "center",
+                            fontSize: "12px",
                           }}
-                        ></i>
-                      </Button>
+                        >
+                          {obj.network}{" "}
+                          <i
+                            class="fas fa-external-link-alt"
+                            style={{
+                              color: "#FFF",
+                              marginLeft: "15px",
+                              fontSize: "13px",
+                              float: "right",
+                              marginRight: "15px",
+                            }}
+                          ></i>
+                        </Button>
+                      </a>
                       <Button
                         variant="primary"
                         style={{
