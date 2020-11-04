@@ -20,8 +20,5 @@
   "getSponsoredDetails":"/addsponsor/details",
   "createSwapping":"/swapping/swap",
   "getSwappingDetails":"/swapping/details"
-  
-
-
 }
 

@@ -39,12 +39,12 @@ export function Header() {
             <div className="header-logo">
               <Link to="/">
                 <img
-                  className="logo-default max-h-40px"
+                  className="logo-default max-h-60px"
                   alt="Logo"
                   src={toAbsoluteUrl("/media/logos/logo-letter-9.png")}
                 />
                 <img
-                  className="logo-sticky max-h-40px"
+                  className="logo-sticky max-h-60px"
                   alt="Logo"
                   src={toAbsoluteUrl("/media/logos/logo-letter-1.png")}
                 />

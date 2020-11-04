@@ -30,6 +30,7 @@ import CompletedTournamentBoxItem from "../mycomponents/completedTournamentItemB
 import MyActiveTournaments from "../mycomponents/MyActiveTournamentProfile";
 import AddSponsorsDrawer from "../mycomponents/addSponsorsDrawer";
 import ViewTournamentDrawer from "../mycomponents/ViewTournamentDetailsDrawer";
+import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
 const PlayerProfilePage = () => {
   const [statistics, setStatistics] = useState([]);
   const [recentTournaments, setRecentTournaments] = useState([]);
@@ -41,6 +42,11 @@ const PlayerProfilePage = () => {
   const [currerntAllot, setCurrentAllot] = useState("");
   const [viewTournamentDetails, setViewTournamentDetails] = useState(false);
   const [currentTournamentShowObj, setCurrentTournamentShowObj] = useState({});
+  const [viewTournamentMode, setViewTournamentMode] = useState(false);
+  const [organicNetworks, setOrganicNetworks] = useState([]);
+  const [ListOfSponsoredTournaments, setListOfSponsoredTournaments] = useState(
+    []
+  );
 
   useEffect(() => {
     var info = JSON.parse(localStorage.getItem("userInfo"));
@@ -57,21 +63,35 @@ const PlayerProfilePage = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
         var stats = JSON.parse(json.result.player_details_json);
-        console.log(stats);
+        // console.log(stats);
         setRecentTournaments(stats.playerDetails.RecentTournaments.Tournament);
         setDataSet(stats.playerDetails.Statistics.StatisticalDataSet);
         setStatistics(stats.playerDetails.Statistics.Statistic);
-        console.log(json.tournaments);
+        // console.log(json.tournaments);
         setActiveTournaments(json.tournaments);
+        setListOfSponsoredTournaments(json.sponsored);
 
         setEvents(stats.playerDetails.Statistics.Timeline.Event);
 
         var ar = stats.playerDetails.Statistics.StatisticalDataSet;
         var ob = ar[0];
-        console.log(ob.Data);
+        //console.log(ob.Data);
         setGraphData(ob.Data);
+
+        fetch(JsonUrl.baseUrl + JsonUrl.getAllNetworks, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+          .then((res) => res.json())
+          .then((result) => {
+            console.log(result);
+            setOrganicNetworks(result.tournaments);
+          })
+          .catch((err) => console.log(err));
 
         //setGraphData(stats.playerDetails.Statistics.StatisticalDataSet[0]);
         //console.log(stats.playerDetails.Statistics.StatisticalDataSet[0]);
@@ -90,7 +110,7 @@ const PlayerProfilePage = () => {
 
   return (
     <Box>
-      <Row>
+      <Row style={{ marginBottom: "20px" }}>
         <Col lg={4}>
           <Paper>
             <ProfileBoxPlayer
@@ -109,6 +129,8 @@ const PlayerProfilePage = () => {
               setViewAddSponsorsMode={setViewAddSponsorsMode}
               setViewTournamentDetails={setViewTournamentDetails}
               setCurrentTournamentShowObj={setCurrentTournamentShowObj}
+              setViewTournamentMode={setViewTournamentMode}
+              sponsoredTournaments={ListOfSponsoredTournaments}
             />
           </Paper>
         </Col>
@@ -335,7 +357,7 @@ const PlayerProfilePage = () => {
           </Paper>
         </Col>
       </Row>
-      <Drawer
+      {/* <Drawer
         anchor="right"
         open={viewAddSponsorsMode}
         onClose={() => setViewAddSponsorsMode(false)}
@@ -353,6 +375,17 @@ const PlayerProfilePage = () => {
         <ViewTournamentDrawer
           setViewTournamentDetails={setViewTournamentDetails}
           obj={currentTournamentShowObj}
+        />
+      </Drawer> */}
+      <Drawer
+        anchor="right"
+        open={viewTournamentMode}
+        onClose={() => setViewTournamentMode(false)}
+      >
+        <DrawerTournamentsView
+          setViewTournamentMode={setViewTournamentMode}
+          obj={currentTournamentShowObj}
+          networks={organicNetworks}
         />
       </Drawer>
     </Box>
