@@ -13,6 +13,7 @@ export function UserProfileDropdown(props) {
   const { user } = useSelector((state) => state.auth);
 
   var userInfo = props.userInfo;
+  var role = props.role;
   console.log("info:", props.userInfo);
 
   const uiService = useHtmlClassService();
@@ -70,11 +71,13 @@ export function UserProfileDropdown(props) {
               Hiii,
             </span>
             <span className="text-white opacity-90 font-weight-bolder font-size-base d-none d-md-inline mr-4">
-              {userInfo.player_name}
+              {role === "player" ? userInfo.player_name : userInfo.sponsor_name}
             </span>
             <span className="symbol symbol-35">
               <span className="symbol-label text-white font-size-h5 font-weight-bold bg-white-o-30">
-                {userInfo.player_name[0]}
+                {role === "player"
+                  ? userInfo.player_name[0]
+                  : userInfo.sponsor_name[0]}
               </span>
             </span>
           </div>
@@ -92,7 +95,9 @@ export function UserProfileDropdown(props) {
                     />
                   </div>
                   <div className="text-dark m-0 flex-grow-1 mr-3 font-size-h5">
-                    {userInfo.player_name}
+                    {role === "player"
+                      ? userInfo.player_name
+                      : userInfo.sponsor_name}
                   </div>
                   <span className="label label-light-success label-lg font-weight-bold label-inline">
                     3 messages
@@ -118,7 +123,9 @@ export function UserProfileDropdown(props) {
                   {/*<img alt="Pic" className="hidden" src={user.pic} />*/}
                 </div>
                 <div className="text-white m-0 flex-grow-1 mr-3 font-size-h5">
-                  {userInfo.player_name}
+                  {role === "player"
+                    ? userInfo.player_name
+                    : userInfo.sponsor_name}
                 </div>
                 <span className="label label-success label-lg font-weight-bold label-inline">
                   3 messages
@@ -128,26 +135,9 @@ export function UserProfileDropdown(props) {
           </>
 
           <div className="navi navi-spacer-x-0 pt-5">
-            <Link to="/player-profile">
-              <a className="navi-item px-8">
-                <div className="navi-link">
-                  <div className="navi-icon mr-2">
-                    <i className="flaticon2-calendar-3 text-success" />
-                  </div>
-                  <div className="navi-text">
-                    <div className="font-weight-bold">My Profile</div>
-                    <div className="text-muted">
-                      Account settings and more{` `}
-                      <span className="label label-light-danger label-inline font-weight-bold">
-                        update
-                      </span>
-                    </div>
-                  </div>
-                </div>
-              </a>
-            </Link>
-
-            <Link to="/player-profile">
+            <Link
+              to={role === "player" ? "/player-profile" : "/sponsor-profile"}
+            >
               <a className="navi-item px-8">
                 <div className="navi-link">
                   <div className="navi-icon mr-2">

@@ -15,6 +15,7 @@ import ErrorsPage from "./modules/ErrorsExamples/ErrorsPage";
 import { Dashboard } from "../_metronic/_partials";
 import Logout from "../app/mycomponents/logoutComponent";
 import AdminSection from "./admin/adminSection";
+import { ErrorPage1 } from "./modules/ErrorsExamples/ErrorPage1";
 
 export function Routes() {
   const { isAuthorized } = useSelector(
@@ -31,6 +32,8 @@ export function Routes() {
       </Layout>
 
       <Route path="/error" component={ErrorsPage} />
+      <Route exact path="/error/error-v1" component={ErrorPage1} />
+
       <Route path="/logout" component={Logout} />
     </Switch>
   );

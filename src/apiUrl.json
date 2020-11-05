@@ -19,6 +19,7 @@
   "getSessionRes":"/payment/checkout-session",
   "getSponsoredDetails":"/addsponsor/details",
   "createSwapping":"/swapping/swap",
-  "getSwappingDetails":"/swapping/details"
+  "getSwappingDetails":"/swapping/details",
+  "getSponsorsDetails":"/sponsor/info"
 }
 

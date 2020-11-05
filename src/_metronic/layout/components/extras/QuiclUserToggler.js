@@ -55,6 +55,7 @@ export function QuickUserToggler() {
       {!layoutProps.offcanvas && (
         <UserProfileDropdown
           userInfo={JSON.parse(localStorage.getItem("userInfo"))}
+          role={localStorage.getItem("role")}
         />
       )}
     </>
