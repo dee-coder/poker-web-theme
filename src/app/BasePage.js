@@ -23,6 +23,9 @@ import AddSwapperPage from "./pages/AddSwapperPage";
 import ViewSwapperPage from "./pages/ViewSwapperPage";
 import SponsorProfilePage from "./pages/SponsorProfilePage";
 import { ErrorPage1 } from "./modules/ErrorsExamples/ErrorPage1";
+import BeSponsorPage from "./pages/BeSponsorPage";
+import ViewSponsorshipPage from "./pages/ViewSponsorshipPage";
+import ApplySponsorshipPage from "./pages/ApplySponsorshipPage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -68,8 +71,19 @@ export default function BasePage() {
       <ContentRoute exact path="/add-sponsor/:id" component={AddSponsorPage} />
       <ContentRoute path="/view-sponsors" component={ViewSponsorsPage} />
 
+      <ContentRoute
+        exact
+        path="/be-sponsor/:allotid"
+        component={BeSponsorPage}
+      />
+      <ContentRoute path="/view-sponsorship" component={ViewSponsorshipPage} />
+
       <ContentRoute exact path="/add-swap/:id" component={AddSwapperPage} />
       <ContentRoute path="/view-swap" component={ViewSwapperPage} />
+      <ContentRoute
+        path="/apply-sponsorship"
+        component={ApplySponsorshipPage}
+      />
       {/* <Route path="/error/error-v1" component={ErrorPage1} /> */}
 
       <Route path="/logout" component={Logout} />

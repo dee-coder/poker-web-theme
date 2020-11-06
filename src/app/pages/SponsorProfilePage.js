@@ -1,14 +1,29 @@
-import { Avatar, Box, Divider, Paper, Typography } from "@material-ui/core";
+import {
+  Avatar,
+  Box,
+  Divider,
+  Drawer,
+  Paper,
+  Typography,
+} from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Col, Row, Tab, Tabs } from "react-bootstrap";
 import API from "../../apiUrl.json";
 import ReactStars from "react-rating-stars-component";
 import BoxItemActiveTournamentsForSponsor from "../mycomponents/BoxItemActiveTournamentsForSponsor";
+import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
 
 const SponsorProfilePage = () => {
   const [SponsorDetails, setSponsorDetails] = useState({});
   const [userINFO, setUserINFO] = useState({});
   const [activeTournaments, setActiveTournaments] = useState([]);
+  const [viewTournamentMode, setViewTournamentMode] = useState(false);
+  const [currentTournamentShowObj, setCurrentTournamentObj] = useState({});
+  const [currentAllot, setCurrentAllotDetails] = useState({});
+  const [currentPlayerInfo, setCurrentPlayerInfo] = useState({});
+  const [pendingTournaments, setPendingTournaments] = useState([]);
+
+  const [networks, setNetworks] = useState([]);
 
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -24,6 +39,8 @@ const SponsorProfilePage = () => {
       .then((response) => {
         setSponsorDetails(response.result);
         setActiveTournaments(response.ActiveTournaments);
+        setNetworks(response.networks);
+        setPendingTournaments(response.pending);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -124,10 +141,26 @@ const SponsorProfilePage = () => {
                 <Tabs defaultActiveKey="active">
                   <Tab
                     eventKey="active"
-                    title="Active Tournaments"
+                    title="Active "
                     style={{ marginTop: "30px" }}
                   >
                     {activeTournaments.map((tournament) => {
+                      return (
+                        <BoxItemActiveTournamentsForSponsor
+                          obj={tournament.gameData}
+                          allot={tournament.data}
+                          playerInfo={tournament.playerInfo}
+                          setCurrentTournamentObj={setCurrentTournamentObj}
+                          currentTournamentShowObj={currentTournamentShowObj}
+                          setViewTournamentMode={setViewTournamentMode}
+                          setCurrentAllotDetails={setCurrentAllotDetails}
+                          setCurrentPlayerInfo={setCurrentPlayerInfo}
+                        />
+                      );
+                    })}
+                  </Tab>
+                  <Tab eventKey="pending" title="Pending ">
+                    {pendingTournaments.map((tournament) => {
                       return (
                         <BoxItemActiveTournamentsForSponsor
                           obj={tournament.gameData}
@@ -137,17 +170,27 @@ const SponsorProfilePage = () => {
                       );
                     })}
                   </Tab>
-                  <Tab
-                    eventKey="sponsoring"
-                    title="Sponsoring Tournaments"
-                  ></Tab>
-                  <Tab eventKey="sponsored" title="Sponsored Tournaments"></Tab>
+                  <Tab eventKey="sponsoring" title="Sponsoring "></Tab>
+                  <Tab eventKey="sponsored" title="Sponsored "></Tab>
                 </Tabs>
               </Col>
             </Row>
           </Paper>
         </Col>
       </Row>
+      <Drawer
+        anchor="right"
+        open={viewTournamentMode}
+        onClose={() => setViewTournamentMode(false)}
+      >
+        <DrawerTournamentsView
+          setViewTournamentMode={setViewTournamentMode}
+          obj={currentTournamentShowObj}
+          networks={networks}
+          currentAllot={currentAllot}
+          playerInfo={currentPlayerInfo}
+        />
+      </Drawer>
     </Box>
   );
 };

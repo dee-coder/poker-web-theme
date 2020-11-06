@@ -1,4 +1,4 @@
-import { Avatar, Box, Paper, Typography } from "@material-ui/core";
+import { Avatar, Box, Divider, Paper, Typography } from "@material-ui/core";
 import { useStyles } from "@material-ui/pickers/views/Calendar/SlideTransition";
 import React, { useState, useEffect } from "react";
 import SVG from "react-inlinesvg";
@@ -26,7 +26,16 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
   }
 };
 
-const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
+const BoxItemActiveTournamentsForSponsor = ({
+  obj,
+  allot,
+  playerInfo,
+  setCurrentTournamentObj,
+  currentTournamentObj,
+  setViewTournamentMode,
+  setCurrentAllotDetails,
+  setCurrentPlayerInfo,
+}) => {
   const timerComponents = [];
   const classes = useStyles();
   let state = {
@@ -49,7 +58,16 @@ const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
 
   return (
     <a>
-      <div className={classes.root} style={{ marginBottom: "25px" }}>
+      <div
+        className={classes.root}
+        style={{ marginBottom: "25px" }}
+        onClick={() => {
+          setCurrentTournamentObj(obj);
+          setCurrentAllotDetails(allot);
+          setCurrentPlayerInfo(playerInfo);
+          setViewTournamentMode(true);
+        }}
+      >
         {" "}
         <div
           className=" card bg-light-primay rounded "
@@ -110,7 +128,7 @@ const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
                 }}
               />
             </Col>
-            <Col lg={10}>
+            <Col lg={4}>
               <Typography variant="h6">{playerInfo.player_name}</Typography>
 
               <ReactStars
@@ -128,6 +146,56 @@ const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
                 {playerInfo.player_email}
               </Typography>
             </Col>
+            <Col lg={6}>
+              <Row>
+                <Col lg={6}>
+                  <div style={{ textAlign: "left" }}>
+                    <Typography variant="button" style={{ color: "#848484" }}>
+                      SPONSORING{" "}
+                      <i
+                        class="fas fa-info-circle"
+                        style={{
+                          marginLeft: "2px",
+                          color: "#848484",
+                          fontSize: "12px",
+                        }}
+                      ></i>
+                    </Typography>
+                    <br />
+                    <br />
+                    <Typography
+                      variant="h4"
+                      style={{ fontWeight: "900", color: "#F64E60" }}
+                    >
+                      0
+                    </Typography>{" "}
+                  </div>
+                </Col>
+                <Col lg={6}>
+                  <div style={{ textAlign: "left" }}>
+                    <Typography variant="button" style={{ color: "#848484" }}>
+                      TOTAL{" "}
+                      <i
+                        class="fas fa-info-circle"
+                        style={{
+                          marginLeft: "2px",
+                          color: "#848484",
+                          fontSize: "12px",
+                        }}
+                      ></i>
+                    </Typography>
+                    <br />
+                    <br />
+                    <Typography
+                      variant="h4"
+                      style={{ fontWeight: "900", color: "black" }}
+                    >
+                      {allot.number_of_sponsor}
+                    </Typography>{" "}
+                  </div>
+                </Col>
+              </Row>
+            </Col>
           </Row>
           <Row style={{ marginTop: "20px" }}>
             <Col lg={12}>
@@ -137,6 +205,77 @@ const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
                 tournaments <strong>{allot.total_parcent}%</strong> of winning
                 amount.
               </Typography>
+            </Col>
+          </Row>
+
+          <Row style={{ marginTop: "20px" }}>
+            <Col lg={3}>
+              <label>
+                EACH (%){" "}
+                <i
+                  style={{
+                    color: "#000",
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                  }}
+                  class="fas fa-info-circle"
+                ></i>
+              </label>
+              <br />
+              <span className="text-muted font-weight-bold">
+                {allot.percent_to_each}
+              </span>
+            </Col>
+            <Col lg={3}>
+              <label>
+                TOTAL (%){" "}
+                <i
+                  style={{
+                    color: "#000",
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                  }}
+                  class="fas fa-info-circle"
+                ></i>
+              </label>
+              <br />
+              <span className="text-muted font-weight-bold">
+                {allot.total_parcent}
+              </span>
+            </Col>
+            <Col lg={3}>
+              <label>
+                BID AMOUNT{" "}
+                <i
+                  style={{
+                    color: "#000",
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                  }}
+                  class="fas fa-info-circle"
+                ></i>
+              </label>
+              <br />
+              <span className="text-muted font-weight-bold">
+                {obj.currency} {allot.amount_of_each}
+              </span>
+            </Col>
+            <Col lg={3}>
+              <label>
+                TOTAL AMOUNT{" "}
+                <i
+                  style={{
+                    color: "#000",
+                    fontSize: "12px",
+                    marginLeft: "5px",
+                  }}
+                  class="fas fa-info-circle"
+                ></i>
+              </label>
+              <br />
+              <span className="text-muted font-weight-bold">
+                {obj.currency} {allot.total_amount}
+              </span>
             </Col>
           </Row>
           <Row style={{ marginTop: "30px" }}>
@@ -150,23 +289,6 @@ const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
           </Row>
 
           <Row style={{ marginTop: "20px" }}>
-            <Col lg={3}>
-              <label>
-                CURRENCY{" "}
-                <i
-                  style={{
-                    color: "#000",
-                    fontSize: "12px",
-                    marginLeft: "5px",
-                  }}
-                  class="fas fa-info-circle"
-                ></i>
-              </label>
-              <br />
-              <span className="text-muted font-weight-bold">
-                {obj.currency}
-              </span>
-            </Col>
             <Col lg={3}>
               <label>
                 GUARENTEE{" "}
@@ -184,7 +306,7 @@ const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
                 {obj.guarantee}
               </span>
             </Col>
-            <Col lg={2}>
+            <Col lg={3}>
               <label>
                 OVERLAY{" "}
                 <i
@@ -199,7 +321,7 @@ const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
               <br />
               <span className="text-muted font-weight-bold">{obj.overlay}</span>
             </Col>
-            <Col lg={2}>
+            <Col lg={3}>
               <label>
                 GAME{" "}
                 <i
@@ -214,7 +336,7 @@ const BoxItemActiveTournamentsForSponsor = ({ obj, allot, playerInfo }) => {
               <br />
               <span className="text-muted font-weight-bold">{obj.game}</span>
             </Col>
-            <Col lg={2}>
+            <Col lg={3}>
               <label>
                 STATE{" "}
                 <i

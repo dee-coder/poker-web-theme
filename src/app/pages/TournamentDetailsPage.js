@@ -6,12 +6,14 @@ import { TournamentHeader } from "../mycomponents/tournamentHeaderComponent";
 import API from "../../apiUrl.json";
 import queryString from "query-string";
 import { Link } from "react-router-dom";
+import _ from "lodash";
 
 const TournamentDetailsPage = (props) => {
   const [id, setId] = useState("");
   const [networks, setNetworks] = useState();
   const [dataa, setData] = useState([]);
   const [details, setDetails] = useState({});
+  const [url, setUrl] = useState();
   const Json = {};
   useEffect(() => {
     var info = props.match.params;
@@ -36,9 +38,14 @@ const TournamentDetailsPage = (props) => {
       .then((json) => {
         //setData(json.networks);
         setDetails(json.result);
+        var data = _.find(json.networks, ["name", json.result.network]);
+        console.log(data);
+        var url = "https://pokerswapping.com/networks/" + data.page_slug;
+        setUrl(url);
       });
     //setNetworks(Json);
   }, []);
+
   if (id === "") {
     return (
       <div>
@@ -129,28 +136,29 @@ const TournamentDetailsPage = (props) => {
                   }}
                 ></i>
               </Button>
-
-              <Button
-                variant="primary"
-                style={{
-                  marginTop: "20px",
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "12px",
-                }}
-              >
-                {details.network}{" "}
-                <i
-                  class="fas fa-external-link-alt"
+              <a href={url} target="_blank">
+                <Button
+                  variant="primary"
                   style={{
-                    color: "#FFF",
-                    marginLeft: "15px",
-                    fontSize: "13px",
-                    float: "right",
-                    marginRight: "15px",
+                    marginTop: "20px",
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: "12px",
                   }}
-                ></i>
-              </Button>
+                >
+                  {details.network}{" "}
+                  <i
+                    class="fas fa-external-link-alt"
+                    style={{
+                      color: "#FFF",
+                      marginLeft: "15px",
+                      fontSize: "13px",
+                      float: "right",
+                      marginRight: "15px",
+                    }}
+                  ></i>
+                </Button>
+              </a>
               <Button
                 variant="primary"
                 style={{

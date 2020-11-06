@@ -20,6 +20,10 @@
   "getSponsoredDetails":"/addsponsor/details",
   "createSwapping":"/swapping/swap",
   "getSwappingDetails":"/swapping/details",
-  "getSponsorsDetails":"/sponsor/info"
+  "getSponsorsDetails":"/sponsor/info",
+  "getSponsorshipInfo":"/sponsorship/info",
+  "getAllotDetails":"/sponsorship/allot-details",
+  "applySponsorship":"/sponsorship/new"
+  
 }
 
