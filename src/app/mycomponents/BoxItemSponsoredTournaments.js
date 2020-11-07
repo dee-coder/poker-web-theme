@@ -53,7 +53,7 @@ const BoxItemSponsoredTournments = ({
         setUrl(url);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
   const timerComponents = [];
   const classes = useStyles();
   let state = {
