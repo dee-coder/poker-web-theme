@@ -23,7 +23,7 @@ const PagesDetailsPage = (props) => {
         setContent(json.page.content);
         setData(json.page);
       });
-  });
+  }, []);
   return (
     <Box>
       <Row>

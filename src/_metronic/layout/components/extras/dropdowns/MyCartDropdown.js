@@ -39,7 +39,7 @@ export function MyCartDropdown() {
         setWalletInfo(response.info);
       })
       .catch((err) => console.log(err));
-  });
+  }, []);
   const bgImage = toAbsoluteUrl("/media/misc/bg-1.jpg");
   return (
     <Dropdown drop="down" alignRight>
