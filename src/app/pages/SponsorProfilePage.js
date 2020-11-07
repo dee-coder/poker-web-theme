@@ -12,6 +12,8 @@ import API from "../../apiUrl.json";
 import ReactStars from "react-rating-stars-component";
 import BoxItemActiveTournamentsForSponsor from "../mycomponents/BoxItemActiveTournamentsForSponsor";
 import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
+import PendingSponsorshipTournamentItemBox from "./PendingSoponsorshipTournamentItemBox";
+import SponsoringTournamentItemBox from "./SponsoringTournamentsItemBox";
 
 const SponsorProfilePage = () => {
   const [SponsorDetails, setSponsorDetails] = useState({});
@@ -22,6 +24,7 @@ const SponsorProfilePage = () => {
   const [currentAllot, setCurrentAllotDetails] = useState({});
   const [currentPlayerInfo, setCurrentPlayerInfo] = useState({});
   const [pendingTournaments, setPendingTournaments] = useState([]);
+  const [sponsoringTournaments, setSponsoringTournaments] = useState([]);
 
   const [networks, setNetworks] = useState([]);
 
@@ -37,10 +40,12 @@ const SponsorProfilePage = () => {
     })
       .then((response) => response.json())
       .then((response) => {
+        console.log(response);
         setSponsorDetails(response.result);
         setActiveTournaments(response.ActiveTournaments);
         setNetworks(response.networks);
         setPendingTournaments(response.pending);
+        setSponsoringTournaments(response.sponsoring);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -160,17 +165,33 @@ const SponsorProfilePage = () => {
                     })}
                   </Tab>
                   <Tab eventKey="pending" title="Pending ">
-                    {pendingTournaments.map((tournament) => {
+                    {pendingTournaments.map((game) => {
+                      //console.log(game);
                       return (
-                        <BoxItemActiveTournamentsForSponsor
-                          obj={tournament.gameData}
-                          allot={tournament.data}
-                          playerInfo={tournament.playerInfo}
+                        <PendingSponsorshipTournamentItemBox
+                          tournamentInfo={game.tournamentInfo}
+                          bettingInfo={game.bettingInfo}
+                          sponsoringList={game.sponsoringList}
+                          playerInfo={game.playerInfo}
                         />
                       );
                     })}
                   </Tab>
-                  <Tab eventKey="sponsoring" title="Sponsoring "></Tab>
+                  <Tab eventKey="sponsoring" title="Sponsoring ">
+                    {sponsoringTournaments.map((game) => {
+                      //console.log(game);
+                      return (
+                        <SponsoringTournamentItemBox
+                          tournamentInfo={game.tournamentInfo}
+                          bettingInfo={game.bettingInfo}
+                          sponsoringList={game.sponsoringList}
+                          playerInfo={game.playerInfo}
+                          allSponsors={game.allSponsors}
+                        />
+                      );
+                    })}
+                  </Tab>
+
                   <Tab eventKey="sponsored" title="Sponsored "></Tab>
                 </Tabs>
               </Col>

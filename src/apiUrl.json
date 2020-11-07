@@ -23,7 +23,8 @@
   "getSponsorsDetails":"/sponsor/info",
   "getSponsorshipInfo":"/sponsorship/info",
   "getAllotDetails":"/sponsorship/allot-details",
-  "applySponsorship":"/sponsorship/new"
+  "applySponsorship":"/sponsorship/new",
+  "walletInfo":"/payment/wallet/info"
   
 }
 

@@ -162,7 +162,7 @@ export function UserProfileDropdown(props) {
                   <i className="flaticon2-mail text-warning"></i>
                 </div>
                 <div className="navi-text">
-                  <div className="font-weight-bold">My Messages</div>
+                  <div className="font-weight-bold">My Messsage</div>
                   <div className="text-muted">Inbox and tasks</div>
                 </div>
               </div>
