@@ -14,7 +14,7 @@ export function UserProfileDropdown(props) {
 
   var userInfo = props.userInfo;
   var role = props.role;
-  console.log("info:", props.userInfo);
+  //console.log("info:", props.userInfo);
 
   const uiService = useHtmlClassService();
   const layoutProps = useMemo(() => {

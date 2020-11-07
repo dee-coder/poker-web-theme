@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://api.pokerswapping.com",
+  "baseUrl": "http://localhost:1234",
   "signinSponsor": "/login/sponser",
   "signinPlayer": "/login/player",
   "signupSponsor": "/signup/sponser",

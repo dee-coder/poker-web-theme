@@ -26,12 +26,16 @@ export function MyCartDropdown() {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        id: userInfo.sponsor_id,
+        id:
+          localStorage.getItem("role") === "player"
+            ? userInfo.player_id
+            : userInfo.sponsor_id,
         role: localStorage.getItem("role"),
       }),
     })
       .then((response) => response.json())
       .then((response) => {
+        //console.log(response);
         setWalletInfo(response.info);
       })
       .catch((err) => console.log(err));
