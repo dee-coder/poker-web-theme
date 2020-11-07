@@ -16,7 +16,7 @@ export function PlayerStatisticsGraph({ className, data }) {
   const [xaxis, setxAXis] = useState();
   const [yaxis, setYAxis] = useState();
   useEffect(() => {
-    console.log(data);
+    //console.log(data);
     var x = [];
     var y = [];
     _.forEach(data, (v, i) => {
@@ -24,7 +24,7 @@ export function PlayerStatisticsGraph({ className, data }) {
       var value = v.Y[1];
       y.push(parseFloat(value["$"]));
     });
-    console.log(x, y);
+    //console.log(x, y);
     setxAXis(x);
     setYAxis(y);
   }, [data]);

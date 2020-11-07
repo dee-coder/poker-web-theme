@@ -18,7 +18,7 @@ const MyActiveTournaments = ({
   const [selectedTab, setSelectedTab] = useState("Active_Tournaments");
 
   const setTab = (name) => {
-    console.log(name);
+    //console.log(name);
     setSelectedTab(name);
   };
   return (

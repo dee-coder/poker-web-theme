@@ -19,7 +19,7 @@ const SponsorsPage = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
         setSponsorsDetails(json.result);
       })
       .catch((err) => console.log(err));

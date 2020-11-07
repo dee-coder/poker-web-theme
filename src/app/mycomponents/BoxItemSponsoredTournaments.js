@@ -44,7 +44,7 @@ const BoxItemSponsoredTournments = ({
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
 
         setNetworks(json.tournaments);
         var data = _.find(json.tournaments, ["name", obj.network]);

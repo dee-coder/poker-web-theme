@@ -35,8 +35,8 @@ const ApplySponsorshipPage = (props) => {
   const [networks, setNetworks] = useState([]);
 
   useEffect(() => {
-    console.log("running");
-    console.log(props);
+    // console.log("running");
+    // console.log(props);
     var info = queryString.parse(props.location.search);
     setPlayerID(info.player);
     fetch(API.baseUrl + API.getSponsorshipInfo, {
@@ -48,7 +48,7 @@ const ApplySponsorshipPage = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
         setBettingInfo(json.res.betttingInfo);
         setPlayerInfo(json.res.playerInfo);
         setTournamentInfo(json.res.tournamentInfo);
@@ -57,7 +57,7 @@ const ApplySponsorshipPage = (props) => {
           "name",
           json.res.tournamentInfo.network,
         ]);
-        console.log(data);
+        //console.log(data);
         var url = "https://pokerswapping.com/networks/" + data.page_slug;
         seturl(url);
       })

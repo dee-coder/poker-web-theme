@@ -19,7 +19,7 @@ const PagesDetailsPage = (props) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
         setContent(json.page.content);
         setData(json.page);
       });

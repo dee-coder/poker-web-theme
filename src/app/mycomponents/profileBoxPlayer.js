@@ -64,7 +64,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
       height: 100,
     },
   });
-  console.log(statistics);
+  //console.log(statistics);
 
   const classes = useStyles();
   //   var row1 = statistics[0];

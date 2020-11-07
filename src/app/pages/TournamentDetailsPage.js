@@ -39,7 +39,7 @@ const TournamentDetailsPage = (props) => {
         //setData(json.networks);
         setDetails(json.result);
         var data = _.find(json.networks, ["name", json.result.network]);
-        console.log(data);
+        //console.log(data);
         var url = "https://pokerswapping.com/networks/" + data.page_slug;
         setUrl(url);
       });

@@ -56,7 +56,7 @@ const DrawerTournamentsView = ({
 
   useEffect(() => {
     var data = _.find(networks, ["name", obj.network]);
-    console.log(data);
+    //console.log(data);
     var url = "https://pokerswapping.com/networks/" + data.page_slug;
     seturl(url);
   });

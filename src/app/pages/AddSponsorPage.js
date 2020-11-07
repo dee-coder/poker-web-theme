@@ -66,7 +66,7 @@ const AddSponsorPage = (props) => {
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json);
+          //console.log(json);
           setTournamentData(json.result);
         })
         .catch((err) => console.log(err));
@@ -103,7 +103,7 @@ const AddSponsorPage = (props) => {
       tournament_amount: totalPercentage,
       match_date_time: tournamentData.scheduledStartUnixTime,
     };
-    console.log(body);
+    //console.log(body);
     fetch(url, {
       method: "POST",
       headers: {
@@ -113,7 +113,7 @@ const AddSponsorPage = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
         if (json.status === "ok") {
           setCallBackId(json.result.id);
           setSuccessRedirect(true);

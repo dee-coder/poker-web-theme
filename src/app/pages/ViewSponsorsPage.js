@@ -57,7 +57,7 @@ const ViewSponsorsPage = (props) => {
 
   useEffect(() => {
     const queries = queryString.parse(props.location.search);
-    console.log(queries);
+    //console.log(queries);
     //setTournamentId(queries.id);
     if (queries.id === undefined || queries.id === null || queries.id === "") {
       setRedirectFourZeroFour(true);
@@ -84,7 +84,7 @@ const ViewSponsorsPage = (props) => {
       })
         .then((res) => res.json())
         .then((json) => {
-          console.log(json);
+          //console.log(json);
           setTournamentData(json.tounamentData);
           setPlayersData(json.playersInfo);
           setSwapData(json.result[0]);

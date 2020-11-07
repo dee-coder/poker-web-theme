@@ -63,7 +63,7 @@ const SingupPage = () => {
         password === confirmPassword
       ) {
         setShowAlert(false);
-        console.log("run");
+        //console.log("run");
         //hit api
         hitApiForRegistration(roleKey);
       } else {
@@ -107,7 +107,7 @@ const SingupPage = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
 
         localStorage.setItem("userInfo", JSON.stringify(json.data));
         localStorage.setItem("role", role);
@@ -121,7 +121,7 @@ const SingupPage = () => {
   }
 
   const handleSwitch = (e) => {
-    console.log(e);
+    //console.log(e);
     setRoleKey(e);
     setEmail("");
     setPassword("");

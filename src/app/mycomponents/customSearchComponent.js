@@ -304,10 +304,10 @@ const IntegrationReactSelect = ({
   }
 
   function handleChangeMulti(value) {
-    console.log(value);
+    //console.log(value);
     setNeworksWhichSelected(value);
     setSelectedNetworks(value);
-    console.log(networkWhichSelected);
+    //console.log(networkWhichSelected);
   }
 
   const selectStyles = {

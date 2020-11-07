@@ -32,7 +32,7 @@ const PendingSponsorshipTournamentItemBox = (
   playerInfo,
   sponsoringList
 ) => {
-  console.log(tournamentInfo);
+  //console.log(tournamentInfo);
   const timerComponents = [];
   const classes = useStyles();
   let state = {

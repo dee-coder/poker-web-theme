@@ -59,7 +59,7 @@ const BeSponsorPage = (props) => {
       })
         .then((response) => response.json())
         .then((json) => {
-          console.log(json);
+          //console.log(json);
           setBettingInfo(json.res.betttingInfo);
           setPlayerInfo(json.res.playerInfo);
           setTournamentData(json.res.tournamentInfo);
@@ -68,7 +68,7 @@ const BeSponsorPage = (props) => {
             "name",
             json.res.tournamentInfo.network,
           ]);
-          console.log(data);
+          //console.log(data);
           var url = "https://pokerswapping.com/networks/" + data.page_slug;
           seturl(url);
         })

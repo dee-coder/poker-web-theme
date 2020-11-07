@@ -13,7 +13,7 @@ export function TournamentHeader({ className, obj, networks }) {
   const [networksAll, setNetworksAll] = useState([]);
 
   useEffect(() => {
-    console.log(obj);
+    //console.log(obj);
     // var obj = _.find(networks, ["name", obj.network]);
     // var url = "https://pokerswapping.com/networks/" + obj.page_slug;
     // setUrl(url);
@@ -26,12 +26,12 @@ export function TournamentHeader({ className, obj, networks }) {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
 
         setNetworksAll(json.tournaments);
-        console.log(obj.network);
+        //console.log(obj.network);
         var data = _.find(json.tournaments, ["name", obj.network]);
-        console.log(data);
+        // console.log(data);
         var url = "https://pokerswapping.com/networks/" + data.page_slug;
         setUrl(url);
         setIcon(data.icon);

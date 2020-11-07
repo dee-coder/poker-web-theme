@@ -357,15 +357,15 @@ const FindTournamentPage = () => {
     })
       .then((res) => res.json())
       .then(async (json) => {
-        console.log(json);
+        //console.log(json);
         // var arr = [];
         if (json.status === "ok") {
-          console.log(json);
+          //console.log(json);
           await setHoldedList([]);
           await setHoldedList([...holdedList, json.result]);
           setShowSpinner(false);
-          console.log(holdedList);
-          console.log(json.result);
+          //console.log(holdedList);
+          //console.log(json.result);
         } else {
           setNoData(true);
           //setHoldedList([]);

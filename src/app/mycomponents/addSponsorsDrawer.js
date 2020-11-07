@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 const AddSponsorsDrawer = ({ setViewAddSponsorsMode, obj }) => {
   const classes = useStyles();
-  console.log("Data:", obj);
+  //console.log("Data:", obj);
   const [totalPercentage, setTotalPercentage] = useState("");
   const [totalPercentageState, setTotalPercentageState] = useState(false);
 
@@ -67,7 +67,7 @@ const AddSponsorsDrawer = ({ setViewAddSponsorsMode, obj }) => {
       tournament_amount: totalPercentage,
       match_date_time: obj.scheduledStartUnixTime,
     };
-    console.log(body);
+    //console.log(body);
     fetch(url, {
       method: "POST",
       headers: {
@@ -77,7 +77,7 @@ const AddSponsorsDrawer = ({ setViewAddSponsorsMode, obj }) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
         if (json.status === "ok") {
           setViewAddSponsorsMode(false);
           window.location.reload(false);

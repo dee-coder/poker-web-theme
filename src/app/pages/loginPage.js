@@ -17,11 +17,11 @@ const LoginPage = () => {
   const [redirect, setRedirect] = useState(false);
   const [responseError, setResponseError] = useState("");
   useEffect(() => {
-    console.log("email:", email);
-    console.log("password:", password);
-    console.log("role:", role);
-    console.log("tncAgree:", tncAgree);
-    console.log("goAhead:", goAhead);
+    // console.log("email:", email);
+    // console.log("password:", password);
+    // console.log("role:", role);
+    // console.log("tncAgree:", tncAgree);
+    // console.log("goAhead:", goAhead);
 
     if (
       /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(email) &&
@@ -61,7 +61,7 @@ const LoginPage = () => {
       //role = "sponsor";
     }
 
-    console.log(url);
+    //console.log(url);
 
     fetch(url, {
       method: "POST", // or 'PUT'

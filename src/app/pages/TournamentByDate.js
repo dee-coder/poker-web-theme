@@ -16,12 +16,12 @@ const TournamentByDate = (props) => {
       JsonUrl.getGamesByDate +
       "?date=" +
       date.replace(/-/g, "/");
-    console.log("Url Requested:", url);
+    //console.log("Url Requested:", url);
     fetch(url)
       .then((response) => response.json())
       .then((data) => {
         setTournamentList(data.result);
-        console.log(data.result);
+        //console.log(data.result);
       })
       .catch((err) => {
         console.log(err.message);

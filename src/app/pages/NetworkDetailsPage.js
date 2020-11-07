@@ -21,14 +21,14 @@ const NetworkDetailsPage = (props) => {
     })
       .then((res) => res.json())
       .then((json) => {
-        console.log(json);
+        //console.log(json);
 
         setData(json.network);
         setBannerTop(json.network.banners[0].path);
         setBannerBottom(json.network.banners[1].path);
         setContent(json.network.details.content);
 
-        console.log(content);
+        //console.log(content);
       });
   }, []);
   return (

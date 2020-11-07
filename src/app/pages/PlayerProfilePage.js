@@ -88,7 +88,7 @@ const PlayerProfilePage = () => {
         })
           .then((res) => res.json())
           .then((result) => {
-            console.log(result);
+            //console.log(result);
             setOrganicNetworks(result.tournaments);
           })
           .catch((err) => console.log(err));
