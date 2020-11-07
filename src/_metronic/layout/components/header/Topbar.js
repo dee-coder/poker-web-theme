@@ -49,7 +49,10 @@ export function Topbar() {
 
       {layoutProps.viewQuickActionsDisplay && <QuickActionsDropdown />}*/}
 
-      {localStorage.getItem("role") !== undefined && <MyCartDropdown />}
+      {JSON.parse(localStorage.getItem("userInfo")) !== null &&
+        JSON.parse(localStorage.getItem("userInfo")) !== undefined && (
+          <MyCartDropdown />
+        )}
 
       {layoutProps.viewQuickPanelDisplay && (
         <OverlayTrigger
