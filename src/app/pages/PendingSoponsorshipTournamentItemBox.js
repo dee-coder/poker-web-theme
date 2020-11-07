@@ -120,7 +120,9 @@ const PendingSponsorshipTournamentItemBox = (
             />
           </Col>
           <Col lg={4}>
-            {/* <Typography variant="h6">{playerInfo.player_name}</Typography> */}
+            <Typography variant="h6">
+              {tournamentInfo.playerInfo.player_name}
+            </Typography>
 
             <ReactStars
               style={{ float: "left" }}
