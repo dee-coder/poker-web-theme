@@ -26,6 +26,10 @@ import { ErrorPage1 } from "./modules/ErrorsExamples/ErrorPage1";
 import BeSponsorPage from "./pages/BeSponsorPage";
 import ViewSponsorshipPage from "./pages/ViewSponsorshipPage";
 import ApplySponsorshipPage from "./pages/ApplySponsorshipPage";
+import SponsorsActiveTournamentsPage from "./pages/SponsorsActiveTournamentsPage";
+import SponsorsPendingTournaments from "./pages/SponsorsPendingTournamnts";
+import SponsorsSponsoringTournamentPage from "./pages/SponsorsSponsoringTournamentPage";
+import SponsorsSponsoredTournamentPage from "./pages/SponsorsSponsoredTournamentPage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -70,6 +74,23 @@ export default function BasePage() {
       />
       <ContentRoute exact path="/add-sponsor/:id" component={AddSponsorPage} />
       <ContentRoute path="/view-sponsors" component={ViewSponsorsPage} />
+
+      <ContentRoute
+        path="/sponsor/active-tournaments"
+        component={SponsorsActiveTournamentsPage}
+      />
+      <ContentRoute
+        path="/sponsor/pending-sponsorship"
+        component={SponsorsPendingTournaments}
+      />
+      <ContentRoute
+        path="/sponsor/sponsoring-tournaments"
+        component={SponsorsSponsoringTournamentPage}
+      />
+      <ContentRoute
+        paht="/sponsor/sponsored-tournaments"
+        component={SponsorsSponsoredTournamentPage}
+      />
 
       <ContentRoute
         exact

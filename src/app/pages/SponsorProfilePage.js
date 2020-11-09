@@ -1,5 +1,6 @@
 import {
   Avatar,
+  Badge,
   Box,
   Divider,
   Drawer,
@@ -14,6 +15,9 @@ import BoxItemActiveTournamentsForSponsor from "../mycomponents/BoxItemActiveTou
 import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
 import PendingSponsorshipTournamentItemBox from "./PendingSoponsorshipTournamentItemBox";
 import SponsoringTournamentItemBox from "./SponsoringTournamentsItemBox";
+import { Link } from "react-router-dom";
+import { toAbsoluteUrl } from "../../_metronic/_helpers";
+import SVG from "react-inlinesvg";
 
 const SponsorProfilePage = () => {
   const [SponsorDetails, setSponsorDetails] = useState({});
@@ -105,7 +109,305 @@ const SponsorProfilePage = () => {
                 paddingLeft: "30px",
               }}
             >
-              <Col></Col>
+              <Col>
+                <Row>
+                  <Col>
+                    <a
+                      href="/sponsor/active-tournaments"
+                      target="_blank"
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="symbol symbol-45 symbol-light-primary mr-5">
+                          <span className="symbol-label">
+                            <span className="svg-icon svg-icon-primary">
+                              <SVG
+                                className="h-50 align-self-center"
+                                src={toAbsoluteUrl(
+                                  "/media/svg/icons/Navigation/Angle-right.svg"
+                                )}
+                              ></SVG>
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <a
+                            href="/sponsor/active-tournaments"
+                            target="_blank"
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            Active Tournaments
+                          </a>
+                        </div>
+                        <i
+                          class="fas fa-external-link-alt"
+                          style={{ fontSize: "12px", marginLeft: "10px" }}
+                        ></i>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+
+                <Row style={{ marginTop: "20px" }}>
+                  <Col>
+                    <a
+                      href="/sponsor/pending-sponsorship"
+                      target="_blank"
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="symbol symbol-45 symbol-light-warning mr-5 ">
+                          <span className="symbol-label">
+                            <span className="svg-icon svg-icon-warning">
+                              <SVG
+                                className="h-50 align-self-center"
+                                src={toAbsoluteUrl(
+                                  "/media/svg/icons/Media/Pause.svg"
+                                )}
+                              ></SVG>
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <a
+                            href="/sponsor/pending-sponsorship"
+                            target="_blank"
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            Pending Sponsorships
+                          </a>
+                        </div>
+                        <i
+                          class="fas fa-external-link-alt"
+                          style={{ fontSize: "12px", marginLeft: "10px" }}
+                        ></i>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+
+                <Row style={{ marginTop: "20px" }}>
+                  <Col>
+                    <a
+                      href="/sponsor/sponsoring-tournaments"
+                      target="_blank"
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="symbol symbol-45 symbol-light-success mr-5 ">
+                          <span className="symbol-label">
+                            <span className="svg-icon svg-icon-success">
+                              <SVG
+                                className="h-50 align-self-center"
+                                src={toAbsoluteUrl(
+                                  "/media/svg/icons/Files/File-done.svg"
+                                )}
+                              ></SVG>
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <a
+                            href="/sponsor/sponsoring-tournaments"
+                            target="_blank"
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            Sponsoring Tournaments
+                          </a>
+                        </div>
+                        <i
+                          class="fas fa-external-link-alt"
+                          style={{ fontSize: "12px", marginLeft: "10px" }}
+                        ></i>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+
+                <Row style={{ marginTop: "20px", marginBottom: "20px" }}>
+                  <Col>
+                    <a
+                      href="/sponsor/sponsored-tournaments"
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="symbol symbol-45 symbol-light-secondary mr-5 ">
+                          <span className="symbol-label">
+                            <span className="svg-icon svg-icon-secondary">
+                              <SVG
+                                className="h-50 align-self-center"
+                                src={toAbsoluteUrl(
+                                  "/media/svg/icons/Shopping/Ticket.svg"
+                                )}
+                              ></SVG>
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <a
+                            href="/sponsor/sponsored-tournaments"
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            Sponsored Tournaments
+                          </a>
+                        </div>
+                        <i
+                          class="fas fa-external-link-alt"
+                          style={{ fontSize: "12px", marginLeft: "10px" }}
+                        ></i>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+              </Col>
+            </Row>
+            <Divider />
+            <Row
+              style={{
+                paddingTop: "30px",
+                paddingRight: "30px",
+                paddingBottom: "30px",
+                paddingLeft: "30px",
+              }}
+            >
+              <Col>
+                <Row>
+                  <Col>
+                    <a
+                      href="#"
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="symbol symbol-45 symbol-light-primary mr-5">
+                          <span className="symbol-label">
+                            <span className="svg-icon svg-icon-primary">
+                              <SVG
+                                className="h-50 align-self-center"
+                                src={toAbsoluteUrl(
+                                  "/media/svg/icons/Code/Option.svg"
+                                )}
+                              ></SVG>
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <a
+                            href="#"
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            Sponsor Statistics
+                          </a>
+                        </div>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+                <Row style={{ marginTop: "20px" }}>
+                  <Col>
+                    <a
+                      href="#"
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="symbol symbol-45 symbol-light-warning mr-5">
+                          <span className="symbol-label">
+                            <span className="svg-icon svg-icon-warning">
+                              <SVG
+                                className="h-50 align-self-center"
+                                src={toAbsoluteUrl(
+                                  "/media/svg/icons/General/Settings-2.svg"
+                                )}
+                              ></SVG>
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <a
+                            href="#"
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            Setting
+                          </a>
+                        </div>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+                <Row style={{ marginTop: "20px" }}>
+                  <Col>
+                    <a
+                      href="#"
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="symbol symbol-45 symbol-light-info mr-5">
+                          <span className="symbol-label">
+                            <span className="svg-icon svg-icon-info">
+                              <SVG
+                                className="h-50 align-self-center"
+                                src={toAbsoluteUrl(
+                                  "/media/svg/icons/Code/Info-circle.svg"
+                                )}
+                              ></SVG>
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <a
+                            href="#"
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            Help
+                          </a>
+                        </div>
+                        <i
+                          class="fas fa-external-link-alt"
+                          style={{ fontSize: "12px", marginLeft: "10px" }}
+                        ></i>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+                <Row style={{ marginTop: "20px" }}>
+                  <Col>
+                    <a
+                      href="#"
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                    >
+                      <div className="d-flex align-items-center">
+                        <div className="symbol symbol-45 symbol-light-secondary mr-5">
+                          <span className="symbol-label">
+                            <span className="svg-icon svg-icon-secondary">
+                              <SVG
+                                className="h-50 align-self-center"
+                                src={toAbsoluteUrl(
+                                  "/media/svg/icons/Navigation/Sign-out.svg"
+                                )}
+                              ></SVG>
+                            </span>
+                          </span>
+                        </div>
+
+                        <div className="d-flex flex-column flex-grow-1">
+                          <a
+                            href="#"
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            Logout
+                          </a>
+                        </div>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+              </Col>
             </Row>
           </Paper>
         </Col>
@@ -164,7 +466,11 @@ const SponsorProfilePage = () => {
                       );
                     })}
                   </Tab>
-                  <Tab eventKey="pending" title="Pending ">
+                  <Tab
+                    eventKey="pending"
+                    title="Pending "
+                    style={{ marginTop: "30px" }}
+                  >
                     {pendingTournaments.map((game) => {
                       //console.log(game);
                       return (
@@ -177,7 +483,11 @@ const SponsorProfilePage = () => {
                       );
                     })}
                   </Tab>
-                  <Tab eventKey="sponsoring" title="Sponsoring ">
+                  <Tab
+                    eventKey="sponsoring"
+                    title="Sponsoring "
+                    style={{ marginTop: "30px" }}
+                  >
                     {sponsoringTournaments.map((game) => {
                       //console.log(game);
                       return (
@@ -192,7 +502,11 @@ const SponsorProfilePage = () => {
                     })}
                   </Tab>
 
-                  <Tab eventKey="sponsored" title="Sponsored "></Tab>
+                  <Tab
+                    eventKey="sponsored"
+                    title="Sponsored "
+                    style={{ marginTop: "30px" }}
+                  ></Tab>
                 </Tabs>
               </Col>
             </Row>
