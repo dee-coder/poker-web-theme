@@ -16,6 +16,7 @@ import { Dashboard } from "../_metronic/_partials";
 import Logout from "../app/mycomponents/logoutComponent";
 import AdminSection from "./admin/adminSection";
 import { ErrorPage1 } from "./modules/ErrorsExamples/ErrorPage1";
+import Registration from "./modules/Auth/pages/Registration";
 
 export function Routes() {
   const { isAuthorized } = useSelector(
@@ -27,6 +28,8 @@ export function Routes() {
 
   return (
     <Switch>
+      {/* <Route path="login-new" component={AuthPage} /> */}
+
       <Layout>
         <BasePage />
       </Layout>

@@ -30,6 +30,9 @@ import SponsorsActiveTournamentsPage from "./pages/SponsorsActiveTournamentsPage
 import SponsorsPendingTournaments from "./pages/SponsorsPendingTournamnts";
 import SponsorsSponsoringTournamentPage from "./pages/SponsorsSponsoringTournamentPage";
 import SponsorsSponsoredTournamentPage from "./pages/SponsorsSponsoredTournamentPage";
+import { AuthPage } from "./modules/Auth/pages/AuthPage";
+import Login from "./modules/Auth/pages/Login";
+import Registration from "./modules/Auth/pages/Registration";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -88,7 +91,7 @@ export default function BasePage() {
         component={SponsorsSponsoringTournamentPage}
       />
       <ContentRoute
-        paht="/sponsor/sponsored-tournaments"
+        path="/sponsor/sponsored-tournaments"
         component={SponsorsSponsoredTournamentPage}
       />
 
@@ -105,7 +108,7 @@ export default function BasePage() {
         path="/apply-sponsorship"
         component={ApplySponsorshipPage}
       />
-      {/* <Route path="/error/error-v1" component={ErrorPage1} /> */}
+      {/* <Route path="/error/error-v1" c omponent={ErrorPage1} /> */}
 
       <Route path="/logout" component={Logout} />
 
@@ -113,7 +116,7 @@ export default function BasePage() {
       <Route path="/react-bootstrap" component={ReactBootstrapPage} />
       <Route path="/e-commerce" component={ECommercePage} />
       <Route path="/admin" component={AdminSection} />
-      <Redirect to="error/error-v1" />
+      {/* <Redirect to="error/error-v1" /> */}
     </Switch>
   );
 }
