@@ -152,6 +152,7 @@ const MyActiveTournaments = ({
                               <BoxItemSponsoredTournments
                                 obj={game.gameData}
                                 allot={game.data}
+                                sponsorList={game.sponsoring}
                               />
                             </Col>
                           </Row>

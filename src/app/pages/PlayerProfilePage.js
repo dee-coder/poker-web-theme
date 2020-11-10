@@ -135,6 +135,7 @@ const PlayerProfilePage = () => {
           </Paper>
         </Col>
       </Row>
+
       <Row>
         <Col lg={12}>
           <Paper style={{ padding: "20px" }}>

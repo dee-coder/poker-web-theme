@@ -31,6 +31,7 @@ const BoxItemSponsoredTournments = ({
   obj,
 
   allot,
+  sponsorList,
 }) => {
   const [url, setUrl] = useState();
   const [networks, setNetworks] = useState([]);
@@ -145,6 +146,77 @@ const BoxItemSponsoredTournments = ({
               <br />
               <span className="text-muted font-weight-bold">{obj.network}</span>
             </Col>
+          </Row>
+          <Row>
+            <div clasName="col-auto">
+              <div style={{ textAlign: "left" }}>
+                <Typography variant="button" style={{ color: "#848484" }}>
+                  SPONSORING{" "}
+                  <i
+                    class="fas fa-info-circle"
+                    style={{
+                      marginLeft: "2px",
+                      color: "#848484",
+                      fontSize: "12px",
+                    }}
+                  ></i>
+                </Typography>
+                <br />
+                <br />
+                <Typography
+                  variant="h4"
+                  style={{ fontWeight: "900", color: "#F64E60" }}
+                >
+                  {sponsorList.length}
+                </Typography>{" "}
+              </div>
+            </div>
+            <div className="col-auto" style={{ marginLeft: "20px" }}>
+              <div style={{ textAlign: "left" }}>
+                <Typography variant="button" style={{ color: "#848484" }}>
+                  TOTAL{" "}
+                  <i
+                    class="fas fa-info-circle"
+                    style={{
+                      marginLeft: "2px",
+                      color: "#848484",
+                      fontSize: "12px",
+                    }}
+                  ></i>
+                </Typography>
+                <br />
+                <br />
+                <Typography
+                  variant="h4"
+                  style={{ fontWeight: "900", color: "black" }}
+                >
+                  {allot.number_of_sponsor}
+                </Typography>{" "}
+              </div>
+            </div>
+            <div className="col-auto" style={{ marginLeft: "20px" }}>
+              <div style={{ textAlign: "left" }}>
+                <Typography variant="button" style={{ color: "#848484" }}>
+                  REQUESTS{" "}
+                  <i
+                    class="fas fa-info-circle"
+                    style={{
+                      marginLeft: "2px",
+                      color: "#848484",
+                      fontSize: "12px",
+                    }}
+                  ></i>
+                </Typography>
+                <br />
+                <br />
+                <Typography
+                  variant="h4"
+                  style={{ fontWeight: "900", color: "gray" }}
+                >
+                  {allot.number_of_sponsor}
+                </Typography>{" "}
+              </div>
+            </div>
           </Row>
 
           <Row style={{ marginTop: "20px" }}>
@@ -344,6 +416,23 @@ const BoxItemSponsoredTournments = ({
                       ></i>
                     </Button>
                   </Form>
+                </Col>
+              </Row>
+
+              <Row>
+                <Col>
+                  <Typography variant="button">Pending Requests</Typography>
+                  <br />
+                  {sponsorList.map((sponsor) => {
+                    return (
+                      <div className="card" style={{ padding: "20px" }}>
+                        <Typography variant="h6">
+                          {sponsor.sponsor_id}
+                          {sponsor.sponsor_name}
+                        </Typography>
+                      </div>
+                    );
+                  })}
                 </Col>
               </Row>
             </div>
