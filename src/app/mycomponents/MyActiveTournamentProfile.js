@@ -14,6 +14,12 @@ const MyActiveTournaments = ({
   setCurrentTournamentShowObj,
   setViewTournamentMode,
   sponsoredTournaments,
+  setOpenDrawerB,
+  openDrawer,
+  setSelectedTournamentInfoObj,
+  setSelectedTournamentBattingInfo,
+  setSelectedPendingSponsorList,
+  setSelectedApprovedSponsorList,
 }) => {
   const [selectedTab, setSelectedTab] = useState("Active_Tournaments");
 
@@ -153,6 +159,21 @@ const MyActiveTournaments = ({
                                 obj={game.gameData}
                                 allot={game.data}
                                 sponsorList={game.sponsoring}
+                                requests={game.pending}
+                                setOpenDrawerB={setOpenDrawerB}
+                                openDrawer={openDrawer}
+                                setSelectedTournamentInfoObj={
+                                  setSelectedTournamentInfoObj
+                                }
+                                setSelectedTournamentBattingInfo={
+                                  setSelectedTournamentBattingInfo
+                                }
+                                setSelectedPendingSponsorList={
+                                  setSelectedPendingSponsorList
+                                }
+                                setSelectedApprovedSponsorList={
+                                  setSelectedApprovedSponsorList
+                                }
                               />
                             </Col>
                           </Row>

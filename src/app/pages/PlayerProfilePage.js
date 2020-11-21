@@ -31,6 +31,7 @@ import MyActiveTournaments from "../mycomponents/MyActiveTournamentProfile";
 import AddSponsorsDrawer from "../mycomponents/addSponsorsDrawer";
 import ViewTournamentDrawer from "../mycomponents/ViewTournamentDetailsDrawer";
 import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
+import DrawerTournamentSponsorshipView from "../mycomponents/DrawerTournamentSponsorhipView";
 const PlayerProfilePage = () => {
   const [statistics, setStatistics] = useState([]);
   const [recentTournaments, setRecentTournaments] = useState([]);
@@ -47,6 +48,23 @@ const PlayerProfilePage = () => {
   const [ListOfSponsoredTournaments, setListOfSponsoredTournaments] = useState(
     []
   );
+
+  const [selectedTournamentInfoObj, setSelectedTournamentInfoObj] = useState(
+    {}
+  );
+  const [
+    selectedTournamentBattingInfo,
+    setSelectedTournamentBattingInfo,
+  ] = useState({});
+  const [selectedPendingSponsorList, setSelectedPendingSponsorList] = useState(
+    {}
+  );
+  const [
+    selectedApprovedSponsorList,
+    setSelectedApprovedSponsorList,
+  ] = useState({});
+
+  const [DrawerB, setDrawerB] = useState(false);
 
   useEffect(() => {
     var info = JSON.parse(localStorage.getItem("userInfo"));
@@ -131,6 +149,14 @@ const PlayerProfilePage = () => {
               setCurrentTournamentShowObj={setCurrentTournamentShowObj}
               setViewTournamentMode={setViewTournamentMode}
               sponsoredTournaments={ListOfSponsoredTournaments}
+              setOpenDrawerB={setDrawerB}
+              openDrawerB={DrawerB}
+              setSelectedTournamentInfoObj={setSelectedTournamentInfoObj}
+              setSelectedTournamentBattingInfo={
+                setSelectedTournamentBattingInfo
+              }
+              setSelectedPendingSponsorList={setSelectedPendingSponsorList}
+              setSelectedApprovedSponsorList={setSelectedApprovedSponsorList}
             />
           </Paper>
         </Col>
@@ -387,6 +413,17 @@ const PlayerProfilePage = () => {
           setViewTournamentMode={setViewTournamentMode}
           obj={currentTournamentShowObj}
           networks={organicNetworks}
+        />
+      </Drawer>
+      <Drawer anchor="right" open={DrawerB} onClose={() => setDrawerB(false)}>
+        <DrawerTournamentSponsorshipView
+          openDrawer={DrawerB}
+          setOpenDrawer={setDrawerB}
+          networks={organicNetworks}
+          tournamentInfo={selectedTournamentInfoObj}
+          tournamentBattingInfo={selectedTournamentBattingInfo}
+          pendingSponsorList={selectedPendingSponsorList}
+          approvedSponsorList={selectedApprovedSponsorList}
         />
       </Drawer>
     </Box>

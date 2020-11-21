@@ -32,6 +32,13 @@ const BoxItemSponsoredTournments = ({
 
   allot,
   sponsorList,
+  requests,
+  openDrawer,
+  setOpenDrawerB,
+  setSelectedTournamentInfoObj,
+  setSelectedTournamentBattingInfo,
+  setSelectedPendingSponsorList,
+  setSelectedApprovedSponsorList,
 }) => {
   const [url, setUrl] = useState();
   const [networks, setNetworks] = useState([]);
@@ -80,10 +87,14 @@ const BoxItemSponsoredTournments = ({
       <div
         className={classes.root}
         style={{ marginBottom: "25px" }}
-        // onClick={() => {
-        //   setCurrentTournamentShowObj(obj);
-        //   setViewTournamentMode(true);
-        // }}
+        //onClick={() => setOpenDrawerB(true)}
+        onClick={() => {
+          setSelectedTournamentInfoObj(obj);
+          setSelectedTournamentBattingInfo(allot);
+          setSelectedPendingSponsorList(requests);
+          setSelectedApprovedSponsorList(sponsorList);
+          setOpenDrawerB(true);
+        }}
       >
         {" "}
         <div
@@ -147,7 +158,7 @@ const BoxItemSponsoredTournments = ({
               <span className="text-muted font-weight-bold">{obj.network}</span>
             </Col>
           </Row>
-          <Row>
+          <Row style={{ padding: "20px" }}>
             <div clasName="col-auto">
               <div style={{ textAlign: "left" }}>
                 <Typography variant="button" style={{ color: "#848484" }}>
@@ -213,7 +224,7 @@ const BoxItemSponsoredTournments = ({
                   variant="h4"
                   style={{ fontWeight: "900", color: "gray" }}
                 >
-                  {allot.number_of_sponsor}
+                  {requests.length}
                 </Typography>{" "}
               </div>
             </div>
