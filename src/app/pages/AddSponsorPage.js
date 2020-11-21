@@ -182,7 +182,7 @@ const AddSponsorPage = (props) => {
             <Row style={{ padding: "30px" }}>
               <Col lg={12}>
                 <Typography variant="h6">
-                  Add Sponsors to{" "}
+                  Find Sponsors{" "}
                   <a
                     href={`https://pokerswapping.com/details/${tournamentId}`}
                     className="text-hover-primary"
