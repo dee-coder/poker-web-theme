@@ -162,7 +162,7 @@ const PlayerProfilePage = () => {
         </Col>
       </Row>
 
-      <Row>
+      {/* <Row>
         <Col lg={12}>
           <Paper style={{ padding: "20px" }}>
             <Tabs defaultActiveKey="graph" id="uncontrolled-tab-example">
@@ -262,15 +262,7 @@ const PlayerProfilePage = () => {
                 title="Event"
                 style={{ paddingTop: "20px", paddingBottom: "20px" }}
               >
-                {/* {event.map((ev) => {
-                  {
-                    return(_.has(ev, "@code") && (
-                     
-                    );
-                   
-                    }
-                    );
-                })} */}
+                
                 <Row>
                   <Col lg={6}>
                     {event.slice(0, event.length / 2).map((ev) => {
@@ -383,7 +375,7 @@ const PlayerProfilePage = () => {
             </Tabs>
           </Paper>
         </Col>
-      </Row>
+      </Row> */}
       {/* <Drawer
         anchor="right"
         open={viewAddSponsorsMode}
@@ -423,6 +415,7 @@ const PlayerProfilePage = () => {
           tournamentInfo={selectedTournamentInfoObj}
           tournamentBattingInfo={selectedTournamentBattingInfo}
           pendingSponsorList={selectedPendingSponsorList}
+          setPendingSponsorList={setSelectedPendingSponsorList}
           approvedSponsorList={selectedApprovedSponsorList}
         />
       </Drawer>

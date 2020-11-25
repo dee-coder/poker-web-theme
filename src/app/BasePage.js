@@ -33,6 +33,7 @@ import SponsorsSponsoredTournamentPage from "./pages/SponsorsSponsoredTournament
 import { AuthPage } from "./modules/Auth/pages/AuthPage";
 import Login from "./modules/Auth/pages/Login";
 import Registration from "./modules/Auth/pages/Registration";
+import InboxPage from "./pages/InboxPage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -108,6 +109,7 @@ export default function BasePage() {
         path="/apply-sponsorship"
         component={ApplySponsorshipPage}
       />
+      <ContentRoute path="/messages" component={InboxPage} />
       {/* <Route path="/error/error-v1" c omponent={ErrorPage1} /> */}
 
       <Route path="/logout" component={Logout} />

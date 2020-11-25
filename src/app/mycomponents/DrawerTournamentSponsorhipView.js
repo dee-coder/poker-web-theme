@@ -13,6 +13,7 @@ import {
 import { makeStyles } from "@material-ui/core/styles";
 import _ from "lodash";
 import Countdown from "react-countdown";
+import PendingSponsorsItemsChip from "./PendingSponsorsItemChip";
 
 const Completionist = () => <span>This tournament has been finished.</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -49,6 +50,7 @@ const DrawerTournamentSponsorshipView = ({
   tournamentInfo,
   tournamentBattingInfo,
   pendingSponsorList,
+  setPendingSponsorList,
   approvedSponsorList,
 }) => {
   const [url, setUrl] = useState();
@@ -68,6 +70,14 @@ const DrawerTournamentSponsorshipView = ({
     var yyyy = today.getFullYear();
     return (today = mm + "-" + dd + "-" + yyyy);
   }
+
+  const removeRequesRow = (obj) => {
+    var arr = [];
+    arr = _.remove(pendingSponsorList, function(n) {
+      return n.sponsor_id === obj.sponsor_id;
+    });
+    setPendingSponsorList(arr);
+  };
   const classes = useStyles();
   return (
     <div className={classes.list}>
@@ -458,41 +468,11 @@ const DrawerTournamentSponsorshipView = ({
         )}
         {pendingSponsorList.map((sponsor) => {
           return (
-            <Row style={{ marginTop: "20px" }}>
-              <Col>
-                <div className="card" style={{ padding: "20px" }}>
-                  <Row>
-                    <Col>
-                      <Image
-                        src="media/users/100_4.jpg"
-                        roundedCircle
-                        style={{ width: "40px", height: "40px" }}
-                      />
-                      <Typography
-                        variant="body"
-                        style={{ fontSize: "13px", marginLeft: "15px" }}
-                      >
-                        {sponsor.sponsor_name}
-                      </Typography>
-                      <div style={{ float: "right" }}>
-                        <Button
-                          variant="outline-primary"
-                          style={{ border: "none" }}
-                        >
-                          Reject{" "}
-                        </Button>
-                        <Button
-                          variant="primary"
-                          style={{ marginLeft: "20px" }}
-                        >
-                          Accept
-                        </Button>
-                      </div>
-                    </Col>
-                  </Row>
-                </div>
-              </Col>
-            </Row>
+            <PendingSponsorsItemsChip
+              sponsor={sponsor}
+              sponsorship_id={tournamentBattingInfo.id}
+              removeRequesRow={removeRequesRow}
+            />
           );
         })}
 
@@ -508,7 +488,7 @@ const DrawerTournamentSponsorshipView = ({
           </Typography>
         )}
         {approvedSponsorList.map((sponsor) => {
-          console.log(sponsor);
+          //console.log(sponsor);
           return (
             <Row style={{ marginTop: "20px" }}>
               <Col>
@@ -527,12 +507,6 @@ const DrawerTournamentSponsorshipView = ({
                         {sponsor.sponsor_name}
                       </Typography>
                       <div style={{ float: "right" }}>
-                        <Button
-                          variant="outline-primary"
-                          style={{ border: "none" }}
-                        >
-                          Reject{" "}
-                        </Button>
                         <Button
                           variant="primary"
                           style={{ marginLeft: "20px" }}
