@@ -155,18 +155,19 @@ export function UserProfileDropdown(props) {
                 </div>
               </a>
             </Link>
-
-            <a className="navi-item px-8">
-              <div className="navi-link">
-                <div className="navi-icon mr-2">
-                  <i className="flaticon2-mail text-warning"></i>
+            <Link to="/messages">
+              <a className="navi-item px-8">
+                <div className="navi-link">
+                  <div className="navi-icon mr-2">
+                    <i className="flaticon2-mail text-warning"></i>
+                  </div>
+                  <div className="navi-text">
+                    <div className="font-weight-bold">My Messsage</div>
+                    <div className="text-muted">Inbox and tasks</div>
+                  </div>
                 </div>
-                <div className="navi-text">
-                  <div className="font-weight-bold">My Messsage</div>
-                  <div className="text-muted">Inbox and tasks</div>
-                </div>
-              </div>
-            </a>
+              </a>
+            </Link>
 
             <a className="navi-item px-8">
               <div className="navi-link">
