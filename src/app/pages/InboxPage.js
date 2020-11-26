@@ -1,5 +1,6 @@
 import { Box, Paper, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
+import css from "@emotion/css";
 import {
   Col,
   Row,
@@ -14,8 +15,16 @@ import { Redirect } from "react-router-dom";
 import API from "../../apiUrl.json";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import SVG from "react-inlinesvg";
+import io from "socket.io-client";
+import ScrollToBottom from "react-scroll-to-bottom";
+
+let socket;
 
 const InboxPage = () => {
+  const [CurrentRoom, setCurrentRoom] = useState(null);
+  const [CurrentUser, setCurrentUser] = useState();
+  const [Messages, setMessages] = useState([]);
+
   const [Redirect, setRedirect] = useState(false);
   const [userInfo, setUserInfo] = useState(null);
   const [role, setRole] = useState(null);
@@ -23,6 +32,8 @@ const InboxPage = () => {
   const [Chats, setChats] = useState([]);
 
   const [NewMessage, setNewMessage] = useState("");
+
+  const ENDPOINT = "http://192.168.29.236:1234";
 
   const [ActiveChat, setActiveChat] = useState(null);
   useEffect(() => {
@@ -48,23 +59,23 @@ const InboxPage = () => {
     })
       .then((json) => json.json())
       .then((res) => {
-        console.log(res);
+        //console.log(res);
         if (res.status === "ok") {
           setChats(res.chats);
         } else {
         }
       })
       .catch((err) => {
-        console.log(err);
+        //console.log(err);
         alert(err.message);
       });
   }, []);
 
-  const selectedChat = (index) => {
-    var chat = Chats[index];
+  // const selectedChat = (index) => {
+  //   var chat = Chats[index];
 
-    setActiveChat(chat);
-  };
+  //   setActiveChat(chat);
+  // };
 
   const createAMessage = () => {
     var message = {
@@ -80,7 +91,7 @@ const InboxPage = () => {
       status: "A",
     };
 
-    console.log(message);
+    //console.log(message);
     var chatObj = ActiveChat;
     var oldChat = JSON.parse(ActiveChat.chat.messages);
 
@@ -90,8 +101,111 @@ const InboxPage = () => {
 
     setActiveChat(chatObj);
     setNewMessage("");
-    console.log(ActiveChat);
+    //console.log(ActiveChat);
   };
+
+  const sendMessage = (e) => {
+    e.preventDefault();
+    if (NewMessage) {
+      // var name =
+      //   role === "player" ? userInfo.player_name : userInfo.sponsor_name;
+      var text = {
+        user: {
+          user_id: role === "player" ? userInfo.player_id : userInfo.sponsor_id,
+          user_name:
+            role === "player" ? userInfo.player_name : userInfo.sponsor_name,
+          user_type: role,
+        },
+        content: NewMessage,
+        type: "text",
+        generated: Date.now(),
+        status: "A",
+      };
+      socket.emit("sendMessage", text, () => setNewMessage(""));
+    }
+  };
+
+  const joinRoom = (chat) => {
+    if (CurrentRoom === null || CurrentRoom === undefined) {
+      //socket = io(ENDPOINT);
+      //console.log(socket);
+      if (socket === undefined) {
+        socket = io(ENDPOINT);
+      } else {
+      }
+      //socket = io(ENDPOINT);
+      var roomid = chat.chat.id;
+      setCurrentRoom(chat);
+
+      setMessages(JSON.parse(chat.chat.messages));
+
+      const username =
+        role === "player" ? userInfo.player_name : userInfo.sponsor_name;
+      //console.log(name, room);
+
+      setCurrentUser(username);
+      //setRoom(room);
+
+      socket.emit("join", { username, roomid }, () => {});
+    } else {
+      socket.emit("leave", { CurrentUser }, () => {});
+      //socket.emit("disconnect");
+      //   socket.off();
+      socket = undefined;
+      setMessages([]);
+
+      // Re join the group as diffrent user
+      if (socket === undefined) {
+        socket = io(ENDPOINT);
+      } else {
+      }
+      //socket = io(ENDPOINT);
+      var roomid = chat.chatid;
+      setCurrentRoom(chat);
+      setMessages(chat.messages);
+
+      const { username } =
+        role === "player" ? userInfo.player_name : userInfo.sponsor_name;
+      //console.log(name, room);
+
+      setCurrentUser(username);
+      //setRoom(room);
+
+      socket.emit("join", { username, roomid }, () => {});
+    }
+
+    // return () => {
+    //     socket.emit("disconnect");
+    //     socket.off();
+    // };
+  };
+
+  //   useEffect(() => {
+
+  //   }, []);
+
+  useEffect(() => {
+    //console.log(CurrentRoom);
+    if (CurrentRoom !== null || CurrentRoom !== undefined) {
+      //console.log(socket);
+      if (socket === undefined) {
+        socket = io(ENDPOINT);
+      }
+      socket.on("message", (msg) => {
+        console.log(msg, "this");
+
+        //var message = { user: user, content: text,type:'text',generated:Date.now };
+        var mess = [];
+        mess = Messages;
+        mess.push(msg);
+        setMessages(mess);
+
+        console.log(Messages);
+      });
+    }
+  }, []);
+
+  useEffect(() => {}, [Messages]);
   return (
     <Paper style={{ minHeight: "600px" }}>
       <Row style={{ paddingLeft: "12px", height: "600px" }}>
@@ -162,7 +276,7 @@ const InboxPage = () => {
               {Chats.map((chat, index) => {
                 return (
                   <div
-                    onClick={() => selectedChat(index)}
+                    onClick={() => joinRoom(chat)}
                     style={{ padding: "15px", background: "#FFF" }}
                   >
                     <Image
@@ -184,17 +298,17 @@ const InboxPage = () => {
           lg={8}
           style={{ paddingLeft: "0", paddingRight: "12px", height: "600px" }}
         >
-          {ActiveChat !== null ? (
+          {CurrentRoom !== null ? (
             <div style={{ height: "600px" }}>
               <Row>
                 <Col lg={12}>
-                  <ChatHeader info={ActiveChat.tournamentDetails} />
+                  <ChatHeader info={CurrentRoom.tournamentDetails} />
                 </Col>
               </Row>
               <Row style={{ marginTop: "20px", height: "450px" }}>
                 <Col style={{ padding: "20px" }} lg={12}>
                   <ActiveChatComponent
-                    Chat={ActiveChat}
+                    Chat={Messages}
                     userInfo={userInfo}
                     role={role}
                   />
@@ -207,7 +321,7 @@ const InboxPage = () => {
                     value={NewMessage}
                     placeholder="Type message here..."
                     onKeyPress={(e) =>
-                      e.key === "Enter" ? createAMessage() : null
+                      e.key === "Enter" ? sendMessage(e) : null
                     }
                     onChange={(e) => setNewMessage(e.target.value)}
                   />
@@ -233,7 +347,15 @@ const InboxPage = () => {
 export default InboxPage;
 
 const ActiveChatComponent = ({ Chat, userInfo, role }) => {
-  useEffect(() => {}, [Chat]);
+  const ROOT_CLASS_CONTAINER = {
+    maxHeight: "450px",
+    minHeight: "450px",
+    overflow: "scroll",
+  };
+  useEffect(() => {
+    console.log(Chat);
+  }, [Chat]);
+
   function getDates(date) {
     // var today = new Date(date);
     // var dd = String(today.getDate()).padStart(2, "0");
@@ -247,8 +369,8 @@ const ActiveChatComponent = ({ Chat, userInfo, role }) => {
     return messsageTime;
   }
   return (
-    <div>
-      {JSON.parse(Chat.chat.messages).map((message) => {
+    <div style={ROOT_CLASS_CONTAINER}>
+      {Chat.map((message) => {
         return (
           <Row>
             <Col>
