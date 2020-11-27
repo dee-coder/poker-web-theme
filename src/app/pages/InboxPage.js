@@ -21,7 +21,6 @@ import ScrollToBottom from "react-scroll-to-bottom";
 let socket;
 
 const InboxPage = () => {
-  const divRef = useRef();
   const [CurrentRoom, setCurrentRoom] = useState(null);
   const [CurrentUser, setCurrentUser] = useState();
   const [Messages, setMessages] = useState([]);
@@ -71,33 +70,34 @@ const InboxPage = () => {
       });
   }, []);
 
-  const createAMessage = () => {
-    var message = {
-      user: {
-        user_id: role === "player" ? userInfo.player_id : userInfo.sponsor_id,
-        user_name:
-          role === "player" ? userInfo.player_name : userInfo.sponsor_name,
-        user_type: role,
-      },
-      type: "text",
-      content: NewMessage,
-      generated: Date.now(),
-      status: "A",
-    };
+  // const createAMessage = () => {
+  //   var message = {
+  //     user: {
+  //       user_id: role === "player" ? userInfo.player_id : userInfo.sponsor_id,
+  //       user_name:
+  //         role === "player" ? userInfo.player_name : userInfo.sponsor_name,
+  //       user_type: role,
+  //     },
+  //     type: "text",
+  //     content: NewMessage,
+  //     generated: Date.now(),
+  //     status: "A",
+  //   };
 
-    var chatObj = ActiveChat;
-    var oldChat = JSON.parse(ActiveChat.chat.messages);
+  //   var chatObj = ActiveChat;
+  //   var oldChat = JSON.parse(ActiveChat.chat.messages);
 
-    oldChat.push(message);
+  //   oldChat.push(message);
 
-    chatObj.chat.messages = JSON.stringify(oldChat);
+  //   chatObj.chat.messages = JSON.stringify(oldChat);
 
-    setActiveChat(chatObj);
-    setNewMessage("");
-  };
+  //   setActiveChat(chatObj);
+  //   setNewMessage("");
+  // };
 
   const sendMessage = (e) => {
     e.preventDefault();
+    setNewMessage("");
     if (NewMessage) {
       var text = {
         user: {
@@ -166,9 +166,9 @@ const InboxPage = () => {
         socket = io(ENDPOINT);
       }
       socket.on("message", (msg) => {
-        console.log(msg, "this");
+        //console.log(msg, "this");
 
-        console.log("message", Messages);
+        //console.log("message", Messages);
         setMessages([...Messages, msg]);
         //divRef.current.scrollIntoView({ behavior: "smooth" });
       });
@@ -176,211 +176,282 @@ const InboxPage = () => {
   }, [Messages]);
 
   return (
-    <Paper style={{ minHeight: "600px" }}>
-      <Row style={{ paddingLeft: "12px", height: "600px" }}>
-        <Col lg={4} style={{ borderRight: "1px solid #c4c4c4" }}>
-          <Row>
-            <Col style={{ padding: "0" }}>
-              <div
-                style={{
-                  padding: "10px",
-                  borderTopLeftRadius: "3px",
-                  backgroundColor: "#ededed",
-                }}
-              >
-                <Row>
-                  <Col>
-                    <Image
-                      style={{ height: "40px", width: "40px" }}
-                      src={toAbsoluteUrl("/media/users/100_1.jpg")}
-                      roundedCircle
-                    />
-                  </Col>
-
-                  <div
-                    className="col-auto"
-                    style={{
-                      float: "right",
-                      paddingTop: "10px",
-                      paddingBottom: "10px",
-                      marginRight: "10px",
-                    }}
-                  >
-                    <span style={{}}>
-                      <i class="fas fa-plus-circle"></i>
-                    </span>
-                  </div>
-                  <div
-                    className="col-auto"
-                    style={{
-                      float: "right",
-                      paddingTop: "10px",
-                      paddingBottom: "10px",
-                    }}
-                  >
-                    <span style={{}}>
-                      <i class="fas fa-ellipsis-v"></i>
-                    </span>
-                  </div>
-                </Row>
-              </div>
-            </Col>
-          </Row>
-          <Row
-            style={{
-              marginTop: "10px",
-              marginBottom: "10px",
-              borderBottom: "1px solid c4c4c4",
-            }}
+    <Box>
+      <Row>
+        <Col lg={12}>
+          <Typography
+            variant="h4"
+            style={{ color: "white", fontWeight: "900" }}
           >
-            <Col style={{ padding: "0" }}>
-              <Form style={{ padding: "15px" }}>
-                <Form.Control type="text" placeholder="Search" />
-              </Form>
-            </Col>
-          </Row>
-          <Row style={{ minHeight: "400px" }}>
-            <Col style={{ padding: "0" }}>
-              {" "}
-              {Chats.map((chat, index) => {
-                return (
-                  <a>
+            Messages
+          </Typography>
+        </Col>
+      </Row>
+      <Row style={{ marginTop: "20px" }}>
+        <Col lg={12}>
+          <Paper style={{ minHeight: "600px" }}>
+            <Row style={{ paddingLeft: "12px", height: "600px" }}>
+              <Col lg={4} style={{ borderRight: "1px solid #c4c4c4" }}>
+                <Row>
+                  <Col style={{ padding: "0" }}>
                     <div
-                      onClick={() => joinRoom(chat)}
                       style={{
-                        padding: "15px",
-                        background: CurrentRoom === chat ? "#f2f2f2" : "#FFF",
+                        padding: "10px",
+                        borderTopLeftRadius: "3px",
+                        backgroundColor: "#ededed",
                       }}
                     >
                       <Row>
-                        <div className="col-auto">
-                          {" "}
+                        <Col>
                           <Image
                             style={{ height: "40px", width: "40px" }}
-                            src={toAbsoluteUrl("/media/users/default.jpg")}
+                            src={toAbsoluteUrl("/media/users/100_1.jpg")}
                             roundedCircle
                           />
+                        </Col>
+
+                        <div
+                          className="col-auto"
+                          style={{
+                            float: "right",
+                            paddingTop: "10px",
+                            paddingBottom: "10px",
+                            marginRight: "10px",
+                          }}
+                        >
+                          <span style={{}}>
+                            <i class="fas fa-plus-circle"></i>
+                          </span>
                         </div>
-                        <div className="col-auto">
-                          {" "}
-                          <Badge variant="primary">
-                            #{chat.tournamentDetails.sharkscope_id}
-                          </Badge>
-                          <br />
-                          <Typography
-                            variant="body"
-                            style={{ marginTop: "5px" }}
-                          >
-                            {chat.tournamentDetails.name}
-                          </Typography>
-                          <br />
-                          <div style={{ marginTop: "5px" }}>
-                            {chat.users.players.map((player) => {
-                              return (
-                                <span
-                                  style={{ fontSize: "12px", color: "gray" }}
-                                >
-                                  {" "}
-                                  {player.player_name},{" "}
-                                </span>
-                              );
-                            })}
-                            {chat.users.sponsors.map((sponsor, index) => {
-                              return index ===
-                                chat.users.sponsors.length - 1 ? (
-                                <span
-                                  style={{ fontSize: "12px", color: "gray" }}
-                                >
-                                  {" "}
-                                  {sponsor.sponsor_name}{" "}
-                                </span>
-                              ) : (
-                                <span
-                                  style={{ fontSize: "12px", color: "gray" }}
-                                >
-                                  {" "}
-                                  {sponsor.sponsor_name},{" "}
-                                </span>
-                              );
-                            })}
-                          </div>
+                        <div
+                          className="col-auto"
+                          style={{
+                            float: "right",
+                            paddingTop: "10px",
+                            paddingBottom: "10px",
+                          }}
+                        >
+                          <span style={{}}>
+                            <i class="fas fa-ellipsis-v"></i>
+                          </span>
                         </div>
                       </Row>
                     </div>
-                  </a>
-                );
-              })}
-            </Col>
-          </Row>
-        </Col>
-        <Col
-          lg={8}
-          style={{ paddingLeft: "0", paddingRight: "12px", height: "600px" }}
-        >
-          {CurrentRoom !== null ? (
-            <div style={{ height: "600px" }}>
-              <Row>
-                <Col lg={12}>
-                  <ChatHeader info={CurrentRoom.tournamentDetails} />
-                </Col>
-              </Row>
-              <Row style={{ marginTop: "20px", height: "450px" }}>
-                <Col style={{ padding: "20px" }} lg={12}>
-                  <ActiveChatComponent
-                    Chat={Messages}
-                    userInfo={userInfo}
-                    role={role}
-                    divRef={divRef}
-                  />
-                </Col>
-              </Row>
-              <Row style={{ alignSelf: "end" }}>
-                <Col style={{ padding: "20px" }} lg={10}>
-                  <Form.Control
-                    type="text"
-                    value={NewMessage}
-                    placeholder="Type message here..."
-                    onKeyPress={(e) =>
-                      e.key === "Enter"
-                        ? NewMessage === ""
-                          ? e.preventDefault()
-                          : sendMessage(e)
-                        : null
-                    }
-                    onChange={(e) => setNewMessage(e.target.value)}
-                  />
-                </Col>
-                <Col lg={2} style={{ paddingRight: "40px" }}>
-                  {" "}
-                  <Button
-                    variant="success"
-                    style={{ marginTop: "20px", float: "right" }}
-                    onClick={(e) =>
-                      NewMessage === "" ? e.preventDefault() : sendMessage(e)
-                    }
-                  >
-                    Send
-                  </Button>
-                </Col>
-              </Row>
-            </div>
-          ) : null}
+                  </Col>
+                </Row>
+                <Row
+                  style={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    borderBottom: "1px solid c4c4c4",
+                  }}
+                >
+                  <Col style={{ padding: "0" }}>
+                    <Form style={{ padding: "15px" }}>
+                      <Form.Control type="text" placeholder="Search" />
+                    </Form>
+                  </Col>
+                </Row>
+                <Row style={{ minHeight: "400px" }}>
+                  <Col style={{ padding: "0" }}>
+                    {" "}
+                    {Chats.map((chat, index) => {
+                      return (
+                        <a>
+                          <div
+                            onClick={() => joinRoom(chat)}
+                            style={{
+                              padding: "15px",
+                              background:
+                                CurrentRoom === chat ? "#f2f2f2" : "#FFF",
+                            }}
+                          >
+                            <Row>
+                              <div className="col-auto">
+                                {" "}
+                                <Image
+                                  style={{ height: "40px", width: "40px" }}
+                                  src={toAbsoluteUrl(
+                                    "/media/users/default.jpg"
+                                  )}
+                                  roundedCircle
+                                />
+                              </div>
+                              <div className="col-auto">
+                                {" "}
+                                <Badge variant="primary">
+                                  #{chat.tournamentDetails.sharkscope_id}
+                                </Badge>
+                                <br />
+                                <Typography
+                                  variant="body"
+                                  style={{ marginTop: "5px" }}
+                                >
+                                  {chat.tournamentDetails.name}
+                                </Typography>
+                                <br />
+                                <div style={{ marginTop: "5px" }}>
+                                  {chat.users.players.map((player) => {
+                                    return (
+                                      <span
+                                        style={{
+                                          fontSize: "12px",
+                                          color: "gray",
+                                        }}
+                                      >
+                                        {" "}
+                                        {player.player_name},{" "}
+                                      </span>
+                                    );
+                                  })}
+                                  {chat.users.sponsors.map((sponsor, index) => {
+                                    return index ===
+                                      chat.users.sponsors.length - 1 ? (
+                                      <span
+                                        style={{
+                                          fontSize: "12px",
+                                          color: "gray",
+                                        }}
+                                      >
+                                        {" "}
+                                        {sponsor.sponsor_name}{" "}
+                                      </span>
+                                    ) : (
+                                      <span
+                                        style={{
+                                          fontSize: "12px",
+                                          color: "gray",
+                                        }}
+                                      >
+                                        {" "}
+                                        {sponsor.sponsor_name},{" "}
+                                      </span>
+                                    );
+                                  })}
+                                </div>
+                              </div>
+                            </Row>
+                          </div>
+                        </a>
+                      );
+                    })}
+                  </Col>
+                </Row>
+              </Col>
+              <Col
+                lg={8}
+                style={{
+                  paddingLeft: "0",
+                  paddingRight: "12px",
+                  height: "600px",
+                }}
+              >
+                {CurrentRoom === null && (
+                  <Row>
+                    <Col lg={12}>
+                      <div
+                        style={{
+                          height: "600px",
+                          width: "100%",
+                          textAlign: "center",
+                        }}
+                        className="d-flex justify-content-center align-items-center"
+                      >
+                        <div style={{ margin: "0", maxWidth: "400px" }}>
+                          <Image
+                            src={toAbsoluteUrl(
+                              "/media/logos/logo-letter-9.png"
+                            )}
+                            alt="pokerswapping.com"
+                            style={{ height: "250px", width: "250px" }}
+                          />
+                          <br />
+                          <Typography variant="h5">
+                            Keep your phone connected
+                          </Typography>
+                          <br />
+                          <br />
+                          <Typography variant="body" style={{ color: "gray" }}>
+                            Vivamus magna justo, lacinia eget consectetur sed,
+                            convallis at tellus. Curabitur non nulla sit amet
+                            nisl tempus convallis quis ac lectus.{" "}
+                          </Typography>
+                        </div>
+                      </div>
+                    </Col>
+                  </Row>
+                )}
+                {CurrentRoom !== null ? (
+                  <div style={{ height: "600px" }}>
+                    <Row>
+                      <Col lg={12}>
+                        <ChatHeader info={CurrentRoom.tournamentDetails} />
+                      </Col>
+                    </Row>
+                    <Row style={{ marginTop: "20px", height: "450px" }}>
+                      <Col style={{ padding: "20px" }} lg={12}>
+                        <ActiveChatComponent
+                          Chat={Messages}
+                          userInfo={userInfo}
+                          role={role}
+                        />
+                      </Col>
+                    </Row>
+                    <Row style={{ alignSelf: "end" }}>
+                      <Col style={{ padding: "20px" }} lg={10}>
+                        <Form.Control
+                          type="text"
+                          value={NewMessage}
+                          placeholder="Type message here..."
+                          onKeyPress={(e) =>
+                            e.key === "Enter"
+                              ? NewMessage === ""
+                                ? e.preventDefault()
+                                : sendMessage(e)
+                              : null
+                          }
+                          onChange={(e) => setNewMessage(e.target.value)}
+                        />
+                      </Col>
+                      <Col lg={2} style={{ paddingRight: "40px" }}>
+                        {" "}
+                        <Button
+                          variant="success"
+                          style={{ marginTop: "20px", float: "right" }}
+                          onClick={(e) =>
+                            NewMessage === ""
+                              ? e.preventDefault()
+                              : sendMessage(e)
+                          }
+                        >
+                          Send
+                        </Button>
+                      </Col>
+                    </Row>
+                  </div>
+                ) : null}
+              </Col>
+            </Row>
+          </Paper>
         </Col>
       </Row>
-    </Paper>
+    </Box>
   );
 };
 
 export default InboxPage;
 
-const ActiveChatComponent = ({ Chat, userInfo, role, divRef }) => {
+const ActiveChatComponent = ({ Chat, userInfo, role }) => {
   const ROOT_CLASS_CONTAINER = {
     maxHeight: "420px",
     minHeight: "420px",
     overflow: "scroll",
   };
+  const divRef = useRef();
 
-  useEffect(() => {}, [Chat]);
+  useEffect(() => {
+    divRef.current.scrollIntoView({ behavior: "smooth" });
+  }, [Chat]);
 
   function getDates(date) {
     // var today = new Date(date);
@@ -395,10 +466,10 @@ const ActiveChatComponent = ({ Chat, userInfo, role, divRef }) => {
     return messsageTime;
   }
   return (
-    <div style={ROOT_CLASS_CONTAINER}>
+    <div style={{ maxHeight: "420px", overflow: "scroll" }}>
       {Chat.map((message) => {
         return (
-          <Row ref={divRef}>
+          <Row>
             <Col>
               {message.user.user_id ===
               (role === "player" ? userInfo.player_id : userInfo.sponsor_id) ? (
@@ -470,6 +541,7 @@ const ActiveChatComponent = ({ Chat, userInfo, role, divRef }) => {
           </Row>
         );
       })}
+      <div ref={divRef} />
     </div>
   );
 };
@@ -523,3 +595,7 @@ const ChatHeader = ({ info }) => {
     </div>
   );
 };
+
+const MESSAGE_CONTAINER = css({
+  height: 420,
+});
