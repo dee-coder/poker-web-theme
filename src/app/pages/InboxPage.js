@@ -1,5 +1,5 @@
 import { Box, Paper, Typography } from "@material-ui/core";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import css from "@emotion/css";
 import {
   Col,
@@ -21,6 +21,7 @@ import ScrollToBottom from "react-scroll-to-bottom";
 let socket;
 
 const InboxPage = () => {
+  const divRef = useRef();
   const [CurrentRoom, setCurrentRoom] = useState(null);
   const [CurrentUser, setCurrentUser] = useState();
   const [Messages, setMessages] = useState([]);
@@ -33,9 +34,10 @@ const InboxPage = () => {
 
   const [NewMessage, setNewMessage] = useState("");
 
-  const ENDPOINT = "http://192.168.29.236:1234";
+  const ENDPOINT = "https://api.pokerswapping.com";
 
   const [ActiveChat, setActiveChat] = useState(null);
+
   useEffect(() => {
     if (localStorage.getItem("userInfo") === undefined) {
       setRedirect(true);
@@ -44,7 +46,7 @@ const InboxPage = () => {
       setRole(localStorage.getItem("role"));
     }
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    //console.log(userInfo);
+
     const role = localStorage.getItem("role");
 
     fetch(API.baseUrl + API.getConversations, {
@@ -59,23 +61,15 @@ const InboxPage = () => {
     })
       .then((json) => json.json())
       .then((res) => {
-        //console.log(res);
         if (res.status === "ok") {
           setChats(res.chats);
         } else {
         }
       })
       .catch((err) => {
-        //console.log(err);
         alert(err.message);
       });
   }, []);
-
-  // const selectedChat = (index) => {
-  //   var chat = Chats[index];
-
-  //   setActiveChat(chat);
-  // };
 
   const createAMessage = () => {
     var message = {
@@ -91,7 +85,6 @@ const InboxPage = () => {
       status: "A",
     };
 
-    //console.log(message);
     var chatObj = ActiveChat;
     var oldChat = JSON.parse(ActiveChat.chat.messages);
 
@@ -101,14 +94,11 @@ const InboxPage = () => {
 
     setActiveChat(chatObj);
     setNewMessage("");
-    //console.log(ActiveChat);
   };
 
   const sendMessage = (e) => {
     e.preventDefault();
     if (NewMessage) {
-      // var name =
-      //   role === "player" ? userInfo.player_name : userInfo.sponsor_name;
       var text = {
         user: {
           user_id: role === "player" ? userInfo.player_id : userInfo.sponsor_id,
@@ -126,86 +116,65 @@ const InboxPage = () => {
   };
 
   const joinRoom = (chat) => {
+    console.log(chat);
     if (CurrentRoom === null || CurrentRoom === undefined) {
-      //socket = io(ENDPOINT);
-      //console.log(socket);
       if (socket === undefined) {
         socket = io(ENDPOINT);
       } else {
       }
-      //socket = io(ENDPOINT);
+
       var roomid = chat.chat.id;
       setCurrentRoom(chat);
+
+      console.log(JSON.parse(chat.chat.messages));
 
       setMessages(JSON.parse(chat.chat.messages));
 
       const username =
         role === "player" ? userInfo.player_name : userInfo.sponsor_name;
-      //console.log(name, room);
 
       setCurrentUser(username);
-      //setRoom(room);
 
       socket.emit("join", { username, roomid }, () => {});
     } else {
       socket.emit("leave", { CurrentUser }, () => {});
-      //socket.emit("disconnect");
-      //   socket.off();
-      socket = undefined;
-      setMessages([]);
 
-      // Re join the group as diffrent user
+      socket = undefined;
+
       if (socket === undefined) {
         socket = io(ENDPOINT);
       } else {
       }
-      //socket = io(ENDPOINT);
-      var roomid = chat.chatid;
-      setCurrentRoom(chat);
-      setMessages(chat.messages);
 
-      const { username } =
+      var roomid = chat.chat.id;
+      setCurrentRoom(chat);
+      console.log(chat.chat.messages);
+      setMessages(JSON.parse(chat.chat.messages));
+
+      const username =
         role === "player" ? userInfo.player_name : userInfo.sponsor_name;
-      //console.log(name, room);
 
       setCurrentUser(username);
-      //setRoom(room);
 
       socket.emit("join", { username, roomid }, () => {});
     }
-
-    // return () => {
-    //     socket.emit("disconnect");
-    //     socket.off();
-    // };
   };
 
-  //   useEffect(() => {
-
-  //   }, []);
-
   useEffect(() => {
-    //console.log(CurrentRoom);
     if (CurrentRoom !== null || CurrentRoom !== undefined) {
-      //console.log(socket);
       if (socket === undefined) {
         socket = io(ENDPOINT);
       }
       socket.on("message", (msg) => {
         console.log(msg, "this");
 
-        //var message = { user: user, content: text,type:'text',generated:Date.now };
-        var mess = [];
-        mess = Messages;
-        mess.push(msg);
-        setMessages(mess);
-
-        console.log(Messages);
+        console.log("message", Messages);
+        setMessages([...Messages, msg]);
+        //divRef.current.scrollIntoView({ behavior: "smooth" });
       });
     }
-  }, []);
+  }, [Messages]);
 
-  useEffect(() => {}, [Messages]);
   return (
     <Paper style={{ minHeight: "600px" }}>
       <Row style={{ paddingLeft: "12px", height: "600px" }}>
@@ -275,20 +244,70 @@ const InboxPage = () => {
               {" "}
               {Chats.map((chat, index) => {
                 return (
-                  <div
-                    onClick={() => joinRoom(chat)}
-                    style={{ padding: "15px", background: "#FFF" }}
-                  >
-                    <Image
-                      style={{ height: "40px", width: "40px" }}
-                      src={toAbsoluteUrl("/media/users/default.jpg")}
-                      roundedCircle
-                    />
-
-                    <Typography variant="body" style={{ marginLeft: "15px" }}>
-                      {chat.tournamentDetails.name}
-                    </Typography>
-                  </div>
+                  <a>
+                    <div
+                      onClick={() => joinRoom(chat)}
+                      style={{
+                        padding: "15px",
+                        background: CurrentRoom === chat ? "#f2f2f2" : "#FFF",
+                      }}
+                    >
+                      <Row>
+                        <div className="col-auto">
+                          {" "}
+                          <Image
+                            style={{ height: "40px", width: "40px" }}
+                            src={toAbsoluteUrl("/media/users/default.jpg")}
+                            roundedCircle
+                          />
+                        </div>
+                        <div className="col-auto">
+                          {" "}
+                          <Badge variant="primary">
+                            #{chat.tournamentDetails.sharkscope_id}
+                          </Badge>
+                          <br />
+                          <Typography
+                            variant="body"
+                            style={{ marginTop: "5px" }}
+                          >
+                            {chat.tournamentDetails.name}
+                          </Typography>
+                          <br />
+                          <div style={{ marginTop: "5px" }}>
+                            {chat.users.players.map((player) => {
+                              return (
+                                <span
+                                  style={{ fontSize: "12px", color: "gray" }}
+                                >
+                                  {" "}
+                                  {player.player_name},{" "}
+                                </span>
+                              );
+                            })}
+                            {chat.users.sponsors.map((sponsor, index) => {
+                              return index ===
+                                chat.users.sponsors.length - 1 ? (
+                                <span
+                                  style={{ fontSize: "12px", color: "gray" }}
+                                >
+                                  {" "}
+                                  {sponsor.sponsor_name}{" "}
+                                </span>
+                              ) : (
+                                <span
+                                  style={{ fontSize: "12px", color: "gray" }}
+                                >
+                                  {" "}
+                                  {sponsor.sponsor_name},{" "}
+                                </span>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </Row>
+                    </div>
+                  </a>
                 );
               })}
             </Col>
@@ -311,6 +330,7 @@ const InboxPage = () => {
                     Chat={Messages}
                     userInfo={userInfo}
                     role={role}
+                    divRef={divRef}
                   />
                 </Col>
               </Row>
@@ -321,7 +341,11 @@ const InboxPage = () => {
                     value={NewMessage}
                     placeholder="Type message here..."
                     onKeyPress={(e) =>
-                      e.key === "Enter" ? sendMessage(e) : null
+                      e.key === "Enter"
+                        ? NewMessage === ""
+                          ? e.preventDefault()
+                          : sendMessage(e)
+                        : null
                     }
                     onChange={(e) => setNewMessage(e.target.value)}
                   />
@@ -331,6 +355,9 @@ const InboxPage = () => {
                   <Button
                     variant="success"
                     style={{ marginTop: "20px", float: "right" }}
+                    onClick={(e) =>
+                      NewMessage === "" ? e.preventDefault() : sendMessage(e)
+                    }
                   >
                     Send
                   </Button>
@@ -346,15 +373,14 @@ const InboxPage = () => {
 
 export default InboxPage;
 
-const ActiveChatComponent = ({ Chat, userInfo, role }) => {
+const ActiveChatComponent = ({ Chat, userInfo, role, divRef }) => {
   const ROOT_CLASS_CONTAINER = {
-    maxHeight: "450px",
-    minHeight: "450px",
+    maxHeight: "420px",
+    minHeight: "420px",
     overflow: "scroll",
   };
-  useEffect(() => {
-    console.log(Chat);
-  }, [Chat]);
+
+  useEffect(() => {}, [Chat]);
 
   function getDates(date) {
     // var today = new Date(date);
@@ -372,13 +398,17 @@ const ActiveChatComponent = ({ Chat, userInfo, role }) => {
     <div style={ROOT_CLASS_CONTAINER}>
       {Chat.map((message) => {
         return (
-          <Row>
+          <Row ref={divRef}>
             <Col>
               {message.user.user_id ===
               (role === "player" ? userInfo.player_id : userInfo.sponsor_id) ? (
-                <div style={{ float: "right" }}>
+                <div style={{ float: "right", marginRight: "20px" }}>
                   <Badge
-                    style={{ padding: "10px", textAlign: "left" }}
+                    style={{
+                      padding: "10px",
+                      textAlign: "left",
+                      float: "right",
+                    }}
                     variant="primary"
                   >
                     <Typography variant="body1" className="text-normal">
@@ -390,9 +420,11 @@ const ActiveChatComponent = ({ Chat, userInfo, role }) => {
                     variant="body2"
                     gutterBottom
                     style={{
+                      float: "left",
                       marginLeft: "5px",
                       fontSize: "10px",
                       marginTop: "10px",
+                      marginRight: "10px",
                     }}
                   >
                     {getDates(message.generated)}
@@ -441,12 +473,6 @@ const ActiveChatComponent = ({ Chat, userInfo, role }) => {
     </div>
   );
 };
-
-// const UserHeader = () => {
-//   return (
-
-//   );
-// };
 
 const ChatHeader = ({ info }) => {
   return (
