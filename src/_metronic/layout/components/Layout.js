@@ -14,6 +14,7 @@ import { QuickUser } from "./extras/offcanvas/QuickUser";
 import { ScrollTop } from "./extras/ScrollTop";
 import { StickyToolbar } from "./extras/StickyToolbar";
 import { AnimateLoading } from "../../_partials/controls";
+import { NotificationsToggle } from "../../../app/pages/NotificationsToggle";
 
 export function Layout({ children }) {
   const uiService = useHtmlClassService();
@@ -99,7 +100,8 @@ export function Layout({ children }) {
         {/*end::Page*/}
       </div>
       <QuickUser />
-      <QuickPanel />
+
+      <NotificationsToggle />
       <ScrollTop />
       <StickyToolbar />
       {/*end::Main*/}

@@ -33,7 +33,7 @@ const InboxPage = () => {
 
   const [NewMessage, setNewMessage] = useState("");
 
-  const ENDPOINT = "https://api.pokerswapping.com";
+  const ENDPOINT = API.baseUrl;
 
   const [ActiveChat, setActiveChat] = useState(null);
 

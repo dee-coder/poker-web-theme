@@ -57,12 +57,12 @@ export function Topbar() {
       {layoutProps.viewQuickPanelDisplay && (
         <OverlayTrigger
           placement="bottom"
-          overlay={<Tooltip id="quick-panel-tooltip">Quick panel</Tooltip>}
+          overlay={<Tooltip id="quick-panel-tooltip">Notifications</Tooltip>}
         >
           <div
             className="topbar-item"
             data-toggle="tooltip"
-            title="Quick panel"
+            title="Notifications"
             data-placement="right"
           >
             <div
@@ -72,7 +72,7 @@ export function Topbar() {
               <span className="svg-icon svg-icon-xl">
                 <SVG
                   src={toAbsoluteUrl(
-                    "/media/svg/icons/Layout/Layout-4-blocks.svg"
+                    "/media/svg/icons/General/Notifications1.svg"
                   )}
                 />
               </span>
