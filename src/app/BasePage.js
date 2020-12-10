@@ -97,7 +97,7 @@ export default function BasePage() {
       {/*Show a player profile based on id*/} {/*Login not required */}
       {/* <ContentRoute path="/player/profile/:id" component={} /> */}
       {/*Show a network page based on id*/} {/*Login not required*/}
-      {/* <ContentRoute path="/networks/:id" component={} /> */}
+       <ContentRoute path="/networks/:id" component={} /> 
       {/*Show a spacific page by id*/} {/*Login not required*/}
       {/* <ContentRoute path="/pages/:id" component={} /> */}
       {/*Show find tournaments page*/} {/*Login not required*/}
