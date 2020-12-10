@@ -93,11 +93,11 @@ export default function BasePage() {
       {/* <ContentRoute path="/apply/:id" component={} /> */}
       {/* COMMON ROUTES*/}
       {/*Show a profile of sponsor*/} {/*Login not required*/}
-       {/* <ContentRoute path="/sponsor/profile/:id" component={} /> */}
+      {/* <ContentRoute path="/sponsor/profile/:id" component={} /> */}
       {/*Show a player profile based on id*/} {/*Login not required */}
       {/* <ContentRoute path="/player/profile/:id" component={} /> */}
       {/*Show a network page based on id*/} {/*Login not required*/}
-       <ContentRoute path="/networks/:id" component={} /> 
+      {/* <ContentRoute path="/networks/:id" component={} />  */}
       {/*Show a spacific page by id*/} {/*Login not required*/}
       {/* <ContentRoute path="/pages/:id" component={} /> */}
       {/*Show find tournaments page*/} {/*Login not required*/}

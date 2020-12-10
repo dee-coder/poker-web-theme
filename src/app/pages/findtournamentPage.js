@@ -78,6 +78,7 @@ const FindTournamentPage = () => {
   var urlNetwork = JsonUrl.baseUrl + JsonUrl.getTournamentFromSpacificNetwork;
 
   useEffect(() => {
+    var filters = [];
     setShowSpinner(true);
     setTournamentList([]);
     var list = [];
@@ -87,10 +88,17 @@ const FindTournamentPage = () => {
     //console.log(selectedNetwork);
     if (selectedNetwork === null || selectedNetwork.length === 0) {
       //setHoldedList([]);
-      var data = {
-        networks: "",
-        filters: "",
-      };
+
+      selectedNetwork.map((obj) => {
+        filters.push({ key: "network", operator: "$eq", value: obj.label });
+      });
+      selectedFilters.map((obj) => {
+        filters.push({
+          key: obj.key,
+          operator: obj.operator,
+          value: obj.value,
+        });
+      });
       setShowSpinner(true);
       //fetch(urlNetwork)
       fetch(urlNetwork, {
@@ -98,7 +106,7 @@ const FindTournamentPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ filters: filters }),
       })
         .then((response) => response.json())
         .then((data) => {
@@ -136,10 +144,17 @@ const FindTournamentPage = () => {
         });
     } else {
       //setHoldedList([]);
-      var data = {
-        networks: selectedNetwork || "",
-        filters: selectedFilters,
-      };
+
+      selectedNetwork.map((obj) => {
+        filters.push({ key: "network", operator: "$eq", value: obj.label });
+      });
+      selectedFilters.map((obj) => {
+        filters.push({
+          key: obj.key,
+          operator: obj.operator,
+          value: obj.value,
+        });
+      });
       setShowSpinner(true);
       //fetch(urlNetwork)
       fetch(urlNetwork, {
@@ -147,7 +162,7 @@ const FindTournamentPage = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({ filters: filters }),
       })
         .then((response) => response.json())
         .then((data) => {
