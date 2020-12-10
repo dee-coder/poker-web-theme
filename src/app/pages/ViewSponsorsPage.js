@@ -46,7 +46,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ViewSponsorsPage = (props) => {
   const classes = useStyles();
-
+  const [Queries, setQueries] = useState(null);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [firstTimeSuccessBox, setFirstTimeSuccessBox] = useState(false);
   const [tournamentData, setTournamentData] = useState({});
@@ -54,44 +54,71 @@ const ViewSponsorsPage = (props) => {
   const [redirectFourZeroFour, setRedirectFourZeroFour] = useState(false);
   const [playersData, setPlayersData] = useState({});
   const [swapData, setSwapData] = useState({});
+  const [AllSponsorsForInvitation, setAllSponsorsForInvitation] = useState([]);
+  const [ActiveSponsors, setActiveSponsors] = useState([]);
 
   useEffect(() => {
-    const queries = queryString.parse(props.location.search);
+    const queries = props.match.params.id;
+    console.log(props.match.params.id);
     //console.log(queries);
     //setTournamentId(queries.id);
-    if (queries.id === undefined || queries.id === null || queries.id === "") {
+    setQueries(queries);
+    if (queries === undefined || queries === null || queries === "") {
       setRedirectFourZeroFour(true);
     }
 
     if (JSON.parse(localStorage.getItem("userInfo")) === null) {
       setRedirectToLogin(true);
     } else {
-      if (
-        queries.status === undefined ||
-        queries.status === null ||
-        queries.status === ""
-      ) {
-        setFirstTimeSuccessBox(false);
-      } else if (queries.status === "new") {
-        setFirstTimeSuccessBox(true);
-      }
+      // if (
+      //   queries.status === undefined ||
+      //   queries.status === null ||
+      //   queries.status === ""
+      // ) {
+      //   setFirstTimeSuccessBox(false);
+      // } else if (queries.status === "new") {
+      //   setFirstTimeSuccessBox(true);
+      // }
       fetch(API.baseUrl + API.getSponsoredDetails, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: queries.id }),
+        body: JSON.stringify({ id: queries }),
       })
         .then((res) => res.json())
         .then((json) => {
-          //console.log(json);
+          console.log(json);
           setTournamentData(json.tounamentData);
           setPlayersData(json.playersInfo);
           setSwapData(json.result[0]);
+          setAllSponsorsForInvitation(json.sponsors);
+          setActiveSponsors(json.sponsoring);
         })
         .catch((err) => console.log(err));
     }
   }, []);
+
+  const inviteTheSponsor = (e, obj) => {
+    e.preventDefault();
+    fetch(API.baseUrl + API.sendInvitation, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sponsor_id: obj.sponsor_id,
+        sponsorship_id: Queries,
+      }),
+    })
+      .then((json) => json.json())
+      .then((res) => {
+        alert(res);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  };
 
   function getDates(date) {
     var today = new Date(date);
@@ -105,8 +132,18 @@ const ViewSponsorsPage = (props) => {
     <Box>
       {redirectFourZeroFour && <Redirect to="/error/error-v1" />}
       {redirectToLogin && <Redirect to="/login-new" />}
-
       <Row>
+        <Col>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Sponsorship
+          </Typography>
+        </Col>
+      </Row>
+
+      <Row style={{ marginTop: "20px" }}>
         <Col lg={8}>
           {firstTimeSuccessBox && (
             <Paper style={{ marginBottom: "20px" }}>
@@ -227,7 +264,9 @@ const ViewSponsorsPage = (props) => {
                   <br />
                   <br />
                   <Typography variant="body1">
-                    <strong>{swapData.created_date}</strong>
+                    <strong>
+                      {new Date(swapData.created).toLocaleDateString("en-US")}
+                    </strong>
                   </Typography>{" "}
                 </div>
               </Col>
@@ -335,13 +374,24 @@ const ViewSponsorsPage = (props) => {
             <Divider />
             <Row style={{ padding: "30px" }}>
               <Col lg={12}>
-                <Typography
-                  variant="body1"
-                  gutterBottom
-                  style={{ color: "#848484" }}
-                >
-                  0 participants sponsors are currently sponsoring this game.
-                </Typography>
+                {ActiveSponsors.length === 0 ? (
+                  <Typography
+                    variant="body1"
+                    gutterBottom
+                    style={{ color: "#848484" }}
+                  >
+                    Currently no sponsor sponsoring this game.
+                  </Typography>
+                ) : (
+                  <Typography
+                    variant="body1"
+                    gutterBottom
+                    style={{ color: "#848484" }}
+                  >
+                    {ActiveSponsors.length} participants sponsors are currently
+                    sponsoring this game.
+                  </Typography>
+                )}
               </Col>
             </Row>
           </Paper>
@@ -358,13 +408,7 @@ const ViewSponsorsPage = (props) => {
             <Row style={{ padding: "30px" }}>
               <Col lg={12}>
                 <List className={classes.root}>
-                  {[
-                    { name: "Anil" },
-                    { name: "Kunal" },
-                    { name: "Rheeha" },
-                    { name: "Shital" },
-                    { name: "Pooja" },
-                  ].map((item) => {
+                  {AllSponsorsForInvitation.map((item) => {
                     return (
                       <ListItem
                         alignItems="flex-start"
@@ -377,7 +421,7 @@ const ViewSponsorsPage = (props) => {
                           />
                         </ListItemAvatar>
                         <ListItemText
-                          primary={item.name}
+                          primary={item.sponsor_name}
                           secondary={
                             <React.Fragment>
                               <Typography
@@ -386,7 +430,7 @@ const ViewSponsorsPage = (props) => {
                                 className={classes.inline}
                                 color="textPrimary"
                               >
-                                Ali Connors
+                                {item.sponsor_name}
                               </Typography>
                               {
                                 " — I'll be in your neighborhood doing errands this…"
@@ -401,6 +445,7 @@ const ViewSponsorsPage = (props) => {
                             float: "right",
                             marginTop: "10px",
                           }}
+                          onClick={(e) => inviteTheSponsor(e, item)}
                         >
                           Invite
                         </Button>

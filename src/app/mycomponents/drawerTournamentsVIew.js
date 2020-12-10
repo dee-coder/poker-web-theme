@@ -1,7 +1,15 @@
 import { Avatar, Box, Divider, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
-import { Row, Col, Container, Badge, Form, Button } from "react-bootstrap";
+import {
+  Row,
+  Col,
+  Container,
+  Badge,
+  Form,
+  Button,
+  Card,
+} from "react-bootstrap";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 import {
@@ -76,33 +84,21 @@ const DrawerTournamentsView = ({
           <Container>
             <Row>
               <Col>
-                <Form inline>
-                  <h4>
-                    {" "}
-                    <Badge
-                      variant="success"
-                      style={{ fontSize: "12px", fontWeight: "200" }}
-                    >
-                      #{obj.sharkscope_id}
-                    </Badge>
-                  </h4>
-
-                  <h4 style={{ marginLeft: "10px" }}>
-                    {" "}
-                    <Badge
-                      variant="secondary"
-                      style={{ fontSize: "12px", fontWeight: "200" }}
-                    >
-                      {obj.scheduledStartTime}
-                    </Badge>
-                  </h4>
-                </Form>
+                <Typography
+                  variant="h4"
+                  style={{
+                    fontWeight: "600",
+                    color: "#000",
+                  }}
+                >
+                  Tournament Details
+                </Typography>
               </Col>
               <Col>
                 <Row>
                   <Col lg={11}>
                     <a
-                      href={`https://pokerswapping.com/details/${obj.sharkscope_id}`}
+                      href={`https://pokerswapping.com/tournament/${obj.sharkscope_id}`}
                       target="_blank"
                       style={{ float: "right" }}
                     >
@@ -135,11 +131,12 @@ const DrawerTournamentsView = ({
                 </Row>
               </Col>
             </Row>
-            <Row style={{ marginTop: "30px" }}>
+
+            <Row>
               <Col>
                 {/* <TournamentHeader className="card-stretch gutter-b" obj={obj} /> */}
                 <Box component="span" m={5}>
-                  <Row style={{ marginTop: "30px" }}>
+                  <Row style={{ marginTop: "10px" }}>
                     <Col lg={9}>
                       <TournamentHeader
                         className="card-stretch gutter-b"
@@ -149,33 +146,57 @@ const DrawerTournamentsView = ({
                     </Col>
 
                     <Col lg={3}>
-                      <Paper style={{ padding: "30px" }}>
-                        <Link to={`/add-swap/${obj.sharkscope_id}`}>
-                          <Button
-                            variant="primary"
-                            style={{
-                              marginTop: "20px",
-                              width: "100%",
-                              textAlign: "center",
-                              fontSize: "12px",
-                            }}
-                          >
-                            Swapping{" "}
-                            <i
-                              class="fas fa-exchange-alt"
+                      <Card>
+                        <Card.Body>
+                          <Link to={`/add-swap/${obj.sharkscope_id}`}>
+                            <Button
+                              variant="primary"
                               style={{
-                                color: "#FFF",
-                                marginLeft: "15px",
+                                marginTop: "20px",
+                                width: "100%",
+                                textAlign: "center",
+                                fontSize: "12px",
+                              }}
+                            >
+                              Swapping{" "}
+                              <i
+                                class="fas fa-exchange-alt"
+                                style={{
+                                  color: "#FFF",
+                                  marginLeft: "15px",
 
-                                fontSize: "13px",
-                                float: "right",
-                                marginRight: "15px",
+                                  fontSize: "13px",
+                                  float: "right",
+                                  marginRight: "15px",
+                                }}
+                              ></i>
+                            </Button>
+                          </Link>
+                          <br />
+                          <Link to={`/sponsorship/create/${obj.sharkscope_id}`}>
+                            <Button
+                              variant="primary"
+                              style={{
+                                marginTop: "20px",
+                                width: "100%",
+                                textAlign: "center",
+                                fontSize: "12px",
                               }}
-                            ></i>
-                          </Button>
-                        </Link>
-                        <br />
-                        <Link to={`/add-sponsor/${obj.sharkscope_id}`}>
+                            >
+                              Add sponsors{" "}
+                              <i
+                                class="fas fa-plus"
+                                style={{
+                                  color: "#FFF",
+                                  marginLeft: "15px",
+                                  fontSize: "13px",
+                                  float: "right",
+                                  marginRight: "15px",
+                                }}
+                              ></i>
+                            </Button>
+                          </Link>
+                          <br />
                           <Button
                             variant="primary"
                             style={{
@@ -185,9 +206,9 @@ const DrawerTournamentsView = ({
                               fontSize: "12px",
                             }}
                           >
-                            Add sponsors{" "}
+                            View Live{" "}
                             <i
-                              class="fas fa-plus"
+                              class="fas fa-tv"
                               style={{
                                 color: "#FFF",
                                 marginLeft: "15px",
@@ -197,30 +218,29 @@ const DrawerTournamentsView = ({
                               }}
                             ></i>
                           </Button>
-                        </Link>
-                        <br />
-                        <Button
-                          variant="primary"
-                          style={{
-                            marginTop: "20px",
-                            width: "100%",
-                            textAlign: "center",
-                            fontSize: "12px",
-                          }}
-                        >
-                          View Live{" "}
-                          <i
-                            class="fas fa-tv"
-                            style={{
-                              color: "#FFF",
-                              marginLeft: "15px",
-                              fontSize: "13px",
-                              float: "right",
-                              marginRight: "15px",
-                            }}
-                          ></i>
-                        </Button>
-                        <a href={url}>
+                          <a href={url}>
+                            <Button
+                              variant="primary"
+                              style={{
+                                marginTop: "20px",
+                                width: "100%",
+                                textAlign: "center",
+                                fontSize: "12px",
+                              }}
+                            >
+                              {obj.network}{" "}
+                              <i
+                                class="fas fa-external-link-alt"
+                                style={{
+                                  color: "#FFF",
+                                  marginLeft: "15px",
+                                  fontSize: "13px",
+                                  float: "right",
+                                  marginRight: "15px",
+                                }}
+                              ></i>
+                            </Button>
+                          </a>
                           <Button
                             variant="primary"
                             style={{
@@ -230,9 +250,9 @@ const DrawerTournamentsView = ({
                               fontSize: "12px",
                             }}
                           >
-                            {obj.network}{" "}
+                            Add to calender{" "}
                             <i
-                              class="fas fa-external-link-alt"
+                              class="fas fa-calendar-check"
                               style={{
                                 color: "#FFF",
                                 marginLeft: "15px",
@@ -242,58 +262,29 @@ const DrawerTournamentsView = ({
                               }}
                             ></i>
                           </Button>
-                        </a>
-                        <Button
-                          variant="primary"
-                          style={{
-                            marginTop: "20px",
-                            width: "100%",
-                            textAlign: "center",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Add to calender{" "}
-                          <i
-                            class="fas fa-calendar-check"
+                          <Button
+                            variant="primary"
                             style={{
-                              color: "#FFF",
-                              marginLeft: "15px",
-                              fontSize: "13px",
-                              float: "right",
-                              marginRight: "15px",
+                              marginTop: "20px",
+                              width: "100%",
+                              textAlign: "center",
+                              fontSize: "12px",
                             }}
-                          ></i>
-                        </Button>
-                        <Button
-                          variant="primary"
-                          style={{
-                            marginTop: "20px",
-                            width: "100%",
-                            textAlign: "center",
-                            fontSize: "12px",
-                          }}
-                        >
-                          Share Tournament{" "}
-                          <i
-                            class="fas fa-share"
-                            style={{
-                              color: "#FFF",
-                              marginLeft: "15px",
-                              fontSize: "13px",
-                              float: "right",
-                              marginRight: "15px",
-                            }}
-                          ></i>
-                        </Button>
-                      </Paper>
-                    </Col>
-                  </Row>
-                  <Row>
-                    <Col lg={9}>
-                      <Paper style={{ padding: "30px" }}>
-                        <h4>Participants</h4>
-                        <Divider style={{ marginTop: "15px" }} />
-                      </Paper>
+                          >
+                            Share Tournament{" "}
+                            <i
+                              class="fas fa-share"
+                              style={{
+                                color: "#FFF",
+                                marginLeft: "15px",
+                                fontSize: "13px",
+                                float: "right",
+                                marginRight: "15px",
+                              }}
+                            ></i>
+                          </Button>
+                        </Card.Body>
+                      </Card>
                     </Col>
                   </Row>
                 </Box>

@@ -46,6 +46,8 @@
         "apexcharts": "^3.19.2",
         "axios": "^0.19.2",
         "axios-mock-adapter": "1.18.1",
+        "bcrypt": "^5.0.0",
+        "bcryptjs": "^2.4.3",
         "bootstrap": "4.5.0",
         "clipboard-copy": "3.1.0",
         "clsx": "1.1.0",

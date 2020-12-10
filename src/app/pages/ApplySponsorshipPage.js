@@ -66,6 +66,16 @@ const ApplySponsorshipPage = (props) => {
 
   return (
     <Box>
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Apply Sponsorship
+          </Typography>
+        </Col>
+      </Row>
       <Row style={{ marginTop: "30px", paddingBottom: "20px" }}>
         <Col>
           <Row style={{ marginTop: "0px" }}>

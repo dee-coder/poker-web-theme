@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://api.pokerswapping.com",
+  "baseUrl": "http://localhost:1234",
   "signinSponsor": "/login/sponser",
   "signinPlayer": "/login/player",
   "signupSponsor": "/signup/sponser",
@@ -27,7 +27,8 @@
   "walletInfo":"/payment/wallet/info",
   "approvePendingSponsorship":"/sponsorship/approve",
   "rejectPendingSponsorship":"/sponsorship/reject",
-  "getConversations":"/chat/conversations"
+  "getConversations":"/chat/conversations",
+  "sendInvitation":"/invitation/send"
 
   
 }

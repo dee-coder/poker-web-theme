@@ -55,6 +55,16 @@ const SponsorProfilePage = () => {
   }, []);
   return (
     <Box>
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            My Profile
+          </Typography>
+        </Col>
+      </Row>
       <Row>
         <Col lg={4}>
           {" "}

@@ -1,4 +1,4 @@
-import { Box, Paper } from "@material-ui/core";
+import { Box, Paper, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Col, Row, Image, Tabs, Tab } from "react-bootstrap";
 import API from "../../apiUrl.json";
@@ -26,6 +26,16 @@ const SponsorsPage = (props) => {
   }, []);
   return (
     <Box p={5}>
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Sponsors
+          </Typography>
+        </Col>
+      </Row>
       <Row>
         <Col lg={4}>
           <Paper style={{ padding: "30px" }}>

@@ -1,4 +1,4 @@
-import { Box, Drawer, Paper } from "@material-ui/core";
+import { Box, Drawer, Paper, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { Row, Col, Tabs, Tab, Badge } from "react-bootstrap";
 import _ from "lodash";
@@ -81,22 +81,25 @@ const PlayerProfilePage = () => {
     })
       .then((response) => response.json())
       .then((json) => {
-        //console.log(json);
-        var stats = JSON.parse(json.result.player_details_json);
-        // console.log(stats);
-        setRecentTournaments(stats.playerDetails.RecentTournaments.Tournament);
-        setDataSet(stats.playerDetails.Statistics.StatisticalDataSet);
-        setStatistics(stats.playerDetails.Statistics.Statistic);
-        // console.log(json.tournaments);
+        console.log(json);
         setActiveTournaments(json.tournaments);
+        setStatistics(json.result.player_details_json.Statistics.Statistic);
+        // console.log(json);
+        // setActiveTournaments(json.tournaments);
+
+        // setStatistics(json.result.player_details_json.Statistics.Statistic);
+        // //console.log(json.tournaments);
+
         setListOfSponsoredTournaments(json.sponsored);
 
-        setEvents(stats.playerDetails.Statistics.Timeline.Event);
+        // console.log(activeTournaments, "this");
 
-        var ar = stats.playerDetails.Statistics.StatisticalDataSet;
-        var ob = ar[0];
-        //console.log(ob.Data);
-        setGraphData(ob.Data);
+        // setEvents(json.result.player_details_json.Statistics.Timeline.Event);
+
+        // var ar = json.result.player_details_json.Statistics.StatisticalDataSet;
+        // var ob = ar[0];
+        // //console.log(ob.Data);
+        // setGraphData(ob.Data);
 
         fetch(JsonUrl.baseUrl + JsonUrl.getAllNetworks, {
           method: "GET",
@@ -128,6 +131,16 @@ const PlayerProfilePage = () => {
 
   return (
     <Box>
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            My Profile
+          </Typography>
+        </Col>
+      </Row>
       <Row style={{ marginBottom: "20px" }}>
         <Col lg={4}>
           <Paper>

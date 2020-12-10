@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, { useState, useEffect } from "react";
-import { Button, Row, Col } from "react-bootstrap";
+import { Button, Row, Col, Form, Badge } from "react-bootstrap";
 import SVG from "react-inlinesvg";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import _ from "lodash";
@@ -73,23 +73,47 @@ export function TournamentHeader({ className, obj, networks }) {
   }, [obj]);
 
   return (
-    <div className={`card card-custom ${className}`}>
+    <div className="card">
       {/* begin::Body */}
       <div className="card-body d-flex flex-column">
         <div className="flex-grow-1 pb-5">
           {/* begin::Info */}
-          <div className="d-flex align-items-center pr-2 mb-6">
-            <span className="text-muted font-weight-bold font-size-lg flex-grow-1">
-              {obj.network}
-            </span>
-            <div className="symbol symbol-50">
-              <span className="symbol-label bg-light-light">
-                <img
-                  src={toAbsoluteUrl(icon)}
-                  className="h-50 align-self-center"
-                ></img>{" "}
-              </span>
-            </div>
+          <div className="align-items-center ">
+            <Row>
+              <Col lg={6}>
+                <Form inline style={{ float: "left" }}>
+                  <h4>
+                    {" "}
+                    <Badge
+                      variant="success"
+                      style={{ fontSize: "12px", fontWeight: "200" }}
+                    >
+                      #{obj.sharkscope_id}
+                    </Badge>
+                  </h4>
+
+                  <h4 style={{ marginLeft: "10px" }}>
+                    {" "}
+                    <Badge
+                      variant="secondary"
+                      style={{ fontSize: "12px", fontWeight: "200" }}
+                    >
+                      {obj.scheduledStartTime}
+                    </Badge>
+                  </h4>
+                </Form>
+              </Col>
+              <Col lg={6}>
+                <div className="symbol symbol-50" style={{ float: "right" }}>
+                  <span className="symbol-label bg-light-light">
+                    <img
+                      src={toAbsoluteUrl(icon)}
+                      className="h-50 align-self-center"
+                    ></img>{" "}
+                  </span>
+                </div>
+              </Col>
+            </Row>
           </div>
           {/* end::Info */}
 

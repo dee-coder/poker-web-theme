@@ -50,14 +50,20 @@ const AddSponsorPage = (props) => {
 
   const [callBackId, setCallBackId] = useState();
 
+  const [RedirectForLogin, setRedirectForLogin] = useState(false);
+
   useEffect(() => {
-    const params = props.match.params;
-    setTournamentId(params.id);
-    var userInfo = JSON.parse(localStorage.getItem("userInfo"));
-    setUserINFO(userInfo);
-    if (JSON.parse(localStorage.getItem("userInfo")) === null) {
-      setRedirectToLogin(true);
+    if (
+      JSON.parse(localStorage.getItem("userInfo")) === null ||
+      JSON.parse(localStorage.getItem("userInfo")) === undefined
+    ) {
+      //not login
+      setRedirectForLogin(true);
     } else {
+      //loggedin
+      setRedirectForLogin(false);
+      const params = props.match.params;
+      setTournamentId(params.id);
       fetch(API.baseUrl + API.getTournamentById + "?id=" + params.id, {
         method: "GET",
         headers: {
@@ -113,7 +119,7 @@ const AddSponsorPage = (props) => {
     })
       .then((response) => response.json())
       .then((json) => {
-        //console.log(json);
+        console.log(json);
         if (json.status === "ok") {
           setCallBackId(json.result.id);
           setSuccessRedirect(true);
@@ -172,10 +178,20 @@ const AddSponsorPage = (props) => {
 
   return (
     <Box>
-      {redirectToLogin && <Redirect to="/login-new" />}
+      {redirectToLogin && <Redirect to="/auth" />}
       {successRedirect && (
-        <Redirect to={`/view-sponsors?id=${callBackId}&status=new`} />
+        <Redirect to={`/sponsorship/${callBackId}&status=new`} />
       )}
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Find Sponsors
+          </Typography>
+        </Col>
+      </Row>
       <Row>
         <Col lg={8}>
           <Paper>

@@ -481,7 +481,7 @@ const DrawerTournamentSponsorshipView = ({
             <Typography variant="h6">Sponsoring</Typography>
           </Col>
         </Row>
-        {pendingSponsorList.length === 0 && (
+        {approvedSponsorList.length === 0 && (
           <Typography variant="body" style={{ color: "#c4c4c4" }}>
             {" "}
             No sponsor is sponsoring for this tournament.{" "}
@@ -504,7 +504,7 @@ const DrawerTournamentSponsorshipView = ({
                         variant="body"
                         style={{ fontSize: "13px", marginLeft: "15px" }}
                       >
-                        {sponsor.sponsor_name}
+                        {sponsor[0].sponsor_name}
                       </Typography>
                       <div style={{ float: "right" }}>
                         <Button

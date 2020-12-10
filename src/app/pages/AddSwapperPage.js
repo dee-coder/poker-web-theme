@@ -162,6 +162,16 @@ const AddSwapperPage = (props) => {
       {successRedirect && (
         <Redirect to={`/view-swap?id=${callBackId}&status=new`} />
       )}
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Find Swapper
+          </Typography>
+        </Col>
+      </Row>
       <Row>
         <Col lg={8}>
           <Paper>

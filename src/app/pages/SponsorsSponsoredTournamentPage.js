@@ -43,6 +43,16 @@ const SponsorsSponsoredTournamentPage = () => {
   }, []);
   return (
     <Box>
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Sponsored Tournaments
+          </Typography>
+        </Col>
+      </Row>
       <Paper>
         <Row style={{ padding: "30px" }}>
           <Col>

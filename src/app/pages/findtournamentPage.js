@@ -376,6 +376,16 @@ const FindTournamentPage = () => {
 
   return (
     <Box component="span" m={5}>
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Find Tournaments
+          </Typography>
+        </Col>
+      </Row>
       <Row style={{ marginTop: "-10px" }}>
         <Col lg={12}>
           <Card>

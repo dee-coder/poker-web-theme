@@ -208,6 +208,13 @@ const BoxItemActiveTournaments = ({
               <span className="text-muted font-weight-bold">{obj.state}</span>
             </Col>
           </Row>
+          {/* <Row style={{ marginTop: "30px" }}>
+            <Col>
+              <Typography variant="body">
+                [ {allot.lenght} Sponsorship ✅ ]
+              </Typography>
+            </Col>
+          </Row> */}
 
           {/* {allot !== null && (
           <div>

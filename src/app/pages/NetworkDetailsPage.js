@@ -1,4 +1,4 @@
-import { Box, Paper } from "@material-ui/core";
+import { Box, Paper, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import API from "../../apiUrl.json";
 import renderHTML from "react-render-html";
@@ -33,6 +33,16 @@ const NetworkDetailsPage = (props) => {
   }, []);
   return (
     <Box>
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Network Details
+          </Typography>
+        </Col>
+      </Row>
       <Row>
         <Col lg={9}>
           <Paper style={{ padding: "50px" }}>

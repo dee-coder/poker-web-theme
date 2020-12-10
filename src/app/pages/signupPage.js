@@ -1,4 +1,4 @@
-import { Box, Paper } from "@material-ui/core";
+import { Box, Paper, Typography } from "@material-ui/core";
 import { useStyles } from "@material-ui/pickers/views/Calendar/SlideTransition";
 import { Row, Col, Card, Form, Button, Alert } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
@@ -139,6 +139,16 @@ const SingupPage = () => {
     <Box>
       <div className={classes.root}>
         {redirectPage && <Redirect to="/findtournament" />}
+        <Row style={{ marginBottom: "40px" }}>
+          <Col lg={12} style={{ textAlign: "left" }}>
+            <Typography
+              variant="h4"
+              style={{ fontWeight: "600", color: "white" }}
+            >
+              Sign up
+            </Typography>
+          </Col>
+        </Row>
         <Row className="justify-content-lg-center">
           <Col lg={6}>
             <Paper className={classes.paper}>

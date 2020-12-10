@@ -30,9 +30,6 @@ import SponsorsActiveTournamentsPage from "./pages/SponsorsActiveTournamentsPage
 import SponsorsPendingTournaments from "./pages/SponsorsPendingTournamnts";
 import SponsorsSponsoringTournamentPage from "./pages/SponsorsSponsoringTournamentPage";
 import SponsorsSponsoredTournamentPage from "./pages/SponsorsSponsoredTournamentPage";
-import { AuthPage } from "./modules/Auth/pages/AuthPage";
-import Login from "./modules/Auth/pages/Login";
-import Registration from "./modules/Auth/pages/Registration";
 import InboxPage from "./pages/InboxPage";
 
 const GoogleMaterialPage = lazy(() =>
@@ -45,10 +42,12 @@ const ECommercePage = lazy(() =>
   import("./modules/ECommerce/pages/eCommercePage")
 );
 
+let userInfo = null;
 export default function BasePage() {
-  // useEffect(() => {
-  //   console.log('Base page');
-  // }, []) // [] - is required if you need only one call
+  //useEffect(() => {
+  //   userInfo = JSON.parse(localStorage.getItem("userInfo"));
+  //    //console.log('Base page');
+  //  }) // [] - is required if you need only one call
   // https://reactjs.org/docs/hooks-reference.html#useeffect
 
   return (
@@ -57,6 +56,72 @@ export default function BasePage() {
         /* Redirect from root URL to /dashboard. */
         <Redirect exact from="/" to="/dashboard" />
       }
+      {/* { /* PLAYER'S ROUTES */}
+      {/*Create sponsorship or allotment of sponsorship by player*/}{" "}
+      {/*Login required*/}
+      <ContentRoute path="/sponsorship/create/:id" component={AddSponsorPage} />
+      <ContentRoute path="/sponsorship/:id" component={ViewSponsorsPage} />
+      {/*Show all sponsorships of players*/} {/*Login required*/}
+      {/* <ContentRoute path="/sponsorships" component={} /> */}
+      {/*Show a spacific sponsorships*/} {/*Login required*/}
+      {/* <ContentRoute path="/sponsorships/:id" component={} /> */}
+      {/*Show all active tournaments of spacific player*/} {/*Login required*/}
+      {/* <ContentRoute path="/active" component={} /> */}
+      {/*Show a spacific active tournaments of spacific player*/}{" "}
+      {/*Login required*/}
+      {/* <ContentRoute path="/active/:id" component={} /> */}
+      {/*Show all sponsoring tournaments of spacific player*/}{" "}
+      {/*Login required*/}
+      {/* <ContentRoute path="/sponsoring" component={} /> */}
+      {/*Show a spacific sponsoring tournaments of spacific player*/}{" "}
+      {/*Login required*/}
+      {/* <ContentRoute path="/sponsoring/:id" component={} /> */}
+      {/*Show all sponsored tournaments by player*/} {/*Login required*/}
+      {/* <ContentRoute path="/sponsored" component={} /> */}
+      {/*Show s spacific sponsored tournament by player*/} {/*Login required*/}
+      {/* <ContentRoute path="/sponsored/:id" component={} /> */}
+      {/*Show all swapping of players*/} {/*Login required*/}
+      {/* <ContentRoute path="/swapping" component={} /> */}
+      {/*Show a spacific swapping of player*/} {/*Login required*/}
+      {/* <ContentRoute path="/swapping/:id" component /> */}
+      {/* SPONSOR'S ROUTES */}
+      {/*Login for players*/}
+      {/*Show all sponsorships of players*/}
+      {/* <ContentRoute path="/sponsorships" component={} /> */}
+      {/*Show a spacific sponsorships*/}
+      {/*Apply on a sponsorship page*/}
+      {/* <ContentRoute path="/apply/:id" component={} /> */}
+      {/* COMMON ROUTES*/}
+      {/*Show a profile of sponsor*/} {/*Login not required*/}
+      {/* <ContentRoute path="/sponsor/profile/:id" component={} /> */}
+      {/*Show a player profile based on id*/} {/*Login not required */}
+      {/* <ContentRoute path="/player/profile/:id" component={} /> */}
+      {/*Show a network page based on id*/} {/*Login not required*/}
+      {/* <ContentRoute path="/networks/:id" component={} /> */}
+      {/*Show a spacific page by id*/} {/*Login not required*/}
+      {/* <ContentRoute path="/pages/:id" component={} /> */}
+      {/*Show find tournaments page*/} {/*Login not required*/}
+      {/* <ContentRoute path="/tournament" component={} /> */}
+      <ContentRoute path="/tournament/:id" component={TournamentDetailsPage} />
+      {/*Show tournament list based on filters*/}
+      {/*Login not required*/}
+      {/* <ContentRoute path="/tournament?filters" component={} /> */}
+      {/*Show profiles of users*/} {/*Login required*/}
+      {/* <ContentRoute path="/profile" component={} /> */}
+      {/*Show messages of users*/} {/*Login required*/}
+      {/* <ContentRoute path="/messages" component={} /> */}
+      {/*Show a group chat*/} {/*Login required*/}
+      {/* <ContentRoute path="/messages/:groupId" component={} /> */}
+      {/*Statistics of user find out by its type ( Player / Sponsor ) { ?user&type } */}
+      {/* <ContentRoute path="/statistics" component={} /> */}
+      {/*Show wallet and add money to wallet*/}
+      {/* <ContentRoute path="/wallet" component={} /> */}
+      {/* Show all settings related to users */}
+      {/* <ContentRoute path="/settings" component={} /> */}
+      {/*Show all notifications of users */}
+      {/* <ContentRoute path="/notifications" component={} /> */}
+      {/* Show a type of notifications */}
+      {/* <ContentRoute path="/notifications/type" component={} /> */}
       <ContentRoute path="/dashboard" component={DashboardPage} />
       <ContentRoute path="/builder" component={BuilderPage} />
       <ContentRoute path="/my-page" component={MyPage} />
@@ -71,14 +136,12 @@ export default function BasePage() {
       <ContentRoute path="/sponsors/:id" component={SponsorsPage} />
       <ContentRoute path="/player-plus" component={PlayerPlusPage} />
       <ContentRoute path="/sponsor-profile" component={SponsorProfilePage} />
-
       <ContentRoute
         path="/subscription/success"
         component={SuccessSubscription}
       />
       <ContentRoute exact path="/add-sponsor/:id" component={AddSponsorPage} />
-      <ContentRoute path="/view-sponsors" component={ViewSponsorsPage} />
-
+      {/* <ContentRoute path="/view-sponsors" component={ViewSponsorsPage} /> */}
       <ContentRoute
         path="/sponsor/active-tournaments"
         component={SponsorsActiveTournamentsPage}
@@ -95,14 +158,12 @@ export default function BasePage() {
         path="/sponsor/sponsored-tournaments"
         component={SponsorsSponsoredTournamentPage}
       />
-
       <ContentRoute
         exact
         path="/be-sponsor/:allotid"
         component={BeSponsorPage}
       />
       <ContentRoute path="/view-sponsorship" component={ViewSponsorshipPage} />
-
       <ContentRoute exact path="/add-swap/:id" component={AddSwapperPage} />
       <ContentRoute path="/view-swap" component={ViewSwapperPage} />
       <ContentRoute
@@ -111,9 +172,7 @@ export default function BasePage() {
       />
       <ContentRoute path="/messages" component={InboxPage} />
       {/* <Route path="/error/error-v1" c omponent={ErrorPage1} /> */}
-
       <Route path="/logout" component={Logout} />
-
       <Route path="/google-material" component={GoogleMaterialPage} />
       <Route path="/react-bootstrap" component={ReactBootstrapPage} />
       <Route path="/e-commerce" component={ECommercePage} />

@@ -167,7 +167,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
                   }}
                 >
                   <span className="svg-icon svg-icon-success">
-                    <Typography variant="button"> {row["$"]}</Typography>
+                    <Typography variant="button"> {row["@value"]}</Typography>
                   </span>
                 </span>
               </div>
@@ -203,7 +203,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
                   }}
                 >
                   <span className="svg-icon svg-icon-success">
-                    <Typography variant="button"> {row["$"]}</Typography>
+                    <Typography variant="button"> {row["@value"]}</Typography>
                   </span>
                 </span>
               </div>

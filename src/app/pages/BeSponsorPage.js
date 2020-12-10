@@ -115,6 +115,16 @@ const BeSponsorPage = (props) => {
       {successRedirect && (
         <Redirect to={`/sponsor-profile?id=${callBackId}&tab=pending`} />
       )}
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Be Sponsor
+          </Typography>
+        </Col>
+      </Row>
       <Row>
         <Col lg={8}>
           <Paper>

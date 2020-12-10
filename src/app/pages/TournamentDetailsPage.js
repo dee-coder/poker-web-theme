@@ -55,6 +55,16 @@ const TournamentDetailsPage = (props) => {
   } else {
     return (
       <Box component="span" m={5}>
+        <Row>
+          <Col>
+            <Typography
+              variant="h4"
+              style={{ fontWeight: "600", color: "#FFF" }}
+            >
+              Tournament Details
+            </Typography>
+          </Col>
+        </Row>
         <Row style={{ marginTop: "30px" }}>
           <Col lg={9}>
             <TournamentHeader
@@ -91,7 +101,7 @@ const TournamentDetailsPage = (props) => {
                 </Button>
               </Link>
               <br />
-              <Link to={`/add-sponsor/${details.sharkscope_id}`}>
+              <Link to={`/sponsorship/create/${details.sharkscope_id}`}>
                 <Button
                   variant="primary"
                   style={{

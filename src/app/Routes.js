@@ -16,28 +16,36 @@ import { Dashboard } from "../_metronic/_partials";
 import Logout from "../app/mycomponents/logoutComponent";
 import AdminSection from "./admin/adminSection";
 import { ErrorPage1 } from "./modules/ErrorsExamples/ErrorPage1";
+import Login from "./modules/Auth/pages/Login";
 import Registration from "./modules/Auth/pages/Registration";
-
+import ForgotPassword from "./modules/Auth/pages/ForgotPassword";
+import { AuthCustom } from "./pages/Auth";
 export function Routes() {
-  const { isAuthorized } = useSelector(
-    ({ auth }) => ({
-      isAuthorized: auth.user != null,
-    }),
-    shallowEqual
-  );
+  // const { isAuthorized } = useSelector(
+  //   ({ auth }) => ({
+  //     isAuthorized: auth.user != null,
+  //   }),
+  //   shallowEqual
+  // );
+
+  const isAuthorized =
+    localStorage.getItem("userInfo") === undefined ? false : true;
 
   return (
     <Switch>
+      {<Redirect exact from="/" to="/dashboard" />}
       {/* <Route path="login-new" component={AuthPage} /> */}
-
-      <Layout>
-        <BasePage />
-      </Layout>
+      {/* ?type="user"&action="login"*/}
+      <Route path="/auth" component={AuthCustom} />
 
       <Route path="/error" component={ErrorsPage} />
       <Route exact path="/error/error-v1" component={ErrorPage1} />
 
       <Route path="/logout" component={Logout} />
+
+      <Layout>
+        <BasePage />
+      </Layout>
     </Switch>
   );
 }

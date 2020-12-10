@@ -1,4 +1,4 @@
-import { Box, Divider, Paper } from "@material-ui/core";
+import { Box, Divider, Paper, Typography } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import { Badge, Button, Col, Row, Card } from "react-bootstrap";
 import API from "../../apiUrl.json";
@@ -56,6 +56,16 @@ const PlayerPlusPage = () => {
   };
   return (
     <Box>
+      <Row style={{ marginBottom: "40px" }}>
+        <Col lg={12} style={{ textAlign: "left" }}>
+          <Typography
+            variant="h4"
+            style={{ fontWeight: "600", color: "white" }}
+          >
+            Player Plus
+          </Typography>
+        </Col>
+      </Row>
       <Paper>
         <Row style={{ padding: "30px" }}>
           <Col lg={12} style={{ textAlign: "left" }}>

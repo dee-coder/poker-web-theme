@@ -181,7 +181,7 @@ const InboxPage = () => {
         <Col lg={12}>
           <Typography
             variant="h4"
-            style={{ color: "white", fontWeight: "900" }}
+            style={{ color: "white", fontWeight: "600" }}
           >
             Messages
           </Typography>
