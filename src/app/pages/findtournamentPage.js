@@ -89,16 +89,17 @@ const FindTournamentPage = () => {
     if (selectedNetwork === null || selectedNetwork.length === 0) {
       //setHoldedList([]);
 
-      selectedNetwork.map((obj) => {
-        filters.push({ key: "network", operator: "$eq", value: obj.label });
-      });
-      selectedFilters.map((obj) => {
-        filters.push({
-          key: obj.key,
-          operator: obj.operator,
-          value: obj.value,
+      // selectedNetwork.map((obj) => {
+      //   filters.push({ key: "network", operator: "$eq", value: obj.label });
+      // });
+      selectedFilters !== undefined &&
+        selectedFilters.map((obj) => {
+          filters.push({
+            key: obj.key,
+            operator: obj.operator,
+            value: obj.value,
+          });
         });
-      });
       setShowSpinner(true);
       //fetch(urlNetwork)
       fetch(urlNetwork, {

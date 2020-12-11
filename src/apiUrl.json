@@ -28,7 +28,8 @@
   "approvePendingSponsorship":"/sponsorship/approve",
   "rejectPendingSponsorship":"/sponsorship/reject",
   "getConversations":"/chat/conversations",
-  "sendInvitation":"/invitation/send"
+  "sendInvitation":"/invitation/send",
+  "AllNotifications":"/notifications/getall"
 
   
 }

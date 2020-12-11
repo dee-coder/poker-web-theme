@@ -1,12 +1,34 @@
 /* eslint-disable no-script-url,jsx-a11y/anchor-is-valid,no-undef */
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import SVG from "react-inlinesvg";
 import { Tab, Nav } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
+import API from "../../apiUrl.json";
 
 export function NotificationsToggle() {
   const [selectedTab, setSelectedTab] = useState("All");
+  const [Notifications, setNotifications] = useState([]);
 
+  useEffect(() => {
+    var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    var Role = localStorage.getItem("role");
+    console.log(userInfo, Role);
+    var idRole = Role === "player" ? userInfo.player_id : userInfo.sponsor_id;
+    fetch(API.baseUrl + API.AllNotifications + "/" + idRole, {
+      method: "get",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((json) => json.json())
+      .then((data) => {
+        console.log(data, "notifcations");
+        setNotifications(data.notifications);
+      })
+      .catch((err) => {
+        alert(err.message);
+      });
+  }, []);
   const setTab = (_tabName) => {
     setSelectedTab(_tabName);
   };
@@ -87,222 +109,38 @@ export function NotificationsToggle() {
               >
                 <div className="mb-15">
                   <h5 className="font-weight-bold mb-5">Notifications</h5>
-
-                  <div className="d-flex align-items-center bg-light-warning rounded p-5 mb-5">
-                    <span className="svg-icon svg-icon-warning mr-5">
-                      <SVG
-                        src={toAbsoluteUrl(
-                          "/media//svg/icons/Home/Library.svg"
-                        )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
+                  {Notifications.length === 0 && (
+                    <span className="text-muted font-size-sm">
+                      No new notifications.
                     </span>
+                  )}
+                  {Notifications.map((not) => {
+                    return (
+                      <div className="d-flex align-items-center bg-light-warning rounded p-5 mb-5">
+                        <span className="svg-icon svg-icon-warning mr-5">
+                          <SVG
+                            src={toAbsoluteUrl(
+                              "/media//svg/icons/Home/Library.svg"
+                            )}
+                            className="svg-icon svg-icon-lg"
+                          ></SVG>
+                        </span>
 
-                    <div className="d-flex flex-column flex-grow-1 mr-2">
-                      <a
-                        href="#"
-                        className="font-weight-normal text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
-                        Another purpose persuade
-                      </a>
-                      <span className="text-muted font-size-sm">
-                        Due in 2 Days
-                      </span>
-                    </div>
-
-                    <span className="font-weight-bolder text-warning py-1 font-size-lg">
-                      +28%
-                    </span>
-                  </div>
-
-                  <div className="d-flex align-items-center bg-light-success rounded p-5 mb-5">
-                    <span className="svg-icon svg-icon-success mr-5">
-                      <SVG
-                        src={toAbsoluteUrl(
-                          "/media/svg/icons/Communication/Write.svg"
-                        )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
-                    </span>
-                    <div className="d-flex flex-column flex-grow-1 mr-2">
-                      <a
-                        href="#"
-                        className="font-weight-normal text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
-                        Would be to people
-                      </a>
-                      <span className="text-muted font-size-sm">
-                        Due in 2 Days
-                      </span>
-                    </div>
-
-                    <span className="font-weight-bolder text-success py-1 font-size-lg">
-                      +50%
-                    </span>
-                  </div>
-
-                  <div className="d-flex align-items-center bg-light-danger rounded p-5 mb-5">
-                    <span className="svg-icon svg-icon-danger mr-5">
-                      <SVG
-                        src={toAbsoluteUrl(
-                          "/media/svg/icons/Communication/Group-chat.svg"
-                        )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
-                    </span>
-                    <div className="d-flex flex-column flex-grow-1 mr-2">
-                      <a
-                        href="#"
-                        className="font-weight-normel text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
-                        Purpose would be to persuade
-                      </a>
-                      <span className="text-muted font-size-sm">
-                        Due in 2 Days
-                      </span>
-                    </div>
-
-                    <span className="font-weight-bolder text-danger py-1 font-size-lg">
-                      -27%
-                    </span>
-                  </div>
-
-                  <div className="d-flex align-items-center bg-light-info rounded p-5">
-                    <span className="svg-icon svg-icon-info mr-5">
-                      <SVG
-                        src={toAbsoluteUrl(
-                          "/media/svg/icons/General/Attachment2.svg"
-                        )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
-                    </span>
-
-                    <div className="d-flex flex-column flex-grow-1 mr-2">
-                      <a
-                        href="#"
-                        className="font-weight-normel text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
-                        The best product
-                      </a>
-                      <span className="text-muted font-size-sm">
-                        Due in 2 Days
-                      </span>
-                    </div>
-
-                    <span className="font-weight-bolder text-info py-1 font-size-lg">
-                      +8%
-                    </span>
-                  </div>
-                </div>
-
-                <div className="mb-5">
-                  <h5 className="font-weight-bold mb-5">Notifications</h5>
-
-                  <div className="d-flex align-items-center bg-light-warning rounded p-5 mb-5">
-                    <span className="svg-icon svg-icon-warning mr-5">
-                      <SVG
-                        src={toAbsoluteUrl(
-                          "/media//svg/icons/Home/Library.svg"
-                        )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
-                    </span>
-
-                    <div className="d-flex flex-column flex-grow-1 mr-2">
-                      <a
-                        href="#"
-                        className="font-weight-normal text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
-                        Another purpose persuade
-                      </a>
-                      <span className="text-muted font-size-sm">
-                        Due in 2 Days
-                      </span>
-                    </div>
-
-                    <span className="font-weight-bolder text-warning py-1 font-size-lg">
-                      +28%
-                    </span>
-                  </div>
-
-                  <div className="d-flex align-items-center bg-light-success rounded p-5 mb-5">
-                    <span className="svg-icon svg-icon-success mr-5">
-                      <SVG
-                        src={toAbsoluteUrl(
-                          "/media/svg/icons/Communication/Write.svg"
-                        )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
-                    </span>
-                    <div className="d-flex flex-column flex-grow-1 mr-2">
-                      <a
-                        href="#"
-                        className="font-weight-normal text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
-                        Would be to people
-                      </a>
-                      <span className="text-muted font-size-sm">
-                        Due in 2 Days
-                      </span>
-                    </div>
-
-                    <span className="font-weight-bolder text-success py-1 font-size-lg">
-                      +50%
-                    </span>
-                  </div>
-
-                  <div className="d-flex align-items-center bg-light-danger rounded p-5 mb-5">
-                    <span className="svg-icon svg-icon-danger mr-5">
-                      <SVG
-                        src={toAbsoluteUrl(
-                          "/media/svg/icons/Communication/Group-chat.svg"
-                        )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
-                    </span>
-                    <div className="d-flex flex-column flex-grow-1 mr-2">
-                      <a
-                        href="#"
-                        className="font-weight-normel text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
-                        Purpose would be to persuade
-                      </a>
-                      <span className="text-muted font-size-sm">
-                        Due in 2 Days
-                      </span>
-                    </div>
-
-                    <span className="font-weight-bolder text-danger py-1 font-size-lg">
-                      -27%
-                    </span>
-                  </div>
-
-                  <div className="d-flex align-items-center bg-light-info rounded p-5">
-                    <span className="svg-icon svg-icon-info mr-5">
-                      <SVG
-                        src={toAbsoluteUrl(
-                          "/media/svg/icons/General/Attachment2.svg"
-                        )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
-                    </span>
-
-                    <div className="d-flex flex-column flex-grow-1 mr-2">
-                      <a
-                        href="#"
-                        className="font-weight-normel text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
-                        The best product
-                      </a>
-                      <span className="text-muted font-size-sm">
-                        Due in 2 Days
-                      </span>
-                    </div>
-
-                    <span className="font-weight-bolder text-info py-1 font-size-lg">
-                      +8%
-                    </span>
-                  </div>
+                        <div className="d-flex flex-column flex-grow-1 mr-2">
+                          <span className="text-muted font-size-sm">
+                            {not.type}
+                          </span>
+                          <a
+                            href={not.links}
+                            target="_blank"
+                            className="font-weight-normal text-dark-75 text-hover-primary font-size-lg mb-1"
+                          >
+                            {not.content}
+                          </a>
+                        </div>
+                      </div>
+                    );
+                  })}
                 </div>
               </div>
               <div
