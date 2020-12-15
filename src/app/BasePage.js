@@ -31,6 +31,7 @@ import SponsorsPendingTournaments from "./pages/SponsorsPendingTournamnts";
 import SponsorsSponsoringTournamentPage from "./pages/SponsorsSponsoringTournamentPage";
 import SponsorsSponsoredTournamentPage from "./pages/SponsorsSponsoredTournamentPage";
 import InboxPage from "./pages/InboxPage";
+import AllSponsorships from "./pages/Sponsorships/AllSponsorships";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -61,6 +62,7 @@ export default function BasePage() {
       {/*Login required*/}
       <ContentRoute path="/sponsorship/create/:id" component={AddSponsorPage} />
       <ContentRoute path="/sponsorship/:id" component={ViewSponsorsPage} />
+      <ContentRoute path="/sponsorship" component={AllSponsorships} />
       {/*Show all sponsorships of players*/} {/*Login required*/}
       {/* <ContentRoute path="/sponsorships" component={} /> */}
       {/*Show a spacific sponsorships*/} {/*Login required*/}

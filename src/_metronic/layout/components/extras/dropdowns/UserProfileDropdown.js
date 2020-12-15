@@ -36,7 +36,7 @@ export function UserProfileDropdown(props) {
           as={DropdownTopbarItemToggler}
           id="dropdown-toggle-user-profile"
         >
-          <Link to="/login-new">
+          <Link to="/auth">
             <div
               className={
                 "btn btn-icon btn-hover-transparent-white d-flex align-items-center btn-lg px-md-2 w-md-auto"

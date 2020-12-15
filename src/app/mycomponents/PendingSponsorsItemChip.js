@@ -8,6 +8,7 @@ const PendingSponsorsItemsChip = ({
   sponsorship_id,
   removeRequesRow,
 }) => {
+  console.log("11:", sponsor.sponsor_id, sponsorship_id);
   const [Loading, ShowLoading] = useState(false);
   const [AddedForSponsorship, setAddedForSponsorship] = useState(false);
   const [AlertForFailed, setAlertForFailed] = useState(false);

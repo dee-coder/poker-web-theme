@@ -15,6 +15,7 @@ import { Link, Redirect } from "react-router-dom";
 import queryString from "query-string";
 import API from "../../apiUrl.json";
 import Countdown from "react-countdown";
+import _ from "lodash";
 
 import { Button, Col, Row, Form, Badge, Spinner } from "react-bootstrap";
 
@@ -46,6 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ViewSponsorsPage = (props) => {
   const classes = useStyles();
+  let Role;
   const [Queries, setQueries] = useState(null);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [firstTimeSuccessBox, setFirstTimeSuccessBox] = useState(false);
@@ -56,10 +58,13 @@ const ViewSponsorsPage = (props) => {
   const [swapData, setSwapData] = useState({});
   const [AllSponsorsForInvitation, setAllSponsorsForInvitation] = useState([]);
   const [ActiveSponsors, setActiveSponsors] = useState([]);
+  const [InvitationLoading, setInvitationLoading] = useState(false);
 
   useEffect(() => {
+    Role = localStorage.getItem("role");
+    console.log(Role);
     const queries = props.match.params.id;
-    console.log(props.match.params.id);
+    //console.log(props.match.params.id);
     //console.log(queries);
     //setTournamentId(queries.id);
     setQueries(queries);
@@ -91,7 +96,7 @@ const ViewSponsorsPage = (props) => {
           console.log(json);
           setTournamentData(json.tounamentData);
           setPlayersData(json.playersInfo);
-          setSwapData(json.result[0]);
+          setSwapData(json.result);
           setAllSponsorsForInvitation(json.sponsors);
           setActiveSponsors(json.sponsoring);
         })
@@ -101,6 +106,7 @@ const ViewSponsorsPage = (props) => {
 
   const inviteTheSponsor = (e, obj) => {
     e.preventDefault();
+    setInvitationLoading(true);
     fetch(API.baseUrl + API.sendInvitation, {
       method: "POST",
       headers: {
@@ -113,7 +119,11 @@ const ViewSponsorsPage = (props) => {
     })
       .then((json) => json.json())
       .then((res) => {
-        alert(res);
+        var newArr = _.remove(AllSponsorsForInvitation, function(n) {
+          return n.sponsor_id == obj.sponsor_id;
+        });
+        setInvitationLoading(false);
+        setAllSponsorsForInvitation(newArr);
       })
       .catch((err) => {
         alert(err.message);
@@ -363,7 +373,7 @@ const ViewSponsorsPage = (props) => {
             <Row></Row>
           </Paper>
 
-          <Paper style={{ marginTop: "20px" }}>
+          {/* <Paper style={{ marginTop: "20px" }}>
             <Row style={{ padding: "30px" }}>
               <Col lg={12}>
                 <Typography variant="h6" gutterBottom>
@@ -394,68 +404,92 @@ const ViewSponsorsPage = (props) => {
                 )}
               </Col>
             </Row>
-          </Paper>
+          </Paper> */}
 
-          <Paper style={{ marginTop: "20px" }}>
-            <Row style={{ padding: "30px" }}>
-              <Col lg={12}>
-                <Typography variant="h6" gutterBottom>
-                  Invite Sponsors
-                </Typography>
-              </Col>
-            </Row>
-            <Divider />
-            <Row style={{ padding: "30px" }}>
-              <Col lg={12}>
-                <List className={classes.root}>
-                  {AllSponsorsForInvitation.map((item) => {
-                    return (
-                      <ListItem
-                        alignItems="flex-start"
-                        style={{ marginTop: "10px" }}
-                      >
-                        <ListItemAvatar>
-                          <Avatar
-                            alt="Remy Sharp"
-                            src="/media/users/100_1.jpg"
-                          />
-                        </ListItemAvatar>
-                        <ListItemText
-                          primary={item.sponsor_name}
-                          secondary={
-                            <React.Fragment>
-                              <Typography
-                                component="span"
-                                variant="body2"
-                                className={classes.inline}
-                                color="textPrimary"
-                              >
-                                {item.sponsor_name}
-                              </Typography>
-                              {
-                                " — I'll be in your neighborhood doing errands this…"
-                              }
-                            </React.Fragment>
-                          }
-                        />
-                        <Button
-                          variant="primary"
-                          size="sm"
-                          style={{
-                            float: "right",
-                            marginTop: "10px",
-                          }}
-                          onClick={(e) => inviteTheSponsor(e, item)}
+          {Role === "player" ? (
+            <Paper style={{ marginTop: "20px" }}>
+              <Row style={{ padding: "30px" }}>
+                <Col lg={12}>
+                  <Typography variant="h6" gutterBottom>
+                    Invite Sponsors
+                  </Typography>
+                </Col>
+              </Row>
+              <Divider />
+              <Row style={{ padding: "30px" }}>
+                <Col lg={12}>
+                  <List className={classes.root}>
+                    {AllSponsorsForInvitation.map((item) => {
+                      return (
+                        <ListItem
+                          alignItems="flex-start"
+                          style={{ marginTop: "10px" }}
                         >
-                          Invite
-                        </Button>
-                      </ListItem>
-                    );
-                  })}
-                </List>
+                          <ListItemAvatar>
+                            <Avatar
+                              alt="Remy Sharp"
+                              src="/media/users/100_1.jpg"
+                            />
+                          </ListItemAvatar>
+                          <ListItemText
+                            primary={item.sponsor_name}
+                            secondary={
+                              <React.Fragment>
+                                <Typography
+                                  component="span"
+                                  variant="body2"
+                                  className={classes.inline}
+                                  color="textPrimary"
+                                >
+                                  {item.sponsor_name}
+                                </Typography>
+                                {
+                                  " — I'll be in your neighborhood doing errands this…"
+                                }
+                              </React.Fragment>
+                            }
+                          />
+                          {InvitationLoading ? (
+                            <Button variant="primary" disabled>
+                              <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                              />
+                              <span className="sr-only">Loading...</span>
+                              Invite
+                            </Button>
+                          ) : (
+                            <Button
+                              variant="primary"
+                              size="sm"
+                              style={{
+                                float: "right",
+                                marginTop: "10px",
+                              }}
+                              onClick={(e) => inviteTheSponsor(e, item)}
+                            >
+                              Invite
+                            </Button>
+                          )}
+                        </ListItem>
+                      );
+                    })}
+                  </List>
+                </Col>
+              </Row>
+            </Paper>
+          ) : (
+            <Row style={{ marginTop: "20px" }}>
+              <Col>
+                <Link to={`/be-sponsor/${Queries}`}>
+                  <Button variant="primary"> Sponsor Game + </Button>
+                </Link>
               </Col>
             </Row>
-          </Paper>
+          )}
         </Col>
         <Col lg={4}>
           <Paper>

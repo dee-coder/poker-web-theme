@@ -123,12 +123,12 @@ const InboxPage = () => {
       } else {
       }
 
-      var roomid = chat.chat.id;
+      var roomid = chat.chat[0].chat_id;
       setCurrentRoom(chat);
 
-      console.log(JSON.parse(chat.chat.messages));
+      console.log(chat.chat[0].messages);
 
-      setMessages(JSON.parse(chat.chat.messages));
+      setMessages(chat.chat[0].messages);
 
       const username =
         role === "player" ? userInfo.player_name : userInfo.sponsor_name;
@@ -146,10 +146,10 @@ const InboxPage = () => {
       } else {
       }
 
-      var roomid = chat.chat.id;
+      var roomid = chat.chat[0].chat_id;
       setCurrentRoom(chat);
-      console.log(chat.chat.messages);
-      setMessages(JSON.parse(chat.chat.messages));
+      console.log(chat.chat[0].messages);
+      setMessages(chat.chat[0].messages);
 
       const username =
         role === "player" ? userInfo.player_name : userInfo.sponsor_name;

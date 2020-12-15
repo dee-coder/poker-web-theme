@@ -14,6 +14,7 @@ import { makeStyles } from "@material-ui/core/styles";
 import _ from "lodash";
 import Countdown from "react-countdown";
 import PendingSponsorsItemsChip from "./PendingSponsorsItemChip";
+import { Link } from "react-router-dom";
 
 const Completionist = () => <span>This tournament has been finished.</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -57,7 +58,7 @@ const DrawerTournamentSponsorshipView = ({
   //const [networks, setNetworks] = useState([]);
 
   useEffect(() => {
-    console.log(approvedSponsorList, "List1");
+    console.log(tournamentBattingInfo, "List1");
     var data = _.find(networks, ["name", tournamentInfo.network]);
 
     var url = "https://pokerswapping.com/networks/" + data.page_slug;
@@ -470,7 +471,7 @@ const DrawerTournamentSponsorshipView = ({
           return (
             <PendingSponsorsItemsChip
               sponsor={sponsor}
-              sponsorship_id={tournamentBattingInfo.id}
+              sponsorship_id={tournamentBattingInfo.sponsorship_id}
               removeRequesRow={removeRequesRow}
             />
           );
@@ -504,15 +505,17 @@ const DrawerTournamentSponsorshipView = ({
                         variant="body"
                         style={{ fontSize: "13px", marginLeft: "15px" }}
                       >
-                        {sponsor[0].sponsor_name}
+                        {sponsor.sponsor_name}
                       </Typography>
                       <div style={{ float: "right" }}>
-                        <Button
-                          variant="primary"
-                          style={{ marginLeft: "20px" }}
-                        >
-                          Chat
-                        </Button>
+                        <Link to="/messages">
+                          <Button
+                            variant="primary"
+                            style={{ marginLeft: "20px" }}
+                          >
+                            Chat
+                          </Button>
+                        </Link>
                       </div>
                     </Col>
                   </Row>

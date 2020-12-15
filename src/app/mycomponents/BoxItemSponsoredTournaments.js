@@ -430,7 +430,7 @@ const BoxItemSponsoredTournments = ({
                 </Col>
               </Row>
 
-              <Row>
+              {/* <Row>
                 <Col>
                   <Typography variant="button">Pending Requests</Typography>
                   <br />
@@ -445,7 +445,7 @@ const BoxItemSponsoredTournments = ({
                     );
                   })}
                 </Col>
-              </Row>
+              </Row> */}
             </div>
           )}
           {/* {allot === null && (

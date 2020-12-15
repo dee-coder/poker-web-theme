@@ -91,6 +91,7 @@ const PlayerProfilePage = () => {
         // //console.log(json.tournaments);
 
         setListOfSponsoredTournaments(json.sponsored);
+        //console.log("PlayerProfilePage 94: ", json.sponsored);
 
         // console.log(activeTournaments, "this");
 

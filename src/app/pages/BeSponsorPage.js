@@ -46,6 +46,7 @@ const BeSponsorPage = (props) => {
     var userInfo = JSON.parse(localStorage.getItem("userInfo"));
     setUserINFO(userInfo);
     setSponsorId(JSON.parse(localStorage.getItem("userInfo")).sponsor_id);
+    console.log(props.match.params);
 
     if (JSON.parse(localStorage.getItem("userInfo")) === null) {
       setRedirectToLogin(true);
@@ -96,7 +97,7 @@ const BeSponsorPage = (props) => {
         agree: agreeTnc,
         sponsorid: sponsorid,
 
-        allotmentid: bettingInfo.id,
+        allotmentid: props.match.params.allotid,
       }),
     })
       .then((res) => res.json())

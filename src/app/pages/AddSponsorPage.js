@@ -179,9 +179,7 @@ const AddSponsorPage = (props) => {
   return (
     <Box>
       {redirectToLogin && <Redirect to="/auth" />}
-      {successRedirect && (
-        <Redirect to={`/sponsorship/${callBackId}&status=new`} />
-      )}
+      {successRedirect && <Redirect to={`/sponsorship/${callBackId}`} />}
       <Row style={{ marginBottom: "40px" }}>
         <Col lg={12} style={{ textAlign: "left" }}>
           <Typography

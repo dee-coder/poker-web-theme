@@ -29,7 +29,8 @@
   "rejectPendingSponsorship":"/sponsorship/reject",
   "getConversations":"/chat/conversations",
   "sendInvitation":"/invitation/send",
-  "AllNotifications":"/notifications/getall"
+  "AllNotifications":"/notifications/getall",
+  "getAllSponsorships":"/sponsorship/all"
 
   
 }

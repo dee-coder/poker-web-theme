@@ -101,7 +101,7 @@ export function Layout({ children }) {
       </div>
       <QuickUser />
 
-      <NotificationsToggle />
+      {localStorage.getItem("userInfo") !== null && <NotificationsToggle />}
       <ScrollTop />
       <StickyToolbar />
       {/*end::Main*/}
