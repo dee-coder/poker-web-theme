@@ -12,7 +12,7 @@ export function NotificationsToggle() {
   useEffect(() => {
     var userInfo = JSON.parse(localStorage.getItem("userInfo"));
     var Role = localStorage.getItem("role");
-    console.log(userInfo, Role);
+    //console.log(userInfo, Role);
     var idRole = Role === "player" ? userInfo.player_id : userInfo.sponsor_id;
     fetch(API.baseUrl + API.AllNotifications + "/" + idRole, {
       method: "get",
@@ -26,6 +26,7 @@ export function NotificationsToggle() {
         setNotifications(data.notifications);
       })
       .catch((err) => {
+        console.log(err.message);
         alert(err.message);
       });
   }, []);
