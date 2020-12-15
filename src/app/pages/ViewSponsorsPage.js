@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ViewSponsorsPage = (props) => {
   const classes = useStyles();
-  let Role;
+  const [Role, setRole] = useState("");
   const [Queries, setQueries] = useState(null);
   const [redirectToLogin, setRedirectToLogin] = useState(false);
   const [firstTimeSuccessBox, setFirstTimeSuccessBox] = useState(false);
@@ -61,8 +61,8 @@ const ViewSponsorsPage = (props) => {
   const [InvitationLoading, setInvitationLoading] = useState(false);
 
   useEffect(() => {
-    Role = localStorage.getItem("role");
-    console.log(Role);
+    setRole(localStorage.getItem("role"));
+    //console.log(Role);
     const queries = props.match.params.id;
     //console.log(props.match.params.id);
     //console.log(queries);
