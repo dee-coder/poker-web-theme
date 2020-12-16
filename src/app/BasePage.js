@@ -32,6 +32,8 @@ import SponsorsSponsoringTournamentPage from "./pages/SponsorsSponsoringTourname
 import SponsorsSponsoredTournamentPage from "./pages/SponsorsSponsoredTournamentPage";
 import InboxPage from "./pages/InboxPage";
 import AllSponsorships from "./pages/Sponsorships/AllSponsorships";
+import ViewProfileSponsor from "./pages/Sponsors/ViewProfileSponsor";
+import ViewProfilePlayer from "./pages/Players/ViewProfilePlayer";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -95,9 +97,12 @@ export default function BasePage() {
       {/* <ContentRoute path="/apply/:id" component={} /> */}
       {/* COMMON ROUTES*/}
       {/*Show a profile of sponsor*/} {/*Login not required*/}
-      {/* <ContentRoute path="/sponsor/profile/:id" component={} /> */}
+      <ContentRoute
+        path="/sponsor/profile/:id"
+        component={ViewProfileSponsor}
+      />
       {/*Show a player profile based on id*/} {/*Login not required */}
-      {/* <ContentRoute path="/player/profile/:id" component={} /> */}
+      <ContentRoute path="/player/profile/:id" component={ViewProfilePlayer} />
       {/*Show a network page based on id*/} {/*Login not required*/}
       {/* <ContentRoute path="/networks/:id" component={} />  */}
       {/*Show a spacific page by id*/} {/*Login not required*/}

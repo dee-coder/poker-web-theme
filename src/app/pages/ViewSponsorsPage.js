@@ -421,60 +421,65 @@ const ViewSponsorsPage = (props) => {
                   <List className={classes.root}>
                     {AllSponsorsForInvitation.map((item) => {
                       return (
-                        <ListItem
-                          alignItems="flex-start"
-                          style={{ marginTop: "10px" }}
+                        <a
+                          href={`/sponsor/profile/${item.sponsor_id}`}
+                          target="_blank"
                         >
-                          <ListItemAvatar>
-                            <Avatar
-                              alt="Remy Sharp"
-                              src="/media/users/100_1.jpg"
-                            />
-                          </ListItemAvatar>
-                          <ListItemText
-                            primary={item.sponsor_name}
-                            secondary={
-                              <React.Fragment>
-                                <Typography
-                                  component="span"
-                                  variant="body2"
-                                  className={classes.inline}
-                                  color="textPrimary"
-                                >
-                                  {item.sponsor_name}
-                                </Typography>
-                                {
-                                  " — I'll be in your neighborhood doing errands this…"
-                                }
-                              </React.Fragment>
-                            }
-                          />
-                          {InvitationLoading ? (
-                            <Button variant="primary" disabled>
-                              <Spinner
-                                as="span"
-                                animation="border"
-                                size="sm"
-                                role="status"
-                                aria-hidden="true"
+                          <ListItem
+                            alignItems="flex-start"
+                            style={{ marginTop: "10px" }}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt="Remy Sharp"
+                                src="/media/users/100_1.jpg"
                               />
-                              <span className="sr-only">Loading...</span>
-                              Invite
-                            </Button>
-                          ) : (
-                            <Button
-                              variant="primary"
-                              size="sm"
-                              style={{
-                                float: "right",
-                                marginTop: "10px",
-                              }}
-                              onClick={(e) => inviteTheSponsor(e, item)}
-                            >
-                              Invite
-                            </Button>
-                          )}
-                        </ListItem>
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={item.sponsor_name}
+                              secondary={
+                                <React.Fragment>
+                                  <Typography
+                                    component="span"
+                                    variant="body2"
+                                    className={classes.inline}
+                                    color="textPrimary"
+                                  >
+                                    {item.sponsor_name}
+                                  </Typography>
+                                  {
+                                    " — I'll be in your neighborhood doing errands this…"
+                                  }
+                                </React.Fragment>
+                              }
+                            />
+                            {InvitationLoading ? (
+                              <Button variant="primary" disabled>
+                                <Spinner
+                                  as="span"
+                                  animation="border"
+                                  size="sm"
+                                  role="status"
+                                  aria-hidden="true"
+                                />
+                                <span className="sr-only">Loading...</span>
+                                Invite
+                              </Button>
+                            ) : (
+                              <Button
+                                variant="primary"
+                                size="sm"
+                                style={{
+                                  float: "right",
+                                  marginTop: "10px",
+                                }}
+                                onClick={(e) => inviteTheSponsor(e, item)}
+                              >
+                                Invite
+                              </Button>
+                            )}
+                          </ListItem>
+                        </a>
                       );
                     })}
                   </List>

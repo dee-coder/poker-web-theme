@@ -1,0 +1,19 @@
+.tabs-active {
+  border-bottom: 3px solid #007bff;
+  font-weight: 600;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.tabs-not-active:hover {
+  border-bottom: 3px solid #007bff;
+  font-weight: 600;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
+
+.tabs-not-active {
+  font-weight: 600;
+  cursor: pointer;
+  padding-bottom: 5px;
+}
