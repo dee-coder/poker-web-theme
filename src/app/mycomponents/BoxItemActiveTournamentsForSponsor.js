@@ -129,7 +129,13 @@ const BoxItemActiveTournamentsForSponsor = ({
               />
             </Col>
             <Col lg={4}>
-              <Typography variant="h6">{playerInfo.player_name}</Typography>
+              <a
+                href={`/player/profile/${playerInfo.player_id}`}
+                target="_blank"
+                style={{ color: "inherit" }}
+              >
+                <Typography variant="h6">{playerInfo.player_name}</Typography>
+              </a>
 
               <ReactStars
                 style={{ float: "left" }}

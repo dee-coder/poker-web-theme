@@ -63,11 +63,12 @@ const DrawerTournamentsView = ({
   const [url, seturl] = useState();
 
   useEffect(() => {
+    console.log("this:", networks);
     var data = _.find(networks, ["name", obj.network]);
-    //console.log(data);
-    var url = "https://pokerswapping.com/networks/" + data.page_slug;
-    seturl(url);
-  });
+    console.log(data);
+    // var url = "https://pokerswapping.com/networks/" + data.page_slug;
+    // seturl(url);
+  }, []);
 
   function getDates(date) {
     var today = new Date(date);
@@ -218,7 +219,7 @@ const DrawerTournamentsView = ({
                               }}
                             ></i>
                           </Button>
-                          <a href={url}>
+                          <a href="#">
                             <Button
                               variant="primary"
                               style={{
@@ -734,7 +735,9 @@ const DrawerTournamentsView = ({
                             <Row>
                               <Col lg={12}>
                                 <Form inline>
-                                  <Link to={`/be-sponsor/${currentAllot.id}`}>
+                                  <Link
+                                    to={`/be-sponsor/${currentAllot.sponsorship_id}`}
+                                  >
                                     <Button
                                       variant="primary"
                                       style={{

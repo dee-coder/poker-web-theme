@@ -21,6 +21,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
   useEffect(() => {
+    //console.log(statistics);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     switch (userInfo.player_network) {
       case "PartyPoker" || "partypoker":
@@ -147,6 +148,16 @@ export function ProfileBoxPlayer({ className, statistics }) {
           paddingLeft: "30px",
         }}
       >
+        {statistics.length === 0 && (
+          <Col lg={12}>
+            <Typography
+              variant="body"
+              style={{ color: "gray", fontWeight: "600" }}
+            >
+              No statistics available.
+            </Typography>
+          </Col>
+        )}
         {statistics.slice(0, 3).map((row) => {
           return (
             <Col lg={4}>

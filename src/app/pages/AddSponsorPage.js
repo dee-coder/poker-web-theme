@@ -121,6 +121,7 @@ const AddSponsorPage = (props) => {
       .then((json) => {
         console.log(json);
         if (json.status === "ok") {
+          console.log(json);
           setCallBackId(json.result.id);
           setSuccessRedirect(true);
           //setViewAddSponsorsMode(false);

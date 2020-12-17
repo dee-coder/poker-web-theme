@@ -32,6 +32,6 @@
   "AllNotifications":"/notifications/getall",
   "getAllSponsorships":"/sponsorship/all",
   "getSponsorProfile":"/sponsor/profile",
-  "getPlayerProfile":"/player/profile"
+  "getPlayerProfile":"/players/profile"
 }
 

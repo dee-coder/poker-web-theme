@@ -44,7 +44,7 @@ const SponsorProfilePage = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        //console.log(response);
+        //console.log("Sponsor-Profile:", response);
         setSponsorDetails(response.result);
         setActiveTournaments(response.ActiveTournaments);
         setNetworks(response.networks);
@@ -466,7 +466,7 @@ const SponsorProfilePage = () => {
                         <BoxItemActiveTournamentsForSponsor
                           obj={tournament.gameData}
                           allot={tournament.data}
-                          playerInfo={tournament.playerInfo}
+                          playerInfo={tournament.playerInfo[0]}
                           setCurrentTournamentObj={setCurrentTournamentObj}
                           currentTournamentShowObj={currentTournamentShowObj}
                           setViewTournamentMode={setViewTournamentMode}
@@ -505,7 +505,7 @@ const SponsorProfilePage = () => {
                           tournamentInfo={game.tournamentInfo}
                           bettingInfo={game.bettingInfo}
                           sponsoringList={game.sponsoringList}
-                          playerInfo={game.playerInfo}
+                          playerInfo={game.playerInfo[0]}
                           allSponsors={game.allSponsors}
                         />
                       );

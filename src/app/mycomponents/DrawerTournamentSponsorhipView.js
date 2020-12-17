@@ -494,31 +494,37 @@ const DrawerTournamentSponsorshipView = ({
             <Row style={{ marginTop: "20px" }}>
               <Col>
                 <div className="card" style={{ padding: "20px" }}>
-                  <Row>
-                    <Col>
-                      <Image
-                        src="media/users/100_4.jpg"
-                        roundedCircle
-                        style={{ width: "40px", height: "40px" }}
-                      />
-                      <Typography
-                        variant="body"
-                        style={{ fontSize: "13px", marginLeft: "15px" }}
-                      >
-                        {sponsor.sponsor_name}
-                      </Typography>
-                      <div style={{ float: "right" }}>
-                        <Link to="/messages">
-                          <Button
-                            variant="primary"
-                            style={{ marginLeft: "20px" }}
-                          >
-                            Chat
-                          </Button>
-                        </Link>
-                      </div>
-                    </Col>
-                  </Row>
+                  <a
+                    href={`/sponsor/profile/${sponsor.sponsor_id}`}
+                    target="_blank"
+                    style={{ color: "inherit" }}
+                  >
+                    <Row>
+                      <Col>
+                        <Image
+                          src="media/users/100_4.jpg"
+                          roundedCircle
+                          style={{ width: "40px", height: "40px" }}
+                        />
+                        <Typography
+                          variant="body"
+                          style={{ fontSize: "13px", marginLeft: "15px" }}
+                        >
+                          {sponsor.sponsor_name}
+                        </Typography>
+                        <div style={{ float: "right" }}>
+                          <Link to="/messages" style={{ color: "inherit" }}>
+                            <Button
+                              variant="primary"
+                              style={{ marginLeft: "20px" }}
+                            >
+                              Chat
+                            </Button>
+                          </Link>
+                        </div>
+                      </Col>
+                    </Row>
+                  </a>
                 </div>
               </Col>
             </Row>

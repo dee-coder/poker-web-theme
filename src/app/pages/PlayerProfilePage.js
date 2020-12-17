@@ -82,43 +82,17 @@ const PlayerProfilePage = () => {
       .then((response) => response.json())
       .then((json) => {
         console.log(json);
+        console.log(json);
         setActiveTournaments(json.tournaments);
-        setStatistics(json.result.player_details_json.Statistics.Statistic);
-        // console.log(json);
-        // setActiveTournaments(json.tournaments);
 
-        // setStatistics(json.result.player_details_json.Statistics.Statistic);
-        // //console.log(json.tournaments);
+        setOrganicNetworks(json.networks);
 
         setListOfSponsoredTournaments(json.sponsored);
-        //console.log("PlayerProfilePage 94: ", json.sponsored);
-
-        // console.log(activeTournaments, "this");
-
-        // setEvents(json.result.player_details_json.Statistics.Timeline.Event);
-
-        // var ar = json.result.player_details_json.Statistics.StatisticalDataSet;
-        // var ob = ar[0];
-        // //console.log(ob.Data);
-        // setGraphData(ob.Data);
-
-        fetch(JsonUrl.baseUrl + JsonUrl.getAllNetworks, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        })
-          .then((res) => res.json())
-          .then((result) => {
-            //console.log(result);
-            setOrganicNetworks(result.tournaments);
-          })
-          .catch((err) => console.log(err));
-
-        //setGraphData(stats.playerDetails.Statistics.StatisticalDataSet[0]);
-        //console.log(stats.playerDetails.Statistics.StatisticalDataSet[0]);
-
-        //console.log(statistics);
+        if (json.result.player_details_json.Statistics === undefined) {
+          setStatistics(null);
+        } else {
+          setStatistics(json.result.player_details_json.Statistics.Statistic);
+        }
       })
       .catch((err) => console.log(err));
   }, []);

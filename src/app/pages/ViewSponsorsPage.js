@@ -59,6 +59,11 @@ const ViewSponsorsPage = (props) => {
   const [AllSponsorsForInvitation, setAllSponsorsForInvitation] = useState([]);
   const [ActiveSponsors, setActiveSponsors] = useState([]);
   const [InvitationLoading, setInvitationLoading] = useState(false);
+  const [sponrosAndApplied, setSponrosAndApplied] = useState(false);
+
+  // For owner
+  const [Owner, setOwner] = useState(false);
+  const [pendingRequests, setPendingRequests] = useState([]);
 
   useEffect(() => {
     setRole(localStorage.getItem("role"));
@@ -89,16 +94,44 @@ const ViewSponsorsPage = (props) => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: queries }),
+        body: JSON.stringify({
+          id: queries,
+          role: localStorage.getItem("role"),
+          userid:
+            localStorage.getItem("role") === "player"
+              ? JSON.parse(localStorage.getItem("userInfo")).player_id
+              : JSON.parse(localStorage.getItem("userInfo")).sponsor_id,
+        }),
       })
         .then((res) => res.json())
         .then((json) => {
           console.log(json);
+          if (json.type === "owner") {
+            setOwner(true);
+          } else {
+            setOwner(false);
+            if (json.type === "sponsor") {
+              if (
+                !_.find(json.sponsoring, {
+                  sponsor_id: JSON.parse(localStorage.getItem("userInfo"))
+                    .sponsor_id,
+                })
+              ) {
+                setSponrosAndApplied(false);
+              } else {
+                setSponrosAndApplied(true);
+              }
+            }
+          }
+
           setTournamentData(json.tounamentData);
           setPlayersData(json.playersInfo);
           setSwapData(json.result);
           setAllSponsorsForInvitation(json.sponsors);
           setActiveSponsors(json.sponsoring);
+          if (json.type === "owner") {
+            setPendingRequests(json.pending);
+          }
         })
         .catch((err) => console.log(err));
     }
@@ -120,7 +153,7 @@ const ViewSponsorsPage = (props) => {
       .then((json) => json.json())
       .then((res) => {
         var newArr = _.remove(AllSponsorsForInvitation, function(n) {
-          return n.sponsor_id == obj.sponsor_id;
+          return n.sponsor_id !== obj.sponsor_id;
         });
         setInvitationLoading(false);
         setAllSponsorsForInvitation(newArr);
@@ -229,7 +262,7 @@ const ViewSponsorsPage = (props) => {
                     variant="h4"
                     style={{ fontWeight: "900", color: "#F64E60" }}
                   >
-                    0
+                    {ActiveSponsors.length}
                   </Typography>{" "}
                 </div>
               </Col>
@@ -256,6 +289,31 @@ const ViewSponsorsPage = (props) => {
                   </Typography>{" "}
                 </div>
               </Col>
+              {Owner && (
+                <Col lg={4}>
+                  <div style={{ textAlign: "left" }}>
+                    <Typography variant="button" style={{ color: "#848484" }}>
+                      PENDING{" "}
+                      <i
+                        class="fas fa-info-circle"
+                        style={{
+                          marginLeft: "2px",
+                          color: "#848484",
+                          fontSize: "12px",
+                        }}
+                      ></i>
+                    </Typography>
+                    <br />
+                    <br />
+                    <Typography
+                      variant="h4"
+                      style={{ fontWeight: "900", color: "black" }}
+                    >
+                      {pendingRequests.length}
+                    </Typography>{" "}
+                  </div>
+                </Col>
+              )}
             </Row>
             <Row style={{ padding: "30px" }}>
               <Col>
@@ -406,7 +464,7 @@ const ViewSponsorsPage = (props) => {
             </Row>
           </Paper> */}
 
-          {Role === "player" ? (
+          {Owner && ActiveSponsors.length === 0 && (
             <Paper style={{ marginTop: "20px" }}>
               <Row style={{ padding: "30px" }}>
                 <Col lg={12}>
@@ -486,12 +544,93 @@ const ViewSponsorsPage = (props) => {
                 </Col>
               </Row>
             </Paper>
-          ) : (
+          )}
+
+          {!sponrosAndApplied && !Owner && (
             <Row style={{ marginTop: "20px" }}>
               <Col>
                 <Link to={`/be-sponsor/${Queries}`}>
                   <Button variant="primary"> Sponsor Game + </Button>
                 </Link>
+              </Col>
+            </Row>
+          )}
+
+          {Owner && ActiveSponsors.length !== 0 && (
+            <Paper style={{ marginTop: "20px" }}>
+              <Row style={{ padding: "30px" }}>
+                <Col lg={12}>
+                  <Typography variant="h6" gutterBottom>
+                    Already Sponsorings
+                  </Typography>
+                </Col>
+              </Row>
+              <Divider />
+              <Row style={{ padding: "30px" }}>
+                <Col lg={12}>
+                  <List className={classes.root}>
+                    {ActiveSponsors.map((item) => {
+                      return (
+                        <a
+                          href={`/sponsor/profile/${item.info.sponsor_id}`}
+                          target="_blank"
+                        >
+                          <ListItem
+                            alignItems="flex-start"
+                            style={{ marginTop: "10px" }}
+                          >
+                            <ListItemAvatar>
+                              <Avatar
+                                alt="Remy Sharp"
+                                src="/media/users/100_1.jpg"
+                              />
+                            </ListItemAvatar>
+                            <ListItemText
+                              primary={item.info.sponsor_id}
+                              secondary={
+                                <React.Fragment>
+                                  <Typography
+                                    component="span"
+                                    variant="body2"
+                                    className={classes.inline}
+                                    color="textPrimary"
+                                  >
+                                    {item.info.sponsor_name}
+                                  </Typography>
+                                  {
+                                    " — I'll be in your neighborhood doing errands this…"
+                                  }
+                                </React.Fragment>
+                              }
+                            />
+                            <a href={`/messages`} target="_blank">
+                              {" "}
+                              <Button
+                                variant="primary"
+                                size="sm"
+                                style={{
+                                  float: "right",
+                                  marginTop: "10px",
+                                }}
+                                onClick={(e) => inviteTheSponsor(e, item)}
+                              >
+                                Chat
+                              </Button>
+                            </a>
+                          </ListItem>
+                        </a>
+                      );
+                    })}
+                  </List>
+                </Col>
+              </Row>
+            </Paper>
+          )}
+
+          {sponrosAndApplied && (
+            <Row style={{ marginTop: "20px" }}>
+              <Col>
+                <Button variant="success"> Alredy Sponsoring ✅</Button>
               </Col>
             </Row>
           )}
