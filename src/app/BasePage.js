@@ -34,6 +34,7 @@ import InboxPage from "./pages/InboxPage";
 import AllSponsorships from "./pages/Sponsorships/AllSponsorships";
 import ViewProfileSponsor from "./pages/Sponsors/ViewProfileSponsor";
 import ViewProfilePlayer from "./pages/Players/ViewProfilePlayer";
+import FindTournamentsPage from "./pages/FindTournaments/find-tournament-page";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -65,6 +66,7 @@ export default function BasePage() {
       <ContentRoute path="/sponsorship/create/:id" component={AddSponsorPage} />
       <ContentRoute path="/sponsorship/:id" component={ViewSponsorsPage} />
       <ContentRoute path="/sponsorship" component={AllSponsorships} />
+      <ContentRoute path="/tournaments" component={FindTournamentsPage} />
       {/*Show all sponsorships of players*/} {/*Login required*/}
       {/* <ContentRoute path="/sponsorships" component={} /> */}
       {/*Show a spacific sponsorships*/} {/*Login required*/}
@@ -133,7 +135,7 @@ export default function BasePage() {
       <ContentRoute path="/builder" component={BuilderPage} />
       <ContentRoute path="/my-page" component={MyPage} />
       <ContentRoute path="/games-by-date/:date" component={TournamentByDate} />
-      <ContentRoute path="/findtournaments" component={FindTournamentPage} />
+      <ContentRoute path="/findtournaments" component={FindTournamentsPage} />
       <ContentRoute path="/login-new" component={LoginPage} />
       <ContentRoute path="/signup-new" component={SingupPage} />
       <ContentRoute path="/player-profile" component={PlayerProfilePage} />
