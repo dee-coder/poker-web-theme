@@ -52,28 +52,49 @@ const FindTournamentsPage = () => {
     { label: "Sort By Scheduled Date  (Late)", value: "late_date" },
   ];
   const GameType = [
-    { label: "Hold'em", value: "H", key: "$eq" },
-    { label: "Omaha", value: "O", key: "$eq" },
+    { label: "Hold'em", value: "H", operator: "$eq", key: "game" },
+    { label: "Omaha", value: "O", operator: "$eq", key: "game" },
+    {},
   ];
 
   const Speed = [
-    { label: "Hold'em", value: "H", key: "$eq" },
-    { label: "Omaha", value: "O", key: "$e1" },
+    { label: "Hold'em", value: "H", operator: "$eq", key: "flag" },
+    { label: "Omaha", value: "O", operator: "$eq", key: "flag" },
   ];
 
   const States = [
-    { label: "Registering", value: "Registering", key: "$eq" },
-    { label: "Late Registering", value: "Late Registering", key: "$eq" },
-    { label: "Running", value: "Running", key: "$eq" },
-    { label: "Completed", value: "Completed", key: "$eq" },
+    {
+      label: "Registering",
+      value: "Registering",
+      operator: "$eq",
+      key: "state",
+    },
+    {
+      label: "Late Registering",
+      value: "Late Registering",
+      operator: "$eq",
+      key: "state",
+    },
+    { label: "Running", value: "Running", operator: "$eq", key: "state" },
+    { label: "Completed", value: "Completed", operator: "$eq", key: "state" },
   ];
 
   const Networks = [
-    { label: "PartyPoker", value: "PartyPoker", key: "$eq" },
-    { label: "PokerStars", value: "PokerStars", key: "$eq" },
-    { label: "SkyPoker", value: "SkyPoker", key: "$eq" },
-    { label: "888Poker", value: "888Poker", key: "$eq" },
-    { label: "Fulltilt", value: "Fulltilt", key: "$eq" },
+    {
+      label: "PartyPoker",
+      value: "PartyPoker",
+      operator: "$eq",
+      key: "network",
+    },
+    {
+      label: "PokerStars",
+      value: "PokerStars",
+      operator: "$eq",
+      key: "network",
+    },
+    { label: "SkyPoker", value: "SkyPoker", operator: "$eq", key: "network" },
+    { label: "888Poker", value: "888Poker", operator: "$eq", key: "network" },
+    { label: "Fulltilt", value: "Fulltilt", operator: "$eq", key: "network" },
   ];
 
   const [Enrolments, setEnrolments] = useState({ min: 1000, max: 5500 });
@@ -84,12 +105,22 @@ const FindTournamentsPage = () => {
   const [FilterSpeed, setFilterSpeed] = useState([]);
   const [Tournaments, setTournaments] = useState([]);
 
+  const [ValuesOfNetworks, setValuesOfNetworks] = useState([]);
+
+  const [ValuesOfGameType, setValuesOfGameType] = useState([]);
+
+  const [ValuesOfSpeed, setValuesOfSpeed] = useState([]);
+
+  const [ValuesOfState, setValuesOfState] = useState([]);
+
   const [Filters, setFilters] = useState([]);
   const [viewTournamentMode, setViewTournamentMode] = useState(false);
   const [currentViewTournament, setCurrentViewTournaments] = useState(null);
   const [organicNetworks, setOrganicNetworks] = useState([]);
 
   useEffect(() => {
+    console.log(Filters);
+    setTournaments([]);
     fetch(API.baseUrl + API.getTournamentFromSpacificNetwork, {
       method: "POST",
       headers: {
@@ -100,13 +131,104 @@ const FindTournamentsPage = () => {
       .then((json) => json.json())
       .then((response) => {
         console.log(response);
+
         setTournaments(response.result);
         setOrganicNetworks(response.networks);
       })
       .catch((err) => {
         console.log(err.message);
       });
-  }, []);
+  }, [Filters]);
+
+  useEffect(() => {
+    var allFilters = [];
+    ValuesOfNetworks.map(async (value) => {
+      await allFilters.push(value);
+    });
+
+    ValuesOfGameType.map(async (value) => {
+      allFilters.push(value);
+    });
+
+    ValuesOfSpeed.map(async (value) => {
+      allFilters.push(value);
+    });
+
+    ValuesOfState.map((value) => {
+      allFilters.push(value);
+    });
+    setFilters(allFilters);
+    console.log(allFilters);
+  }, [ValuesOfNetworks, ValuesOfGameType, ValuesOfSpeed, ValuesOfState]);
+
+  const handleFilterChanges = (value, key) => {
+    var allFilters = [];
+    if (value === null) {
+      value = [];
+    }
+    switch (key) {
+      case "network":
+        setValuesOfNetworks(value);
+
+        break;
+
+      case "game":
+        setValuesOfGameType(value);
+
+        break;
+
+      case "flag":
+        setValuesOfSpeed(value);
+
+        break;
+
+      case "state":
+        setValuesOfState(value);
+
+        break;
+    }
+
+    // console.log(key);
+
+    // console.log(value);
+    // if (value !== null) {
+    //   var f = [];
+    //   f = Filters;
+    //   await Promise.all(
+    //     value.map(async (v, i) => {
+    //       var found = await f.some(
+    //         (el) => el.label === v.label && el.key === key
+    //       );
+    //       if (found) {
+    //       } else {
+    //         f.push(v);
+    //       }
+    //     })
+    //   );
+
+    //   setFilters(f);
+    //   console.log(f);
+    // } else {
+    //   var f = [];
+    //   f = Filters;
+    //   var index = f.findIndex((x) => x.key === key);
+    //   f.splice(index);
+
+    //   // await Promise.all(
+    //   //   value.map(async (v, i) => {
+
+    //   //     var found = await f.some((el) => el.label === v.label);
+    //   //     if (found) {
+    //   //     } else {
+    //   //       f.push(v);
+    //   //     }
+    //   //   })
+
+    //   // );
+    //   console.log(f);
+    //   setFilters(f);
+    // }
+  };
 
   function getDates(date) {
     var today = new Date(date);
@@ -158,9 +280,7 @@ const FindTournamentsPage = () => {
                     isMulti
                     name="colors"
                     options={Networks}
-                    onChange={(value) =>
-                      setFilterNetworks([...FilterNetworks, value])
-                    }
+                    onChange={(value) => handleFilterChanges(value, "network")}
                     className="basic-multi-select"
                     classNamePrefix="select"
                   />
@@ -180,9 +300,7 @@ const FindTournamentsPage = () => {
                     isMulti
                     name="colors"
                     options={GameType}
-                    onChange={(value) =>
-                      setFiltereGameType([...FilterGameType, value])
-                    }
+                    onChange={(value) => handleFilterChanges(value, "game")}
                     className="basic-multi-select"
                     classNamePrefix="select"
                   />
@@ -203,9 +321,7 @@ const FindTournamentsPage = () => {
                     isMulti
                     name="colors"
                     options={Speed}
-                    onChange={(value) =>
-                      setFilterSpeed([...FilterSpeed, value])
-                    }
+                    onChange={(value) => handleFilterChanges(value, "flag")}
                     className="basic-multi-select"
                     classNamePrefix="select"
                   />
@@ -271,9 +387,7 @@ const FindTournamentsPage = () => {
                     isMulti
                     name="colors"
                     options={States}
-                    onChange={(value) =>
-                      setFilterStates([...FilterStates, value])
-                    }
+                    onChange={(value) => handleFilterChanges(value, "state")}
                     className="basic-multi-select"
                     classNamePrefix="select"
                   />
@@ -380,7 +494,7 @@ const FindTournamentsPage = () => {
                       placeholder="Sort"
                       style={{ width: "60%", float: "right" }}
                     >
-                      <option> Sort as</option>
+                      <option> Sort By</option>
                       {sortingValues.map((option) => {
                         return (
                           <option value={option.value}>{option.label}</option>

@@ -7,7 +7,7 @@
   "playerInfo":"/players/info",
   "getTournamentById": "/tournaments/getTournamentById",
   "getRegisteringTournaments": "/tournaments/all",
-  "getTournamentFromSpacificNetwork": "/filters/all",
+  "getTournamentFromSpacificNetwork": "/filters/find",
   "getGamesByDate": "/filters/games-by-date",
   "addSponsors":"/addsponsor/add",
   "getPageDetails":"/admin/pages/get",
