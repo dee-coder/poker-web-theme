@@ -71,12 +71,8 @@ export default function BasePage() {
 
   return (
     <Switch>
-      {/* Redirect from root URL to /dashboard. */
-      LoggedIn ? (
-        <Redirect exact from="/" to="/dashboard" />
-      ) : (
-        <Redirect exact from="/dashboard" to="/" />
-      )}
+      {/* Redirect from root URL to /dashboard. */}
+      LoggedIn && <Redirect exact from="/" to="/dashboard" />
       <ContentRoute exact path="/" component={HomePage} />
       <ContentRoute path="/dashboard" component={DashboardPage} />
       {/* { /* PLAYER'S ROUTES */}

@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import objectPath from "object-path";
 // LayoutContext
 import { useHtmlClassService } from "../_core/MetronicLayout";
@@ -17,6 +17,16 @@ import { AnimateLoading } from "../../_partials/controls";
 import { NotificationsToggle } from "../../../app/pages/NotificationsToggle";
 
 export function Layout({ children }) {
+  const [LoggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (userInfo === undefined || userInfo === null) {
+      setLoggedIn(false);
+    } else {
+      setLoggedIn(true);
+    }
+  });
   const uiService = useHtmlClassService();
   // Layout settings (cssClasses/cssAttributes)
   const layoutProps = useMemo(() => {
@@ -101,7 +111,7 @@ export function Layout({ children }) {
       </div>
       <QuickUser />
 
-      {localStorage.getItem("userInfo") !== null && <NotificationsToggle />}
+      {LoggedIn && <NotificationsToggle />}
       <ScrollTop />
       {/* <StickyToolbar /> */}
       {/*end::Main*/}
