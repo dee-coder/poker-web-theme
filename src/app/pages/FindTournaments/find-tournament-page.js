@@ -1,5 +1,5 @@
 import { Box, Drawer, Paper, Typography } from "@material-ui/core";
-import { Row, Col, Image } from "react-bootstrap";
+import { Row, Col, Image, Spinner } from "react-bootstrap";
 import Select from "react-select";
 import React, { useState, useEffect } from "react";
 import { toAbsoluteUrl } from "../../../_metronic/_helpers";
@@ -58,8 +58,8 @@ const FindTournamentsPage = () => {
   ];
 
   const Speed = [
-    { label: "Hold'em", value: "H", operator: "$eq", key: "flag" },
-    { label: "Omaha", value: "O", operator: "$eq", key: "flag" },
+    { label: "Turbo", value: "T", operator: "$eq", key: "flag" },
+    { label: "Slow", value: "S", operator: "$eq", key: "flag" },
   ];
 
   const States = [
@@ -97,8 +97,8 @@ const FindTournamentsPage = () => {
     { label: "Fulltilt", value: "Fulltilt", operator: "$eq", key: "network" },
   ];
 
-  const [Enrolments, setEnrolments] = useState({ min: 1000, max: 5500 });
-  const [PrizePool, setPrizePool] = useState({ min: 1000, max: 5500 });
+  const [Enrolments, setEnrolments] = useState({ min: 0, max: 0 });
+  const [PrizePool, setPrizePool] = useState({ min: 0, max: 0 });
   const [FilterStates, setFilterStates] = useState([]);
   const [FilterNetworks, setFilterNetworks] = useState([]);
   const [FilterGameType, setFiltereGameType] = useState([]);
@@ -118,9 +118,13 @@ const FindTournamentsPage = () => {
   const [currentViewTournament, setCurrentViewTournaments] = useState(null);
   const [organicNetworks, setOrganicNetworks] = useState([]);
 
+  const [MakeLoading, setMakeLoading] = useState(false);
+
   useEffect(() => {
-    console.log(Filters);
+    //console.log(Filters);
+
     setTournaments([]);
+    setMakeLoading(true);
     fetch(API.baseUrl + API.getTournamentFromSpacificNetwork, {
       method: "POST",
       headers: {
@@ -131,7 +135,7 @@ const FindTournamentsPage = () => {
       .then((json) => json.json())
       .then((response) => {
         console.log(response);
-
+        setMakeLoading(false);
         setTournaments(response.result);
         setOrganicNetworks(response.networks);
       })
@@ -238,6 +242,10 @@ const FindTournamentsPage = () => {
     return (today = mm + "-" + dd + "-" + yyyy);
   }
 
+  const setRangeValue = (value, key) => {
+    console.log(value, key);
+  };
+
   return (
     <Box>
       <Row>
@@ -343,10 +351,10 @@ const FindTournamentsPage = () => {
                   }}
                 >
                   <InputRange
-                    maxValue={10000}
+                    maxValue={5000}
                     minValue={10}
                     value={PrizePool}
-                    onChange={(value) => setPrizePool(value)}
+                    onChange={(value) => setRangeValue(value, "guarantee")}
                   />
                 </div>
               </Col>
@@ -366,10 +374,10 @@ const FindTournamentsPage = () => {
                   }}
                 >
                   <InputRange
-                    maxValue={10000}
+                    maxValue={5000}
                     minValue={10}
                     value={Enrolments}
-                    onChange={(value) => setEnrolments(value)}
+                    onChange={(value) => setRangeValue(value, "totalEntrants")}
                   />
                 </div>
               </Col>
@@ -387,7 +395,7 @@ const FindTournamentsPage = () => {
                     isMulti
                     name="colors"
                     options={States}
-                    onChange={(value) => handleFilterChanges(value, "state")}
+                    onChange={(value) => setRangeValue(value, "state")}
                     className="basic-multi-select"
                     classNamePrefix="select"
                   />
@@ -506,6 +514,20 @@ const FindTournamentsPage = () => {
               </Paper>
             </Col>
           </Row>
+          {MakeLoading && (
+            <Row>
+              <Col lg={12}>
+                <div
+                  className="d-flex justify-content-center align-items-center"
+                  style={{ width: "100%", padding: "50px" }}
+                >
+                  <Spinner animation="border" role="status" variant="primary">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner>
+                </div>
+              </Col>
+            </Row>
+          )}
           {Tournaments.length !== 0 &&
             Tournaments.map((game) => {
               return (
