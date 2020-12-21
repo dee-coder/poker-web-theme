@@ -103,7 +103,7 @@ export function Layout({ children }) {
 
       {localStorage.getItem("userInfo") !== null && <NotificationsToggle />}
       <ScrollTop />
-      <StickyToolbar />
+      {/* <StickyToolbar /> */}
       {/*end::Main*/}
       <LayoutInit />
     </>

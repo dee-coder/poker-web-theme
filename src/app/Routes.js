@@ -5,7 +5,7 @@
  * components (e.g: `src/app/modules/Auth/pages/AuthPage`, `src/app/BasePage`).
  */
 
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
 import { shallowEqual, useSelector } from "react-redux";
 import { Layout } from "../_metronic/layout";
@@ -20,6 +20,7 @@ import Login from "./modules/Auth/pages/Login";
 import Registration from "./modules/Auth/pages/Registration";
 import ForgotPassword from "./modules/Auth/pages/ForgotPassword";
 import { AuthCustom } from "./pages/Auth";
+
 export function Routes() {
   // const { isAuthorized } = useSelector(
   //   ({ auth }) => ({
@@ -28,14 +29,26 @@ export function Routes() {
   //   shallowEqual
   // );
 
+  const [LoggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (userInfo === undefined || userInfo === null) {
+      setLoggedIn(false);
+    } else {
+      setLoggedIn(true);
+    }
+  });
+
   const isAuthorized =
     localStorage.getItem("userInfo") === undefined ? false : true;
 
   return (
     <Switch>
-      {<Redirect exact from="/" to="/dashboard" />}
+      {LoggedIn && <Redirect exact from="/" to="/dashboard" />}
       {/* <Route path="login-new" component={AuthPage} /> */}
       {/* ?type="user"&action="login"*/}
+
       <Route path="/auth" component={AuthCustom} />
 
       <Route path="/error" component={ErrorsPage} />

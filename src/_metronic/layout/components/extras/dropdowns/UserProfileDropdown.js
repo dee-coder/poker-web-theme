@@ -94,14 +94,30 @@ export function UserProfileDropdown(props) {
                       alt=""
                     />
                   </div>
-                  <div className="text-dark m-0 flex-grow-1 mr-3 font-size-h5">
-                    {role === "player"
-                      ? userInfo.player_name
-                      : userInfo.sponsor_name}
+                  <div>
+                    <span className="text-dark m-0 flex-grow-1 mr-3 font-size-h5">
+                      {role === "player"
+                        ? userInfo.player_name
+                        : userInfo.sponsor_name}
+                      <br />
+                    </span>
+
+                    <span
+                      style={{
+                        fontWeight: "normal",
+                        color: "gray",
+                        fontSize: "15px",
+                      }}
+                    >
+                      {role === "player"
+                        ? userInfo.player_email
+                        : userInfo.sponsor_email}
+                    </span>
                   </div>
-                  <span className="label label-light-success label-lg font-weight-bold label-inline">
-                    3 messages
-                  </span>
+
+                  {/* <span className="label label-light-success label-lg font-weight-bold label-inline">
+                    
+                  </span> */}
                 </div>
                 <div className="separator separator-solid"></div>
               </>
@@ -127,9 +143,23 @@ export function UserProfileDropdown(props) {
                     ? userInfo.player_name
                     : userInfo.sponsor_name}
                 </div>
-                <span className="label label-success label-lg font-weight-bold label-inline">
+                <div>
+                  <span
+                    style={{
+                      fontWeight: "normal",
+                      color: "gray",
+                      fontSize: "10px",
+                    }}
+                  >
+                    {role === "player"
+                      ? userInfo.player_email
+                      : userInfo.sponsor_email}
+                  </span>
+                </div>
+
+                {/* <span className="label label-success label-lg font-weight-bold label-inline">
                   3 messages
-                </span>
+                </span> */}
               </div>
             )}
           </>
@@ -138,7 +168,7 @@ export function UserProfileDropdown(props) {
             <Link
               to={role === "player" ? "/player-profile" : "/sponsor-profile"}
             >
-              <a className="navi-item px-8">
+              <a href="#" className="navi-item px-8">
                 <div className="navi-link">
                   <div className="navi-icon mr-2">
                     <i className="flaticon2-calendar-3 text-success" />
@@ -147,9 +177,9 @@ export function UserProfileDropdown(props) {
                     <div className="font-weight-bold">My Profile</div>
                     <div className="text-muted">
                       Account settings and more{` `}
-                      <span className="label label-light-danger label-inline font-weight-bold">
+                      {/* <span className="label label-light-danger label-inline font-weight-bold">
                         update
-                      </span>
+                      </span> */}
                     </div>
                   </div>
                 </div>
@@ -169,7 +199,7 @@ export function UserProfileDropdown(props) {
               </a>
             </Link>
 
-            <a className="navi-item px-8">
+            {/* <a className="navi-item px-8">
               <div className="navi-link">
                 <div className="navi-icon mr-2">
                   <i className="flaticon2-rocket-1 text-danger"></i>
@@ -179,7 +209,7 @@ export function UserProfileDropdown(props) {
                   <div className="text-muted">Logs and notifications</div>
                 </div>
               </div>
-            </a>
+            </a> */}
 
             <a className="navi-item px-8">
               <div className="navi-link">
@@ -187,8 +217,10 @@ export function UserProfileDropdown(props) {
                   <i className="flaticon2-hourglass text-primary"></i>
                 </div>
                 <div className="navi-text">
-                  <div className="font-weight-bold">My Tasks</div>
-                  <div className="text-muted">latest tasks and projects</div>
+                  <div className="font-weight-bold">My Sponsorships</div>
+                  <div className="text-muted">
+                    latest games and sponsorships
+                  </div>
                 </div>
               </div>
             </a>
@@ -201,9 +233,12 @@ export function UserProfileDropdown(props) {
               >
                 Sign Out
               </Link>
-              <a href="#" className="btn btn-clean font-weight-bold">
+              <Link
+                to="/upgrade-plan"
+                className="btn btn-clean font-weight-bold"
+              >
                 Upgrade Plan
-              </a>
+              </Link>
             </div>
           </div>
         </Dropdown.Menu>

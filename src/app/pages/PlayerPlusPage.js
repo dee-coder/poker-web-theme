@@ -18,12 +18,13 @@ const PlayerPlusPage = () => {
     })
       .then((res) => res.json())
       .then((json) => {
+        console.log(json);
         setplans(json.list);
         const userInfo = JSON.parse(localStorage.getItem("userInfo"));
         const role = localStorage.getItem("role");
         setInfo(userInfo);
         setRole(role);
-        //console.log(userInfo);
+
         setInfo(userInfo);
       })
       .catch((err) => console.log(err));
@@ -66,78 +67,71 @@ const PlayerPlusPage = () => {
           </Typography>
         </Col>
       </Row>
-      <Paper>
-        <Row style={{ padding: "30px" }}>
-          <Col lg={12} style={{ textAlign: "left" }}>
-            <h3> Player Plus</h3>
-          </Col>
-        </Row>
-        <Divider />
-        <Row style={{ padding: "30px" }}>
-          {plans.map((plan) => {
-            return (
-              <Col lg={6}>
-                <Card style={{ borderColor: "#fff" }}>
-                  <Card.Body>
-                    <Row>
-                      <Col>
-                        <div>
-                          <h1>
-                            <strong>
-                              {" "}
-                              {plan.currency}
-                              {plan.plan_amount}
-                            </strong>
-                          </h1>
-                          {plan.subscription_type === "Annualy"
-                            ? "/ year"
-                            : "/ month"}
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row style={{ marginTop: "20px" }}>
-                      <Col>
-                        <div>
-                          <h1>{plan.title}</h1>
-                        </div>
-                      </Col>
-                    </Row>
-                    <Row style={{ marginTop: "20px" }}>
-                      <Col lg={6} style={{ textAlign: "left" }}>
-                        <span>{plan.description}</span>
-                      </Col>
-                      <Col lg={6} style={{ textAlign: "right" }}>
-                        <Badge variant="primary">
-                          <span>{plan.subscription_type}</span>
-                        </Badge>
-                      </Col>
-                    </Row>
-                    <Row style={{ marginTop: "20px" }}>
-                      <Col lg={12}>
-                        <Button
-                          style={{ minWidth: "100%" }}
-                          onClick={(e) =>
-                            makeRequestToPayment(
-                              e,
-                              plan.stripe_product_id,
-                              plan.id
-                            )
-                          }
-                        >
-                          Get This Plan{" "}
+
+      <Row style={{ padding: "30px" }}>
+        {plans.map((plan) => {
+          return (
+            <Col lg={6}>
+              <div className="card">
+                <div className="card-body">
+                  <Row>
+                    <Col>
+                      <div>
+                        <h1>
                           <strong>
-                            {plan.currency} {plan.plan_amount}
+                            {" "}
+                            {plan.currency}
+                            {plan.plan_amount}
                           </strong>
-                        </Button>
-                      </Col>
-                    </Row>
-                  </Card.Body>
-                </Card>
-              </Col>
-            );
-          })}
-        </Row>
-      </Paper>
+                        </h1>
+                        {plan.subscription_type === "Annualy"
+                          ? "/ year"
+                          : "/ month"}
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "20px" }}>
+                    <Col>
+                      <div>
+                        <h1>{plan.title}</h1>
+                      </div>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "20px" }}>
+                    <Col lg={6} style={{ textAlign: "left" }}>
+                      <span>{plan.description}</span>
+                    </Col>
+                    <Col lg={6} style={{ textAlign: "right" }}>
+                      <Badge variant="primary">
+                        <span>{plan.subscription_type}</span>
+                      </Badge>
+                    </Col>
+                  </Row>
+                  <Row style={{ marginTop: "20px" }}>
+                    <Col lg={12}>
+                      <Button
+                        style={{ minWidth: "100%" }}
+                        onClick={(e) =>
+                          makeRequestToPayment(
+                            e,
+                            plan.stripe_product_id,
+                            plan.id
+                          )
+                        }
+                      >
+                        Get This Plan{" "}
+                        <strong>
+                          {plan.currency} {plan.plan_amount}
+                        </strong>
+                      </Button>
+                    </Col>
+                  </Row>
+                </div>
+              </div>
+            </Col>
+          );
+        })}
+      </Row>
     </Box>
   );
 };

@@ -1,4 +1,4 @@
-import React, { Suspense, lazy } from "react";
+import React, { Suspense, lazy, useState, useEffect } from "react";
 import { Redirect, Switch, Route } from "react-router-dom";
 import { LayoutSplashScreen, ContentRoute } from "../_metronic/layout";
 import { BuilderPage } from "./pages/BuilderPage";
@@ -35,6 +35,10 @@ import AllSponsorships from "./pages/Sponsorships/AllSponsorships";
 import ViewProfileSponsor from "./pages/Sponsors/ViewProfileSponsor";
 import ViewProfilePlayer from "./pages/Players/ViewProfilePlayer";
 import FindTournamentsPage from "./pages/FindTournaments/find-tournament-page";
+import HowItWorks from "./pages/ContentPages/HowItWorks";
+import AboutUsPage from "./pages/ContentPages/About-us";
+import ContactUsPage from "./pages/ContentPages/Contact-us";
+import HomePage from "./pages/ContentPages/HomePage";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -54,12 +58,27 @@ export default function BasePage() {
   //  }) // [] - is required if you need only one call
   // https://reactjs.org/docs/hooks-reference.html#useeffect
 
+  const [LoggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    if (userInfo === undefined || userInfo === null) {
+      setLoggedIn(false);
+    } else {
+      setLoggedIn(true);
+    }
+  });
+
   return (
     <Switch>
-      {
-        /* Redirect from root URL to /dashboard. */
+      {/* Redirect from root URL to /dashboard. */
+      LoggedIn ? (
         <Redirect exact from="/" to="/dashboard" />
-      }
+      ) : (
+        <Redirect exact from="/dashboard" to="/" />
+      )}
+      <ContentRoute exact path="/" component={HomePage} />
+      <ContentRoute path="/dashboard" component={DashboardPage} />
       {/* { /* PLAYER'S ROUTES */}
       {/*Create sponsorship or allotment of sponsorship by player*/}{" "}
       {/*Login required*/}
@@ -145,6 +164,7 @@ export default function BasePage() {
       <ContentRoute path="/sponsors/:id" component={SponsorsPage} />
       <ContentRoute path="/player-plus" component={PlayerPlusPage} />
       <ContentRoute path="/sponsor-profile" component={SponsorProfilePage} />
+      <ContentRoute path="/upgrade-plan" component={PlayerPlusPage} />
       <ContentRoute
         path="/subscription/success"
         component={SuccessSubscription}
@@ -181,6 +201,10 @@ export default function BasePage() {
       />
       <ContentRoute path="/messages" component={InboxPage} />
       {/* <Route path="/error/error-v1" c omponent={ErrorPage1} /> */}
+      {/* Content pages */}
+      <Route path="/how-it-works" component={HowItWorks} />
+      <Route path="/about-us" component={AboutUsPage} />
+      <Route path="/contact-us" component={ContactUsPage} />
       <Route path="/logout" component={Logout} />
       <Route path="/google-material" component={GoogleMaterialPage} />
       <Route path="/react-bootstrap" component={ReactBootstrapPage} />

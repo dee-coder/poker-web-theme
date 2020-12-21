@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useMemo, useState, useEffect } from "react";
 import objectPath from "object-path";
 import SVG from "react-inlinesvg";
 import { OverlayTrigger, Tooltip } from "react-bootstrap";
@@ -13,7 +13,16 @@ import { QuickUserToggler } from "../extras/QuiclUserToggler";
 
 export function Topbar() {
   const uiService = useHtmlClassService();
+  const [LoggedIn, setLoggedIn] = useState(false);
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
+    if (userInfo === undefined || userInfo === null) {
+      setLoggedIn(false);
+    } else {
+      setLoggedIn(true);
+    }
+  });
   const layoutProps = useMemo(() => {
     return {
       viewSearchDisplay: objectPath.get(
@@ -49,12 +58,9 @@ export function Topbar() {
 
       {layoutProps.viewQuickActionsDisplay && <QuickActionsDropdown />}*/}
 
-      {JSON.parse(localStorage.getItem("userInfo")) !== null &&
-        JSON.parse(localStorage.getItem("userInfo")) !== undefined && (
-          <MyCartDropdown />
-        )}
+      {LoggedIn && <MyCartDropdown />}
 
-      {layoutProps.viewQuickPanelDisplay && (
+      {LoggedIn && (
         <OverlayTrigger
           placement="bottom"
           overlay={<Tooltip id="quick-panel-tooltip">Notifications</Tooltip>}
@@ -81,7 +87,7 @@ export function Topbar() {
         </OverlayTrigger>
       )}
 
-      {layoutProps.viewLanguagesDisplay && <LanguageSelectorDropdown />}
+      {/* {layoutProps.viewLanguagesDisplay && <LanguageSelectorDropdown />} */}
 
       {layoutProps.viewUserDisplay && <QuickUserToggler />}
     </div>

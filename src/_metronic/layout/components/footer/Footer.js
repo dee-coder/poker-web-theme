@@ -17,21 +17,26 @@ export function Footer() {
   }, [uiService]);
 
   return (
-    <>
-      {layoutProps.footerLayout === "compact" && (
-        <FooterCompact
-          today={today}
-          footerClasses={layoutProps.footerClasses}
-          footerContainerClasses={layoutProps.footerContainerClasses}
-        />
-      )}
-      {layoutProps.footerLayout === "extended" && (
-        <FooterExtended
-          today={today}
-          footerClasses={layoutProps.footerClasses}
-          footerContainerClasses={layoutProps.footerContainerClasses}
-        />
-      )}
-    </>
+    <FooterCompact
+      today={today}
+      footerClasses={layoutProps.footerClasses}
+      footerContainerClasses={layoutProps.footerContainerClasses}
+    />
+    // <>
+    //   {layoutProps.footerLayout === "compact" && (
+    //     <FooterCompact
+    //       today={today}
+    //       footerClasses={layoutProps.footerClasses}
+    //       footerContainerClasses={layoutProps.footerContainerClasses}
+    //     />
+    //   )}
+    //   {layoutProps.footerLayout === "extended" && (
+    //     <FooterExtended
+    //       today={today}
+    //       footerClasses={layoutProps.footerClasses}
+    //       footerContainerClasses={layoutProps.footerContainerClasses}
+    //     />
+    //   )}
+    // </>
   );
 }
