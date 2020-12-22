@@ -211,7 +211,7 @@ export function UserProfileDropdown(props) {
               </div>
             </a> */}
 
-            <a className="navi-item px-8">
+            <Link to="/sponsorship" className="navi-item px-8">
               <div className="navi-link">
                 <div className="navi-icon mr-2">
                   <i className="flaticon2-hourglass text-primary"></i>
@@ -223,7 +223,7 @@ export function UserProfileDropdown(props) {
                   </div>
                 </div>
               </div>
-            </a>
+            </Link>
             <div className="navi-separator mt-3"></div>
 
             <div className="navi-footer  px-8 py-5">
