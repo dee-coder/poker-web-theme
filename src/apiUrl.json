@@ -32,6 +32,7 @@
   "AllNotifications":"/notifications/getall",
   "getAllSponsorships":"/sponsorship/all",
   "getSponsorProfile":"/sponsor/profile",
-  "getPlayerProfile":"/players/profile"
+  "getPlayerProfile":"/players/profile",
+  "getWalletAndTransactions":"/payment/info"
 }
 

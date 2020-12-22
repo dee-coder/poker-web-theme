@@ -1,16 +1,39 @@
 import { Box, Paper, Typography } from "@material-ui/core";
 import { Button } from "react-bootstrap";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Image } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../../_metronic/_helpers";
-
+import API from "../../../apiUrl.json";
 const WalletAndTransactionPage = () => {
+  useEffect(() => {
+    let role = localStorage.getItem("role");
+    let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
+    fetch(API.baseUrl + API.getWalletAndTransactions, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        userid: role === "player" ? userInfo.player_id : userInfo.sponsor_id,
+        role: role,
+      }),
+    })
+      .then((response) => response.json())
+      .then((json) => {
+        setWalletInfo(json.info);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
   const tabs = [
     { name: " Internal Transactions", key: "internal" },
     { name: " External Transactions", key: "external" },
   ];
 
   const [SelectedTab, setSelectedTab] = useState("internal");
+  const [WalletInfo, setWalletInfo] = useState({});
 
   return (
     <Box>
@@ -83,7 +106,9 @@ const WalletAndTransactionPage = () => {
                                 color: "black",
                               }}
                             >
-                              0.00
+                              {parseFloat(WalletInfo.sponsor_credits).toFixed(
+                                2
+                              )}
                             </Typography>
                             <br />
                             <Typography
@@ -115,7 +140,9 @@ const WalletAndTransactionPage = () => {
                                 color: "black",
                               }}
                             >
-                              342.02
+                              {parseFloat(WalletInfo.payment_credits).toFixed(
+                                2
+                              )}
                             </Typography>
                             <br />
                             <Typography
@@ -144,7 +171,7 @@ const WalletAndTransactionPage = () => {
                               color: "black",
                             }}
                           >
-                            342.02
+                            0.00
                           </Typography>
                           <br />
                           <Typography variant="body1" style={{ color: "gray" }}>
@@ -170,7 +197,7 @@ const WalletAndTransactionPage = () => {
                               color: "#28A745",
                             }}
                           >
-                            342.02
+                            0.00
                           </Typography>
                           <br />
                           <Typography variant="body1" style={{ color: "gray" }}>
