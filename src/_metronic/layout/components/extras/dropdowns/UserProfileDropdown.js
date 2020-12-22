@@ -189,7 +189,7 @@ export function UserProfileDropdown(props) {
               <a className="navi-item px-8">
                 <div className="navi-link">
                   <div className="navi-icon mr-2">
-                    <i className="flaticon2-mail text-warning"></i>
+                    <i className="flaticon2-chat-1 text-warning"></i>
                   </div>
                   <div className="navi-text">
                     <div className="font-weight-bold">My Messsage</div>
@@ -220,6 +220,32 @@ export function UserProfileDropdown(props) {
                   <div className="font-weight-bold">My Sponsorships</div>
                   <div className="text-muted">
                     latest games and sponsorships
+                  </div>
+                </div>
+              </div>
+            </Link>
+            <Link to="/notifications" className="navi-item px-8">
+              <div className="navi-link">
+                <div className="navi-icon mr-2">
+                  <i className="flaticon2-notification text-primary"></i>
+                </div>
+                <div className="navi-text">
+                  <div className="font-weight-bold">My Notifications</div>
+                  <div className="text-muted">
+                    Latest and earlier notifications
+                  </div>
+                </div>
+              </div>
+            </Link>
+            <Link to="/payments" className="navi-item px-8">
+              <div className="navi-link">
+                <div className="navi-icon mr-2">
+                  <i className="flaticon2-copy text-primary"></i>
+                </div>
+                <div className="navi-text">
+                  <div className="font-weight-bold">My Payments</div>
+                  <div className="text-muted">
+                    Wallet, Payments & Withdrawel
                   </div>
                 </div>
               </div>

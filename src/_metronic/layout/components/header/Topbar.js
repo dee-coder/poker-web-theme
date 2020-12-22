@@ -22,6 +22,7 @@ export function Topbar() {
     } else {
       setLoggedIn(true);
     }
+    console.log("Status:", LoggedIn);
   });
   const layoutProps = useMemo(() => {
     return {
