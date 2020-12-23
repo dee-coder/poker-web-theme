@@ -1015,21 +1015,12 @@ const HomePage = () => {
         </Col>
       </Row>
 
-      <Row style={{ marginTop: "50px" }}>
+      {/* <Row style={{ marginTop: "50px" }}>
         <Col lg={12}>
           <Row>
             <Col lg={12}>
               <div className="d-flex flex-row justify-content-center">
-                <Typography
-                  variant="button"
-                  style={{
-                    fontSize: "15px",
-                    fontWeight: "600",
-                    color: "#17a2b8",
-                  }}
-                >
-                  GET IN TOUCH
-                </Typography>
+                
               </div>
             </Col>
           </Row>
@@ -1049,7 +1040,7 @@ const HomePage = () => {
             </Col>
           </Row>
         </Col>
-      </Row>
+      </Row> */}
       <Row style={{ marginTop: "30px" }}>
         <Col lg={12}>
           <div className="card" style={{ borderRadius: "12px" }}>
@@ -1074,11 +1065,25 @@ const HomePage = () => {
                   lg={6}
                   sm={12}
                   md={12}
-                  style={{ paddingTop: "40px", paddingBottom: "40px" }}
+                  style={{ paddingTop: "30px", paddingBottom: "30px" }}
                 >
                   <Typography
+                    variant="button"
+                    style={{
+                      fontSize: "15px",
+                      fontWeight: "600",
+                      color: "#17a2b8",
+                    }}
+                  >
+                    GET IN TOUCH
+                  </Typography>
+                  <Typography
                     variant="h3"
-                    style={{ color: "black", fontWeight: "600" }}
+                    style={{
+                      color: "black",
+                      fontWeight: "600",
+                      marginTop: "20px",
+                    }}
                   >
                     Join The Pool Party!
                   </Typography>
