@@ -44,7 +44,7 @@ const SponsorProfilePage = () => {
     })
       .then((response) => response.json())
       .then((response) => {
-        //console.log("Sponsor-Profile:", response);
+        console.log("Sponsor-Profile:", response);
         setSponsorDetails(response.result);
         setActiveTournaments(response.ActiveTournaments);
         setNetworks(response.networks);

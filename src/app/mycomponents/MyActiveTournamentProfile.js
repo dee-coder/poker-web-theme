@@ -3,11 +3,13 @@ import React, { useState } from "react";
 import { Row, Col, Container, Nav, Tab, Tabs } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import BoxItemSponsoredTournments from "./BoxItemSponsoredTournaments";
+import CompletedTournamentBox from "./CompletedTournamentsBox";
 import BoxItemActiveTournaments from "./ItemBoxActiveTournaments";
 import BoxItem from "./tournamentBoxItem";
 
 const MyActiveTournaments = ({
   activeTournaments,
+  completedTournaments,
   setViewAddSponsorsMode,
   setCurrentAllot,
   setViewTournamentDetails,
@@ -184,12 +186,22 @@ const MyActiveTournaments = ({
                 </Col>
               </Row>
             </Tab>
-            <Tab eventKey="swapping_tournaments" title="Swapping Tournaments">
+            <Tab eventKey="sponsored_tournaments" title="Sponsored Tournaments">
               <Row>
                 <Col
                   lg={12}
-                  style={{ textAlign: "center", paddingTop: "50px" }}
+                  style={{ textAlign: "left", paddingTop: "50px" }}
                 >
+
+                  {completedTournaments.map((game)=>{
+                    return (
+                      <CompletedTournamentBox
+                       obj = {game.gameData}
+                       allot = {game.data}
+                       sponsorList = {game.sponsoring}
+                      />
+                    )
+                  })}
                   <span className="text-muted font-weight-bolder font-size-h5">
                     No active tournaments going on.
                   </span>

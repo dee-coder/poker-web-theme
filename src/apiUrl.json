@@ -33,6 +33,8 @@
   "getAllSponsorships":"/sponsorship/all",
   "getSponsorProfile":"/sponsor/profile",
   "getPlayerProfile":"/players/profile",
-  "getWalletAndTransactions":"/payment/info"
+  "getWalletAndTransactions":"/payment/info",
+  "deactivateSponsorship":"/sponsorship/deactivate",
+  "getSummaryofSponsorship":"/sponsorship/summary"
 }
 

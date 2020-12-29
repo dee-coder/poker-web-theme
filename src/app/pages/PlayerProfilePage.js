@@ -49,6 +49,8 @@ const PlayerProfilePage = () => {
     []
   );
 
+  const [CompletedTournaments,setCompletedTournaments] = useState([]);
+
   const [selectedTournamentInfoObj, setSelectedTournamentInfoObj] = useState(
     {}
   );
@@ -86,6 +88,8 @@ const PlayerProfilePage = () => {
         setActiveTournaments(json.tournaments);
 
         setOrganicNetworks(json.networks);
+
+        setCompletedTournaments(json.completed);
 
         setListOfSponsoredTournaments(json.sponsored);
         if (json.result.player_details_json.Statistics === undefined) {
@@ -132,6 +136,7 @@ const PlayerProfilePage = () => {
               className="card-stretch gutter-b"
               activeTournaments={activeTournaments}
               setCurrentAllot={setCurrentAllot}
+              completedTournaments = {CompletedTournaments}
               setViewAddSponsorsMode={setViewAddSponsorsMode}
               setViewTournamentDetails={setViewTournamentDetails}
               setCurrentTournamentShowObj={setCurrentTournamentShowObj}
@@ -145,6 +150,7 @@ const PlayerProfilePage = () => {
               }
               setSelectedPendingSponsorList={setSelectedPendingSponsorList}
               setSelectedApprovedSponsorList={setSelectedApprovedSponsorList}
+
             />
           </Paper>
         </Col>

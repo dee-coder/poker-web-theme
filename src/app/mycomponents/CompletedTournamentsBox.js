@@ -9,6 +9,8 @@ import AddToCalendar from "react-add-to-calendar";
 import Countdown from "react-countdown";
 import API from "../../apiUrl.json";
 import _ from "lodash";
+import { Link } from 'react-router-dom';
+
 
 const Completionist = () => <span>This tournament has been finished.</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -27,18 +29,11 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
   }
 };
 
-const BoxItemSponsoredTournments = ({
+const CompletedTournamentBox = ({
   obj,
-
   allot,
-  sponsorList,
-  requests,
-  openDrawer,
-  setOpenDrawerB,
-  setSelectedTournamentInfoObj,
-  setSelectedTournamentBattingInfo,
-  setSelectedPendingSponsorList,
-  setSelectedApprovedSponsorList,
+  sponsorList
+  
 }) => {
   const [url, setUrl] = useState();
   const [networks, setNetworks] = useState([]);
@@ -74,20 +69,7 @@ const BoxItemSponsoredTournments = ({
     },
   };
 
-  const endSponsorship = (e) =>{
-    e.preventDefault();
-
-    fetch(API.baseUrl+ API.deactivateSponsorship+"/"+allot.sponsorship_id,{
-      method:'GET',
-      headers:{
-        "Content-Type":"application/json",
-      }
-    }).then((response)=>response.json()).then((data)=>{
-        console.log(data);
-    }).catch((err)=>{
-       console.log(err.message);
-    });
-  };
+  
 
   function getDates(date) {
     var today = new Date(date);
@@ -98,18 +80,11 @@ const BoxItemSponsoredTournments = ({
   }
 
   return (
-    <a>
+    <Link to= {`/result/${allot.sponsorship_id}`} target="_blank" style = {{color:'inherit'}}>
       <div
         className={classes.root}
         style={{ marginBottom: "25px" }}
-        //onClick={() => setOpenDrawerB(true)}
-        onClick={() => {
-          setSelectedTournamentInfoObj(obj);
-          setSelectedTournamentBattingInfo(allot);
-          setSelectedPendingSponsorList(requests);
-          setSelectedApprovedSponsorList(sponsorList);
-          setOpenDrawerB(true);
-        }}
+        
       >
         {" "}
         <div
@@ -220,29 +195,7 @@ const BoxItemSponsoredTournments = ({
                 </Typography>{" "}
               </div>
             </div>
-            <div className="col-auto" style={{ marginLeft: "20px" }}>
-              <div style={{ textAlign: "left" }}>
-                <Typography variant="button" style={{ color: "#848484" }}>
-                  REQUESTS{" "}
-                  <i
-                    class="fas fa-info-circle"
-                    style={{
-                      marginLeft: "2px",
-                      color: "#848484",
-                      fontSize: "12px",
-                    }}
-                  ></i>
-                </Typography>
-                <br />
-                <br />
-                <Typography
-                  variant="h4"
-                  style={{ fontWeight: "900", color: "gray" }}
-                >
-                  {requests.length}
-                </Typography>{" "}
-              </div>
-            </div>
+                    
           </Row>
 
           <Row style={{ marginTop: "20px" }}>
@@ -444,89 +397,12 @@ const BoxItemSponsoredTournments = ({
                   </Form>
                 </Col>
               </Row>
-
-              {/* <Row>
-                <Col>
-                  <Typography variant="button">Pending Requests</Typography>
-                  <br />
-                  {sponsorList.map((sponsor) => {
-                    return (
-                      <div className="card" style={{ padding: "20px" }}>
-                        <Typography variant="h6">
-                          {sponsor.sponsor_id}
-                          {sponsor.sponsor_name}
-                        </Typography>
-                      </div>
-                    );
-                  })}
-                </Col>
-              </Row> */}
-            </div>
-          )}
-
-          <Row style = {{marginTop:'20px'}}>
-            <Col lg={12}>
-              <a>
-              <span style ={{color:'#F64E60',fontSize:'15px',fontWeight:'600'}} onClick = {(e)=>endSponsorship(e)}>
-                End this Sponsorship
-              </span>
-              </a>
-              </Col>
-          </Row>
-          {/* {allot === null && (
-          <Row style={{ marginTop: "25px" }}>
-            <Col lg={12}>
-              <Form inline style={{ float: "left" }}>
-                <Button variant="primary">
-                  {obj.network}{" "}
-                  <i
-                    style={{ fontSize: "12px", marginLeft: "5px" }}
-                    class="fas fa-external-link-alt"
-                  ></i>
-                </Button>
-                <Button
-                  style={{ marginLeft: "20px" }}
-                  variant="primary"
-                  onClick={() => {
-                    setViewAddSponsorsMode(true);
-                    setCurrentAllot(obj);
-                  }}
-                >
-                  Add Sponsors
-                  <i
-                    style={{
-                      color: "#fff",
-                      fontSize: "12px",
-                      marginLeft: "5px",
-                    }}
-                    class="fas fa-plus"
-                  ></i>
-                </Button>
-
-                <Button style={{ marginLeft: "20px" }} variant="primary">
-                  More info{" "}
-                  <i
-                    style={{ fontSize: "12px", marginLeft: "5px" }}
-                    class="fas fa-info"
-                  ></i>
-                </Button>
-
-                <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
-                  Add To Calender
-                  <i
-                    style={{ fontSize: "12px", marginLeft: "5px" }}
-                    class="fas fa-calendar-check"
-                  ></i>
-                </Button> 
-                <AddToCalendar event={state.event} />
-              </Form>
-            </Col>
-          </Row>
-        )} */}
+             </div>
+             )}
         </div>
       </div>
-    </a>
+    </Link>
   );
 };
 
-export default BoxItemSponsoredTournments;
+export default CompletedTournamentBox;

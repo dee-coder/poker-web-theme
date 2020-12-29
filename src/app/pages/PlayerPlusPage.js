@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Badge, Button, Col, Row, Card } from "react-bootstrap";
 import API from "../../apiUrl.json";
 import { loadStripe } from "@stripe/stripe-js";
-const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
+// const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
 const PlayerPlusPage = () => {
   const [plans, setplans] = useState([]);
@@ -33,27 +33,27 @@ const PlayerPlusPage = () => {
   }, []);
 
   const makeRequestToPayment = async (e, id, plan_id) => {
-    e.preventDefault();
-    const stripe = await stripePromise;
-    await fetch(API.baseUrl + API.paymentSession, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        product_id: id,
-        uid: userInfo.player_id,
-        type: role,
-        plan: plan_id,
-      }),
-    })
-      .then((res) => res.json())
-      .then(async (session) => {
-        const result = await stripe.redirectToCheckout({
-          sessionId: session.id,
-        });
-      })
-      .catch((err) => console.log(err));
+    // e.preventDefault();
+    // const stripe = await stripePromise;
+    // await fetch(API.baseUrl + API.paymentSession, {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify({
+    //     product_id: id,
+    //     uid: userInfo.player_id,
+    //     type: role,
+    //     plan: plan_id,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then(async (session) => {
+    //     const result = await stripe.redirectToCheckout({
+    //       sessionId: session.id,
+    //     });
+    //   })
+    //   .catch((err) => console.log(err));
   };
   return (
     <Box>
