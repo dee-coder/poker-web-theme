@@ -55,11 +55,21 @@ export function HeadersMenuNormal({ layoutProps }) {
 
         <li
           className={`menu-item menu-item-rel ${getMenuItemActive(
-            "/games-by-date"
+            "/contact-us"
           )}`}
         >
           <NavLink className="menu-link" to="/contact-us">
             <span className="menu-text">Contact Us</span>
+            {layoutProps.rootArrowEnabled && <i className="menu-arrow" />}
+          </NavLink>
+        </li>
+        <li
+          className={`menu-item menu-item-rel ${getMenuItemActive(
+            "/blog"
+          )}`}
+        >
+          <NavLink className="menu-link" to="/blog">
+            <span className="menu-text">Blog</span>
             {layoutProps.rootArrowEnabled && <i className="menu-arrow" />}
           </NavLink>
         </li>

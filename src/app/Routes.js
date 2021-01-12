@@ -21,6 +21,7 @@ import Registration from "./modules/Auth/pages/Registration";
 import ForgotPassword from "./modules/Auth/pages/ForgotPassword";
 import { AuthCustom } from "./pages/Auth";
 
+
 export function Routes() {
   // const { isAuthorized } = useSelector(
   //   ({ auth }) => ({
@@ -45,7 +46,7 @@ export function Routes() {
 
   return (
     <Switch>
-      {LoggedIn && <Redirect exact from="/" to="/dashboard" />}
+      { LoggedIn && <Redirect exact from="/" to="/dashboard" />}
       {/* <Route path="login-new" component={AuthPage} /> */}
       {/* ?type="user"&action="login"*/}
 
@@ -55,6 +56,7 @@ export function Routes() {
       <Route exact path="/error/error-v1" component={ErrorPage1} />
 
       <Route path="/logout" component={Logout} />
+      
 
       <Layout>
         <BasePage />

@@ -42,6 +42,8 @@ import HomePage from "./pages/ContentPages/HomePage";
 import MyNotifications from "./pages/MyNotifications";
 import WalletAndTransactionPage from "./pages/Payments/WalletAndTransactionsPage";
 import TournamentSummary from "./pages/TournamentSummary";
+import Blog from "./pages/ContentPages/Blogs";
+import SingleBlog from "./pages/ContentPages/SingleBlog";
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -207,6 +209,8 @@ export default function BasePage() {
       <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/contact-us" component={ContactUsPage} />
+      <Route exact path="/blog" component={Blog} />
+      <Route path="/blog/:slug" component={SingleBlog} />
       <Route path="/logout" component={Logout} />
       <Route path="/google-material" component={GoogleMaterialPage} />
       <Route path="/react-bootstrap" component={ReactBootstrapPage} />

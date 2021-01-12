@@ -55,6 +55,13 @@ export function FooterCompact({
             >
               Contact
             </Link>
+            <Link
+              to="/blog"
+              rel="noopener noreferrer"
+              className="nav-link pl-3 pr-0"
+            >
+              Blog
+            </Link>
           </div>
           {/* end::Nav */}
         </div>
