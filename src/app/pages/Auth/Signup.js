@@ -43,6 +43,15 @@ function Signup(props) {
   }, []);
 
   useEffect(() => {
+    console.log("Email", Email);
+    console.log("Fullname", Fullname);
+    console.log("Password", Password);
+    console.log("ConfirmPassword", ConfirmPassword);
+    console.log("PlayerNetwork", PlayerNetwork);
+
+    console.log("Username", Username);
+    console.log("Tnc", Tnc);
+
     if (Role === "player") {
       if (
         Email !== null &&
