@@ -100,37 +100,43 @@ const HomePage = () => {
         <Col className="d-flex align-items-center justify-content-center">
           <Image
             src={toAbsoluteUrl("/media/poker-logos/888pokerlogo.png")}
-            style={{ height: "60px", width: "60px" }}
+            style={{ /*height: "60px", */ width: "80px" }}
+            className="img-fluid"
           />
         </Col>
         <Col className="d-flex align-items-center justify-content-center">
           <Image
             src={toAbsoluteUrl("/media/poker-logos/partypokerlogo.png")}
-            style={{ height: "60px", width: "60px" }}
+           /* style={{ height: "60px", width: "60px" }} */
+            className="img-fluid"
           />
         </Col>
         <Col className="d-flex align-items-center justify-content-center">
           <Image
             src={toAbsoluteUrl("/media/poker-logos/888pokerlogo.png")}
-            style={{ height: "60px", width: "60px" }}
+            style={{ /*height: "60px", */ width: "80px" }}
+            className="img-fluid"
           />
         </Col>
         <Col className="d-flex align-items-center justify-content-center">
           <Image
             src={toAbsoluteUrl("/media/poker-logos/partypokerlogo.png")}
-            style={{ height: "60px", width: "60px" }}
+            /* style={{ height: "60px", width: "60px" }} */
+            className="img-fluid"
           />
         </Col>
         <Col className="d-flex align-items-center justify-content-center">
           <Image
             src={toAbsoluteUrl("/media/poker-logos/888pokerlogo.png")}
-            style={{ height: "60px", width: "60px" }}
+            style={{ /*height: "60px", */ width: "80px" }}
+            className="img-fluid"
           />
         </Col>
         <Col className="d-flex align-items-center justify-content-center">
           <Image
             src={toAbsoluteUrl("/media/poker-logos/partypokerlogo.png")}
-            style={{ height: "60px", width: "60px" }}
+           /* style={{ height: "60px", width: "60px" }} */
+            className="img-fluid"
           />
         </Col>
       </Row>
