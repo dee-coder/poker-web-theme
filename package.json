@@ -57,6 +57,7 @@
         "downshift": "3.4.2",
         "emotion": "^11.0.0",
         "fg-loadcss": "2.1.0",
+        "firebase": "^8.2.4",
         "formik": "2.1.4",
         "html-to-react": "^1.4.4",
         "json2mq": "0.2.0",

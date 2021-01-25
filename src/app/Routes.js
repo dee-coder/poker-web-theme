@@ -18,9 +18,8 @@ import AdminSection from "./admin/adminSection";
 import { ErrorPage1 } from "./modules/ErrorsExamples/ErrorPage1";
 import Login from "./modules/Auth/pages/Login";
 import Registration from "./modules/Auth/pages/Registration";
-import ForgotPassword from "./modules/Auth/pages/ForgotPassword";
 import { AuthCustom } from "./pages/Auth";
-
+import ForgotPassword from "./pages/Auth/ForgotPasswordPage";
 
 export function Routes() {
   // const { isAuthorized } = useSelector(
@@ -46,17 +45,17 @@ export function Routes() {
 
   return (
     <Switch>
-      { LoggedIn && <Redirect exact from="/" to="/dashboard" />}
+      {LoggedIn && <Redirect exact from="/" to="/dashboard" />}
       {/* <Route path="login-new" component={AuthPage} /> */}
       {/* ?type="user"&action="login"*/}
 
       <Route path="/auth" component={AuthCustom} />
+      <Route path="/recovery" component={ForgotPassword} />
 
       <Route path="/error" component={ErrorsPage} />
       <Route exact path="/error/error-v1" component={ErrorPage1} />
 
       <Route path="/logout" component={Logout} />
-      
 
       <Layout>
         <BasePage />

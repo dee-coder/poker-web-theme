@@ -9,6 +9,7 @@ import InputRange from "react-input-range";
 import "react-input-range/lib/css/index.css";
 import { Button } from "react-bootstrap";
 import API from "../../../apiUrl.json";
+import moment from "moment";
 
 import Countdown from "react-countdown";
 import DrawerTournamentsView from "../../mycomponents/drawerTournamentsVIew";
@@ -235,11 +236,60 @@ const FindTournamentsPage = () => {
   };
 
   function getDates(date) {
-    var today = new Date(date);
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
-    var yyyy = today.getFullYear();
-    return (today = mm + "-" + dd + "-" + yyyy);
+    // unix timestamp
+    var ts = date;
+
+    // convert unix timestamp to milliseconds
+    var ts_ms = ts * 1000;
+
+    // initialize new Date object
+    var date_ob = new Date(ts_ms);
+
+    // year as 4 digits (YYYY)
+    var year = date_ob.getFullYear();
+
+    // month as 2 digits (MM)
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+
+    // date as 2 digits (DD)
+    var date = ("0" + date_ob.getDate()).slice(-2);
+
+    // hours as 2 digits (hh)
+    var hours = ("0" + date_ob.getHours()).slice(-2);
+
+    // minutes as 2 digits (mm)
+    var minutes = ("0" + date_ob.getMinutes()).slice(-2);
+
+    // seconds as 2 digits (ss)
+
+    var seconds = ("0" + date_ob.getSeconds()).slice(-2);
+
+    return (
+      year +
+      "-" +
+      month +
+      "-" +
+      date +
+      " " +
+      hours +
+      ":" +
+      minutes +
+      ":" +
+      seconds
+    );
+
+    // date as YYYY-MM-DD format
+    //console.log("Date as YYYY-MM-DD Format: " + year + "-" + month + "-" + date);
+
+    //console.log("\r\n");
+
+    // date & time as YYYY-MM-DD hh:mm:ss format:
+    //console.log("Date as YYYY-MM-DD hh:mm:ss Format: " + year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
+
+    //console.log("\r\n");
+
+    // time as hh:mm format:
+    //console.log("Time as hh:mm Format: " + hours + ":" + minutes);
   }
 
   const setRangeValue = (value, key) => {
@@ -562,8 +612,7 @@ const FindTournamentsPage = () => {
                                     marginRight: "5px",
                                   }}
                                 ></i>
-
-                                {getDates(game.scheduledStartTime)}
+                                {getDates(game.scheduledStartUnixTime)}
                               </Badge>
                               <Badge
                                 variant="danger"
@@ -582,7 +631,9 @@ const FindTournamentsPage = () => {
                                   }}
                                 ></i>
                                 <Countdown
-                                  date={new Date(game.scheduledStartTime)}
+                                  date={
+                                    new Date(game.scheduledStartUnixTime * 1000)
+                                  }
                                   renderer={renderer}
                                 />
                               </Badge>

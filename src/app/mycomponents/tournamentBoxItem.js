@@ -52,6 +52,14 @@ const BoxItem = ({ obj, setViewTournamentMode, networks }) => {
     },
   };
 
+  function getDates(date) {
+    var today = new Date(date);
+    var dd = String(today.getDate()).padStart(2, "0");
+    var mm = String(today.getMonth() + 1).padStart(2, "0"); //January is 0!
+    var yyyy = today.getFullYear();
+    return (today = mm + "-" + dd + "-" + yyyy);
+  }
+
   return (
     <div className={classes.root} style={{ marginTop: "25px" }}>
       <Paper className={classes.paper}>
@@ -72,8 +80,7 @@ const BoxItem = ({ obj, setViewTournamentMode, networks }) => {
                       marginRight: "5px",
                     }}
                   ></i>
-
-                  {obj.scheduledStartTime}
+                  {getDates(obj.scheduledStartUnixTime)}
                 </Badge>
                 <Badge
                   variant="danger"
@@ -92,7 +99,7 @@ const BoxItem = ({ obj, setViewTournamentMode, networks }) => {
                     }}
                   ></i>
                   <Countdown
-                    date={new Date(obj.scheduledStartTime)}
+                    date={getDates(obj.scheduledStartUnixTime)}
                     renderer={renderer}
                   />
                 </Badge>
