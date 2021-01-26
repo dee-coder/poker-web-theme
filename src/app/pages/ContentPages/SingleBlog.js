@@ -32,7 +32,7 @@ export default function SingleBlog(props) {
 return (
   <Box>
       {post.map((single, index) => ( 
-   <div key={index}>      
+   <div key={index}>
   <Row>
   <Col lg={12}>
     <div className="card shadow p-3 mb-5 bg-white rounded">

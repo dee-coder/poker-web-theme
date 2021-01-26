@@ -35,7 +35,6 @@ export default function Blogs() {
               // oups! something went wrong
               return;
           }
-  
           const posts = await response.json();
           setPosts(posts);
           console.log(posts);
@@ -93,7 +92,6 @@ return (
 </Row>
   <Grid container spacing={2}>
     {posts.map((post, index) => (
-      
     
     <Grid item xs={4} key={index}>
       <Card className={classes.fullHeightCard}>

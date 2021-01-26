@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { Button, Tab, Nav, Col, Row } from "react-bootstrap";
+import ForgotPassword from './ForgotPasswordPage';
 import API from "../../../apiUrl.json";
 import bcrypt from "bcryptjs";
 
@@ -192,5 +193,4 @@ function Login(props) {
     </div>
   );
 }
-
 export default Login;

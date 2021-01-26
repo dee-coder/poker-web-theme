@@ -7,6 +7,7 @@ import "../../../_metronic/_assets/sass/pages/login/classic/login-1.scss";
 import queryString from "query-string";
 import Login from "./Login";
 import Signup from "./Signup";
+import ForgotPassword from "./ForgotPasswordPage";
 import { ContentRoute } from "../../../_metronic/layout";
 
 export function AuthCustom(props) {
@@ -113,6 +114,8 @@ export function AuthCustom(props) {
               <Switch>
                 <ContentRoute path="/auth/login" component={Login} />
                 <ContentRoute path="/auth/signup" component={Signup} />
+                <ContentRoute path="/auth/forgot-password" component={ForgotPassword}/>
+
                 <Redirect from="/auth" exact={true} to="/auth/login" />
                 <Redirect to="/auth/login" />
               </Switch>
