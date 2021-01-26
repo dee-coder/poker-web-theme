@@ -84,7 +84,7 @@ const ForgotPassword = () => {
           </div>
         </div>
         }
-        
+
         <div className="form-group fv-plugins-icon-container">
         <input
           type="email"
