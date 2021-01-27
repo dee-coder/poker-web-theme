@@ -44,6 +44,7 @@ const ForgotPassword = () => {
                 variant:'warning',
                 message:response.message,
               })
+              setEmail("");
 
             }
           }
