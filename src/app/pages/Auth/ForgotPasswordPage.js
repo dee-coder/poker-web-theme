@@ -35,6 +35,7 @@ const ForgotPassword = () => {
               variant:'success',
               message:response.message,
             })
+            setEmail("");
           }
           else{
             if(response.status==="not_found"){

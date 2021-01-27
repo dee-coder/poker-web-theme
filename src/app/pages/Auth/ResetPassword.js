@@ -36,18 +36,15 @@ const ResetPassword = (props) => {
         .then((json) => {
           console.log(json);
           if (json.status === "token_found") {
-            alert(json.message);
             setTokeDetail(json.tokeDetails);
 
             //if(json.tokeDetail.status)
           } else {
-            alert(json.message);
             setRedirectPage(true);
           }
         })
         .catch((err) => {
           console.log(err.message);
-         
         });
     }
   }, []);
