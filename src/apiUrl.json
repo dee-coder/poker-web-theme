@@ -5,6 +5,8 @@
   "signupSponsor": "/signup/sponser",
   "signupPlayer": "/signup/player",
   "forgetPassword":"/auth/forget_password",
+  "validateToken":"/auth/validate_token",
+  "resetPassword":"/auth/set_new_password",
 
   "playerInfo":"/players/info",
   "getTournamentById": "/tournaments/getTournamentById",

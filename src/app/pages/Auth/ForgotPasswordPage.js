@@ -62,7 +62,7 @@ const ForgotPassword = () => {
 
   return (
 
-    <div>
+    <div style={{width:"400px"}}>
       <div className="text-center mb-10 mb-lg-20">
         <h3 className="font-size-h1">Forget Password</h3>
         <p className="text-muted font-weight-bold">

@@ -9,8 +9,10 @@ import Login from "./Login";
 import Signup from "./Signup";
 import ForgotPassword from "./ForgotPasswordPage";
 import { ContentRoute } from "../../../_metronic/layout";
+import ResetPassword from "./ResetPassword";
 
 export function AuthCustom(props) {
+
   const { pathname } = props.location;
   return (
     <>
@@ -115,6 +117,8 @@ export function AuthCustom(props) {
                 <ContentRoute path="/auth/login" component={Login} />
                 <ContentRoute path="/auth/signup" component={Signup} />
                 <ContentRoute path="/auth/forgot-password" component={ForgotPassword}/>
+                
+                <ContentRoute path="/auth/reset-password/:token" component={ResetPassword}/>
 
                 <Redirect from="/auth" exact={true} to="/auth/login" />
                 <Redirect to="/auth/login" />

@@ -51,7 +51,6 @@ function Signup(props) {
 
     console.log("Username", Username);
     console.log("Tnc", Tnc);
-
     if (Role === "player") {
       if (
         Email !== null &&
@@ -212,6 +211,8 @@ function Signup(props) {
   const disableLoading = () => {
     setLoading(false);
   };
+
+
 
   return (
     <div className="login-form login-signin" style={{ display: "block" }}>
