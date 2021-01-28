@@ -299,7 +299,7 @@ const BeSponsorPage = (props) => {
                         variant="caption"
                         style={{ fontWeight: "600" }}
                       >
-                        {getDates(tournamentData.scheduledStartTime)}
+                        {getDates(tournamentData.scheduledStartUnixTime*1000)}
                       </Typography>
                     </Badge>
                   </Col>
@@ -319,7 +319,7 @@ const BeSponsorPage = (props) => {
                         ></i>
                         <Countdown
                           style={{ float: "right" }}
-                          date={new Date(tournamentData.scheduledStartTime)}
+                          date={new Date(tournamentData.scheduledStartUnixTime*1000)}
                           renderer={renderer}
                         />
                       </Typography>

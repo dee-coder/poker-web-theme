@@ -324,8 +324,8 @@ const FindTournamentPage = () => {
       case "recent_date":
         var arr = [...holdedList];
         arr.sort((a, b) => {
-          let da = new Date(a.scheduledStartTime),
-            db = new Date(b.scheduledStartTime);
+          let da = new Date(a.scheduledStartUnixTime*1000),
+            db = new Date(b.scheduledStartUnixTime*1000);
           return db - da;
         });
         setHoldedList(arr);
@@ -334,8 +334,8 @@ const FindTournamentPage = () => {
       case "late_date":
         var arr = [...holdedList];
         arr.sort((a, b) => {
-          let da = new Date(a.scheduledStartTime),
-            db = new Date(b.scheduledStartTime);
+          let da = new Date(a.scheduledStartUnixTime*1000),
+            db = new Date(b.scheduledStartUnixTime*1000);
           return da - db;
         });
         setHoldedList(arr);

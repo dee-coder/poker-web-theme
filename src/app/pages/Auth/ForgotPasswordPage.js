@@ -90,7 +90,7 @@ const ForgotPassword = () => {
         <div className="form-group fv-plugins-icon-container">
         <input
           type="email"
-          placeholder="Enter registred email"
+          placeholder="Enter registered email"
           value={Email}
           className={`mb-10 form-control form-control-solid h-auto py-5 px-6`}
           onChange={(e) => setEmail(e.target.value)}

@@ -1,4 +1,5 @@
 import { Box, Paper, Typography } from "@material-ui/core";
+import { Link, Switch, Redirect } from "react-router-dom";
 import { Button } from "react-bootstrap";
 import React, { useState, useEffect } from "react";
 import { Row, Col, Image } from "react-bootstrap";
@@ -73,13 +74,14 @@ const WalletAndTransactionPage = () => {
                         >
                           Wallet
                         </Typography>
-
+                        <Link to="addCredits">
                         <Button variant="primary" style={{ float: "right" }}>
                           Add Credits to Wallet +
                         </Button>
+                        </Link>
                       </div>
                       {/* <Typography variant="body1">
-                     
+
                     </Typography> */}
                     </Col>
                   </Row>

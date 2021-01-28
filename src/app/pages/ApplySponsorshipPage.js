@@ -106,7 +106,7 @@ const ApplySponsorshipPage = (props) => {
                                 variant="secondary"
                                 style={{ fontSize: "12px", fontWeight: "200" }}
                               >
-                                {tournamentInfo.scheduledStartTime}
+                                {tournamentInfo.scheduledStartUnixTime*1000}
                               </Badge>
                             </h4>
                           </Form>
@@ -134,7 +134,7 @@ const ApplySponsorshipPage = (props) => {
                                 ></i>
                                 <Countdown
                                   date={
-                                    new Date(tournamentInfo.scheduledStartTime)
+                                    new Date(tournamentInfo.scheduledStartUnixTime*1000)
                                   }
                                   renderer={renderer}
                                 />

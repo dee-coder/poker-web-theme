@@ -265,7 +265,7 @@ const ViewProfilePlayer = (props) => {
 
                                           {getDates(
                                             sponsorship.tournamentInfo
-                                              .scheduledStartTime
+                                              .scheduledStartUnixTime*1000
                                           )}
                                         </Badge>
                                         <Badge
@@ -287,7 +287,7 @@ const ViewProfilePlayer = (props) => {
                                           <Countdown
                                             date={
                                               new Date(
-                                                sponsorship.tournamentInfo.scheduledStartTime
+                                                sponsorship.tournamentInfo.scheduledStartUnixTime*1000
                                               )
                                             }
                                             renderer={renderer}

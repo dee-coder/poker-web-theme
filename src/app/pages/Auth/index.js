@@ -59,13 +59,13 @@ export function AuthCustom(props) {
                   &copy; 2020 Pokerswapping
                 </div>
                 <div className="d-flex">
-                  <Link to="/terms" className="text-white">
+                  <Link to="/privacy" className="text-white">
                     Privacy
                   </Link>
                   <Link to="/terms" className="text-white ml-10">
                     Legal
                   </Link>
-                  <Link to="/terms" className="text-white ml-10">
+                  <Link to="/Contact-Us" className="text-white ml-10">
                     Contact
                   </Link>
                 </div>
@@ -117,9 +117,7 @@ export function AuthCustom(props) {
                 <ContentRoute path="/auth/login" component={Login} />
                 <ContentRoute path="/auth/signup" component={Signup} />
                 <ContentRoute path="/auth/forgot-password" component={ForgotPassword}/>
-                
                 <ContentRoute path="/auth/reset-password/:token" component={ResetPassword}/>
-
                 <Redirect from="/auth" exact={true} to="/auth/login" />
                 <Redirect to="/auth/login" />
               </Switch>
@@ -142,7 +140,7 @@ export function AuthCustom(props) {
                   Legal
                 </Link>
                 <Link
-                  to="/terms"
+                  to="/contact-us"
                   className="text-dark-75 text-hover-primary ml-4"
                 >
                   Contact
