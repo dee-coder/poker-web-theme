@@ -16,6 +16,7 @@ const AboutUsPage = () => {
               About Us
             </Typography>
           </div>
+          
         </Col>
       </Row>
     </Box>

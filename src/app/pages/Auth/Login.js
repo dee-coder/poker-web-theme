@@ -4,6 +4,7 @@ import { useFormik } from "formik";
 import * as Yup from "yup";
 import { FormattedMessage, injectIntl } from "react-intl";
 import { Button, Tab, Nav, Col, Row } from "react-bootstrap";
+import ForgotPassword from './ForgotPasswordPage';
 import API from "../../../apiUrl.json";
 import bcrypt from "bcryptjs";
 
@@ -25,12 +26,12 @@ const initialValues = {
 function Login(props) {
   const { intl } = props;
   const [loading, setLoading] = useState(false);
-
   const [Email, setEmail] = useState("");
   const [Password, setPassword] = useState("");
   const [Role, setRole] = useState("player");
   const [Tnc, setTnc] = useState(false);
   const [doRedirect, redirectToDashboard] = useState(false);
+  const [passwordCheck, setPasswordCheck] = useState(true);
   // const LoginSchema = Yup.object().shape({
   //   email: Yup.string()
   //     .email("Wrong email format")
@@ -82,6 +83,9 @@ function Login(props) {
           localStorage.setItem("userInfo", JSON.stringify(res.result));
           localStorage.setItem("role", Role);
           redirectToDashboard(true);
+          setPasswordCheck(true);
+        }else{
+          setPasswordCheck(false);
         }
       });
   };
@@ -115,6 +119,13 @@ function Login(props) {
           </div>
         </div>
 
+
+        {passwordCheck === false && (
+            <div
+              className={`mb-10 alert alert-custom alert-light-danger alert-dismissible`}>
+              <div className="alert-text ">Incorrect Password</div>
+            </div>
+          )}
         <Tab.Container id="top-tabs-example" defaultActiveKey="player">
           <Row>
             <Col sm={12}>
@@ -192,5 +203,4 @@ function Login(props) {
     </div>
   );
 }
-
 export default Login;
