@@ -22,13 +22,6 @@ import { AuthCustom } from "./pages/Auth";
 import ForgotPassword from "./pages/Auth/ForgotPasswordPage";
 
 export function Routes() {
-  // const { isAuthorized } = useSelector(
-  //   ({ auth }) => ({
-  //     isAuthorized: auth.user != null,
-  //   }),
-  //   shallowEqual
-  // );
-
   const [LoggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
