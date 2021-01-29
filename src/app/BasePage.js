@@ -94,8 +94,8 @@ export default function BasePage() {
       <ContentRoute path="/tournaments" component={FindTournamentsPage} />
       <ContentRoute path="/notifications" component={MyNotifications} />
       <ContentRoute path="/payments" component={WalletAndTransactionPage} />
-      <ContentRoute path="/addCredits" component={AddCredits}/>
-      <ContentRoute path="/result/:id" component = {TournamentSummary}/>
+      <ContentRoute path="/addCredits" component={AddCredits} />
+      <ContentRoute path="/result/:id" component={TournamentSummary} />
       {/*Show all sponsorships of players*/} {/*Login required*/}
       {/* <ContentRoute path="/sponsorships" component={} /> */}
       {/*Show a spacific sponsorships*/} {/*Login required*/}
@@ -216,8 +216,8 @@ export default function BasePage() {
       <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/contact-us" component={ContactUsPage} />
-      <Route path="/terms" component={TermsPage}/>
-      <Route path="/privacy" component={PrivacyPage}/>
+      <Route path="/terms" component={TermsPage} />
+      <Route path="/privacy" component={PrivacyPage} />
       <Route exact path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={SingleBlog} />
       <Route path="/logout" component={Logout} />
