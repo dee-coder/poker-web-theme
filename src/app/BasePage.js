@@ -41,6 +41,7 @@ import ContactUsPage from "./pages/ContentPages/Contact-us";
 import TermsPage from "./pages/ContentPages/TermsPage";
 import PrivacyPage from "./pages/ContentPages/PrivacyPage";
 import AddCredits from "./pages/Payments/AddCredits";
+import SponserReviewPage from "./pages/ReviewPages/SponserReviewPage";
 
 import HomePage from "./pages/ContentPages/HomePage";
 import MyNotifications from "./pages/MyNotifications";
@@ -133,6 +134,7 @@ export default function BasePage() {
       />
       {/*Show a player profile based on id*/} {/*Login not required */}
       <ContentRoute path="/player/profile/:id" component={ViewProfilePlayer} />
+      <ContentRoute path="/reviews/:id" component={SponserReviewPage}/>
       {/*Show a network page based on id*/} {/*Login not required*/}
       {/* <ContentRoute path="/networks/:id" component={} />  */}
       {/*Show a spacific page by id*/} {/*Login not required*/}

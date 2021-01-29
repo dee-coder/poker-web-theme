@@ -7,7 +7,8 @@
   "forgetPassword":"/auth/forget_password",
   "validateToken":"/auth/validate_token",
   "resetPassword":"/auth/set_new_password",
-
+  "reviewSponser":"/ratings/get",
+  
   "playerInfo":"/players/info",
   "getTournamentById": "/tournaments/getTournamentById",
   "getRegisteringTournaments": "/tournaments/all",

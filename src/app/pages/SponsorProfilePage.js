@@ -552,6 +552,7 @@ const SponsorProfilePage = () => {
           </Paper>
         </Col>
       </Row>
+      
       <Drawer
         anchor="right"
         open={viewTournamentMode}
