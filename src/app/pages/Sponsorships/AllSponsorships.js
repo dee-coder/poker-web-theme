@@ -72,6 +72,7 @@ const AllSponsorships = () => {
                 <Card.Title>13 Results</Card.Title>
               </Card.Header>
               <Card.Body>
+              
                 {Sponsorships.map((tournament) => {
                   return (
                     <a
@@ -91,7 +92,7 @@ const AllSponsorships = () => {
                       />
                     </a>
                   );
-                })}
+                })}              
               </Card.Body>
             </Card>
           </Col>

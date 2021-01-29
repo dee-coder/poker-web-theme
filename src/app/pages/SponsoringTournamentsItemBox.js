@@ -77,7 +77,7 @@ const SponsoringTournamentItemBox = (
                   }}
                 ></i>
 
-                {getDates(tournamentInfo.tournamentInfo.scheduledStartTime)}
+                {getDates(tournamentInfo.tournamentInfo.scheduledStartUnixTime*1000)}
               </Badge>
               <Badge
                 variant="danger"
@@ -97,7 +97,7 @@ const SponsoringTournamentItemBox = (
                 ></i>
                 <Countdown
                   date={
-                    new Date(tournamentInfo.tournamentInfo.scheduledStartTime)
+                    new Date(tournamentInfo.tournamentInfo.scheduledStartUnixTime*1000)
                   }
                   renderer={renderer}
                 />

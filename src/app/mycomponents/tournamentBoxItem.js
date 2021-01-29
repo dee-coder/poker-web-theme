@@ -80,7 +80,7 @@ const BoxItem = ({ obj, setViewTournamentMode, networks }) => {
                       marginRight: "5px",
                     }}
                   ></i>
-                  {getDates(obj.scheduledStartUnixTime)}
+                  {getDates(obj.scheduledStartUnixTime*1000)}
                 </Badge>
                 <Badge
                   variant="danger"
@@ -99,7 +99,7 @@ const BoxItem = ({ obj, setViewTournamentMode, networks }) => {
                     }}
                   ></i>
                   <Countdown
-                    date={getDates(obj.scheduledStartUnixTime)}
+                    date={getDates(obj.scheduledStartUnixTime*1000)}
                     renderer={renderer}
                   />
                 </Badge>

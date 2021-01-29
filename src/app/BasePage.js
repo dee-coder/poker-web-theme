@@ -38,6 +38,10 @@ import FindTournamentsPage from "./pages/FindTournaments/find-tournament-page";
 import HowItWorks from "./pages/ContentPages/HowItWorks";
 import AboutUsPage from "./pages/ContentPages/About-us";
 import ContactUsPage from "./pages/ContentPages/Contact-us";
+import TermsPage from "./pages/ContentPages/TermsPage";
+import PrivacyPage from "./pages/ContentPages/PrivacyPage";
+import AddCredits from "./pages/Payments/AddCredits";
+
 import HomePage from "./pages/ContentPages/HomePage";
 import MyNotifications from "./pages/MyNotifications";
 import WalletAndTransactionPage from "./pages/Payments/WalletAndTransactionsPage";
@@ -89,6 +93,7 @@ export default function BasePage() {
       <ContentRoute path="/tournaments" component={FindTournamentsPage} />
       <ContentRoute path="/notifications" component={MyNotifications} />
       <ContentRoute path="/payments" component={WalletAndTransactionPage} />
+      <ContentRoute path="/addCredits" component={AddCredits}/>
       <ContentRoute path="/result/:id" component = {TournamentSummary}/>
       {/*Show all sponsorships of players*/} {/*Login required*/}
       {/* <ContentRoute path="/sponsorships" component={} /> */}
@@ -209,6 +214,8 @@ export default function BasePage() {
       <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/contact-us" component={ContactUsPage} />
+      <Route path="/terms" component={TermsPage}/>
+      <Route path="/privacy" component={PrivacyPage}/>
       <Route exact path="/blog" component={Blog} />
       <Route path="/blog/:slug" component={SingleBlog} />
       <Route path="/logout" component={Logout} />

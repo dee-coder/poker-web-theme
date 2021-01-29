@@ -427,7 +427,7 @@ const ViewSwapperPage = (props) => {
                         variant="caption"
                         style={{ fontWeight: "600" }}
                       >
-                        {getDates(tournamentData.scheduledStartTime)}
+                        {getDates(tournamentData.scheduledStartUnixTime)}
                       </Typography>
                     </Badge>
                   </Col>
@@ -447,7 +447,7 @@ const ViewSwapperPage = (props) => {
                         ></i>
                         <Countdown
                           style={{ float: "right" }}
-                          date={new Date(tournamentData.scheduledStartTime)}
+                          date={new Date(tournamentData.scheduledStartUnixTime)}
                           renderer={renderer}
                         />
                       </Typography>

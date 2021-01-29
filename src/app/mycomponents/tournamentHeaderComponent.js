@@ -98,7 +98,7 @@ export function TournamentHeader({ className, obj, networks }) {
                       variant="secondary"
                       style={{ fontSize: "12px", fontWeight: "200" }}
                     >
-                      {obj.scheduledStartTime}
+                      {obj.scheduledStartUnixTime*1000}
                     </Badge>
                   </h4>
                 </Form>

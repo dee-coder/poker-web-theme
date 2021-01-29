@@ -319,7 +319,7 @@ const DrawerTournamentsView = ({
                       variant="secondary"
                       style={{ fontSize: "12px", fontWeight: "200" }}
                     >
-                      {obj.scheduledStartTime}
+                      {obj.scheduledStartUnixTime*1000}
                     </Badge>
                   </h4>
                   <h4 style={{ marginLeft: "10px" }}>
@@ -340,7 +340,7 @@ const DrawerTournamentsView = ({
                         }}
                       ></i>
                       <Countdown
-                        date={new Date(obj.scheduledStartTime)}
+                        date={new Date(obj.scheduledStartUnixTime*1000)}
                         renderer={renderer}
                       />
                     </Badge>

@@ -132,7 +132,7 @@ const BoxItemSponsoredTournments = ({
                     }}
                   ></i>
 
-                  {getDates(obj.scheduledStartTime)}
+                  {getDates(obj.scheduledStartUnixTime * 1000)}
                 </Badge>
                 <Badge
                   variant="danger"
@@ -151,7 +151,7 @@ const BoxItemSponsoredTournments = ({
                     }}
                   ></i>
                   <Countdown
-                    date={new Date(obj.scheduledStartTime)}
+                    date={new Date(obj.scheduledStartUnixTime * 1000)}
                     renderer={renderer}
                   />
                 </Badge>
@@ -502,7 +502,6 @@ const BoxItemSponsoredTournments = ({
                     class="fas fa-plus"
                   ></i>
                 </Button>
-
                 <Button style={{ marginLeft: "20px" }} variant="primary">
                   More info{" "}
                   <i
@@ -510,7 +509,6 @@ const BoxItemSponsoredTournments = ({
                     class="fas fa-info"
                   ></i>
                 </Button>
-
                 <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
                   Add To Calender
                   <i

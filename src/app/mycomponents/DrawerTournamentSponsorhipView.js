@@ -120,7 +120,7 @@ const DrawerTournamentSponsorshipView = ({
                           }}
                         ></i>
 
-                        {getDates(tournamentInfo.scheduledStartTime)}
+                        {getDates(tournamentInfo.scheduledStartUnixTime * 1000)}
                       </Badge>
                       <Badge
                         variant="danger"
@@ -139,7 +139,7 @@ const DrawerTournamentSponsorshipView = ({
                           }}
                         ></i>
                         <Countdown
-                          date={new Date(tournamentInfo.scheduledStartTime)}
+                          date={new Date(tournamentInfo.scheduledStartUnixTime*1000)}
                           renderer={renderer}
                         />
                       </Badge>

@@ -81,7 +81,7 @@ const AddSwapperPage = (props) => {
       network: tournamentData.network,
       creator: userInfo.player_id,
       swap_percentage: totalPercentage,
-      scheduled_on: tournamentData.scheduledStartTime,
+      scheduled_on: tournamentData.scheduledStartUnixTime*1000,
       //   percent_to_each: percentageOfEach,
       //   total_parcent: totalPercentage,
       //   amount_of_each: sponsorAmount,
@@ -308,7 +308,7 @@ const AddSwapperPage = (props) => {
                         variant="caption"
                         style={{ fontWeight: "600" }}
                       >
-                        {getDates(tournamentData.scheduledStartTime)}
+                        {getDates(tournamentData.scheduledStartUnixTime*1000)}
                       </Typography>
                     </Badge>
                   </Col>
@@ -328,7 +328,7 @@ const AddSwapperPage = (props) => {
                         ></i>
                         <Countdown
                           style={{ float: "right" }}
-                          date={new Date(tournamentData.scheduledStartTime)}
+                          date={new Date(tournamentData.scheduledStartUnixTime*1000)}
                           renderer={renderer}
                         />
                       </Typography>

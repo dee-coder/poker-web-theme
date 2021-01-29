@@ -463,7 +463,6 @@ const BoxItemActiveTournamentsForSponsor = ({
                       class="fas fa-external-link-alt"
                     ></i>
                   </Button>
-
                   <Button style={{ marginLeft: "20px" }} variant="primary">
                     More info{" "}
                     <i
@@ -505,7 +504,6 @@ const BoxItemActiveTournamentsForSponsor = ({
                     class="fas fa-plus"
                   ></i>
                 </Button>
-
                 <Button style={{ marginLeft: "20px" }} variant="primary">
                   More info{" "}
                   <i
@@ -513,7 +511,6 @@ const BoxItemActiveTournamentsForSponsor = ({
                     class="fas fa-info"
                   ></i>
                 </Button>
-
                 <Button variant={"secondary"} style={{ marginLeft: "25px" }}>
                   Add To Calender
                   <i
