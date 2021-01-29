@@ -6,10 +6,11 @@ import { Link, Redirect } from "react-router-dom";
 import API from "../../apiUrl.json";
 import _ from "lodash";
 
+const Completionist = () => <span>This tournament has been finished.</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
-    //return <Completionist />;
+    return <Completionist />;
   } else {
     // Render a countdown
     return (
@@ -60,7 +61,7 @@ const BeSponsorPage = (props) => {
       })
         .then((response) => response.json())
         .then((json) => {
-          //console.log(json);
+          console.log(json);
           setBettingInfo(json.res.betttingInfo);
           setPlayerInfo(json.res.playerInfo);
           setTournamentData(json.res.tournamentInfo);
@@ -134,10 +135,10 @@ const BeSponsorPage = (props) => {
                 <Typography variant="h6">
                   Be ac Sponsors to{" "}
                   <a
-                    href={`https://pokerswapping.com/details/${tournamentId}`}
+                    href={`https://pokerswapping.com/details/${tournamentData.sharkscope_id}`}
                     className="text-hover-primary"
                   >
-                    #{tournamentId}
+                    #{tournamentData.sharkscope_id}
                   </a>
                 </Typography>
               </Col>
@@ -299,7 +300,7 @@ const BeSponsorPage = (props) => {
                         variant="caption"
                         style={{ fontWeight: "600" }}
                       >
-                        {getDates(tournamentData.scheduledStartUnixTime*1000)}
+                        {getDates(tournamentData.scheduledStartUnixTime * 1000)}
                       </Typography>
                     </Badge>
                   </Col>
@@ -319,7 +320,11 @@ const BeSponsorPage = (props) => {
                         ></i>
                         <Countdown
                           style={{ float: "right" }}
-                          date={new Date(tournamentData.scheduledStartUnixTime*1000)}
+                          date={
+                            new Date(
+                              tournamentData.scheduledStartUnixTime * 1000
+                            )
+                          }
                           renderer={renderer}
                         />
                       </Typography>

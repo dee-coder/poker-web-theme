@@ -74,19 +74,26 @@ const BoxItemSponsoredTournments = ({
     },
   };
 
-  const endSponsorship = (e) =>{
+  const endSponsorship = (e) => {
     e.preventDefault();
 
-    fetch(API.baseUrl+ API.deactivateSponsorship+"/"+allot.sponsorship_id,{
-      method:'GET',
-      headers:{
-        "Content-Type":"application/json",
+    fetch(
+      API.baseUrl + API.deactivateSponsorship + "/" + allot.sponsorship_id,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
       }
-    }).then((response)=>response.json()).then((data)=>{
+    )
+      .then((response) => response.json())
+      .then((data) => {
         console.log(data);
-    }).catch((err)=>{
-       console.log(err.message);
-    });
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
   };
 
   function getDates(date) {
@@ -464,14 +471,21 @@ const BoxItemSponsoredTournments = ({
             </div>
           )}
 
-          <Row style = {{marginTop:'20px'}}>
+          <Row style={{ marginTop: "20px" }}>
             <Col lg={12}>
               <a>
-              <span style ={{color:'#F64E60',fontSize:'15px',fontWeight:'600'}} onClick = {(e)=>endSponsorship(e)}>
-                End this Sponsorship
-              </span>
+                <span
+                  style={{
+                    color: "#F64E60",
+                    fontSize: "15px",
+                    fontWeight: "600",
+                  }}
+                  onClick={(e) => endSponsorship(e)}
+                >
+                  End this Sponsorship
+                </span>
               </a>
-              </Col>
+            </Col>
           </Row>
           {/* {allot === null && (
           <Row style={{ marginTop: "25px" }}>
