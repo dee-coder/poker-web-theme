@@ -8,7 +8,7 @@ import ReactStars from "react-rating-stars-component";
 import "./some.css";
 import Countdown from "react-countdown";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
@@ -253,7 +253,7 @@ const ViewProfileSponsor = (props) => {
 
                                           {getDates(
                                             sponsorship.tournamentInfo
-                                              .scheduledStartUnixTime*1000
+                                              .scheduledStartUnixTime * 1000
                                           )}
                                         </Badge>
                                         <Badge
@@ -275,7 +275,8 @@ const ViewProfileSponsor = (props) => {
                                           <Countdown
                                             date={
                                               new Date(
-                                                sponsorship.tournamentInfo.scheduledStartUnixTime*1000
+                                                sponsorship.tournamentInfo
+                                                  .scheduledStartUnixTime * 1000
                                               )
                                             }
                                             renderer={renderer}

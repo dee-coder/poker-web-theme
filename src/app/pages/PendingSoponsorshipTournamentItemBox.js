@@ -9,7 +9,7 @@ import AddToCalendar from "react-add-to-calendar";
 import Countdown from "react-countdown";
 import ReactStars from "react-rating-stars-component";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
@@ -78,7 +78,9 @@ const PendingSponsorshipTournamentItemBox = (
                   }}
                 ></i>
 
-                {getDates(tournamentInfo.tournamentInfo.scheduledStartUnixTime*1000)}
+                {getDates(
+                  tournamentInfo.tournamentInfo.scheduledStartUnixTime * 1000
+                )}
               </Badge>
               <Badge
                 variant="danger"
@@ -98,7 +100,10 @@ const PendingSponsorshipTournamentItemBox = (
                 ></i>
                 <Countdown
                   date={
-                    new Date(tournamentInfo.tournamentInfo.scheduledStartUnixTime*1000)
+                    new Date(
+                      tournamentInfo.tournamentInfo.scheduledStartUnixTime *
+                        1000
+                    )
                   }
                   renderer={renderer}
                 />

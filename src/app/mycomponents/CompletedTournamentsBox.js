@@ -9,10 +9,9 @@ import AddToCalendar from "react-add-to-calendar";
 import Countdown from "react-countdown";
 import API from "../../apiUrl.json";
 import _ from "lodash";
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
@@ -29,12 +28,7 @@ const renderer = ({ days, hours, minutes, seconds, completed }) => {
   }
 };
 
-const CompletedTournamentBox = ({
-  obj,
-  allot,
-  sponsorList
-  
-}) => {
+const CompletedTournamentBox = ({ obj, allot, sponsorList }) => {
   const [url, setUrl] = useState();
   const [networks, setNetworks] = useState([]);
 
@@ -69,8 +63,6 @@ const CompletedTournamentBox = ({
     },
   };
 
-  
-
   function getDates(date) {
     var today = new Date(date);
     var dd = String(today.getDate()).padStart(2, "0");
@@ -80,12 +72,12 @@ const CompletedTournamentBox = ({
   }
 
   return (
-    <Link to= {`/result/${allot.sponsorship_id}`} target="_blank" style = {{color:'inherit'}}>
-      <div
-        className={classes.root}
-        style={{ marginBottom: "25px" }}
-        
-      >
+    <Link
+      to={`/result/${allot.sponsorship_id}`}
+      target="_blank"
+      style={{ color: "inherit" }}
+    >
+      <div className={classes.root} style={{ marginBottom: "25px" }}>
         {" "}
         <div
           className=" card bg-light-primay rounded "
@@ -195,7 +187,6 @@ const CompletedTournamentBox = ({
                 </Typography>{" "}
               </div>
             </div>
-                    
           </Row>
 
           <Row style={{ marginTop: "20px" }}>
@@ -397,8 +388,8 @@ const CompletedTournamentBox = ({
                   </Form>
                 </Col>
               </Row>
-             </div>
-             )}
+            </div>
+          )}
         </div>
       </div>
     </Link>

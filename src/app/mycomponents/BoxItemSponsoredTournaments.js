@@ -10,7 +10,7 @@ import Countdown from "react-countdown";
 import API from "../../apiUrl.json";
 import _ from "lodash";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
