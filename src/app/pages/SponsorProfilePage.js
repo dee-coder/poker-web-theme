@@ -461,20 +461,49 @@ const SponsorProfilePage = () => {
                     title="Active "
                     style={{ marginTop: "30px" }}
                   >
-                    {activeTournaments.map((tournament) => {
-                      return (
-                        <BoxItemActiveTournamentsForSponsor
-                          obj={tournament.gameData}
-                          allot={tournament.data}
-                          playerInfo={tournament.playerInfo[0]}
-                          setCurrentTournamentObj={setCurrentTournamentObj}
-                          currentTournamentShowObj={currentTournamentShowObj}
-                          setViewTournamentMode={setViewTournamentMode}
-                          setCurrentAllotDetails={setCurrentAllotDetails}
-                          setCurrentPlayerInfo={setCurrentPlayerInfo}
-                        />
-                      );
-                    })}
+                    {activeTournaments.length === 0 ? (
+                      <div
+                        style={{
+                          height: "300px",
+                          width: "100%",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textAlign: "center",
+                        }}
+                      >
+                        <div style={{ marginTop: "100px" }}>
+                          <img
+                            style={{ width: "40px", height: "40px" }}
+                            src={toAbsoluteUrl("/media/svg/empty.svg")}
+                          />
+                          <span
+                            style={{
+                              fontSize: "15px",
+
+                              color: "#c4c4c4",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            No Active tournament found.
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                      activeTournaments.map((tournament) => {
+                        return (
+                          <BoxItemActiveTournamentsForSponsor
+                            obj={tournament.gameData}
+                            allot={tournament.data}
+                            playerInfo={tournament.playerInfo[0]}
+                            setCurrentTournamentObj={setCurrentTournamentObj}
+                            currentTournamentShowObj={currentTournamentShowObj}
+                            setViewTournamentMode={setViewTournamentMode}
+                            setCurrentAllotDetails={setCurrentAllotDetails}
+                            setCurrentPlayerInfo={setCurrentPlayerInfo}
+                          />
+                        );
+                      })
+                    )}
                   </Tab>
                   <Tab
                     eventKey="pending"

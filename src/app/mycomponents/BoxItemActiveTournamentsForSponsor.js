@@ -89,7 +89,7 @@ const BoxItemActiveTournamentsForSponsor = ({
                     }}
                   ></i>
 
-                  {getDates(obj.scheduledStartTime)}
+                  {getDates(obj.scheduledStartUnixTime * 1000)}
                 </Badge>
                 <Badge
                   variant="danger"
@@ -108,7 +108,7 @@ const BoxItemActiveTournamentsForSponsor = ({
                     }}
                   ></i>
                   <Countdown
-                    date={new Date(obj.scheduledStartTime)}
+                    date={new Date(obj.scheduledStartUnixTime * 1000)}
                     renderer={renderer}
                   />
                 </Badge>
