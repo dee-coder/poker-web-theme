@@ -14,7 +14,7 @@ import {
 import { MixedWidgetCustom } from "./mixWidgetComponent";
 import { TournamentHeader } from "./tournamentHeaderComponent";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state

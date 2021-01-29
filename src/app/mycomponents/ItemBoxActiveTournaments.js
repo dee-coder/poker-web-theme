@@ -7,12 +7,10 @@ import { Card, Badge, Row, Col, Button, Form } from "react-bootstrap";
 import MailIcon from "@material-ui/icons/Mail";
 import AddToCalendar from "react-add-to-calendar";
 import Countdown from "react-countdown";
-import API from '../../apiUrl.json';
+import API from "../../apiUrl.json";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
-
-  
   if (completed) {
     // Render a completed state
     return <Completionist />;
@@ -56,9 +54,6 @@ const BoxItemActiveTournaments = ({
     var yyyy = today.getFullYear();
     return (today = mm + "-" + dd + "-" + yyyy);
   }
-
-
-  
 
   return (
     <a>
@@ -215,7 +210,6 @@ const BoxItemActiveTournaments = ({
             </Col>
           </Row>
 
-          
           {/* <Row style={{ marginTop: "30px" }}>
             <Col>
               <Typography variant="body">

@@ -25,7 +25,7 @@ import { TournamentHeader } from "./tournamentHeaderComponent";
 import Countdown from "react-countdown";
 import ReactStars from "react-rating-stars-component";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
@@ -319,7 +319,7 @@ const DrawerTournamentsView = ({
                       variant="secondary"
                       style={{ fontSize: "12px", fontWeight: "200" }}
                     >
-                      {obj.scheduledStartUnixTime*1000}
+                      {obj.scheduledStartUnixTime * 1000}
                     </Badge>
                   </h4>
                   <h4 style={{ marginLeft: "10px" }}>
@@ -340,7 +340,7 @@ const DrawerTournamentsView = ({
                         }}
                       ></i>
                       <Countdown
-                        date={new Date(obj.scheduledStartUnixTime*1000)}
+                        date={new Date(obj.scheduledStartUnixTime * 1000)}
                         renderer={renderer}
                       />
                     </Badge>

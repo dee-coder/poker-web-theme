@@ -16,7 +16,7 @@ import Countdown from "react-countdown";
 import PendingSponsorsItemsChip from "./PendingSponsorsItemChip";
 import { Link } from "react-router-dom";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
@@ -139,7 +139,11 @@ const DrawerTournamentSponsorshipView = ({
                           }}
                         ></i>
                         <Countdown
-                          date={new Date(tournamentInfo.scheduledStartUnixTime*1000)}
+                          date={
+                            new Date(
+                              tournamentInfo.scheduledStartUnixTime * 1000
+                            )
+                          }
                           renderer={renderer}
                         />
                       </Badge>

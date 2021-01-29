@@ -9,7 +9,7 @@ import AddToCalendar from "react-add-to-calendar";
 import Countdown from "react-countdown";
 import ReactStars from "react-rating-stars-component";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state

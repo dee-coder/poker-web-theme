@@ -9,7 +9,7 @@ import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
 import _ from "lodash";
 
-const Completionist = () => <span>This tournament has been finished.</span>;
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
@@ -106,7 +106,7 @@ const ApplySponsorshipPage = (props) => {
                                 variant="secondary"
                                 style={{ fontSize: "12px", fontWeight: "200" }}
                               >
-                                {tournamentInfo.scheduledStartUnixTime*1000}
+                                {tournamentInfo.scheduledStartUnixTime * 1000}
                               </Badge>
                             </h4>
                           </Form>
@@ -134,7 +134,10 @@ const ApplySponsorshipPage = (props) => {
                                 ></i>
                                 <Countdown
                                   date={
-                                    new Date(tournamentInfo.scheduledStartUnixTime*1000)
+                                    new Date(
+                                      tournamentInfo.scheduledStartUnixTime *
+                                        1000
+                                    )
                                   }
                                   renderer={renderer}
                                 />
