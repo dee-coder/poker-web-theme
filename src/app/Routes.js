@@ -25,7 +25,7 @@ export function Routes() {
   const [LoggedIn, setLoggedIn] = useState(false);
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
-
+    
     if (userInfo === undefined || userInfo === null) {
       setLoggedIn(false);
     } else {

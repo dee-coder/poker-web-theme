@@ -45,12 +45,12 @@ const SponsorsActiveTournamentsPage = () => {
         <Col lg={12} style={{ textAlign: "left" }}>
           <Typography
             variant="h4"
-            style={{ fontWeight: "600", color: "white" }}
-          >
+            style={{ fontWeight: "600", color: "white" }}>
             Active Tournaments
           </Typography>
         </Col>
       </Row>
+
       <Paper>
         <Row style={{ padding: "30px" }}>
           <Col>
@@ -61,36 +61,56 @@ const SponsorsActiveTournamentsPage = () => {
             <Typography
               variant="body1"
               gutterBottom
-              style={{ color: "#848484" }}
-            >
+              style={{ color: "#848484" }}>
               Active Tournaments alloted by players for sponsorships
             </Typography>
-          </Col>
-        </Row>
-        <Row style={{ padding: "30px" }}>
-          <Col>
-            {activeTournaments.map((tournament) => {
-              return (
-                <BoxItemActiveTournamentsForSponsor
-                  obj={tournament.gameData}
-                  allot={tournament.data}
-                  playerInfo={tournament.playerInfo}
-                  setCurrentTournamentObj={setCurrentTournamentObj}
-                  currentTournamentShowObj={currentTournamentShowObj}
-                  setViewTournamentMode={setViewTournamentMode}
-                  setCurrentAllotDetails={setCurrentAllotDetails}
-                  setCurrentPlayerInfo={setCurrentPlayerInfo}
-                />
-              );
-            })}
-          </Col>
-        </Row>
+           </Col>
+         </Row>
+
+          <Row>
+             <Col lg={12}>
+                  {activeTournaments.length === 0 ||
+                    activeTournaments === null ? 
+                    <Row>
+                      <Col
+                        lg={12}
+                        style={{ textAlign: "center", paddingTop: "50px" }}
+                      >
+                        <span className="text-muted font-weight-bolder font-size-h5">
+                          No Sponsored tournaments going on.
+                        </span>
+                      </Col>
+                    </Row>
+                   : 
+                    <div>
+                   <Row style={{ padding: "30px" }}>
+                     <Col>
+                      {activeTournaments.map((tournament) => {
+                        return (
+                          <BoxItemActiveTournamentsForSponsor
+                            obj={tournament.gameData}
+                            allot={tournament.data}
+                            playerInfo={tournament.playerInfo}
+                            setCurrentTournamentObj={setCurrentTournamentObj}
+                            currentTournamentShowObj={currentTournamentShowObj}
+                            setViewTournamentMode={setViewTournamentMode}
+                            setCurrentAllotDetails={setCurrentAllotDetails}
+                            setCurrentPlayerInfo={setCurrentPlayerInfo}
+                          />
+                        )
+                      })}
+                    </Col>
+                  </Row>
+               </div>
+              }
+           </Col>
+          </Row>
       </Paper>
+      
       <Drawer
         anchor="right"
         open={viewTournamentMode}
-        onClose={() => setViewTournamentMode(false)}
-      >
+        onClose={() => setViewTournamentMode(false)}>
         <DrawerTournamentsView
           setViewTournamentMode={setViewTournamentMode}
           obj={currentTournamentShowObj}

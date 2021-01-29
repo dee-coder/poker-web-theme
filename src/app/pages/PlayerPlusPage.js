@@ -4,8 +4,8 @@ import { Badge, Button, Col, Row, Card } from "react-bootstrap";
 import API from "../../apiUrl.json";
 import { loadStripe } from "@stripe/stripe-js";
 import createMollieClient from '@mollie/api-client';
- 
-// const mollieClient = createMollieClient({ apiKey: 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM' });
+
+//const mollieClient = createMollieClient({ apiKey: 'test_dHar4XY7LxsDOtmnkVtjNVWXLSlXsM' });
 
 const stripePromise = loadStripe(process.env.REACT_APP_STRIPE_KEY);
 
