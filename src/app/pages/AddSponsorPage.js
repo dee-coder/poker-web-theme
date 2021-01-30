@@ -5,10 +5,11 @@ import Countdown from "react-countdown";
 import { Link, Redirect } from "react-router-dom";
 import API from "../../apiUrl.json";
 
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
-    //return <Completionist />;
+    return <Completionist />;
   } else {
     // Render a countdown
     return (
@@ -403,7 +404,7 @@ const AddSponsorPage = (props) => {
                         variant="caption"
                         style={{ fontWeight: "600" }}
                       >
-                        {getDates(tournamentData.scheduledStartUnixTime*1000)}
+                        {getDates(tournamentData.scheduledStartUnixTime * 1000)}
                       </Typography>
                     </Badge>
                   </Col>
@@ -423,7 +424,11 @@ const AddSponsorPage = (props) => {
                         ></i>
                         <Countdown
                           style={{ float: "right" }}
-                          date={new Date(tournamentData.scheduledStartUnixTime*1000)}
+                          date={
+                            new Date(
+                              tournamentData.scheduledStartUnixTime * 1000
+                            )
+                          }
                           renderer={renderer}
                         />
                       </Typography>

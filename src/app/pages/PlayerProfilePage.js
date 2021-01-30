@@ -49,7 +49,7 @@ const PlayerProfilePage = () => {
     []
   );
 
-  const [CompletedTournaments,setCompletedTournaments] = useState([]);
+  const [CompletedTournaments, setCompletedTournaments] = useState([]);
 
   const [selectedTournamentInfoObj, setSelectedTournamentInfoObj] = useState(
     {}
@@ -122,37 +122,28 @@ const PlayerProfilePage = () => {
       </Row>
       <Row style={{ marginBottom: "20px" }}>
         <Col lg={4}>
-          <Paper>
-            <ProfileBoxPlayer
-              className="gutter-b card-stretch"
-              chartColor="danger"
-              statistics={statistics}
-            />
+          <Paper style={{ width: "100%" }}>
+            <ProfileBoxPlayer statistics={statistics} />
           </Paper>
         </Col>
         <Col lg={8}>
-          <Paper>
-            <MyActiveTournaments
-              className="card-stretch gutter-b"
-              activeTournaments={activeTournaments}
-              setCurrentAllot={setCurrentAllot}
-              completedTournaments = {CompletedTournaments}
-              setViewAddSponsorsMode={setViewAddSponsorsMode}
-              setViewTournamentDetails={setViewTournamentDetails}
-              setCurrentTournamentShowObj={setCurrentTournamentShowObj}
-              setViewTournamentMode={setViewTournamentMode}
-              sponsoredTournaments={ListOfSponsoredTournaments}
-              setOpenDrawerB={setDrawerB}
-              openDrawerB={DrawerB}
-              setSelectedTournamentInfoObj={setSelectedTournamentInfoObj}
-              setSelectedTournamentBattingInfo={
-                setSelectedTournamentBattingInfo
-              }
-              setSelectedPendingSponsorList={setSelectedPendingSponsorList}
-              setSelectedApprovedSponsorList={setSelectedApprovedSponsorList}
-
-            />
-          </Paper>
+          <MyActiveTournaments
+            className="card-stretch gutter-b"
+            activeTournaments={activeTournaments}
+            setCurrentAllot={setCurrentAllot}
+            completedTournaments={CompletedTournaments}
+            setViewAddSponsorsMode={setViewAddSponsorsMode}
+            setViewTournamentDetails={setViewTournamentDetails}
+            setCurrentTournamentShowObj={setCurrentTournamentShowObj}
+            setViewTournamentMode={setViewTournamentMode}
+            sponsoredTournaments={ListOfSponsoredTournaments}
+            setOpenDrawerB={setDrawerB}
+            openDrawerB={DrawerB}
+            setSelectedTournamentInfoObj={setSelectedTournamentInfoObj}
+            setSelectedTournamentBattingInfo={setSelectedTournamentBattingInfo}
+            setSelectedPendingSponsorList={setSelectedPendingSponsorList}
+            setSelectedApprovedSponsorList={setSelectedApprovedSponsorList}
+          />
         </Col>
       </Row>
 
