@@ -91,7 +91,7 @@ export default function BasePage() {
       <ContentRoute path="/sponsorship/create/:id" component={AddSponsorPage} />
       <ContentRoute path="/sponsorship/:id" component={ViewSponsorsPage} />
       <ContentRoute path="/sponsorship" component={AllSponsorships} />
-      <ContentRoute path="/tournaments" component={FindTournamentsPage} />
+      <ContentRoute path="/tournaments" component={FindTournamentsPage}/>
       <ContentRoute path="/notifications" component={MyNotifications} />
       <ContentRoute path="/payments" component={WalletAndTransactionPage} />
       <ContentRoute path="/addCredits" component={AddCredits} />

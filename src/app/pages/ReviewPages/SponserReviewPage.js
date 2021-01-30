@@ -7,6 +7,7 @@ import ReactStars from "react-rating-stars-component";
 import API from "../../../apiUrl.json";
 
 function SponserReviewPage(props) {
+    
   const ratingChanged = (newRating) => {
     console.log(newRating);
   };
