@@ -105,6 +105,8 @@ const FindTournamentsPage = () => {
   const [FilterGameType, setFiltereGameType] = useState([]);
   const [FilterSpeed, setFilterSpeed] = useState([]);
   const [Tournaments, setTournaments] = useState([]);
+  const [holdedList, setHoldedList] = useState([]);
+  const [tournamentList, setTournamentList] = useState([]);
 
   const [ValuesOfNetworks, setValuesOfNetworks] = useState([]);
 
@@ -233,6 +235,121 @@ const FindTournamentsPage = () => {
     //   console.log(f);
     //   setFilters(f);
     // }
+  };
+
+  const handleSorting = (e) => {
+    //console.log(e.target.value);
+    setHoldedList(tournamentList);
+
+    switch (e.target.value) {
+      case "prize_pool_low_to_high":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return (a.guarantee - b.guarantee);
+        });
+
+        setHoldedList(arr);
+        // console.log(arr);
+        break;
+
+      case "prize_pool_high_to_low":
+        //console.log("running");
+        var arr = holdedList;
+
+        arr.sort((a, b) => {
+          return b.guarantee - a.guarantee;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "name_a_to_z":
+        var arr = holdedList;
+
+        arr.sort((a, b) => {
+          let fa = a.name.toLowerCase(),
+            fb = b.name.toLowerCase();
+
+          if (fa < fb) {
+            return -1;
+          }
+          if (fa > fb) {
+            return 1;
+          }
+          return 0;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "name_z_to_a":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          let fa = b.name.toLowerCase(),
+            fb = a.name.toLowerCase();
+
+          if (fa < fb) {
+            return -1;
+          }
+          if (fa > fb) {
+            return 1;
+          }
+          return 0;
+        });
+        setHoldedList(arr);
+
+        break;
+
+      case "entrants_low_to_high":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return a.totalEntrants - b.totalEntrants;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "entrants_high_to_row":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return b.totalEntrants - a.totalEntrants;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "game_id_low_to_high":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return a.sharkscope_id - b.sharkscope_id;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "game_id_high_to_low":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return b.sharkscope_id - a.sharkscope_id;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "recent_date":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          let da = new Date(a.scheduledStartUnixTime*1000),
+            db = new Date(b.scheduledStartUnixTime*1000);
+          return db - da;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "late_date":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          let da = new Date(a.scheduledStartUnixTime*1000),
+            db = new Date(b.scheduledStartUnixTime*1000);
+          return da - db;
+        });
+        setHoldedList(arr);
+        break;
+    }
   };
 
   function getDates(date) {
@@ -551,6 +668,7 @@ const FindTournamentsPage = () => {
                       as="select"
                       placeholder="Sort"
                       style={{ width: "60%", float: "right" }}
+                      onChange={(e) => handleSorting(e)}
                     >
                       <option> Sort By</option>
                       {sortingValues.map((option) => {

@@ -5,7 +5,7 @@ import { BuilderPage } from "./pages/BuilderPage";
 import { MyPage } from "./pages/MyPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import TournamentByDate from "./pages/TournamentByDate";
-import FindTournamentPage from "./pages/findtournamentPage";
+// import FindTournamentPage from "./pages/findtournamentPage";
 import LoginPage from "./pages/loginPage";
 import SingupPage from "./pages/signupPage";
 import PlayerProfilePage from "./pages/PlayerProfilePage";
