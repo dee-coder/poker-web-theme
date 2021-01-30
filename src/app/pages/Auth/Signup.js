@@ -145,15 +145,15 @@ function Signup(props) {
     var url = API.baseUrl;
     var role = "";
     var body = {};
-    var encrypted = await bcrypt.hash(Password, 10);
+    //var encrypted = await bcrypt.hash(Password, 10);
 
-    console.log(encrypted);
+    //console.log(encrypted);
     if (Role === "player") {
       url = url + API.signupPlayer;
       body = {
         name: Fullname,
         email: Email,
-        password: encrypted,
+        password: Password,
         network: PlayerNetwork,
         username: Username,
       };
@@ -164,7 +164,7 @@ function Signup(props) {
       body = {
         name: Fullname,
         email: Email,
-        password: encrypted,
+        password: Password,
       };
     }
     fetch(url, {
@@ -211,8 +211,6 @@ function Signup(props) {
   const disableLoading = () => {
     setLoading(false);
   };
-
-
 
   return (
     <div className="login-form login-signin" style={{ display: "block" }}>
