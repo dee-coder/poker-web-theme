@@ -58,7 +58,8 @@ function SponserReviewPage(props) {
               fontSize: "40px",
               marginTop: "20px",
               marginBottom: "40px",
-            }}>
+            }}
+          >
             Rating And Reviews
           </Typography>
         </Col>
@@ -83,7 +84,8 @@ function SponserReviewPage(props) {
                         <Badge variant="secondary" style={{ float: "left" }}>
                           <Typography
                             variant="caption"
-                            style={{ fontWeight: "600" }}>
+                            style={{ fontWeight: "600" }}
+                          >
                             {getDates(tournamentData.scheduledStartUnixTime)}
                           </Typography>
                         </Badge>
@@ -93,7 +95,8 @@ function SponserReviewPage(props) {
                     <Row
                       style={{
                         marginTop: "20px",
-                      }}>
+                      }}
+                    >
                       <Col>
                         <Typography variant="h5" gutterBottom>
                           {" "}
@@ -104,7 +107,8 @@ function SponserReviewPage(props) {
                     <Row
                       style={{
                         marginTop: "5px",
-                      }}>
+                      }}
+                    >
                       <Col>
                         <Typography variant="button" gutterBottom>
                           {" "}
@@ -117,13 +121,15 @@ function SponserReviewPage(props) {
                         <div style={{ textAlign: "left" }}>
                           <Typography
                             variant="button"
-                            style={{ color: "#848484" }}>
+                            style={{ color: "#848484" }}
+                          >
                             Overlay
                           </Typography>
                           <br />
                           <Typography
                             variant="h4"
-                            style={{ fontWeight: "900" }}>
+                            style={{ fontWeight: "900" }}
+                          >
                             {tournamentData.overlay}{" "}
                           </Typography>{" "}
                         </div>
@@ -132,13 +138,15 @@ function SponserReviewPage(props) {
                         <div style={{ textAlign: "center" }}>
                           <Typography
                             variant="button"
-                            style={{ color: "#848484" }}>
+                            style={{ color: "#848484" }}
+                          >
                             Rake
                           </Typography>
                           <br />
                           <Typography
                             variant="h4"
-                            style={{ fontWeight: "900" }}>
+                            style={{ fontWeight: "900" }}
+                          >
                             {tournamentData.rake}
                           </Typography>
                         </div>
@@ -147,13 +155,15 @@ function SponserReviewPage(props) {
                         <div style={{ textAlign: "right" }}>
                           <Typography
                             variant="button"
-                            style={{ color: "#848484" }}>
+                            style={{ color: "#848484" }}
+                          >
                             Stake
                           </Typography>
                           <br />
                           <Typography
                             variant="h4"
-                            style={{ fontWeight: "900" }}>
+                            style={{ fontWeight: "900" }}
+                          >
                             {tournamentData.stake}
                           </Typography>
                         </div>
@@ -163,7 +173,8 @@ function SponserReviewPage(props) {
                       <Col>
                         <Typography
                           variant="body1"
-                          style={{ textAlign: "left" }}>
+                          style={{ textAlign: "left" }}
+                        >
                           Vestibulum ac diam sit amet quam vehicula elementum
                           sed sit amet dui. Proin eget tortor risus. Vestibulum
                           ac diam sit amet quam vehicula elementum sed sit amet
@@ -187,106 +198,111 @@ function SponserReviewPage(props) {
                 </Row>
                 <Divider />
 
-                <Col style={{ padding: "30px" }}>
-                  <Col
-                    lg={6}
-                    style={{ textAlign: "left" }}
-                    className="d-flex align-items-center">
-                    <div className="d-flex inline align-items-center">
-                    <Image
-                      roundedCircle
-                      src={toAbsoluteUrl("/media/users/100_2.jpg")}
-                      style={{ width: "60px", height: "60px" }}
-                    />
-                    </div>
-                    <div>
-                      <span className="text-dark font-weight-bolder text-hover-primary font-size-h2">
-                        {playerDetails.player_name}
-                      </span>
-                      <br />
-                      <p className="text-muted font-weight-bolder text-hover-primary font-size-h6">
-                        {playerDetails.player_email}
-                      </p>
-                      <ReactStars
-                        style={{ float: "left" }}
-                        count={5}
-                        value={3.2}
-                        size={12}
-                        edit={false}
-                        activeColor="#ffd700"
-                      />
-                    </div>
+                <Row style={{ padding: "30px" }}>
+                  <Col lg={12} style={{ textAlign: "left" }}>
+                    <Row>
+                      <Col lg={12}>
+                        <div className="d-flex inline align-items-center">
+                          <Image
+                            roundedCircle
+                            src={toAbsoluteUrl("/media/users/100_2.jpg")}
+                            style={{ width: "80px", height: "80px" }}
+                          />
+
+                          <div style={{ marginLeft: "20px" }}>
+                            <Typography
+                              variant="body1"
+                              style={{ fontWeight: "600", fontSize: "20px" }}
+                              gutterBottom
+                            >
+                              {playerDetails.player_name}
+                            </Typography>
+                            <Typography
+                              variant="body2"
+                              style={{ fontWeight: "600", color: "gray" }}
+                              gutterBottom
+                            >
+                              {playerDetails.player_email}
+                            </Typography>
+                            <ReactStars
+                              style={{ float: "left" }}
+                              count={5}
+                              value={3.2}
+                              size={12}
+                              edit={false}
+                              activeColor="#ffd700"
+                            />
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+
+                    <Row style={{ marginTop: "30px" }}>
+                      <Col lg={12}>
+                        <Typography variant="h6" gutterBottom>
+                          Rate your experiance
+                        </Typography>
+
+                        <ReactStars
+                          count={5}
+                          onChange={ratingChanged}
+                          size={40}
+                          isHalf={true}
+                          emptyIcon={<i className="far fa-star"></i>}
+                          halfIcon={<i className="fa fa-star-half-alt"></i>}
+                          fullIcon={<i className="fa fa-star"></i>}
+                          activeColor="#ffd700"
+                        />
+                      </Col>
+                    </Row>
+
+                    <Row style={{ marginTop: "30px" }}>
+                      <Col lg={12}>
+                        <Typography variant="h6" gutterBottom>
+                          What was the best part?
+                        </Typography>
+
+                        <div className="row">
+                          <div class="col pl-0 pr-0 m-5">
+                            <input
+                              type="text"
+                              className="form-control h-auto py-5 px-6"
+                              placeholder="Never expected such huge profit!"
+                              name="Name"
+                            />
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+
+                    <Row style={{ marginTop: "20px" }}>
+                      <Col lg={12}>
+                        <Typography variant="h6" gutterBottom>
+                          Please describe your experinece with player.
+                        </Typography>
+                        <div className="row">
+                          <div class="col pl-0 pr-0 m-5">
+                            <textarea
+                              class="form-control form-control-sm mb-3"
+                              rows="8"
+                              placeholder="eg. I like the player's stratagies"
+                              name="message"
+                            ></textarea>
+                          </div>
+                        </div>
+                      </Col>
+                    </Row>
+                    <Row>
+                      <Col lg={12}>
+                        <button
+                          className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
+                        >
+                          Submit Review
+                        </button>
+                      </Col>
+                    </Row>
                   </Col>
-
-                  <Typography
-                    variant="h5"
-                    style={{
-                      color: "black",
-                      fontWeight: "600",
-                      fontSize: "20px",
-                      marginTop: "20px",
-                    }}>
-                    Create Reviews
-                  </Typography>
-
-                  <ReactStars
-                    count={5}
-                    onChange={ratingChanged}
-                    size={54}
-                    isHalf={true}
-                    emptyIcon={<i className="far fa-star"></i>}
-                    halfIcon={<i className="fa fa-star-half-alt"></i>}
-                    fullIcon={<i className="fa fa-star"></i>}
-                    activeColor="#ffd700"
-                  />
-
-                  <Typography
-                    variant="h5"
-                    style={{
-                      color: "black",
-                      fontWeight: "600",
-                      fontSize: "20px",
-                      marginTop: "20px",
-                    }}>
-                    Add a HeadLine
-                  </Typography>
-
-                  <div className="row">
-                    <div class="col pl-0 pr-0 m-5">
-                      <input
-                        type="text"
-                        className="form-control h-auto py-5 px-6"
-                        placeholder="What's Most Important to know"
-                        name="Name"
-                      />
-                    </div>
-                  </div>
-                  <Typography
-                    variant="h5"
-                    style={{
-                      color: "black",
-                      fontWeight: "600",
-                      fontSize: "20px",
-                      marginTop: "20px",
-                    }}>
-                    Add a Written Reviews
-                  </Typography>
-                  <div className="row">
-                    <div class="col pl-0 pr-0 m-5">
-                      <textarea
-                        class="form-control form-control-sm mb-3"
-                        rows="8"
-                        placeholder="What did You like Dislikes?"
-                        name="message"></textarea>
-                    </div>
-                  </div>
-                  <div className="text-center">
-                    <button
-                      className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}>
-                      Submit Review
-                    </button>
-                  </div>
-                </Col>
+                </Row>
               </Paper>
             </Col>
           </Row>
