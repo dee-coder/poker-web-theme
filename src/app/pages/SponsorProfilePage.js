@@ -510,7 +510,37 @@ const SponsorProfilePage = () => {
                     title="Pending "
                     style={{ marginTop: "30px" }}
                   >
-                    {pendingTournaments.map((game) => {
+                  
+                  {pendingTournaments.length === 0 ? (
+                      <div
+                        style={{
+                          height: "300px",
+                          width: "100%",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textAlign: "center",
+                        }}
+                      >
+                        <div style={{ marginTop: "100px" }}>
+                          <img
+                            style={{ width: "40px", height: "40px" }}
+                            src={toAbsoluteUrl("/media/svg/empty.svg")}
+                          />
+                          <span
+                            style={{
+                              fontSize: "15px",
+
+                              color: "#c4c4c4",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            No Pending tournament found.
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+
+                    pendingTournaments.map((game) => {
                       //console.log(game);
                       return (
                         <PendingSponsorshipTournamentItemBox
@@ -519,15 +549,44 @@ const SponsorProfilePage = () => {
                           sponsoringList={game.sponsoringList}
                           playerInfo={game.playerInfo}
                         />
-                      );
-                    })}
+                      )
+                    })
+                  )}
                   </Tab>
                   <Tab
                     eventKey="sponsoring"
                     title="Sponsoring "
                     style={{ marginTop: "30px" }}
                   >
-                    {sponsoringTournaments.map((game) => {
+                  {sponsoringTournaments.length === 0 ? (
+                      <div
+                        style={{
+                          height: "300px",
+                          width: "100%",
+                          justifyContent: "center",
+                          alignItems: "center",
+                          textAlign: "center",
+                        }}
+                      >
+                        <div style={{ marginTop: "100px" }}>
+                          <img
+                            style={{ width: "40px", height: "40px" }}
+                            src={toAbsoluteUrl("/media/svg/empty.svg")}
+                          />
+                          <span
+                            style={{
+                              fontSize: "15px",
+
+                              color: "#c4c4c4",
+                              marginLeft: "20px",
+                            }}
+                          >
+                            No Sponsorship tournament found.
+                          </span>
+                        </div>
+                      </div>
+                    ) : (
+                    sponsoringTournaments.map((game) => {
                       //console.log(game);
                       return (
                         <SponsoringTournamentItemBox
@@ -537,8 +596,9 @@ const SponsorProfilePage = () => {
                           playerInfo={game.playerInfo[0]}
                           allSponsors={game.allSponsors}
                         />
-                      );
-                    })}
+                     )
+                    })
+                  )}
                   </Tab>
 
                   <Tab
@@ -552,7 +612,6 @@ const SponsorProfilePage = () => {
           </Paper>
         </Col>
       </Row>
-      
       <Drawer
         anchor="right"
         open={viewTournamentMode}
