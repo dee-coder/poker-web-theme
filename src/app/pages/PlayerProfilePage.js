@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Tabs, Tab, Badge } from "react-bootstrap";
 import _ from "lodash";
 import SVG from "react-inlinesvg";
+import Image, { Shimmer } from 'react-shimmer'
 
 import {
   ListsWidget10,
@@ -143,6 +144,7 @@ const PlayerProfilePage = () => {
             setSelectedTournamentBattingInfo={setSelectedTournamentBattingInfo}
             setSelectedPendingSponsorList={setSelectedPendingSponsorList}
             setSelectedApprovedSponsorList={setSelectedApprovedSponsorList}
+            fallback={<Shimmer width={800} height={600} />}
           />
         </Col>
       </Row>
@@ -402,6 +404,7 @@ const PlayerProfilePage = () => {
           pendingSponsorList={selectedPendingSponsorList}
           setPendingSponsorList={setSelectedPendingSponsorList}
           approvedSponsorList={selectedApprovedSponsorList}
+          
         />
       </Drawer>
     </Box>

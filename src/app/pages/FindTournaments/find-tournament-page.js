@@ -10,6 +10,7 @@ import "react-input-range/lib/css/index.css";
 import { Button } from "react-bootstrap";
 import API from "../../../apiUrl.json";
 import moment from "moment";
+import { Shimmer } from 'react-shimmer'
 
 import Countdown from "react-countdown";
 import DrawerTournamentsView from "../../mycomponents/drawerTournamentsVIew";
@@ -860,6 +861,7 @@ const FindTournamentsPage = () => {
                       </div>
                     </a>
                   </Col>
+  
                 </Row>
               );
             })}
