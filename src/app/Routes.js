@@ -23,15 +23,17 @@ import ForgotPassword from "./pages/Auth/ForgotPasswordPage";
 
 export function Routes() {
   const [LoggedIn, setLoggedIn] = useState(false);
+
   useEffect(() => {
     const userInfo = localStorage.getItem("userInfo");
-    
+
     if (userInfo === undefined || userInfo === null) {
       setLoggedIn(false);
     } else {
       setLoggedIn(true);
     }
   });
+ 
 
   const isAuthorized =
     localStorage.getItem("userInfo") === undefined ? false : true;

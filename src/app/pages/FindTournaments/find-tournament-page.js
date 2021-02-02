@@ -10,6 +10,9 @@ import "react-input-range/lib/css/index.css";
 import { Button } from "react-bootstrap";
 import API from "../../../apiUrl.json";
 import moment from "moment";
+import Shimmer from "react-shimmer-effect";
+import injectSheet from "react-jss";
+import ReactPaginate from "react-paginate";
 
 import Countdown from "react-countdown";
 import DrawerTournamentsView from "../../mycomponents/drawerTournamentsVIew";
@@ -105,6 +108,8 @@ const FindTournamentsPage = () => {
   const [FilterGameType, setFiltereGameType] = useState([]);
   const [FilterSpeed, setFilterSpeed] = useState([]);
   const [Tournaments, setTournaments] = useState([]);
+  const [holdedList, setHoldedList] = useState([]);
+  const [tournamentList, setTournamentList] = useState([]);
 
   const [ValuesOfNetworks, setValuesOfNetworks] = useState([]);
 
@@ -120,6 +125,11 @@ const FindTournamentsPage = () => {
   const [organicNetworks, setOrganicNetworks] = useState([]);
 
   const [MakeLoading, setMakeLoading] = useState(false);
+
+  const [offset, setOffset] = useState(0);
+  const [data, setData] = useState([]);
+  const [perPage] = useState(10);
+  const [pageCount, setPageCount] = useState(0);
 
   useEffect(() => {
     //console.log(Filters);
@@ -139,6 +149,7 @@ const FindTournamentsPage = () => {
         setMakeLoading(false);
         setTournaments(response.result);
         setOrganicNetworks(response.networks);
+        setPageCount(Math.ceil(data.length / perPage));
       })
       .catch((err) => {
         console.log(err.message);
@@ -235,6 +246,121 @@ const FindTournamentsPage = () => {
     // }
   };
 
+  const handleSorting = (e) => {
+    //console.log(e.target.value);
+    setHoldedList(tournamentList);
+
+    switch (e.target.value) {
+      case "prize_pool_low_to_high":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return a.guarantee - b.guarantee;
+        });
+
+        setHoldedList(arr);
+        // console.log(arr);
+        break;
+
+      case "prize_pool_high_to_low":
+        //console.log("running");
+        var arr = holdedList;
+
+        arr.sort((a, b) => {
+          return b.guarantee - a.guarantee;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "name_a_to_z":
+        var arr = holdedList;
+
+        arr.sort((a, b) => {
+          let fa = a.name.toLowerCase(),
+            fb = b.name.toLowerCase();
+
+          if (fa < fb) {
+            return -1;
+          }
+          if (fa > fb) {
+            return 1;
+          }
+          return 0;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "name_z_to_a":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          let fa = b.name.toLowerCase(),
+            fb = a.name.toLowerCase();
+
+          if (fa < fb) {
+            return -1;
+          }
+          if (fa > fb) {
+            return 1;
+          }
+          return 0;
+        });
+        setHoldedList(arr);
+
+        break;
+
+      case "entrants_low_to_high":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return a.totalEntrants - b.totalEntrants;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "entrants_high_to_row":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return b.totalEntrants - a.totalEntrants;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "game_id_low_to_high":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return a.sharkscope_id - b.sharkscope_id;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "game_id_high_to_low":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          return b.sharkscope_id - a.sharkscope_id;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "recent_date":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          let da = new Date(a.scheduledStartUnixTime * 1000),
+            db = new Date(b.scheduledStartUnixTime * 1000);
+          return db - da;
+        });
+        setHoldedList(arr);
+        break;
+
+      case "late_date":
+        var arr = holdedList;
+        arr.sort((a, b) => {
+          let da = new Date(a.scheduledStartUnixTime * 1000),
+            db = new Date(b.scheduledStartUnixTime * 1000);
+          return da - db;
+        });
+        setHoldedList(arr);
+        break;
+    }
+  };
+
   function getDates(date) {
     // unix timestamp
     var ts = date;
@@ -302,8 +428,7 @@ const FindTournamentsPage = () => {
         <Col lg={12}>
           <Typography
             variant="h4"
-            style={{ color: "white", fontWeight: "600" }}
-          >
+            style={{ color: "white", fontWeight: "600" }}>
             Find - Tournaments
           </Typography>
         </Col>
@@ -317,8 +442,9 @@ const FindTournamentsPage = () => {
                   <span className="svg-icon svg-icon-primary">
                     <SVG
                       className="h-50 align-self-center"
-                      src={toAbsoluteUrl("/media/svg/icons/Text/Filter.svg")}
-                    ></SVG>
+                      src={toAbsoluteUrl(
+                        "/media/svg/icons/Text/Filter.svg"
+                      )}></SVG>
                   </span>
                   <Typography variant="h6">Filters</Typography>
                 </div>
@@ -331,8 +457,7 @@ const FindTournamentsPage = () => {
                 <br />
                 <div
                   className=" align-items-center"
-                  style={{ width: "100%", marginTop: "10px" }}
-                >
+                  style={{ width: "100%", marginTop: "10px" }}>
                   <Select
                     defaultValue={[]}
                     isMulti
@@ -351,8 +476,7 @@ const FindTournamentsPage = () => {
                 <br />
                 <div
                   className=" align-items-center"
-                  style={{ width: "100%", marginTop: "10px" }}
-                >
+                  style={{ width: "100%", marginTop: "10px" }}>
                   <Select
                     defaultValue={[]}
                     isMulti
@@ -372,8 +496,7 @@ const FindTournamentsPage = () => {
                 <br />
                 <div
                   className=" align-items-center"
-                  style={{ width: "100%", marginTop: "10px" }}
-                >
+                  style={{ width: "100%", marginTop: "10px" }}>
                   <Select
                     defaultValue={[]}
                     isMulti
@@ -398,8 +521,7 @@ const FindTournamentsPage = () => {
                     marginTop: "20px",
                     paddingLeft: "10px",
                     paddingRight: "10px",
-                  }}
-                >
+                  }}>
                   <InputRange
                     maxValue={5000}
                     minValue={10}
@@ -421,8 +543,7 @@ const FindTournamentsPage = () => {
                     marginTop: "20px",
                     paddingLeft: "10px",
                     paddingRight: "10px",
-                  }}
-                >
+                  }}>
                   <InputRange
                     maxValue={5000}
                     minValue={10}
@@ -438,8 +559,7 @@ const FindTournamentsPage = () => {
                 <br />
                 <div
                   className=" align-items-center"
-                  style={{ width: "100%", marginTop: "10px" }}
-                >
+                  style={{ width: "100%", marginTop: "10px" }}>
                   <Select
                     defaultValue={[]}
                     isMulti
@@ -460,13 +580,13 @@ const FindTournamentsPage = () => {
                     width: "100%",
                     height: "40px",
                     fontWeight: "600",
-                  }}
-                >
+                  }}>
                   <span className="svg-icon svg-icon-white">
                     <Image
                       style={{ width: "20px", height: "20px" }}
-                      src={toAbsoluteUrl("/media/svg/icons/General/Search.svg")}
-                    ></Image>
+                      src={toAbsoluteUrl(
+                        "/media/svg/icons/General/Search.svg"
+                      )}></Image>
                   </span>
                   Search
                 </Button>
@@ -488,8 +608,7 @@ const FindTournamentsPage = () => {
                 <br />
                 <div
                   className=" align-items-center"
-                  style={{ width: "100%", marginTop: "10px" }}
-                >
+                  style={{ width: "100%", marginTop: "10px" }}>
                   <Form>
                     <Form.Group>
                       <Form.Control
@@ -503,15 +622,13 @@ const FindTournamentsPage = () => {
                         width: "100%",
                         height: "40px",
                         fontWeight: "600",
-                      }}
-                    >
+                      }}>
                       <span className="svg-icon svg-icon-white">
                         <Image
                           style={{ width: "20px", height: "20px" }}
                           src={toAbsoluteUrl(
                             "/media/svg/icons/General/Search.svg"
-                          )}
-                        ></Image>
+                          )}></Image>
                       </span>
                       Search
                     </Button>
@@ -531,18 +648,15 @@ const FindTournamentsPage = () => {
                   paddingRight: "20px",
                   paddingTop: "10px",
                   paddingBottom: "10px",
-                }}
-              >
+                }}>
                 <div
                   className="d-flex align-items-center row"
-                  style={{ width: "100%" }}
-                >
+                  style={{ width: "100%" }}>
                   <div className="col-lg-6">
                     <Typography
                       variant="h6"
                       style={{ float: "left" }}
-                      gutterBottom
-                    >
+                      gutterBottom>
                       {Tournaments.length} tournaments found
                     </Typography>
                   </div>
@@ -551,7 +665,7 @@ const FindTournamentsPage = () => {
                       as="select"
                       placeholder="Sort"
                       style={{ width: "60%", float: "right" }}
-                    >
+                      onChange={(e) => handleSorting(e)}>
                       <option> Sort By</option>
                       {sortingValues.map((option) => {
                         return (
@@ -569,12 +683,17 @@ const FindTournamentsPage = () => {
               <Col lg={12}>
                 <div
                   className="d-flex justify-content-center align-items-center"
-                  style={{ width: "100%", padding: "50px" }}
-                >
+                  style={{ width: "100%", padding: "50px" }}>
                   <Spinner animation="border" role="status" variant="primary">
                     <span className="sr-only">Loading...</span>
                   </Spinner>
                 </div>
+                {/* <div className={classes.container}>
+                  <Shimmer>
+                    <div className={classes.circle} />
+                    <div className={classes.line} />
+                  </Shimmer>
+                </div> */}
               </Col>
             </Row>
           )}
@@ -590,8 +709,7 @@ const FindTournamentsPage = () => {
                         onClick={() => {
                           setViewTournamentMode(true);
                           setCurrentViewTournaments(game);
-                        }}
-                      >
+                        }}>
                         <Row>
                           <Col lg={6}>
                             <Badge variant="success">
@@ -601,8 +719,7 @@ const FindTournamentsPage = () => {
                           <Col lg={6}>
                             <Form
                               inline
-                              style={{ textAlign: "right", float: "right" }}
-                            >
+                              style={{ textAlign: "right", float: "right" }}>
                               <Badge variant="primary">
                                 <i
                                   class="far fa-calendar"
@@ -610,8 +727,7 @@ const FindTournamentsPage = () => {
                                     color: "#fff",
                                     fontSize: "12px",
                                     marginRight: "5px",
-                                  }}
-                                ></i>
+                                  }}></i>
                                 {getDates(game.scheduledStartUnixTime)}
                               </Badge>
                               <Badge
@@ -620,16 +736,14 @@ const FindTournamentsPage = () => {
                                   marginLeft: "10px",
                                   color: "#FFF",
                                   fontWeight: "600",
-                                }}
-                              >
+                                }}>
                                 <i
                                   class="far fa-clock"
                                   style={{
                                     color: "#fff",
                                     fontSize: "12px",
                                     marginRight: "5px",
-                                  }}
-                                ></i>
+                                  }}></i>
                                 <Countdown
                                   date={
                                     new Date(game.scheduledStartUnixTime * 1000)
@@ -662,8 +776,7 @@ const FindTournamentsPage = () => {
                                   fontSize: "12px",
                                   marginLeft: "5px",
                                 }}
-                                class="fas fa-info-circle"
-                              ></i>
+                                class="fas fa-info-circle"></i>
                             </label>
                             <br />
                             <span className="text-muted font-weight-bold">
@@ -679,8 +792,7 @@ const FindTournamentsPage = () => {
                                   fontSize: "12px",
                                   marginLeft: "5px",
                                 }}
-                                class="fas fa-info-circle"
-                              ></i>
+                                class="fas fa-info-circle"></i>
                             </label>
                             <br />
                             <span className="text-muted font-weight-bold">
@@ -696,8 +808,7 @@ const FindTournamentsPage = () => {
                                   fontSize: "12px",
                                   marginLeft: "5px",
                                 }}
-                                class="fas fa-info-circle"
-                              ></i>
+                                class="fas fa-info-circle"></i>
                             </label>
                             <br />
                             <span className="text-muted font-weight-bold">
@@ -713,8 +824,7 @@ const FindTournamentsPage = () => {
                                   fontSize: "12px",
                                   marginLeft: "5px",
                                 }}
-                                class="fas fa-info-circle"
-                              ></i>
+                                class="fas fa-info-circle"></i>
                             </label>
                             <br />
                             <span className="text-muted font-weight-bold">
@@ -730,8 +840,7 @@ const FindTournamentsPage = () => {
                                   fontSize: "12px",
                                   marginLeft: "5px",
                                 }}
-                                class="fas fa-info-circle"
-                              ></i>
+                                class="fas fa-info-circle"></i>
                             </label>
                             <br />
                             <span className="text-muted font-weight-bold">
@@ -747,11 +856,11 @@ const FindTournamentsPage = () => {
             })}
         </Col>
       </Row>
+
       <Drawer
         anchor="right"
         open={viewTournamentMode}
-        onClose={() => setViewTournamentMode(false)}
-      >
+        onClose={() => setViewTournamentMode(false)}>
         <DrawerTournamentsView
           setViewTournamentMode={setViewTournamentMode}
           obj={currentViewTournament}

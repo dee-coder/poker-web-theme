@@ -176,11 +176,11 @@ const FindTournamentPage = () => {
             setNoData(false);
             setShowSpinner(false);
             var lenght = data.result.length;
-            //console.log(lenght);
+            // console.log(lenght);
             var sets = lenght / 30;
-            //console.log(sets);
+            // console.log(sets);
             var pagess = Math.ceil(sets);
-            //console.log(pagess);
+            // console.log(pagess);
             list = Array(pagess - 1 + 1)
               .fill()
               .map((_, idx) => 1 + idx);
@@ -237,10 +237,11 @@ const FindTournamentPage = () => {
       case "prize_pool_low_to_high":
         var arr = [...holdedList];
         arr.sort((a, b) => {
-          return a.guarantee - b.guarantee;
+          return (a.guarantee - b.guarantee);
         });
 
         setHoldedList(arr);
+        // console.log(arr);
         break;
 
       case "prize_pool_high_to_low":

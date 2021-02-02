@@ -1,6 +1,7 @@
 import { Avatar, Box, Divider, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
+import AddToCalendar from "react-add-to-calendar";
 import {
   Row,
   Col,
@@ -9,6 +10,7 @@ import {
   Form,
   Button,
   Card,
+  Modal,
 } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import _ from "lodash";
@@ -24,6 +26,7 @@ import { MixedWidgetCustom } from "./mixWidgetComponent";
 import { TournamentHeader } from "./tournamentHeaderComponent";
 import Countdown from "react-countdown";
 import ReactStars from "react-rating-stars-component";
+import ReactShareSocial from "react-share-social";
 
 const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -52,6 +55,7 @@ const useStyles = makeStyles((theme) => ({
     width: "auto",
   },
 }));
+
 const DrawerTournamentsView = ({
   setViewTournamentMode,
   obj,
@@ -70,6 +74,10 @@ const DrawerTournamentsView = ({
     // seturl(url);
   }, []);
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   function getDates(date) {
     var today = new Date(date);
     var dd = String(today.getDate()).padStart(2, "0");
@@ -78,9 +86,32 @@ const DrawerTournamentsView = ({
     return (today = mm + "-" + dd + "-" + yyyy);
   }
 
+  let event = {
+    title: "Sample Event",
+    description: "This is the sample event provided as an example only",
+    location: "Portland, OR",
+    startTime: "2016-09-16T20:15:00-04:00",
+    endTime: "2016-09-16T21:45:00-04:00",
+  };
+
   if (localStorage.getItem("role") === "player") {
     return (
       <div className={classes.list}>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
         <div className={classes.viewBoxCont} style={{ padding: "20px" }}>
           <Container>
             <Row>
@@ -90,8 +121,7 @@ const DrawerTournamentsView = ({
                   style={{
                     fontWeight: "600",
                     color: "#000",
-                  }}
-                >
+                  }}>
                   Tournament Details
                 </Typography>
               </Col>
@@ -101,13 +131,11 @@ const DrawerTournamentsView = ({
                     <a
                       href={`https://pokerswapping.com/tournament/${obj.sharkscope_id}`}
                       target="_blank"
-                      style={{ float: "right" }}
-                    >
+                      style={{ float: "right" }}>
                       {" "}
                       <Badge
                         variant="secondary"
-                        style={{ fontSize: "12px", fontWeight: "200" }}
-                      >
+                        style={{ fontSize: "12px", fontWeight: "200" }}>
                         <i
                           class="fas fa-external-link-alt"
                           style={{ marginRight: "10px", fontSize: "12px" }}
@@ -120,13 +148,11 @@ const DrawerTournamentsView = ({
                     <Badge
                       variant="secondary"
                       style={{ float: "right" }}
-                      onClick={() => setViewTournamentMode(false)}
-                    >
+                      onClick={() => setViewTournamentMode(false)}>
                       {" "}
                       <i
                         style={{ float: "right", fontSize: "14px" }}
-                        class="fas fa-times"
-                      ></i>
+                        class="fas fa-times"></i>
                     </Badge>
                   </Col>
                 </Row>
@@ -157,8 +183,7 @@ const DrawerTournamentsView = ({
                                 width: "100%",
                                 textAlign: "center",
                                 fontSize: "12px",
-                              }}
-                            >
+                              }}>
                               Swapping{" "}
                               <i
                                 class="fas fa-exchange-alt"
@@ -169,8 +194,7 @@ const DrawerTournamentsView = ({
                                   fontSize: "13px",
                                   float: "right",
                                   marginRight: "15px",
-                                }}
-                              ></i>
+                                }}></i>
                             </Button>
                           </Link>
                           <br />
@@ -182,8 +206,7 @@ const DrawerTournamentsView = ({
                                 width: "100%",
                                 textAlign: "center",
                                 fontSize: "12px",
-                              }}
-                            >
+                              }}>
                               Add sponsors{" "}
                               <i
                                 class="fas fa-plus"
@@ -193,8 +216,7 @@ const DrawerTournamentsView = ({
                                   fontSize: "13px",
                                   float: "right",
                                   marginRight: "15px",
-                                }}
-                              ></i>
+                                }}></i>
                             </Button>
                           </Link>
                           <br />
@@ -205,8 +227,7 @@ const DrawerTournamentsView = ({
                               width: "100%",
                               textAlign: "center",
                               fontSize: "12px",
-                            }}
-                          >
+                            }}>
                             View Live{" "}
                             <i
                               class="fas fa-tv"
@@ -216,8 +237,7 @@ const DrawerTournamentsView = ({
                                 fontSize: "13px",
                                 float: "right",
                                 marginRight: "15px",
-                              }}
-                            ></i>
+                              }}></i>
                           </Button>
                           <a href="#">
                             <Button
@@ -227,8 +247,7 @@ const DrawerTournamentsView = ({
                                 width: "100%",
                                 textAlign: "center",
                                 fontSize: "12px",
-                              }}
-                            >
+                              }}>
                               {obj.network}{" "}
                               <i
                                 class="fas fa-external-link-alt"
@@ -238,19 +257,17 @@ const DrawerTournamentsView = ({
                                   fontSize: "13px",
                                   float: "right",
                                   marginRight: "15px",
-                                }}
-                              ></i>
+                                }}></i>
                             </Button>
                           </a>
-                          <Button
+                          {/* <Button
                             variant="primary"
                             style={{
                               marginTop: "20px",
                               width: "100%",
                               textAlign: "center",
                               fontSize: "12px",
-                            }}
-                          >
+                            }}>
                             Add to calender{" "}
                             <i
                               class="fas fa-calendar-check"
@@ -260,18 +277,38 @@ const DrawerTournamentsView = ({
                                 fontSize: "13px",
                                 float: "right",
                                 marginRight: "15px",
-                              }}
-                            ></i>
-                          </Button>
-                          <Button
-                            variant="primary"
+                              }}></i>
+                          </Button> */}
+                          {/* <Button
+                            // variant="primary"
                             style={{
                               marginTop: "20px",
                               width: "100%",
                               textAlign: "center",
                               fontSize: "12px",
-                            }}
-                          >
+                              color: "white",
+                            }}> */}
+                            <div  style={{
+                              marginTop: "20px",
+                              width: "100%",
+                              textAlign: "center",
+                              fontSize: "12px",
+                            }}>
+                              <AddToCalendar event={event} 
+                                 displayItemIcons={false} 
+                              />
+                            </div>
+                          {/* </Button> */}
+
+                          <Button
+                            variant="primary"
+                            onClick={(e) => handleShow()}
+                            style={{
+                              marginTop: "20px",
+                              width: "100%",
+                              textAlign: "center",
+                              fontSize: "12px",
+                            }}>
                             Share Tournament{" "}
                             <i
                               class="fas fa-share"
@@ -281,9 +318,18 @@ const DrawerTournamentsView = ({
                                 fontSize: "13px",
                                 float: "right",
                                 marginRight: "15px",
-                              }}
-                            ></i>
+                              }}></i>
                           </Button>
+
+                          {/* <ReactShareSocial
+                            url="url_to_share.com"
+                            socialTypes={[
+                              "facebook",
+                              "twitter",
+                              "reddit",
+                              "linkedin",
+                            ]}
+                          /> */}
                         </Card.Body>
                       </Card>
                     </Col>
@@ -298,6 +344,20 @@ const DrawerTournamentsView = ({
   } else {
     return (
       <div className={classes.list}>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <div className={classes.viewBoxCont}>
           <Container>
             <Row>
@@ -307,8 +367,7 @@ const DrawerTournamentsView = ({
                     {" "}
                     <Badge
                       variant="success"
-                      style={{ fontSize: "12px", fontWeight: "200" }}
-                    >
+                      style={{ fontSize: "12px", fontWeight: "200" }}>
                       #{obj.sharkscope_id}
                     </Badge>
                   </h4>
@@ -317,8 +376,7 @@ const DrawerTournamentsView = ({
                     {" "}
                     <Badge
                       variant="secondary"
-                      style={{ fontSize: "12px", fontWeight: "200" }}
-                    >
+                      style={{ fontSize: "12px", fontWeight: "200" }}>
                       {obj.scheduledStartUnixTime * 1000}
                     </Badge>
                   </h4>
@@ -329,16 +387,14 @@ const DrawerTournamentsView = ({
                         marginLeft: "10px",
                         color: "#FFF",
                         fontWeight: "600",
-                      }}
-                    >
+                      }}>
                       <i
                         class="far fa-clock"
                         style={{
                           color: "#fff",
                           fontSize: "12px",
                           marginRight: "5px",
-                        }}
-                      ></i>
+                        }}></i>
                       <Countdown
                         date={new Date(obj.scheduledStartUnixTime * 1000)}
                         renderer={renderer}
@@ -353,13 +409,11 @@ const DrawerTournamentsView = ({
                     <a
                       href={`https://pokerswapping.com/apply-sponsorship?id=${obj.sharkscope_id}&player=${playerInfo.player_id}`}
                       target="_blank"
-                      style={{ float: "right" }}
-                    >
+                      style={{ float: "right" }}>
                       {" "}
                       <Badge
                         variant="secondary"
-                        style={{ fontSize: "12px", fontWeight: "200" }}
-                      >
+                        style={{ fontSize: "12px", fontWeight: "200" }}>
                         <i
                           class="fas fa-external-link-alt"
                           style={{ marginRight: "10px", fontSize: "12px" }}
@@ -372,13 +426,11 @@ const DrawerTournamentsView = ({
                     <Badge
                       variant="secondary"
                       style={{ float: "right" }}
-                      onClick={() => setViewTournamentMode(false)}
-                    >
+                      onClick={() => setViewTournamentMode(false)}>
                       {" "}
                       <i
                         style={{ float: "right", fontSize: "14px" }}
-                        class="fas fa-times"
-                      ></i>
+                        class="fas fa-times"></i>
                     </Badge>
                   </Col>
                 </Row>
@@ -392,14 +444,12 @@ const DrawerTournamentsView = ({
                   <Col lg={12}>
                     <div
                       className={classes.root}
-                      style={{ marginBottom: "25px" }}
-                    >
+                      style={{ marginBottom: "25px" }}>
                       <Row style={{ paddingBottom: "20px" }}>
                         <Col lg={12}>
                           <div
                             className=" card bg-light-primay rounded "
-                            style={{ padding: "20px" }}
-                          >
+                            style={{ padding: "20px" }}>
                             <Row style={{ marginTop: "0px" }}>
                               <Col>
                                 <Typography variant="h4">
@@ -423,8 +473,7 @@ const DrawerTournamentsView = ({
                                       fontSize: "12px",
                                       marginLeft: "5px",
                                     }}
-                                    class="fas fa-info-circle"
-                                  ></i>
+                                    class="fas fa-info-circle"></i>
                                 </label>
                                 <br />
                                 <span className="text-muted font-weight-bold">
@@ -440,8 +489,7 @@ const DrawerTournamentsView = ({
                                       fontSize: "12px",
                                       marginLeft: "5px",
                                     }}
-                                    class="fas fa-info-circle"
-                                  ></i>
+                                    class="fas fa-info-circle"></i>
                                 </label>
                                 <br />
                                 <span className="text-muted font-weight-bold">
@@ -457,8 +505,7 @@ const DrawerTournamentsView = ({
                                       fontSize: "12px",
                                       marginLeft: "5px",
                                     }}
-                                    class="fas fa-info-circle"
-                                  ></i>
+                                    class="fas fa-info-circle"></i>
                                 </label>
                                 <br />
                                 <span className="text-muted font-weight-bold">
@@ -474,8 +521,7 @@ const DrawerTournamentsView = ({
                                       fontSize: "12px",
                                       marginLeft: "5px",
                                     }}
-                                    class="fas fa-info-circle"
-                                  ></i>
+                                    class="fas fa-info-circle"></i>
                                 </label>
                                 <br />
                                 <span className="text-muted font-weight-bold">
@@ -490,8 +536,7 @@ const DrawerTournamentsView = ({
                         <Col lg={12}>
                           <div
                             className=" card bg-light-primay rounded "
-                            style={{ padding: "20px" }}
-                          >
+                            style={{ padding: "20px" }}>
                             {/* <Row>
                           <Col lg={6}>
                             <Badge variant="success">
@@ -567,8 +612,10 @@ const DrawerTournamentsView = ({
                                 />
                                 <Typography
                                   variant="subtitle2"
-                                  style={{ marginTop: "5px", color: "#848484" }}
-                                >
+                                  style={{
+                                    marginTop: "5px",
+                                    color: "#848484",
+                                  }}>
                                   {playerInfo.player_email}
                                 </Typography>
                               </Col>
@@ -578,8 +625,7 @@ const DrawerTournamentsView = ({
                                     <div style={{ textAlign: "left" }}>
                                       <Typography
                                         variant="button"
-                                        style={{ color: "#848484" }}
-                                      >
+                                        style={{ color: "#848484" }}>
                                         SPONSORING{" "}
                                         <i
                                           class="fas fa-info-circle"
@@ -587,8 +633,7 @@ const DrawerTournamentsView = ({
                                             marginLeft: "2px",
                                             color: "#848484",
                                             fontSize: "12px",
-                                          }}
-                                        ></i>
+                                          }}></i>
                                       </Typography>
                                       <br />
                                       <br />
@@ -597,8 +642,7 @@ const DrawerTournamentsView = ({
                                         style={{
                                           fontWeight: "900",
                                           color: "#F64E60",
-                                        }}
-                                      >
+                                        }}>
                                         0
                                       </Typography>{" "}
                                     </div>
@@ -607,8 +651,7 @@ const DrawerTournamentsView = ({
                                     <div style={{ textAlign: "left" }}>
                                       <Typography
                                         variant="button"
-                                        style={{ color: "#848484" }}
-                                      >
+                                        style={{ color: "#848484" }}>
                                         TOTAL{" "}
                                         <i
                                           class="fas fa-info-circle"
@@ -616,8 +659,7 @@ const DrawerTournamentsView = ({
                                             marginLeft: "2px",
                                             color: "#848484",
                                             fontSize: "12px",
-                                          }}
-                                        ></i>
+                                          }}></i>
                                       </Typography>
                                       <br />
                                       <br />
@@ -626,8 +668,7 @@ const DrawerTournamentsView = ({
                                         style={{
                                           fontWeight: "900",
                                           color: "black",
-                                        }}
-                                      >
+                                        }}>
                                         {currentAllot.number_of_sponsor}
                                       </Typography>{" "}
                                     </div>
@@ -639,8 +680,7 @@ const DrawerTournamentsView = ({
                               <Col lg={12}>
                                 <Typography
                                   variant="body1"
-                                  style={{ color: "#848484" }}
-                                >
+                                  style={{ color: "#848484" }}>
                                   <strong>{playerInfo.player_name}</strong> is
                                   looking for{" "}
                                   <strong>
@@ -663,8 +703,7 @@ const DrawerTournamentsView = ({
                                       fontSize: "12px",
                                       marginLeft: "5px",
                                     }}
-                                    class="fas fa-info-circle"
-                                  ></i>
+                                    class="fas fa-info-circle"></i>
                                 </label>
                                 <br />
                                 <span className="text-muted font-weight-bold">
@@ -680,8 +719,7 @@ const DrawerTournamentsView = ({
                                       fontSize: "12px",
                                       marginLeft: "5px",
                                     }}
-                                    class="fas fa-info-circle"
-                                  ></i>
+                                    class="fas fa-info-circle"></i>
                                 </label>
                                 <br />
                                 <span className="text-muted font-weight-bold">
@@ -697,8 +735,7 @@ const DrawerTournamentsView = ({
                                       fontSize: "12px",
                                       marginLeft: "5px",
                                     }}
-                                    class="fas fa-info-circle"
-                                  ></i>
+                                    class="fas fa-info-circle"></i>
                                 </label>
                                 <br />
                                 <span className="text-muted font-weight-bold">
@@ -714,8 +751,7 @@ const DrawerTournamentsView = ({
                                       fontSize: "12px",
                                       marginLeft: "5px",
                                     }}
-                                    class="fas fa-info-circle"
-                                  ></i>
+                                    class="fas fa-info-circle"></i>
                                 </label>
                                 <br />
                                 <span className="text-muted font-weight-bold">
@@ -730,22 +766,19 @@ const DrawerTournamentsView = ({
                         <Col lg={12}>
                           <div
                             className=" card bg-light-primay rounded "
-                            style={{ padding: "20px" }}
-                          >
+                            style={{ padding: "20px" }}>
                             <Row>
                               <Col lg={12}>
                                 <Form inline>
                                   <Link
-                                    to={`/be-sponsor/${currentAllot.sponsorship_id}`}
-                                  >
+                                    to={`/be-sponsor/${currentAllot.sponsorship_id}`}>
                                     <Button
                                       variant="primary"
                                       style={{
                                         width: "100%",
                                         textAlign: "center",
                                         fontSize: "12px",
-                                      }}
-                                    >
+                                      }}>
                                       Sponsor Game{" "}
                                       <i
                                         class="fas fa-plus"
@@ -755,8 +788,7 @@ const DrawerTournamentsView = ({
                                           fontSize: "13px",
                                           float: "right",
                                           marginRight: "15px",
-                                        }}
-                                      ></i>
+                                        }}></i>
                                     </Button>
                                   </Link>
 
@@ -767,8 +799,7 @@ const DrawerTournamentsView = ({
                                         width: "100%",
                                         textAlign: "center",
                                         fontSize: "12px",
-                                      }}
-                                    >
+                                      }}>
                                       {obj.network}{" "}
                                       <i
                                         class="fas fa-external-link-alt"
@@ -778,8 +809,7 @@ const DrawerTournamentsView = ({
                                           fontSize: "13px",
                                           float: "right",
                                           marginRight: "15px",
-                                        }}
-                                      ></i>
+                                        }}></i>
                                     </Button>
                                   </a>
                                 </Form>
