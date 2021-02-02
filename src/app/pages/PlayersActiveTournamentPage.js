@@ -4,19 +4,21 @@ import { Col, Image } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import API from "../../apiUrl.json";
 import { toAbsoluteUrl } from "../../_metronic/_helpers";
+import BoxItemActiveTournaments from "../mycomponents/ItemBoxActiveTournaments";
 
 const PlayersActiveTournamentPage = () => {
   const [ActiveTournaments, setActiveTournaments] = useState([]);
   const [UserDetails, setUserDetails] = useState({});
 
   useEffect(() => {
-    setUserDetails(JSON.parse(localStorage.getItem("userInfo")));
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+
     fetch(API.baseUrl + API.getPlayersActiveTournaments, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ player_id: UserDetails.player_id }),
+      body: JSON.stringify({ player_id: userInfo.player_id }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -65,7 +67,23 @@ const PlayersActiveTournamentPage = () => {
               </Row>
             </Paper>
           ) : (
-            <div></div>
+            ActiveTournaments.map((game) => {
+              return (
+                <Row>
+                  <Col lg={12}>
+                    <BoxItemActiveTournaments
+                      obj={game}
+                      allot={game}
+                      //   setCurrentAllot={setCurrentAllot}
+                      //   setViewAddSponsorsMode={setViewAddSponsorsMode}
+                      //   setViewTournamentDetails={setViewTournamentDetails}
+                      //   setCurrentTournamentShowObj={setCurrentTournamentShowObj}
+                      //   setViewTournamentMode={setViewTournamentMode}
+                    />
+                  </Col>
+                </Row>
+              );
+            })
           )}
         </Col>
       </Row>
