@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://api.pokerswapping.com ",
+  "baseUrl": "http://localhost:1234",
   "signinSponsor": "/login/sponser",
   "signinPlayer": "/login/player",
   "signupSponsor": "/signup/sponser",
@@ -8,7 +8,6 @@
   "validateToken":"/auth/validate_token",
   "resetPassword":"/auth/set_new_password",
   "reviewSponser":"/ratings/get",
-  
   "playerInfo":"/players/info",
   "getTournamentById": "/tournaments/getTournamentById",
   "getRegisteringTournaments": "/tournaments/all",
@@ -40,6 +39,7 @@
   "getPlayerProfile":"/players/profile",
   "getWalletAndTransactions":"/payment/info",
   "deactivateSponsorship":"/sponsorship/deactivate",
-  "getSummaryofSponsorship":"/sponsorship/summary"
+  "getSummaryofSponsorship":"/sponsorship/summary",
+  "getPlayersActiveTournaments":"/players/get_active_tournaments"
 }
 
