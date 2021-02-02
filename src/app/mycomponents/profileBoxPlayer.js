@@ -360,7 +360,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
 
                   <div className="d-flex flex-column flex-grow-1">
                     <a
-                      href="#"
+                      href="/settings/"
                       className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
                     >
                       Setting
@@ -393,7 +393,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
 
                   <div className="d-flex flex-column flex-grow-1">
                     <a
-                      href="#"
+                      href="/event"
                       className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
                     >
                       Event
@@ -425,7 +425,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
 
                   <div className="d-flex flex-column flex-grow-1">
                     <a
-                      href="#"
+                      href="/help"
                       className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
                     >
                       Help

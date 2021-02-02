@@ -87,6 +87,7 @@
         "react-intl": "3.6.2",
         "react-is": "16.13.1",
         "react-multiselect-checkboxes": "^0.1.1",
+        "react-paginate": "^7.0.0",
         "react-perfect-scrollbar": "1.5.8",
         "react-placemoulder": "^1.1.0",
         "react-portal": "4.2.0",

@@ -144,7 +144,6 @@ const PlayerProfilePage = () => {
             setSelectedTournamentBattingInfo={setSelectedTournamentBattingInfo}
             setSelectedPendingSponsorList={setSelectedPendingSponsorList}
             setSelectedApprovedSponsorList={setSelectedApprovedSponsorList}
-            fallback={<Shimmer width={800} height={600} />}
           />
         </Col>
       </Row>

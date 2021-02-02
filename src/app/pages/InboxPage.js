@@ -210,7 +210,7 @@ const InboxPage = () => {
                           />
                         </Col>
 
-                        <div
+                        {/* <div
                           className="col-auto"
                           style={{
                             float: "right",
@@ -222,8 +222,8 @@ const InboxPage = () => {
                           <span style={{}}>
                             <i class="fas fa-plus-circle"></i>
                           </span>
-                        </div>
-                        <div
+                        </div> */}
+                        {/* <div
                           className="col-auto"
                           style={{
                             float: "right",
@@ -234,7 +234,7 @@ const InboxPage = () => {
                           <span style={{}}>
                             <i class="fas fa-ellipsis-v"></i>
                           </span>
-                        </div>
+                        </div> */}
                       </Row>
                     </div>
                   </Col>

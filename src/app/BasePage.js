@@ -8,6 +8,7 @@ import TournamentByDate from "./pages/TournamentByDate";
 // import FindTournamentPage from "./pages/findtournamentPage";
 import LoginPage from "./pages/loginPage";
 import SingupPage from "./pages/signupPage";
+import SettingHome from "./pages/SettingsPlayer/SettingHome";
 import PlayerProfilePage from "./pages/PlayerProfilePage";
 import Logout from "./mycomponents/logoutComponent";
 import AdminSection from "./admin/adminSection";
@@ -37,6 +38,8 @@ import ViewProfilePlayer from "./pages/Players/ViewProfilePlayer";
 import FindTournamentsPage from "./pages/FindTournaments/find-tournament-page";
 import HowItWorks from "./pages/ContentPages/HowItWorks";
 import AboutUsPage from "./pages/ContentPages/About-us";
+import Help from "./pages/ContentPages/Help";
+import Event from "./pages/ContentPages/Event";
 import ContactUsPage from "./pages/ContentPages/Contact-us";
 import TermsPage from "./pages/ContentPages/TermsPage";
 import PrivacyPage from "./pages/ContentPages/PrivacyPage";
@@ -49,6 +52,7 @@ import WalletAndTransactionPage from "./pages/Payments/WalletAndTransactionsPage
 import TournamentSummary from "./pages/TournamentSummary";
 import Blog from "./pages/ContentPages/Blogs";
 import SingleBlog from "./pages/ContentPages/SingleBlog";
+
 
 const GoogleMaterialPage = lazy(() =>
   import("./modules/GoogleMaterialExamples/GoogleMaterialPage")
@@ -96,6 +100,7 @@ export default function BasePage() {
       <ContentRoute path="/payments" component={WalletAndTransactionPage} />
       <ContentRoute path="/addCredits" component={AddCredits} />
       <ContentRoute path="/result/:id" component={TournamentSummary} />
+      <ContentRoute path="/settings/" component={SettingHome}/>
       {/*Show all sponsorships of players*/} {/*Login required*/}
       {/* <ContentRoute path="/sponsorships" component={} /> */}
       {/*Show a spacific sponsorships*/} {/*Login required*/}
@@ -135,6 +140,7 @@ export default function BasePage() {
       {/*Show a player profile based on id*/} {/*Login not required */}
       <ContentRoute path="/player/profile/:id" component={ViewProfilePlayer} />
       <ContentRoute path="/reviews/:id" component={SponserReviewPage}/>
+      
       {/*Show a network page based on id*/} {/*Login not required*/}
       {/* <ContentRoute path="/networks/:id" component={} />  */}
       {/*Show a spacific page by id*/} {/*Login not required*/}
@@ -216,6 +222,9 @@ export default function BasePage() {
       <Route path="/how-it-works" component={HowItWorks} />
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/contact-us" component={ContactUsPage} />
+      <Route path="/help" component={Help}/>
+      <Route path="/event" component={Event}/>
+
       <Route path="/terms" component={TermsPage} />
       <Route path="/privacy" component={PrivacyPage} />
       <Route exact path="/blog" component={Blog} />

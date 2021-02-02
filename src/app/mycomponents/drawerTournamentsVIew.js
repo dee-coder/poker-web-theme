@@ -1,6 +1,7 @@
 import { Avatar, Box, Divider, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
+import AddToCalendar from "react-add-to-calendar";
 import {
   Row,
   Col,
@@ -55,12 +56,6 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-
-
-
-
-
-
 const DrawerTournamentsView = ({
   setViewTournamentMode,
   obj,
@@ -91,27 +86,32 @@ const DrawerTournamentsView = ({
     return (today = mm + "-" + dd + "-" + yyyy);
   }
 
-
+  let event = {
+    title: "Sample Event",
+    description: "This is the sample event provided as an example only",
+    location: "Portland, OR",
+    startTime: "2016-09-16T20:15:00-04:00",
+    endTime: "2016-09-16T21:45:00-04:00",
+  };
 
   if (localStorage.getItem("role") === "player") {
     return (
       <div className={classes.list}>
-      
-     <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
-      
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
+
         <div className={classes.viewBoxCont} style={{ padding: "20px" }}>
           <Container>
             <Row>
@@ -260,7 +260,7 @@ const DrawerTournamentsView = ({
                                 }}></i>
                             </Button>
                           </a>
-                          <Button
+                          {/* <Button
                             variant="primary"
                             style={{
                               marginTop: "20px",
@@ -278,11 +278,31 @@ const DrawerTournamentsView = ({
                                 float: "right",
                                 marginRight: "15px",
                               }}></i>
-                          </Button>
+                          </Button> */}
+                          {/* <Button
+                            // variant="primary"
+                            style={{
+                              marginTop: "20px",
+                              width: "100%",
+                              textAlign: "center",
+                              fontSize: "12px",
+                              color: "white",
+                            }}> */}
+                            <div  style={{
+                              marginTop: "20px",
+                              width: "100%",
+                              textAlign: "center",
+                              fontSize: "12px",
+                            }}>
+                              <AddToCalendar event={event} 
+                                 displayItemIcons={false} 
+                              />
+                            </div>
+                          {/* </Button> */}
 
                           <Button
                             variant="primary"
-                            onClick = {(e)=>handleShow()}
+                            onClick={(e) => handleShow()}
                             style={{
                               marginTop: "20px",
                               width: "100%",
@@ -324,20 +344,20 @@ const DrawerTournamentsView = ({
   } else {
     return (
       <div className={classes.list}>
-       <Modal show={show} onHide={handleClose}>
-        <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button>
-        </Modal.Footer>
-      </Modal>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton>
+            <Modal.Title>Modal heading</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={handleClose}>
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
         <div className={classes.viewBoxCont}>
           <Container>
             <Row>
