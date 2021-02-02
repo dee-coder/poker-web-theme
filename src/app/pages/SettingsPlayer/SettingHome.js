@@ -129,12 +129,12 @@ function SettingHome() {
                               Change Password
                             </Link>
                           </div>
-                          <i
+                          {/* <i
                             class="fas fa-external-link-alt"
                             style={{
                               fontSize: "12px",
                               marginLeft: "10px",
-                            }}></i>
+                            }}></i> */}
                         </div>
                       </a>
                     </Col>
@@ -158,12 +158,12 @@ function SettingHome() {
                               Change User Name
                             </Link>
                           </div>
-                          <i
+                          {/* <i
                             class="fas fa-external-link-alt"
                             style={{
                               fontSize: "12px",
                               marginLeft: "10px",
-                            }}></i>
+                            }}></i> */}
                         </div>
                       </a>
                     </Col>

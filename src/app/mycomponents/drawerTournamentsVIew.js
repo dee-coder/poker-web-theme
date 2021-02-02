@@ -62,6 +62,7 @@ const DrawerTournamentsView = ({
   networks,
   currentAllot,
   playerInfo,
+  showModal,
 }) => {
   const classes = useStyles();
   const [url, seturl] = useState();
@@ -74,9 +75,9 @@ const DrawerTournamentsView = ({
     // seturl(url);
   }, []);
 
-  const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
 
   function getDates(date) {
     var today = new Date(date);
@@ -97,21 +98,6 @@ const DrawerTournamentsView = ({
   if (localStorage.getItem("role") === "player") {
     return (
       <div className={classes.list}>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
-
         <div className={classes.viewBoxCont} style={{ padding: "20px" }}>
           <Container>
             <Row>
@@ -302,7 +288,8 @@ const DrawerTournamentsView = ({
 
                           <Button
                             variant="primary"
-                            onClick={(e) => handleShow()}
+                            onClick={(e) => showModal()}
+                            // onClick={() => setViewTournamentMode(false)}
                             style={{
                               marginTop: "20px",
                               width: "100%",
@@ -344,20 +331,6 @@ const DrawerTournamentsView = ({
   } else {
     return (
       <div className={classes.list}>
-        <Modal show={show} onHide={handleClose}>
-          <Modal.Header closeButton>
-            <Modal.Title>Modal heading</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>Woohoo, you're reading this text in a modal!</Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={handleClose}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={handleClose}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
-        </Modal>
         <div className={classes.viewBoxCont}>
           <Container>
             <Row>

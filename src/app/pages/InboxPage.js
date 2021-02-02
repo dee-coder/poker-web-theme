@@ -1,4 +1,4 @@
-import { Box, Paper, Typography } from "@material-ui/core";
+import { Box, Paper, Typography,Avatar,makeStyles } from "@material-ui/core";
 import React, { useEffect, useState, useRef } from "react";
 import css from "@emotion/css";
 import {
@@ -26,7 +26,7 @@ const InboxPage = () => {
   const [Messages, setMessages] = useState([]);
 
   const [Redirect, setRedirect] = useState(false);
-  const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState({});
   const [role, setRole] = useState(null);
 
   const [Chats, setChats] = useState([]);
@@ -35,7 +35,7 @@ const InboxPage = () => {
 
   const ENDPOINT = API.baseUrl;
 
-  const [ActiveChat, setActiveChat] = useState(null);
+  const [ActiveChat, setActiveChat] = useState(false);
 
   useEffect(() => {
     if (localStorage.getItem("userInfo") === undefined) {
@@ -45,7 +45,8 @@ const InboxPage = () => {
       setRole(localStorage.getItem("role"));
     }
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
+    console.log(userInfo);
+    
     const role = localStorage.getItem("role");
 
     fetch(API.baseUrl + API.getConversations, {
@@ -63,6 +64,7 @@ const InboxPage = () => {
         if (res.status === "ok") {
           setChats(res.chats);
         } else {
+          setActiveChat(false);
         }
       })
       .catch((err) => {
@@ -175,14 +177,27 @@ const InboxPage = () => {
     }
   }, [Messages]);
 
+  const useStyles = makeStyles({
+    avatar: {
+      margin: 10,
+    },
+    bigAvatar: {
+      margin: 0,
+      width: 70,
+      height: 70,
+    },
+  });
+  //console.log(statistics);
+
+  const classes = useStyles();
+
   return (
     <Box>
       <Row>
         <Col lg={12}>
           <Typography
             variant="h4"
-            style={{ color: "white", fontWeight: "600" }}
-          >
+            style={{ color: "white", fontWeight: "600" }}>
             Messages
           </Typography>
         </Col>
@@ -199,42 +214,39 @@ const InboxPage = () => {
                         padding: "10px",
                         borderTopLeftRadius: "3px",
                         backgroundColor: "#ededed",
-                      }}
-                    >
-                      <Row>
-                        <Col>
-                          <Image
-                            style={{ height: "40px", width: "40px" }}
-                            src={toAbsoluteUrl("/media/users/100_1.jpg")}
-                            roundedCircle
-                          />
-                        </Col>
+                      }}>
+                      <Row
+                        style={{
+                          paddingTop: "30px",
+                          paddingRight: "30px",
+                          paddingBottom: "10px",
+                          paddingLeft: "30px",
+                        }}>
+                        <Avatar
+                          alt="Remy Sharp"
+                          src={toAbsoluteUrl(
+                            "/media/poker-logos/placeholder-profile.jpg"
+                          )}
+                          className={classes.bigAvatar}
+                        />
 
-                        {/* <div
-                          className="col-auto"
-                          style={{
-                            float: "right",
-                            paddingTop: "10px",
-                            paddingBottom: "10px",
-                            marginRight: "10px",
-                          }}
-                        >
-                          <span style={{}}>
-                            <i class="fas fa-plus-circle"></i>
-                          </span>
-                        </div> */}
-                        {/* <div
-                          className="col-auto"
-                          style={{
-                            float: "right",
-                            paddingTop: "10px",
-                            paddingBottom: "10px",
-                          }}
-                        >
-                          <span style={{}}>
-                            <i class="fas fa-ellipsis-v"></i>
-                          </span>
-                        </div> */}
+                        <div style={{ marginLeft: "20px" }}>
+                          <Typography
+                            variant="body1"
+                            style={{ fontSize: "20px" }}>
+                            {role === "player" ? userInfo.player_name : userInfo.sponsor_name}
+                            {/* {userInfo.player_name} */}
+                          </Typography>
+                          <Typography
+                            variant="body2"
+                            style={{ fontSize: "14px", color: "gray" }}>
+                            {/* {userInfo.player_network_username}({" "}
+                            {userInfo.player_email} ) */}
+
+                            {role === "player" ? userInfo.player_network_username : userInfo.sponsor_network_username}{" "}
+                            {role === "player" ? userInfo.player_email : userInfo.sponsor_email} 
+                          </Typography>
+                        </div>
                       </Row>
                     </div>
                   </Col>
@@ -244,8 +256,7 @@ const InboxPage = () => {
                     marginTop: "10px",
                     marginBottom: "10px",
                     borderBottom: "1px solid c4c4c4",
-                  }}
-                >
+                  }}>
                   <Col style={{ padding: "0" }}>
                     <Form style={{ padding: "15px" }}>
                       <Form.Control type="text" placeholder="Search" />
@@ -264,8 +275,10 @@ const InboxPage = () => {
                               padding: "15px",
                               background:
                                 CurrentRoom === chat ? "#f2f2f2" : "#FFF",
-                            }}
-                          >
+                            }}>
+
+                            {/* {ActiveChat === true  } */}
+                            {ActiveChat=== true && (
                             <Row>
                               <div className="col-auto">
                                 {" "}
@@ -285,8 +298,7 @@ const InboxPage = () => {
                                 <br />
                                 <Typography
                                   variant="body"
-                                  style={{ marginTop: "5px" }}
-                                >
+                                  style={{ marginTop: "5px" }}>
                                   {chat.tournamentDetails.name}
                                 </Typography>
                                 <br />
@@ -297,13 +309,13 @@ const InboxPage = () => {
                                         style={{
                                           fontSize: "12px",
                                           color: "gray",
-                                        }}
-                                      >
+                                        }}>
                                         {" "}
                                         {player.player_name},{" "}
                                       </span>
                                     );
                                   })}
+
                                   {chat.users.sponsors.map((sponsor, index) => {
                                     return index ===
                                       chat.users.sponsors.length - 1 ? (
@@ -311,8 +323,7 @@ const InboxPage = () => {
                                         style={{
                                           fontSize: "12px",
                                           color: "gray",
-                                        }}
-                                      >
+                                        }}>
                                         {" "}
                                         {sponsor.sponsor_name}{" "}
                                       </span>
@@ -321,8 +332,7 @@ const InboxPage = () => {
                                         style={{
                                           fontSize: "12px",
                                           color: "gray",
-                                        }}
-                                      >
+                                        }}>
                                         {" "}
                                         {sponsor.sponsor_name},{" "}
                                       </span>
@@ -331,6 +341,8 @@ const InboxPage = () => {
                                 </div>
                               </div>
                             </Row>
+                            )}
+
                           </div>
                         </a>
                       );
@@ -344,8 +356,7 @@ const InboxPage = () => {
                   paddingLeft: "0",
                   paddingRight: "12px",
                   height: "600px",
-                }}
-              >
+                }}>
                 {CurrentRoom === null && (
                   <Row>
                     <Col lg={12}>
@@ -355,8 +366,7 @@ const InboxPage = () => {
                           width: "100%",
                           textAlign: "center",
                         }}
-                        className="d-flex justify-content-center align-items-center"
-                      >
+                        className="d-flex justify-content-center align-items-center">
                         <div style={{ margin: "0", maxWidth: "400px" }}>
                           <Image
                             src={toAbsoluteUrl(
@@ -422,8 +432,7 @@ const InboxPage = () => {
                             NewMessage === ""
                               ? e.preventDefault()
                               : sendMessage(e)
-                          }
-                        >
+                          }>
                           Send
                         </Button>
                       </Col>
@@ -480,8 +489,7 @@ const ActiveChatComponent = ({ Chat, userInfo, role }) => {
                       textAlign: "left",
                       float: "right",
                     }}
-                    variant="primary"
-                  >
+                    variant="primary">
                     <Typography variant="body1" className="text-normal">
                       {message.content}
                     </Typography>
@@ -496,8 +504,7 @@ const ActiveChatComponent = ({ Chat, userInfo, role }) => {
                       fontSize: "10px",
                       marginTop: "10px",
                       marginRight: "10px",
-                    }}
-                  >
+                    }}>
                     {getDates(message.generated)}
                   </Typography>
                 </div>
@@ -505,8 +512,7 @@ const ActiveChatComponent = ({ Chat, userInfo, role }) => {
                 <div style={{ float: "left" }}>
                   <Badge
                     style={{ padding: "10px", textAlign: "left" }}
-                    variant="secondary"
-                  >
+                    variant="secondary">
                     {message.user === "admin" ? (
                       <Typography variant="button" className="text-danger">
                         {message.user}
@@ -531,8 +537,7 @@ const ActiveChatComponent = ({ Chat, userInfo, role }) => {
                       marginLeft: "5px",
                       fontSize: "10px",
                       marginTop: "10px",
-                    }}
-                  >
+                    }}>
                     {getDates(message.generated)}
                   </Typography>
                 </div>
@@ -553,8 +558,7 @@ const ChatHeader = ({ info }) => {
         padding: "10px",
         borderTopRightRadius: "3px",
         backgroundColor: "#ededed",
-      }}
-    >
+      }}>
       <Row>
         <Col lg={12}>
           <Image
@@ -570,8 +574,7 @@ const ChatHeader = ({ info }) => {
               paddingBottom: "10px",
               marginRight: "10px",
               marginLeft: "10px",
-            }}
-          >
+            }}>
             <span>{info.name}</span>
           </div>
           <div
@@ -580,8 +583,7 @@ const ChatHeader = ({ info }) => {
               paddingTop: "10px",
               paddingBottom: "10px",
               marginRight: "10px",
-            }}
-          >
+            }}>
             <span style={{ marginRight: "20px" }}>
               <i class="fas fa-plus-circle"></i>
             </span>

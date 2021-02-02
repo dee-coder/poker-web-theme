@@ -31,7 +31,7 @@ export function TournamentHeader({ className, obj, networks }) {
         setNetworksAll(json.tournaments);
         //console.log(obj.network);
         var data = _.find(json.tournaments, ["name", obj.network]);
-        // console.log(data);
+        console.log(data);
         var url = "https://pokerswapping.com/networks/" + data.page_slug;
         setUrl(url);
         setIcon(data.icon);

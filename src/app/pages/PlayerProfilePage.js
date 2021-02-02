@@ -1,9 +1,9 @@
 import { Box, Drawer, Paper, Typography } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
-import { Row, Col, Tabs, Tab, Badge } from "react-bootstrap";
+import { Row, Col, Tabs, Tab, Badge, Modal, Button } from "react-bootstrap";
 import _ from "lodash";
 import SVG from "react-inlinesvg";
-import Image, { Shimmer } from 'react-shimmer'
+import Image, { Shimmer } from "react-shimmer";
 
 import {
   ListsWidget10,
@@ -33,6 +33,7 @@ import AddSponsorsDrawer from "../mycomponents/addSponsorsDrawer";
 import ViewTournamentDrawer from "../mycomponents/ViewTournamentDetailsDrawer";
 import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
 import DrawerTournamentSponsorshipView from "../mycomponents/DrawerTournamentSponsorhipView";
+import ReactShareSocial from 'react-share-social' 
 const PlayerProfilePage = () => {
   const [statistics, setStatistics] = useState([]);
   const [recentTournaments, setRecentTournaments] = useState([]);
@@ -68,6 +69,10 @@ const PlayerProfilePage = () => {
   ] = useState({});
 
   const [DrawerB, setDrawerB] = useState(false);
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   useEffect(() => {
     var info = JSON.parse(localStorage.getItem("userInfo"));
@@ -111,12 +116,31 @@ const PlayerProfilePage = () => {
 
   return (
     <Box>
+      <Modal show={show} onHide={handleClose}style={{zIndex:99999}} >
+        <Modal.Header closeButton>
+          <Modal.Title className="text-center justify-content-center align-items-center">Share This tournament</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ReactShareSocial
+            url={window.location.href}
+            socialTypes={["facebook", "twitter", "reddit", "linkedin","Email"]}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
+
       <Row style={{ marginBottom: "40px" }}>
         <Col lg={12} style={{ textAlign: "left" }}>
           <Typography
             variant="h4"
-            style={{ fontWeight: "600", color: "white" }}
-          >
+            style={{ fontWeight: "600", color: "white" }}>
             My Profile
           </Typography>
         </Col>
@@ -385,9 +409,9 @@ const PlayerProfilePage = () => {
       <Drawer
         anchor="right"
         open={viewTournamentMode}
-        onClose={() => setViewTournamentMode(false)}
-      >
+        onClose={() => setViewTournamentMode(false)}>
         <DrawerTournamentsView
+          showModal={handleShow}
           setViewTournamentMode={setViewTournamentMode}
           obj={currentTournamentShowObj}
           networks={organicNetworks}
@@ -403,7 +427,6 @@ const PlayerProfilePage = () => {
           pendingSponsorList={selectedPendingSponsorList}
           setPendingSponsorList={setSelectedPendingSponsorList}
           approvedSponsorList={selectedApprovedSponsorList}
-          
         />
       </Drawer>
     </Box>

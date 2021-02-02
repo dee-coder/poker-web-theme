@@ -103,7 +103,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
                 variant="body2"
                 style={{ fontSize: "14px", color: "gray" }}
               >
-                {userInfo.player_network_username}( {userInfo.player_network} )
+                {userInfo.player_network_username} {userInfo.player_email} 
               </Typography>
 
               {statistics.rating === undefined ? (
