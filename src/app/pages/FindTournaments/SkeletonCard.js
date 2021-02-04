@@ -28,7 +28,7 @@ const SkeletonCard = () => {
               </h4>
               <h4 style={{ marginTop: "30px"}} className="card-title">
                 {/* <Skeleton circle={true} height={50} width={50} /> */}
-                <Skeleton height={36} width={`100%`} />
+                <Skeleton height={36} width={`50%`} />
               </h4>
             </Paper>
           </Col>
@@ -43,7 +43,7 @@ const SkeletonCard = () => {
               </h4>
               <h4 style={{ marginTop: "30px"}} className="card-title">
                 {/* <Skeleton circle={true} height={50} width={50} /> */}
-                <Skeleton height={36} width={`100%`} />
+                <Skeleton height={36} width={`50%`} />
               </h4>
             </Paper>
           </Col>

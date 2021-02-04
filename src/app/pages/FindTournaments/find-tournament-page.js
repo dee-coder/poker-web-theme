@@ -897,8 +897,8 @@ const FindTournamentsPage = () => {
         open={viewTournamentMode}
         onClose={() => setViewTournamentMode(false)}>
         <DrawerTournamentsView
-          playerInfo
-          currentAllot
+          // playerInfo
+          // currentAllot
           showModal={handleShow}
           setViewTournamentMode={setViewTournamentMode}
           obj={currentViewTournament}

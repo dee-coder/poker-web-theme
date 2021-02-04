@@ -46,6 +46,7 @@ import PrivacyPage from "./pages/ContentPages/PrivacyPage";
 import AddCredits from "./pages/Payments/AddCredits";
 import SponserReviewPage from "./pages/ReviewPages/SponserReviewPage";
 
+
 import HomePage from "./pages/ContentPages/HomePage";
 import MyNotifications from "./pages/MyNotifications";
 import WalletAndTransactionPage from "./pages/Payments/WalletAndTransactionsPage";
@@ -73,13 +74,17 @@ export default function BasePage() {
   // https://reactjs.org/docs/hooks-reference.html#useeffect
 
   const [LoggedIn, setLoggedIn] = useState(false);
+  
   useEffect(() => {
+    
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
 
     if (userInfo === undefined || userInfo === null) {
       setLoggedIn(false);
+      
     } else {
       setLoggedIn(true);
+      
     }
   });
 
@@ -181,4 +186,5 @@ export default function BasePage() {
       {/* <Redirect to="error/error-v1" /> */}
     </Switch>
   );
+  
 }
