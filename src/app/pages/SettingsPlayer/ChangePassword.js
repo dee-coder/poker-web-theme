@@ -7,6 +7,7 @@ import { Redirect } from "react-router-dom";
 // must be listed before other Firebase SDKs
 import Axios from "axios";
 import { closestTo } from "date-fns";
+import SkeletonCard from "../SettingsPlayer/SkeltonSetting";
 
 const ChangePassword = (props) => {
   const [pass1, setPass1] = useState(null);
@@ -17,37 +18,43 @@ const ChangePassword = (props) => {
   const [passwordMatchingStatus, setPasswordMatchingStatus] = useState(true);
   const [RedirectToDashBoard, setRedirectToDashBoard] = useState(false);
 
-  // useEffect(() => {
-  //   if (props.match.params.token === undefined) {
-  //     setRedirectPage(true);
-  //   } else {
-  //     setRedirectPage(false);
-  //     console.log(props.match.params.token);
-  //     fetch(API.baseUrl + API.validateToken, {
-  //       method: "POST", // or 'PUT'
-  //       headers: {
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         token: props.match.params.token,
-  //       }),
-  //     })
-  //       .then((response) => response.json())
-  //       .then((json) => {
-  //         console.log(json);
-  //         if (json.status === "token_found") {
-  //           setTokeDetail(json.tokeDetails);
+  const [isLoading, setIsLoading] = useState(false);
 
-  //           //if(json.tokeDetail.status)
-  //         } else {
-  //           setRedirectPage(true);
-  //         }
-  //       })
-  //       .catch((err) => {
-  //         console.log(err.message);
-  //       });
-  //   }
-  // }, []);
+  useEffect(() => {
+    setIsLoading(true);
+    // if (props.match.params.token === undefined) {
+    //   setRedirectPage(true);
+    // } else {
+    //   setRedirectPage(false);
+    //   console.log(props.match.params.token);
+    //   fetch(API.baseUrl + API.validateToken, {
+    //     method: "POST", // or 'PUT'
+    //     headers: {
+    //       "Content-Type": "application/json",
+    //     },
+    //     body: JSON.stringify({
+    //       token: props.match.params.token,
+    //     }),
+    //   })
+    //     .then((response) => response.json())
+    //     .then((json) => {
+    //       setIsLoading(false);
+    //       console.log(json);
+    //       if (json.status === "token_found") {
+    //         setTokeDetail(json.tokeDetails);
+
+    //         //if(json.tokeDetail.status)
+    //       } else {
+    //         setRedirectPage(true);
+    //       }
+    //     })
+    //     .catch((err) => {
+    //       console.log(err.message);
+    //     });
+    // }
+    setIsLoading(false);
+
+  }, []);
 
   const confirmReset = (e) => {
   //   e.preventDefault();
@@ -88,6 +95,11 @@ const ChangePassword = (props) => {
   // if (RedirectToDashBoard) {
   //   return <Redirect to="/dashboard" />;
   // } else {
+    
+  if (isLoading){
+    return <SkeletonCard/>
+  }else{
+
     return (
       <div style={{ width: "400px" }}>
         <div className="text-center mb-10 mb-lg-20">
@@ -136,6 +148,7 @@ const ChangePassword = (props) => {
         </form>
       </div>
     );
-  // }
+          }
+  // }?
 };
 export default ChangePassword;

@@ -122,7 +122,7 @@ const PlayerProfilePage = () => {
         </Modal.Header>
         <Modal.Body>
           <ReactShareSocial
-            url={window.location.href}
+            url='https://www.pokerswapping.com/findtournaments'
             socialTypes={["facebook", "twitter", "reddit", "linkedin","Email"]}
           />
         </Modal.Body>

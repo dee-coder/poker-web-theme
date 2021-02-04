@@ -288,7 +288,7 @@ const DrawerTournamentsView = ({
 
                           <Button
                             variant="primary"
-                            onClick={(e) => showModal()}
+                            onClick={(e) => showModal(e)}
                             // onClick={() => setViewTournamentMode(false)}
                             style={{
                               marginTop: "20px",

@@ -76,6 +76,7 @@ const MyActiveTournaments = ({
         <Col lg={12} style={{ borderBottom: "1px solid #e0e0e0" }}></Col>
       </Row>
 
+
       {SelectedTab === "tournaments" && (
         <div style={{ marginTop: "30px" }}>
           {activeTournaments.length !== 0 ? (

@@ -1,5 +1,5 @@
 import { Box, Drawer, Paper, Typography } from "@material-ui/core";
-import { Row, Col, Image, Spinner } from "react-bootstrap";
+import { Row, Col, Image, Spinner, Modal } from "react-bootstrap";
 import Select from "react-select";
 import React, { useState, useEffect } from "react";
 import { toAbsoluteUrl } from "../../../_metronic/_helpers";
@@ -13,9 +13,11 @@ import moment from "moment";
 import Shimmer from "react-shimmer-effect";
 import injectSheet from "react-jss";
 import ReactPaginate from "react-paginate";
+import ReactShareSocial from "react-share-social";
 
 import Countdown from "react-countdown";
 import DrawerTournamentsView from "../../mycomponents/drawerTournamentsVIew";
+import SkeletonCard from "../../pages/FindTournaments/SkeletonCard";
 
 const Completionist = () => <span>Ended</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
@@ -123,7 +125,6 @@ const FindTournamentsPage = () => {
   const [viewTournamentMode, setViewTournamentMode] = useState(false);
   const [currentViewTournament, setCurrentViewTournaments] = useState(null);
   const [organicNetworks, setOrganicNetworks] = useState([]);
-
   const [MakeLoading, setMakeLoading] = useState(false);
 
   const [offset, setOffset] = useState(0);
@@ -131,9 +132,12 @@ const FindTournamentsPage = () => {
   const [perPage] = useState(10);
   const [pageCount, setPageCount] = useState(0);
 
-  useEffect(() => {
-    //console.log(Filters);
+  const [valueOfGameName, setValueOfGameName] = useState([]);
+  const [isloading, setIsloading] = useState(false);
 
+  useEffect(() => {
+    setIsloading(true);
+    //console.log(Filters);
     setTournaments([]);
     setMakeLoading(true);
     fetch(API.baseUrl + API.getTournamentFromSpacificNetwork, {
@@ -145,12 +149,20 @@ const FindTournamentsPage = () => {
     })
       .then((json) => json.json())
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         setMakeLoading(false);
         setTournaments(response.result);
-        setOrganicNetworks(response.networks);
+        // setTournamentList(response.result);
+        setOrganicNetworks(response.network);
         setPageCount(Math.ceil(data.length / perPage));
+        // setValueOfGameName({
+        //   filter: Array.from(response.result.name)
+        // })
+        setValueOfGameName(response.result);
+        setHoldedList(response.result);
+        setIsloading(false);
       })
+
       .catch((err) => {
         console.log(err.message);
       });
@@ -163,16 +175,17 @@ const FindTournamentsPage = () => {
     });
 
     ValuesOfGameType.map(async (value) => {
-      allFilters.push(value);
+      await allFilters.push(value);
     });
 
     ValuesOfSpeed.map(async (value) => {
-      allFilters.push(value);
+      await allFilters.push(value);
     });
 
-    ValuesOfState.map((value) => {
-      allFilters.push(value);
+    ValuesOfState.map(async (value) => {
+      await allFilters.push(value);
     });
+
     setFilters(allFilters);
     console.log(allFilters);
   }, [ValuesOfNetworks, ValuesOfGameType, ValuesOfSpeed, ValuesOfState]);
@@ -247,18 +260,17 @@ const FindTournamentsPage = () => {
   };
 
   const handleSorting = (e) => {
-    //console.log(e.target.value);
-    setHoldedList(tournamentList);
-
+    // console.log(e.target.value);
+    // setHoldedList(tournamentList);
+    // console.log(holdedList);
     switch (e.target.value) {
       case "prize_pool_low_to_high":
         var arr = holdedList;
         arr.sort((a, b) => {
           return a.guarantee - b.guarantee;
         });
-
         setHoldedList(arr);
-        // console.log(arr);
+        setTournaments(arr);
         break;
 
       case "prize_pool_high_to_low":
@@ -269,11 +281,11 @@ const FindTournamentsPage = () => {
           return b.guarantee - a.guarantee;
         });
         setHoldedList(arr);
+        setTournaments(arr);
         break;
 
       case "name_a_to_z":
         var arr = holdedList;
-
         arr.sort((a, b) => {
           let fa = a.name.toLowerCase(),
             fb = b.name.toLowerCase();
@@ -287,6 +299,9 @@ const FindTournamentsPage = () => {
           return 0;
         });
         setHoldedList(arr);
+        setTournaments(arr);
+        // console.log(Tournaments)
+        console.log(arr);
         break;
 
       case "name_z_to_a":
@@ -304,7 +319,7 @@ const FindTournamentsPage = () => {
           return 0;
         });
         setHoldedList(arr);
-
+        setTournaments(arr);
         break;
 
       case "entrants_low_to_high":
@@ -313,6 +328,7 @@ const FindTournamentsPage = () => {
           return a.totalEntrants - b.totalEntrants;
         });
         setHoldedList(arr);
+        setTournaments(arr);
         break;
 
       case "entrants_high_to_row":
@@ -419,11 +435,37 @@ const FindTournamentsPage = () => {
   }
 
   const setRangeValue = (value, key) => {
-    console.log(value, key);
+    // console.log(value, key);
   };
+
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
     <Box>
+      <Modal show={show} onHide={handleClose} style={{ zIndex: 99999 }}>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-center justify-content-center align-items-center">
+            Share This tournament
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ReactShareSocial
+            url="https://www.pokerswapping.com/findtournaments"
+            socialTypes={["facebook", "twitter", "reddit", "linkedin", "Email"]}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
+
       <Row>
         <Col lg={12}>
           <Typography
@@ -681,19 +723,12 @@ const FindTournamentsPage = () => {
           {MakeLoading && (
             <Row>
               <Col lg={12}>
-                <div
-                  className="d-flex justify-content-center align-items-center"
-                  style={{ width: "100%", padding: "50px" }}>
-                  <Spinner animation="border" role="status" variant="primary">
+                <div>
+                  {/* <Spinner animation="border" role="status" variant="primary">
                     <span className="sr-only">Loading...</span>
-                  </Spinner>
+                  </Spinner> */}
+                  <SkeletonCard />
                 </div>
-                {/* <div className={classes.container}>
-                  <Shimmer>
-                    <div className={classes.circle} />
-                    <div className={classes.line} />
-                  </Shimmer>
-                </div> */}
               </Col>
             </Row>
           )}
@@ -862,6 +897,7 @@ const FindTournamentsPage = () => {
         open={viewTournamentMode}
         onClose={() => setViewTournamentMode(false)}>
         <DrawerTournamentsView
+          showModal={handleShow}
           setViewTournamentMode={setViewTournamentMode}
           obj={currentViewTournament}
           networks={organicNetworks}

@@ -3,6 +3,7 @@ import { toAbsoluteUrl } from "../../../_metronic/_helpers";
 import React, { useEffect, useState } from "react";
 import { Link, Switch, Redirect } from "react-router-dom";
 import { Card, Dropdown, Row, Col, Badge, Image, Form } from "react-bootstrap";
+import SkeletonCard from "../SettingsPlayer/SkeltonSetting";
 import {
   Box,
   Avatar,
@@ -21,10 +22,10 @@ import { ContentRoute } from "../../../_metronic/layout";
 function SettingHome() {
   const [redirect, setRedirect] = useState(false);
   const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
+  const [isLoading, setIsLoading] = useState(false);
   useEffect(() => {
+    setIsLoading(true);
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
-
     if (userInfo === undefined || userInfo === null) {
       setRedirect(true);
     } else {
@@ -33,7 +34,7 @@ function SettingHome() {
       // setUserInfo(userInfo);
     }
   });
-  
+
   const useStyles = makeStyles({
     avatar: {
       margin: 10,
@@ -73,35 +74,35 @@ function SettingHome() {
           <Col lg={12}>
             <Row>
               <Col lg={4}>
-              <Paper>
-                <Row
-                  style={{
-                    paddingTop: "30px",
-                    paddingRight: "30px",
-                    paddingBottom: "10px",
-                    paddingLeft: "30px",
-                  }}>
-                  <Avatar
-                    alt="Remy Sharp"
-                    src={toAbsoluteUrl(
-                      "/media/poker-logos/placeholder-profile.jpg"
-                    )}
-                    className={classes.bigAvatar}
-                  />
+                <Paper>
+                  <Row
+                    style={{
+                      paddingTop: "30px",
+                      paddingRight: "30px",
+                      paddingBottom: "10px",
+                      paddingLeft: "30px",
+                    }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={toAbsoluteUrl(
+                        "/media/poker-logos/placeholder-profile.jpg"
+                      )}
+                      className={classes.bigAvatar}
+                    />
 
-                  <div style={{ marginLeft: "20px" }}>
-                    <Typography variant="body1" style={{ fontSize: "20px" }}>
-                      {userInfo.player_name}
-                    </Typography>
-                    <Typography
-                      variant="body2"
-                      style={{ fontSize: "14px", color: "gray" }}>
-                      {userInfo.player_network_username}({" "}
-                      {userInfo.player_email} )
-                    </Typography>
-                  </div>
-                </Row>
-                
+                    <div style={{ marginLeft: "20px" }}>
+                      <Typography variant="body1" style={{ fontSize: "20px" }}>
+                        {userInfo.player_name}
+                      </Typography>
+                      <Typography
+                        variant="body2"
+                        style={{ fontSize: "14px", color: "gray" }}>
+                        {userInfo.player_network_username} {" "}
+                        {userInfo.player_email} 
+                      </Typography>
+                    </div>
+                  </Row>
+
                   <Row style={{ padding: "30px" }}>
                     <Col lg={12}>
                       <Typography variant="h6" gutterBottom>

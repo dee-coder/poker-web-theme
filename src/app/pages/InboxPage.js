@@ -211,7 +211,7 @@ const InboxPage = () => {
                   <Col style={{ padding: "0" }}>
                     <div
                       style={{
-                        padding: "10px",
+                        // padding: "10px",
                         borderTopLeftRadius: "3px",
                         backgroundColor: "#ededed",
                       }}>
