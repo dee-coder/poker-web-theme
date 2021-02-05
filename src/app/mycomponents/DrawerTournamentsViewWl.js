@@ -116,6 +116,7 @@ return (
                   <Col lg={11}>
                     <a
                       href={`https://pokerswapping.com/tournament/${obj.sharkscope_id}`}
+                     
                       target="_blank"
                       style={{ float: "right" }}>
                       {" "}
