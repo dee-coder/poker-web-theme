@@ -25,32 +25,53 @@ const AllSponsorships = () => {
   const [currentTournamentShowObj, setCurrentTournamentShowObj] = useState();
   const [CurrentAllotDetails, setCurrentAllotDetails] = useState();
 
+  const [role, setRole] = useState();
   useEffect(() => {
-    if (localStorage.getItem("userInfo") !== undefined) {
+    userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    Role = localStorage.getItem("role");
+
+    if (localStorage.getItem("userInfo") !== null) {
       userInfo = JSON.parse(localStorage.getItem("userInfo"));
       Role = localStorage.getItem("role");
 
-      fetch(url, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ type: Role, id: userInfo.sponsor_id }),
-      })
-        .then((response) => response.json())
-        .then((response) => {
-          //console.log(response);
-          setSponsorships(response.sponsorships);
+      if ((Role = "sponsor")) {
+        // console.log(Role);
+
+        fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ type: Role, id: userInfo.sponsor_id }),
         })
-        .catch((err) => console.log(err));
+          .then((response) => response.json())
+          .then((response) => {
+            //console.log(response);
+            setSponsorships(response.sponsorships);
+          })
+          .catch((err) => console.log(err));
+      }
+      Role = localStorage.getItem("role");
+      setRole(Role);
     } else {
       //redirects to login
       setRedirectsForLogin(true);
     }
   }, []);
 
-  if (Role === "player") {
-    return <Box></Box>;
+  if (role === "player") {
+    return (
+      <Box>
+        {RedirectsForLogin && <Redirect to="auth" />}
+        <Col lg={12}>
+            <Typography
+              variant="h4"
+              style={{ fontWeight: "600", color: "white" }}>
+               Sponsorships
+            </Typography>
+          </Col>
+      </Box>
+    );
   } else {
     return (
       <Box>
@@ -59,9 +80,8 @@ const AllSponsorships = () => {
           <Col lg={12}>
             <Typography
               variant="h4"
-              style={{ fontWeight: "600", color: "white" }}
-            >
-              Sponsorships
+              style={{ fontWeight: "600", color: "white" }}>
+               Sponsorships
             </Typography>
           </Col>
         </Row>
@@ -72,14 +92,12 @@ const AllSponsorships = () => {
                 <Card.Title>13 Results</Card.Title>
               </Card.Header>
               <Card.Body>
-              
                 {Sponsorships.map((tournament) => {
                   return (
                     <a
                       style={{ color: "inherit", textDecoration: "none" }}
                       target="_blank"
-                      href={`/sponsorship/${tournament.sponsorship.sponsorship_id}`}
-                    >
+                      href={`/sponsorship/${tournament.sponsorship.sponsorship_id}`}>
                       <BoxItemActiveTournamentsForSponsor
                         obj={tournament.tournamentInfo}
                         allot={tournament.bettingInfo}
@@ -92,7 +110,7 @@ const AllSponsorships = () => {
                       />
                     </a>
                   );
-                })}              
+                })}
               </Card.Body>
             </Card>
           </Col>

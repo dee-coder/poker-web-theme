@@ -79,7 +79,7 @@ export function HeadersMenuNormal({ layoutProps }) {
             "/games-by-date"
           )}`}
         >
-          <NavLink className="menu-link" to="/findtournaments">
+          <NavLink className="menu-link" to="/trounaments">
             <span className="menu-text">Find Tournaments</span>
             {layoutProps.rootArrowEnabled && <i className="menu-arrow" />}
           </NavLink>

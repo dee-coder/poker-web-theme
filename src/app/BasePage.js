@@ -5,7 +5,7 @@ import { BuilderPage } from "./pages/BuilderPage";
 import { MyPage } from "./pages/MyPage";
 import { DashboardPage } from "./pages/DashboardPage";
 import TournamentByDate from "./pages/TournamentByDate";
-// import FindTournamentPage from "./pages/findtournamentPage";
+import FindTournamentPage from "./pages/findtournamentPage";
 import LoginPage from "./pages/loginPage";
 import SingupPage from "./pages/signupPage";
 import SettingHome from "./pages/SettingsPlayer/SettingHome";
@@ -100,7 +100,9 @@ export default function BasePage() {
       <ContentRoute path="/sponsorship/create/:id" component={AddSponsorPage} />
       <ContentRoute path="/sponsorship/:id" component={ViewSponsorsPage} />
       <ContentRoute path="/sponsorship" component={AllSponsorships} />
-      <ContentRoute path="/tournaments" component={FindTournamentsPage} />
+      <ContentRoute path="/findtournaments" component={FindTournamentsPage} />
+      {/* <ContentRoute path="/tournaments" component={FindTournamentsPage} /> */}
+
       <ContentRoute path="/notifications" component={MyNotifications} />
       <ContentRoute path="/payments" component={WalletAndTransactionPage} />
       <ContentRoute path="/addCredits" component={AddCredits} />
@@ -170,6 +172,7 @@ export default function BasePage() {
       {/* <Route path="/error/error-v1" c omponent={ErrorPage1} /> */}
       {/* Content pages */}
       <Route path="/how-it-works" component={HowItWorks} />
+      <Route path="/trounaments" component={FindTournamentPage}/>
       <Route path="/about-us" component={AboutUsPage} />
       <Route path="/contact-us" component={ContactUsPage} />
       <Route path="/help" component={Help} />

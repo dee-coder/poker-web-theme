@@ -14,6 +14,7 @@ import Shimmer from "react-shimmer-effect";
 import injectSheet from "react-jss";
 import ReactPaginate from "react-paginate";
 import ReactShareSocial from "react-share-social";
+import { Redirect, Link } from "react-router-dom";
 
 import Countdown from "react-countdown";
 import DrawerTournamentsView from "../../mycomponents/drawerTournamentsVIew";
@@ -134,38 +135,45 @@ const FindTournamentsPage = () => {
 
   const [valueOfGameName, setValueOfGameName] = useState([]);
   const [isloading, setIsloading] = useState(false);
+  const [RedirectsForLogin, setRedirectsForLogin] = useState(false);
 
   useEffect(() => {
     setIsloading(true);
     //console.log(Filters);
-    setTournaments([]);
-    setMakeLoading(true);
-    fetch(API.baseUrl + API.getTournamentFromSpacificNetwork, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ filters: Filters }),
-    })
-      .then((json) => json.json())
-      .then((response) => {
-        // console.log(response);
-        setMakeLoading(false);
-        setTournaments(response.result);
-        // setTournamentList(response.result);
-        setOrganicNetworks(response.network);
-        setPageCount(Math.ceil(data.length / perPage));
-        // setValueOfGameName({
-        //   filter: Array.from(response.result.name)
-        // })
-        setValueOfGameName(response.result);
-        setHoldedList(response.result);
-        setIsloading(false);
-      })
 
-      .catch((err) => {
-        console.log(err.message);
-      });
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo === undefined || userInfo === null) {
+      setRedirectsForLogin(true);
+    } else {
+      setTournaments([]);
+      setMakeLoading(true);
+      fetch(API.baseUrl + API.getTournamentFromSpacificNetwork, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ filters: Filters }),
+      })
+        .then((json) => json.json())
+        .then((response) => {
+          // console.log(response);
+          setMakeLoading(false);
+          setTournaments(response.result);
+          // setTournamentList(response.result);
+          setOrganicNetworks(response.network);
+          setPageCount(Math.ceil(data.length / perPage));
+          // setValueOfGameName({
+          //   filter: Array.from(response.result.name)
+          // })
+          setValueOfGameName(response.result);
+          setHoldedList(response.result);
+          setIsloading(false);
+        })
+
+        .catch((err) => {
+          console.log(err.message);
+        });
+    }
   }, [Filters]);
 
   useEffect(() => {
@@ -444,6 +452,7 @@ const FindTournamentsPage = () => {
 
   return (
     <Box>
+     {RedirectsForLogin && <Redirect to="auth" />}
       <Modal show={show} onHide={handleClose} style={{ zIndex: 99999 }}>
         <Modal.Header closeButton>
           <Modal.Title className="text-center justify-content-center align-items-center">
@@ -897,8 +906,8 @@ const FindTournamentsPage = () => {
         open={viewTournamentMode}
         onClose={() => setViewTournamentMode(false)}>
         <DrawerTournamentsView
-          // playerInfo
-          // currentAllot
+          playerInfo
+          currentAllot
           showModal={handleShow}
           setViewTournamentMode={setViewTournamentMode}
           obj={currentViewTournament}

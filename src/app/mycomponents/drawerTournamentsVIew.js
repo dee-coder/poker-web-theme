@@ -380,7 +380,7 @@ const DrawerTournamentsView = ({
                 <Row>
                   <Col lg={11}>
                     <a
-                      href={`https://pokerswapping.com/apply-sponsorship?id=${obj.sharkscope_id}&player=${playerInfo.player_id}`}
+                      href={`https://pokerswapping.com/apply-sponsorship?id=${obj.sharkscope_id}&player=${playerInfo.sponsor_id}`}
                       target="_blank"
                       style={{ float: "right" }}>
                       {" "}
