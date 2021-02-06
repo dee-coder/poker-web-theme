@@ -259,7 +259,7 @@ export function ProfileBoxPlayer({ className, statistics }) {
 
                   <div className="d-flex flex-column flex-grow-1">
                     <a
-                      href="/player/sponsoring-tournaments"
+                      href="/player/sponsorships"
                       target="_blank"
                       className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
                     >

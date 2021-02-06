@@ -41,5 +41,7 @@
   "getWalletAndTransactions":"/payment/info",
   "deactivateSponsorship":"/sponsorship/deactivate",
   "getSummaryofSponsorship":"/sponsorship/summary",
-  "getPlayersActiveTournaments":"/players/get_active_tournaments"
+  "getPlayersActiveTournaments":"/players/get_active_tournaments",
+  "getActiveSponsorshipsPlayer":"/players/active_sponsorships",
+  "getSponsoredSponsorshipsPlayer":"/players/sponsored_sponsorships"
 }
