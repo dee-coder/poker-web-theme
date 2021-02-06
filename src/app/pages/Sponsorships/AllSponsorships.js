@@ -88,9 +88,12 @@ const AllSponsorships = () => {
         <Row style={{ marginTop: "30px" }}>
           <Col lg={12}>
             <Card>
-              <Card.Header>
-                <Card.Title>13 Results</Card.Title>
+
+              {Sponsorships.length === 0 ? (
+                <Card.Header>
+                <Card.Title>No Sponsorship Tournament found</Card.Title>
               </Card.Header>
+              ):(
               <Card.Body>
                 {Sponsorships.map((tournament) => {
                   return (
@@ -112,6 +115,7 @@ const AllSponsorships = () => {
                   );
                 })}
               </Card.Body>
+              )}
             </Card>
           </Col>
         </Row>

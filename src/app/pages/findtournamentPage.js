@@ -131,7 +131,6 @@ const FindTournamentPage = () => {
   const [data, setData] = useState([]);
   const [perPage] = useState(10);
   const [pageCount, setPageCount] = useState(0);
-
   const [valueOfGameName, setValueOfGameName] = useState([]);
   const [isloading, setIsloading] = useState(false);
 

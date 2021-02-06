@@ -8,6 +8,8 @@ import { Redirect } from "react-router-dom";
 import bcrypt from "bcryptjs";
 import { Row, Col, Tab, Nav } from "react-bootstrap";
 import RoleTabs from "../../mycomponents/signupRoleTabs";
+import DrawerSignup from "./DrawerSignup";
+import { Box, Drawer, Paper, Typography } from "@material-ui/core";
 
 function Signup(props) {
   const { intl } = props;
@@ -25,6 +27,7 @@ function Signup(props) {
   const [RedirectPage, setRedirectPage] = useState(false);
   const [ShowAlert, setShowAlert] = useState();
   const [Tnc, setTnc] = useState(false);
+  const [signupDrawer, setSignupDrawer] = useState();
 
   useEffect(() => {
     console.log("Running!");
@@ -43,14 +46,14 @@ function Signup(props) {
   }, []);
 
   useEffect(() => {
-    console.log("Email", Email);
-    console.log("Fullname", Fullname);
-    console.log("Password", Password);
-    console.log("ConfirmPassword", ConfirmPassword);
-    console.log("PlayerNetwork", PlayerNetwork);
+    // console.log("Email", Email);
+    // console.log("Fullname", Fullname);
+    // console.log("Password", Password);
+    // console.log("ConfirmPassword", ConfirmPassword);
+    // console.log("PlayerNetwork", PlayerNetwork);
 
-    console.log("Username", Username);
-    console.log("Tnc", Tnc);
+    // console.log("Username", Username);
+    // console.log("Tnc", Tnc);
     if (Role === "player") {
       if (
         Email !== null &&
@@ -315,6 +318,7 @@ function Signup(props) {
 
                   <div className="form-group fv-plugins-icon-container">
                     <select
+                    onClick={()=>setSignupDrawer(true)}
                       onChange={(e) => setPlayerNetwork(e.target.value)}
                       className={`form-control form-control-solid h-auto py-5 px-6 `}
                     >
@@ -496,7 +500,20 @@ function Signup(props) {
             </Tab.Content>
           </Col>
         </Row>
+
+        <Drawer
+        anchor="left"
+        open={signupDrawer}
+        onClose={() => setSignupDrawer(false)}>
+        <DrawerSignup
+          setViewTournamentMode={setSignupDrawer}
+        />
+
+      </Drawer>
       </Tab.Container>
+       
+
+
     </div>
   );
 }

@@ -2,6 +2,7 @@ import { Avatar, Box, Divider, Paper, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import AddToCalendar from "react-add-to-calendar";
+import API from "../../apiUrl.json";
 import {
   Row,
   Col,
@@ -12,7 +13,7 @@ import {
   Card,
   Modal,
 } from "react-bootstrap";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 import _ from "lodash";
 import {
   MixedWidget1,
@@ -66,6 +67,9 @@ const DrawerTournamentsView = ({
 }) => {
   const classes = useStyles();
   const [url, seturl] = useState();
+  const [proceed, setProceed] = useState(false);
+  const [showModalForBalance, setShowModalForBalance] = useState(false);
+  const [resMessage, setResMessage] = useState(null);  
 
   useEffect(() => {
     console.log("this:", networks);
@@ -75,9 +79,41 @@ const DrawerTournamentsView = ({
     // seturl(url);
   }, []);
 
+  const CheckBalance = () => {
+    var url = API.baseUrl+API.sponsorshipEligibility;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        sponsor_id:
+          localStorage.getItem("role") === "player"
+            ? JSON.parse(localStorage.getItem("userInfo")).player_id
+            : JSON.parse(localStorage.getItem("userInfo")).sponsor_id,
+        amount: currentAllot.amount_of_each,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === "OK") {
+          setProceed(true);
+          console.log(response);
+          console.log(response.message);
+          setResMessage(response.message);
+          
+        } else {
+          setProceed(false);
+          setShowModalForBalance(true);
+          console.log(response.message);
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
   // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
+  const handleClose = () => setShowModalForBalance(false);
+  // const handleShow = () => setShowModalForBalance(true);
 
   function getDates(date) {
     var today = new Date(date);
@@ -274,16 +310,18 @@ const DrawerTournamentsView = ({
                               fontSize: "12px",
                               color: "white",
                             }}> */}
-                            <div  style={{
+                          <div
+                            style={{
                               marginTop: "20px",
                               width: "100%",
                               textAlign: "center",
                               fontSize: "12px",
                             }}>
-                              <AddToCalendar event={event} 
-                                 displayItemIcons={false} 
-                              />
-                            </div>
+                            <AddToCalendar
+                              event={event}
+                              displayItemIcons={false}
+                            />
+                          </div>
                           {/* </Button> */}
 
                           <Button
@@ -331,8 +369,36 @@ const DrawerTournamentsView = ({
   } else {
     return (
       <div className={classes.list}>
+        {proceed && (
+          <Redirect to={`/be-sponsor/${currentAllot.sponsorship_id}`} />
+        )}
         <div className={classes.viewBoxCont}>
           <Container>
+            <Modal
+              show={showModalForBalance}
+              onHide={handleClose}
+              style={{ zIndex: 99999 }}>
+              <Modal.Header closeButton>
+                <Modal.Title className="text-center justify-content-center align-items-center">
+                  You Have Not Enough Balance to Sponsor This tournament
+                </Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {resMessage}
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary">
+                  Add Credits
+                </Button>
+                <Button variant="secondary" onClick={handleClose}>
+                  Close
+                </Button>
+                {/* <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button> */}
+              </Modal.Footer>
+            </Modal>
+
             <Row>
               <Col style={{ padding: "30px" }}>
                 <Form inline>
@@ -744,8 +810,10 @@ const DrawerTournamentsView = ({
                               <Col lg={12}>
                                 <Form inline>
                                   <Link
-                                    to={`/be-sponsor/${currentAllot.sponsorship_id}`}>
+                                  // to={`/be-sponsor/${currentAllot.sponsorship_id}`}
+                                  >
                                     <Button
+                                      onClick={() => CheckBalance()}
                                       variant="primary"
                                       style={{
                                         width: "100%",

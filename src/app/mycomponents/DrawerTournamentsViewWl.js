@@ -75,9 +75,6 @@ const DrawerTournamentsViewWl = ({
     // seturl(url);
   }, []);
 
-  // const [show, setShow] = useState(false);
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
 
   function getDates(date) {
     var today = new Date(date);
@@ -116,7 +113,7 @@ return (
                   <Col lg={11}>
                     <a
                       href={`https://pokerswapping.com/tournament/${obj.sharkscope_id}`}
-                     
+
                       target="_blank"
                       style={{ float: "right" }}>
                       {" "}

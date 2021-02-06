@@ -313,7 +313,7 @@ const SponsorProfilePage = () => {
                 <Row style={{ marginTop: "20px" }}>
                   <Col>
                     <a
-                      href="#"
+                      href="/settings"
                       className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-45 symbol-light-warning mr-5">
@@ -330,7 +330,7 @@ const SponsorProfilePage = () => {
 
                         <div className="d-flex flex-column flex-grow-1">
                           <a
-                            href="#"
+                            href="/settingsSp/"
                             className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                             Setting
                           </a>
@@ -342,7 +342,7 @@ const SponsorProfilePage = () => {
                 <Row style={{ marginTop: "20px" }}>
                   <Col>
                     <a
-                      href="#"
+                      href="/help"
                       className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-45 symbol-light-info mr-5">

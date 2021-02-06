@@ -1,4 +1,4 @@
-import { Box, Paper, Typography,Avatar,makeStyles } from "@material-ui/core";
+import { Box, Paper, Typography, Avatar, makeStyles } from "@material-ui/core";
 import React, { useEffect, useState, useRef } from "react";
 import css from "@emotion/css";
 import {
@@ -46,7 +46,7 @@ const InboxPage = () => {
     }
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     console.log(userInfo);
-    
+
     const role = localStorage.getItem("role");
 
     fetch(API.baseUrl + API.getConversations, {
@@ -234,7 +234,9 @@ const InboxPage = () => {
                           <Typography
                             variant="body1"
                             style={{ fontSize: "20px" }}>
-                            {role === "player" ? userInfo.player_name : userInfo.sponsor_name}
+                            {role === "player"
+                              ? userInfo.player_name
+                              : userInfo.sponsor_name}
                             {/* {userInfo.player_name} */}
                           </Typography>
                           <Typography
@@ -242,9 +244,12 @@ const InboxPage = () => {
                             style={{ fontSize: "14px", color: "gray" }}>
                             {/* {userInfo.player_network_username}({" "}
                             {userInfo.player_email} ) */}
-
-                            {role === "player" ? userInfo.player_network_username : userInfo.sponsor_network_username}{" "}
-                            {role === "player" ? userInfo.player_email : userInfo.sponsor_email} 
+                            {role === "player"
+                              ? userInfo.player_network_username
+                              : userInfo.sponsor_network_username}{" "}
+                            {role === "player"
+                              ? userInfo.player_email
+                              : userInfo.sponsor_email}
                           </Typography>
                         </div>
                       </Row>
@@ -263,6 +268,25 @@ const InboxPage = () => {
                     </Form>
                   </Col>
                 </Row>
+                <Row
+                  style={{
+                    marginTop: "10px",
+                    marginBottom: "10px",
+                    borderBottom: "1px solid c4c4c4",
+                  }}>
+                  <Col style={{ padding: "0" }}>
+                  {!ActiveChat && (
+                    <Col style={{ padding: "0" }}>
+                      <Typography
+                       className="d-flex align-items-center"
+                        variant="h4"
+                        style={{ color: "Red", fontWeight: "600" ,justifyContent:"center" }}>
+                        You Have No Active Chat 
+                      </Typography>
+                    </Col>
+                  )}
+                  </Col>
+                </Row>
                 <Row style={{ minHeight: "400px" }}>
                   <Col style={{ padding: "0" }}>
                     {" "}
@@ -276,73 +300,73 @@ const InboxPage = () => {
                               background:
                                 CurrentRoom === chat ? "#f2f2f2" : "#FFF",
                             }}>
-
                             {/* {ActiveChat === true  } */}
-                            {ActiveChat=== true && (
-                            <Row>
-                              <div className="col-auto">
-                                {" "}
-                                <Image
-                                  style={{ height: "40px", width: "40px" }}
-                                  src={toAbsoluteUrl(
-                                    "/media/users/default.jpg"
-                                  )}
-                                  roundedCircle
-                                />
-                              </div>
-                              <div className="col-auto">
-                                {" "}
-                                <Badge variant="primary">
-                                  #{chat.tournamentDetails.sharkscope_id}
-                                </Badge>
-                                <br />
-                                <Typography
-                                  variant="body"
-                                  style={{ marginTop: "5px" }}>
-                                  {chat.tournamentDetails.name}
-                                </Typography>
-                                <br />
-                                <div style={{ marginTop: "5px" }}>
-                                  {chat.users.players.map((player) => {
-                                    return (
-                                      <span
-                                        style={{
-                                          fontSize: "12px",
-                                          color: "gray",
-                                        }}>
-                                        {" "}
-                                        {player.player_name},{" "}
-                                      </span>
-                                    );
-                                  })}
-
-                                  {chat.users.sponsors.map((sponsor, index) => {
-                                    return index ===
-                                      chat.users.sponsors.length - 1 ? (
-                                      <span
-                                        style={{
-                                          fontSize: "12px",
-                                          color: "gray",
-                                        }}>
-                                        {" "}
-                                        {sponsor.sponsor_name}{" "}
-                                      </span>
-                                    ) : (
-                                      <span
-                                        style={{
-                                          fontSize: "12px",
-                                          color: "gray",
-                                        }}>
-                                        {" "}
-                                        {sponsor.sponsor_name},{" "}
-                                      </span>
-                                    );
-                                  })}
+                            {ActiveChat === true && (
+                              <Row>
+                                <div className="col-auto">
+                                  {" "}
+                                  <Image
+                                    style={{ height: "40px", width: "40px" }}
+                                    src={toAbsoluteUrl(
+                                      "/media/users/default.jpg"
+                                    )}
+                                    roundedCircle
+                                  />
                                 </div>
-                              </div>
-                            </Row>
-                            )}
+                                <div className="col-auto">
+                                  {" "}
+                                  <Badge variant="primary">
+                                    #{chat.tournamentDetails.sharkscope_id}
+                                  </Badge>
+                                  <br />
+                                  <Typography
+                                    variant="body"
+                                    style={{ marginTop: "5px" }}>
+                                    {chat.tournamentDetails.name}
+                                  </Typography>
+                                  <br />
+                                  <div style={{ marginTop: "5px" }}>
+                                    {chat.users.players.map((player) => {
+                                      return (
+                                        <span
+                                          style={{
+                                            fontSize: "12px",
+                                            color: "gray",
+                                          }}>
+                                          {" "}
+                                          {player.player_name},{" "}
+                                        </span>
+                                      );
+                                    })}
 
+                                    {chat.users.sponsors.map(
+                                      (sponsor, index) => {
+                                        return index ===
+                                          chat.users.sponsors.length - 1 ? (
+                                          <span
+                                            style={{
+                                              fontSize: "12px",
+                                              color: "gray",
+                                            }}>
+                                            {" "}
+                                            {sponsor.sponsor_name}{" "}
+                                          </span>
+                                        ) : (
+                                          <span
+                                            style={{
+                                              fontSize: "12px",
+                                              color: "gray",
+                                            }}>
+                                            {" "}
+                                            {sponsor.sponsor_name},{" "}
+                                          </span>
+                                        );
+                                      }
+                                    )}
+                                  </div>
+                                </div>
+                              </Row>
+                            )}
                           </div>
                         </a>
                       );
@@ -377,7 +401,7 @@ const InboxPage = () => {
                           />
                           <br />
                           <Typography variant="h5">
-                            Keep your phone connected
+                            No Any Chat Found
                           </Typography>
                           <br />
                           <br />

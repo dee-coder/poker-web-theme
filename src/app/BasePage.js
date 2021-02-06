@@ -9,6 +9,7 @@ import FindTournamentPage from "./pages/findtournamentPage";
 import LoginPage from "./pages/loginPage";
 import SingupPage from "./pages/signupPage";
 import SettingHome from "./pages/SettingsPlayer/SettingHome";
+import SettingHomeSponsor from "./pages/SettingSponsor/SettingHomeSponsor";
 import PlayerProfilePage from "./pages/PlayerProfilePage";
 import Logout from "./mycomponents/logoutComponent";
 import AdminSection from "./admin/adminSection";
@@ -108,6 +109,7 @@ export default function BasePage() {
       <ContentRoute path="/addCredits" component={AddCredits} />
       <ContentRoute path="/result/:id" component={TournamentSummary} />
       <ContentRoute path="/settings/" component={SettingHome} />
+      <ContentRoute path="/settingsSp/" component={SettingHomeSponsor} />
       <ContentRoute
         path="/sponsor/profile/:id"
         component={ViewProfileSponsor}
