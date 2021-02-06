@@ -69,7 +69,7 @@ const DrawerTournamentsView = ({
   const [url, seturl] = useState();
   const [proceed, setProceed] = useState(false);
   const [showModalForBalance, setShowModalForBalance] = useState(false);
-  const [resMessage, setResMessage] = useState(null);  
+  const [resMessage, setResMessage] = useState();  
 
   useEffect(() => {
     console.log("this:", networks);
@@ -99,13 +99,14 @@ const DrawerTournamentsView = ({
         if (response.status === "OK") {
           setProceed(true);
           console.log(response);
-          console.log(response.message);
-          setResMessage(response.message);
+          // console.log(response.message);
+          
           
         } else {
           setProceed(false);
           setShowModalForBalance(true);
-          console.log(response.message);
+          setResMessage(response.message);
+          // console.log(response.message);
         }
       })
       .catch((err) => console.log(err));
