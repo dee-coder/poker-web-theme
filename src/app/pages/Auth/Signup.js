@@ -318,8 +318,9 @@ function Signup(props) {
 
                   <div className="form-group fv-plugins-icon-container">
                     <select
-                    onClick={()=>setSignupDrawer(true)}
-                      onChange={(e) => setPlayerNetwork(e.target.value)}
+                  
+                      onChange={(e) =>{ setPlayerNetwork(e.target.value)
+                        setSignupDrawer(true)}}
                       className={`form-control form-control-solid h-auto py-5 px-6 `}
                     >
                       <option value={null}>Select Network</option>
@@ -507,6 +508,7 @@ function Signup(props) {
         onClose={() => setSignupDrawer(false)}>
         <DrawerSignup
           setViewTournamentMode={setSignupDrawer}
+          network= {PlayerNetwork}
         />
 
       </Drawer>
