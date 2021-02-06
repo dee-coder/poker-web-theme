@@ -211,7 +211,14 @@ export function UserProfileDropdown(props) {
               </div>
             </a> */}
 
-            <Link to="/sponsorship" className="navi-item px-8">
+            <Link
+              to={
+                localStorage.getItem("role") === "player"
+                  ? `/player/sponsorships`
+                  : `/sponsor/sponsorships`
+              }
+              className="navi-item px-8"
+            >
               <div className="navi-link">
                 <div className="navi-icon mr-2">
                   <i className="flaticon2-hourglass text-primary"></i>
