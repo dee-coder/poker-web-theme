@@ -107,6 +107,8 @@ const BeSponsorPage = (props) => {
           setSuccessRedirect(true);
           setCallBackId(res.id);
         }
+        // console.log(res);
+        
       })
       .catch((err) => console.log(err));
   };

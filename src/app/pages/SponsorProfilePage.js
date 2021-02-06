@@ -32,6 +32,15 @@ const SponsorProfilePage = () => {
 
   const [networks, setNetworks] = useState([]);
 
+  const tabs = [
+    { name: "Active Tournaments", key: "tournaments" },
+    { name: "Active Sponsorships", key: "sponsorships" },
+  ];
+
+  //
+
+  const [SelectedTab, setSelectedTab] = useState("tournaments");
+
   useEffect(() => {
     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
     setUserINFO(userInfo);
@@ -59,8 +68,7 @@ const SponsorProfilePage = () => {
         <Col lg={12} style={{ textAlign: "left" }}>
           <Typography
             variant="h4"
-            style={{ fontWeight: "600", color: "white" }}
-          >
+            style={{ fontWeight: "600", color: "white" }}>
             My Profile
           </Typography>
         </Col>
@@ -86,8 +94,7 @@ const SponsorProfilePage = () => {
                   </Col>
                   <Col
                     lg={8}
-                    style={{ paddingTop: "10px", paddingBottom: "10px" }}
-                  >
+                    style={{ paddingTop: "10px", paddingBottom: "10px" }}>
                     <Typography variant="h6">
                       {userINFO.sponsor_name}
                     </Typography>
@@ -102,8 +109,7 @@ const SponsorProfilePage = () => {
                     />
                     <Typography
                       variant="subtitle2"
-                      style={{ marginTop: "5px", color: "#848484" }}
-                    >
+                      style={{ marginTop: "5px", color: "#848484" }}>
                       {userINFO.sponsor_email}
                     </Typography>
                   </Col>
@@ -117,16 +123,14 @@ const SponsorProfilePage = () => {
                 paddingRight: "30px",
                 paddingBottom: "10px",
                 paddingLeft: "30px",
-              }}
-            >
+              }}>
               <Col>
                 <Row>
                   <Col>
                     <a
                       href="/sponsor/active-tournaments"
                       target="_blank"
-                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                    >
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-45 symbol-light-primary mr-5">
                           <span className="symbol-label">
@@ -135,8 +139,7 @@ const SponsorProfilePage = () => {
                                 className="h-50 align-self-center"
                                 src={toAbsoluteUrl(
                                   "/media/svg/icons/Navigation/Angle-right.svg"
-                                )}
-                              ></SVG>
+                                )}></SVG>
                             </span>
                           </span>
                         </div>
@@ -145,21 +148,19 @@ const SponsorProfilePage = () => {
                           <a
                             href="/sponsor/active-tournaments"
                             target="_blank"
-                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                          >
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                             Active Tournaments
                           </a>
                         </div>
                         <i
                           class="fas fa-external-link-alt"
-                          style={{ fontSize: "12px", marginLeft: "10px" }}
-                        ></i>
+                          style={{ fontSize: "12px", marginLeft: "10px" }}></i>
                       </div>
                     </a>
                   </Col>
                 </Row>
 
-                <Row style={{ marginTop: "20px" }}>
+                {/* <Row style={{ marginTop: "20px" }}>
                   <Col>
                     <a
                       href="/sponsor/pending-sponsorship"
@@ -196,15 +197,14 @@ const SponsorProfilePage = () => {
                       </div>
                     </a>
                   </Col>
-                </Row>
+                </Row> */}
 
                 <Row style={{ marginTop: "20px" }}>
                   <Col>
                     <a
                       href="/sponsor/sponsoring-tournaments"
                       target="_blank"
-                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                    >
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-45 symbol-light-success mr-5 ">
                           <span className="symbol-label">
@@ -213,8 +213,7 @@ const SponsorProfilePage = () => {
                                 className="h-50 align-self-center"
                                 src={toAbsoluteUrl(
                                   "/media/svg/icons/Files/File-done.svg"
-                                )}
-                              ></SVG>
+                                )}></SVG>
                             </span>
                           </span>
                         </div>
@@ -223,21 +222,19 @@ const SponsorProfilePage = () => {
                           <a
                             href="/sponsor/sponsoring-tournaments"
                             target="_blank"
-                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                          >
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                             Sponsoring Tournaments
                           </a>
                         </div>
                         <i
                           class="fas fa-external-link-alt"
-                          style={{ fontSize: "12px", marginLeft: "10px" }}
-                        ></i>
+                          style={{ fontSize: "12px", marginLeft: "10px" }}></i>
                       </div>
                     </a>
                   </Col>
                 </Row>
 
-                <Row style={{ marginTop: "20px", marginBottom: "20px" }}>
+                {/* <Row style={{ marginTop: "20px", marginBottom: "20px" }}>
                   <Col>
                     <a
                       href="/sponsor/sponsored-tournaments"
@@ -272,7 +269,7 @@ const SponsorProfilePage = () => {
                       </div>
                     </a>
                   </Col>
-                </Row>
+                </Row> */}
               </Col>
             </Row>
             <Divider />
@@ -282,15 +279,13 @@ const SponsorProfilePage = () => {
                 paddingRight: "30px",
                 paddingBottom: "30px",
                 paddingLeft: "30px",
-              }}
-            >
+              }}>
               <Col>
                 <Row>
                   <Col>
                     <a
                       href="#"
-                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                    >
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-45 symbol-light-primary mr-5">
                           <span className="symbol-label">
@@ -299,8 +294,7 @@ const SponsorProfilePage = () => {
                                 className="h-50 align-self-center"
                                 src={toAbsoluteUrl(
                                   "/media/svg/icons/Code/Option.svg"
-                                )}
-                              ></SVG>
+                                )}></SVG>
                             </span>
                           </span>
                         </div>
@@ -308,8 +302,7 @@ const SponsorProfilePage = () => {
                         <div className="d-flex flex-column flex-grow-1">
                           <a
                             href="#"
-                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                          >
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                             Sponsor Statistics
                           </a>
                         </div>
@@ -321,8 +314,7 @@ const SponsorProfilePage = () => {
                   <Col>
                     <a
                       href="#"
-                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                    >
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-45 symbol-light-warning mr-5">
                           <span className="symbol-label">
@@ -331,8 +323,7 @@ const SponsorProfilePage = () => {
                                 className="h-50 align-self-center"
                                 src={toAbsoluteUrl(
                                   "/media/svg/icons/General/Settings-2.svg"
-                                )}
-                              ></SVG>
+                                )}></SVG>
                             </span>
                           </span>
                         </div>
@@ -340,8 +331,7 @@ const SponsorProfilePage = () => {
                         <div className="d-flex flex-column flex-grow-1">
                           <a
                             href="#"
-                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                          >
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                             Setting
                           </a>
                         </div>
@@ -353,8 +343,7 @@ const SponsorProfilePage = () => {
                   <Col>
                     <a
                       href="#"
-                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                    >
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-45 symbol-light-info mr-5">
                           <span className="symbol-label">
@@ -363,8 +352,7 @@ const SponsorProfilePage = () => {
                                 className="h-50 align-self-center"
                                 src={toAbsoluteUrl(
                                   "/media/svg/icons/Code/Info-circle.svg"
-                                )}
-                              ></SVG>
+                                )}></SVG>
                             </span>
                           </span>
                         </div>
@@ -372,15 +360,13 @@ const SponsorProfilePage = () => {
                         <div className="d-flex flex-column flex-grow-1">
                           <a
                             href="/help"
-                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                          >
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                             Help
                           </a>
                         </div>
                         <i
                           class="fas fa-external-link-alt"
-                          style={{ fontSize: "12px", marginLeft: "10px" }}
-                        ></i>
+                          style={{ fontSize: "12px", marginLeft: "10px" }}></i>
                       </div>
                     </a>
                   </Col>
@@ -389,8 +375,7 @@ const SponsorProfilePage = () => {
                   <Col>
                     <a
                       href="#"
-                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                    >
+                      className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                       <div className="d-flex align-items-center">
                         <div className="symbol symbol-45 symbol-light-secondary mr-5">
                           <span className="symbol-label">
@@ -399,8 +384,7 @@ const SponsorProfilePage = () => {
                                 className="h-50 align-self-center"
                                 src={toAbsoluteUrl(
                                   "/media/svg/icons/Navigation/Sign-out.svg"
-                                )}
-                              ></SVG>
+                                )}></SVG>
                             </span>
                           </span>
                         </div>
@@ -408,8 +392,7 @@ const SponsorProfilePage = () => {
                         <div className="d-flex flex-column flex-grow-1">
                           <a
                             href="/logout"
-                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1"
-                          >
+                            className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
                             Logout
                           </a>
                         </div>
@@ -429,8 +412,7 @@ const SponsorProfilePage = () => {
                 paddingRight: "30px",
                 paddingBottom: "10px",
                 paddingLeft: "30px",
-              }}
-            >
+              }}>
               <Col>
                 <Typography variant="h6" gutterBottom>
                   Sponsoring Tournaments
@@ -439,12 +421,40 @@ const SponsorProfilePage = () => {
                 <Typography
                   variant="body1"
                   gutterBottom
-                  style={{ color: "#848484" }}
-                >
+                  style={{ color: "#848484" }}>
                   Sponsor's sponsoring and sponsored tournaments
                 </Typography>
               </Col>
             </Row>
+
+            {/* <Row>
+              <div className="col-auto">
+                <span
+                  className={
+                    SelectedTab === "tournaments"
+                      ? "tabs-active"
+                      : "tabs-not-active"
+                  }
+                  onClick={() => setSelectedTab("tournaments")}>
+                  {tabs[0].name}
+                </span>
+              </div>
+              <div className="col-auto" style={{ marginLeft: "10px" }}>
+                <span
+                  className={
+                    SelectedTab === "sponsorships"
+                      ? "tabs-active"
+                      : "tabs-not-active"
+                  }
+                  onClick={() => setSelectedTab("sponsorships")}>
+                  {tabs[1].name}
+                </span>
+              </div>
+            </Row>
+            <Row style={{ marginTop: "8px" }}>
+              <Col lg={12} style={{ borderBottom: "1px solid #e0e0e0" }}></Col>
+            </Row>
+      */}
 
             <Row
               style={{
@@ -452,15 +462,13 @@ const SponsorProfilePage = () => {
                 paddingRight: "30px",
                 paddingBottom: "30px",
                 paddingTop: "10px",
-              }}
-            >
+              }}>
               <Col>
                 <Tabs defaultActiveKey="active">
                   <Tab
                     eventKey="active"
                     title="Active "
-                    style={{ marginTop: "30px" }}
-                  >
+                    style={{ marginTop: "30px" }}>
                     {activeTournaments.length === 0 ? (
                       <div
                         style={{
@@ -469,8 +477,7 @@ const SponsorProfilePage = () => {
                           justifyContent: "center",
                           alignItems: "center",
                           textAlign: "center",
-                        }}
-                      >
+                        }}>
                         <div style={{ marginTop: "100px" }}>
                           <img
                             style={{ width: "40px", height: "40px" }}
@@ -482,8 +489,7 @@ const SponsorProfilePage = () => {
 
                               color: "#c4c4c4",
                               marginLeft: "20px",
-                            }}
-                          >
+                            }}>
                             No Active tournament found.
                           </span>
                         </div>
@@ -505,7 +511,7 @@ const SponsorProfilePage = () => {
                       })
                     )}
                   </Tab>
-                  <Tab
+                  {/* <Tab
                     eventKey="pending"
                     title="Pending "
                     style={{ marginTop: "30px" }}
@@ -552,13 +558,12 @@ const SponsorProfilePage = () => {
                       )
                     })
                   )}
-                  </Tab>
+                  </Tab> */}
                   <Tab
                     eventKey="sponsoring"
                     title="Sponsoring "
-                    style={{ marginTop: "30px" }}
-                  >
-                  {sponsoringTournaments.length === 0 ? (
+                    style={{ marginTop: "30px" }}>
+                    {sponsoringTournaments.length === 0 ? (
                       <div
                         style={{
                           height: "300px",
@@ -566,8 +571,7 @@ const SponsorProfilePage = () => {
                           justifyContent: "center",
                           alignItems: "center",
                           textAlign: "center",
-                        }}
-                      >
+                        }}>
                         <div style={{ marginTop: "100px" }}>
                           <img
                             style={{ width: "40px", height: "40px" }}
@@ -579,33 +583,32 @@ const SponsorProfilePage = () => {
 
                               color: "#c4c4c4",
                               marginLeft: "20px",
-                            }}
-                          >
+                            }}>
                             No Sponsorship tournament found.
                           </span>
                         </div>
                       </div>
                     ) : (
-                    sponsoringTournaments.map((game) => {
-                      //console.log(game);
-                      return (
-                        <SponsoringTournamentItemBox
-                          tournamentInfo={game.tournamentInfo}
-                          bettingInfo={game.bettingInfo}
-                          sponsoringList={game.sponsoringList}
-                          playerInfo={game.playerInfo[0]}
-                          allSponsors={game.allSponsors}
-                        />
-                     )
-                    })
-                  )}
+                      sponsoringTournaments.map((game) => {
+                        //console.log(game);
+                        return (
+                          <SponsoringTournamentItemBox
+                            tournamentInfo={game.tournamentInfo}
+                            bettingInfo={game.bettingInfo}
+                            sponsoringList={game.sponsoringList}
+                            playerInfo={game.playerInfo[0]}
+                            allSponsors={game.allSponsors}
+                          />
+                        );
+                      })
+                    )}
                   </Tab>
 
-                  <Tab
+                  {/* <Tab
                     eventKey="sponsored"
                     title="Sponsored "
                     style={{ marginTop: "30px" }}
-                  ></Tab>
+                  ></Tab> */}
                 </Tabs>
               </Col>
             </Row>
@@ -615,8 +618,7 @@ const SponsorProfilePage = () => {
       <Drawer
         anchor="right"
         open={viewTournamentMode}
-        onClose={() => setViewTournamentMode(false)}
-      >
+        onClose={() => setViewTournamentMode(false)}>
         <DrawerTournamentsView
           setViewTournamentMode={setViewTournamentMode}
           obj={currentTournamentShowObj}

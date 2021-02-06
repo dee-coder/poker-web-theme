@@ -1,212 +1,45 @@
-import React, { useState, useEffect } from "react";
-import { makeStyles } from "@material-ui/core/styles";
-import Paper from "@material-ui/core/Paper";
-import Typography from "@material-ui/core/Typography";
-import MultipleInputField from "../mycomponents/multipleInputField";
-import { Box, Divider, Drawer } from "@material-ui/core";
+import { Box, Drawer, Paper, Typography } from "@material-ui/core";
+import { Row, Col, Image, Spinner, Modal } from "react-bootstrap";
 import Select from "react-select";
-import _ from "lodash";
-import {
-  Card,
-  Row,
-  Col,
-  Form,
-  Spinner,
-  Button,
-  Pagination,
-  Tabs,
-  Tab,
-  Dropdown,
-  FormControl,
-} from "react-bootstrap";
-
-import moment from "moment";
-import JsonUrl from "../../apiUrl.json";
+import React, { useState, useEffect } from "react";
+import { toAbsoluteUrl } from "../../_metronic/_helpers";
+import SVG from "react-inlinesvg";
+import { Form, Badge } from "react-bootstrap";
+import InputRange from "react-input-range";
+import "react-input-range/lib/css/index.css";
+import { Button } from "react-bootstrap";
 import API from "../../apiUrl.json";
+import moment from "moment";
+import Shimmer from "react-shimmer-effect";
+import injectSheet from "react-jss";
+import ReactPaginate from "react-paginate";
+import ReactShareSocial from "react-share-social";
 
-import axios from "axios";
-import TournamentItem from "../mycomponents/tournamentItem";
-import BoxItem from "../mycomponents/tournamentBoxItem";
-import DrawerTournamentsView from "../mycomponents/drawerTournamentsVIew";
-import CustomPagination from "../mycomponents/CustomPagination";
+import Countdown from "react-countdown";
+import DrawerTournamentsViewWl from "../mycomponents/DrawerTournamentsViewWl";
+import SkeletonCard from "../pages/FindTournaments/SkeletonCard";
 
-const useStyles = makeStyles((theme) => ({
-  root: {
-    padding: theme.spacing(3, 2),
-  },
-  list: {
-    width: 1200,
-  },
-  viewBoxCont: {
-    width: "auto",
-  },
-}));
+const Completionist = () => <span>Ended</span>;
+const renderer = ({ days, hours, minutes, seconds, completed }) => {
+  if (completed) {
+    // Render a completed state
+    return <Completionist />;
+  } else {
+    // Render a countdown
+    return (
+      <span>
+        {days}
+        {" day(s) "}
+        {hours}:{minutes}:{seconds}
+      </span>
+    );
+  }
+};
 
 const FindTournamentPage = () => {
-  const [selectedNetwork, setSelectedNetworks] = useState([]);
-  const [selectedFilters, setSelectedFilters] = useState([]);
-  const [showSpinner, setShowSpinner] = useState(false);
-  const [tournamentList, setTournamentList] = useState([]);
-  const [noData, setNoData] = useState(false);
-  const [organicNetworks, setOrganicNetworks] = useState([]);
+  //options
 
-  const [networkWhichSelected, setNeworksWhichSelected] = useState([]);
-  const [enrolmentWhichSelected, setEnrolmentWhichSelected] = useState([]);
-  const [stateWhichSelected, setStateWhichSelected] = useState([]);
-  const [speedWhichSelected, setSpeedWhichSelected] = useState([]);
-  const [gameTypeWhichSelected, setGameTypeWhichSelected] = useState([]);
-  const [prizePoolWhichSelected, setPrizePoolWhichSelected] = useState([]);
-
-  //pagination
-  const [pagination, setPagination] = useState([1, 2, 3, 4, 5, 6, 7, 8, 9, 10]);
-  const [startPaginationValues, setStartPaginationValues] = useState(0);
-  const [endPaginationValue, setEndPaginationValue] = useState(50);
-  const [pages, setPages] = useState([]);
-  const [activePage, setActivePages] = useState(1);
-  const [viewType, setViewType] = useState("box");
-  const [viewTournamentMode, setViewTournamentMode] = useState(false);
-  const [currentViewTournament, setCurrentViewTournaments] = useState(null);
-
-  const [pageOfItems, setPageOfItems] = useState([]);
-
-  const [sortingKey, setSortingKey] = useState();
-
-  const [holdedList, setHoldedList] = useState([]);
-
-  const [tournamentId, setTournamentId] = useState();
-
-  var urlNetwork = JsonUrl.baseUrl + JsonUrl.getTournamentFromSpacificNetwork;
-
-  useEffect(() => {
-    var filters = [];
-    setShowSpinner(true);
-    setTournamentList([]);
-    var list = [];
-    //console.log("URL:", urlNetwork);
-
-    //data
-    //console.log(selectedNetwork);
-    if (selectedNetwork === null || selectedNetwork.length === 0) {
-      //setHoldedList([]);
-
-      // selectedNetwork.map((obj) => {
-      //   filters.push({ key: "network", operator: "$eq", value: obj.label });
-      // });
-      selectedFilters !== undefined &&
-        selectedFilters.map((obj) => {
-          filters.push({
-            key: obj.key,
-            operator: obj.operator,
-            value: obj.value,
-          });
-        });
-      setShowSpinner(true);
-      //fetch(urlNetwork)
-      fetch(urlNetwork, {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ filters: filters }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          // console.log("Axios Response:", data);
-          setShowSpinner(false);
-          if (data.status === "ok") {
-            //console.log("Response:", data.result);
-
-            setTournamentList(data.result);
-            setHoldedList(data.result);
-            setNoData(false);
-            setShowSpinner(false);
-            var lenght = data.result.length;
-            //console.log(lenght);
-            var sets = lenght / 30;
-            //console.log(sets);
-            var pagess = Math.ceil(sets);
-            //console.log(pagess);
-            list = Array(pagess - 1 + 1)
-              .fill()
-              .map((_, idx) => 1 + idx);
-
-            //var list = Array.from(Array(pagess).keys());
-          } else if (data.status === "failed") {
-            setNoData(true);
-
-            setShowSpinner(false);
-          }
-          setPages(list);
-          setOrganicNetworks(data.networks);
-          //console.log("Pages:", list);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    } else {
-      //setHoldedList([]);
-
-      selectedNetwork.map((obj) => {
-        filters.push({ key: "network", operator: "$eq", value: obj.label });
-      });
-      selectedFilters.map((obj) => {
-        filters.push({
-          key: obj.key,
-          operator: obj.operator,
-          value: obj.value,
-        });
-      });
-      setShowSpinner(true);
-      //fetch(urlNetwork)
-      fetch(urlNetwork, {
-        method: "POST", // or 'PUT'
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ filters: filters }),
-      })
-        .then((response) => response.json())
-        .then((data) => {
-          //console.log("Axios Response:", data);
-          setShowSpinner(false);
-          if (data.status === "ok") {
-            //console.log("Response:", data.result);
-            setTournamentList(data.result);
-            setHoldedList(data.result);
-            setNoData(false);
-            setShowSpinner(false);
-            var lenght = data.result.length;
-            // console.log(lenght);
-            var sets = lenght / 30;
-            // console.log(sets);
-            var pagess = Math.ceil(sets);
-            // console.log(pagess);
-            list = Array(pagess - 1 + 1)
-              .fill()
-              .map((_, idx) => 1 + idx);
-            //var list = Array.from(Array(pagess).keys());
-          } else if (data.status === "failed") {
-            setNoData(true);
-
-            setShowSpinner(false);
-          }
-          setPages(list);
-          setOrganicNetworks(data.networks);
-          // _.find(pageOfItems, function(o) {
-          //   return new Date(o.scheduledStartTime * 1000) > new Date();
-          // });
-          //console.log("Pages:", list);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [selectedFilters, selectedNetwork]);
-
-  const classes = useStyles();
   const sortingValues = [
-    // { label: "Sort By Date (Latest to Oldest)", value: "date" },
-    // { label: "Sort By Date (Oldest to Latest)", value: "date" },
     {
       label: "Sort By Prize Pool (Low to High)",
       value: "prize_pool_low_to_high",
@@ -224,39 +57,235 @@ const FindTournamentPage = () => {
     { label: "Sort By Scheduled Date (Recent)", value: "recent_date" },
     { label: "Sort By Scheduled Date  (Late)", value: "late_date" },
   ];
+  const GameType = [
+    { label: "Hold'em", value: "H", operator: "$eq", key: "game" },
+    { label: "Omaha", value: "O", operator: "$eq", key: "game" },
+    {},
+  ];
 
-  const openTournamentView = (obj) => {
-    setCurrentViewTournaments(obj);
-    setViewTournamentMode(true);
+  const Speed = [
+    { label: "Turbo", value: "T", operator: "$eq", key: "flag" },
+    { label: "Slow", value: "S", operator: "$eq", key: "flag" },
+  ];
+
+  const States = [
+    {
+      label: "Registering",
+      value: "Registering",
+      operator: "$eq",
+      key: "state",
+    },
+    {
+      label: "Late Registering",
+      value: "Late Registering",
+      operator: "$eq",
+      key: "state",
+    },
+    { label: "Running", value: "Running", operator: "$eq", key: "state" },
+    { label: "Completed", value: "Completed", operator: "$eq", key: "state" },
+  ];
+
+  const Networks = [
+    {
+      label: "PartyPoker",
+      value: "PartyPoker",
+      operator: "$eq",
+      key: "network",
+    },
+    {
+      label: "PokerStars",
+      value: "PokerStars",
+      operator: "$eq",
+      key: "network",
+    },
+    { label: "SkyPoker", value: "SkyPoker", operator: "$eq", key: "network" },
+    { label: "888Poker", value: "888Poker", operator: "$eq", key: "network" },
+    { label: "Fulltilt", value: "Fulltilt", operator: "$eq", key: "network" },
+  ];
+
+  const [Enrolments, setEnrolments] = useState({ min: 0, max: 0 });
+  const [PrizePool, setPrizePool] = useState({ min: 0, max: 0 });
+  const [FilterStates, setFilterStates] = useState([]);
+  const [FilterNetworks, setFilterNetworks] = useState([]);
+  const [FilterGameType, setFiltereGameType] = useState([]);
+  const [FilterSpeed, setFilterSpeed] = useState([]);
+  const [Tournaments, setTournaments] = useState([]);
+  const [holdedList, setHoldedList] = useState([]);
+  const [tournamentList, setTournamentList] = useState([]);
+
+  const [ValuesOfNetworks, setValuesOfNetworks] = useState([]);
+
+  const [ValuesOfGameType, setValuesOfGameType] = useState([]);
+
+  const [ValuesOfSpeed, setValuesOfSpeed] = useState([]);
+
+  const [ValuesOfState, setValuesOfState] = useState([]);
+
+  const [Filters, setFilters] = useState([]);
+  const [viewTournamentMode, setViewTournamentMode] = useState(false);
+  const [currentViewTournament, setCurrentViewTournaments] = useState(null);
+  const [organicNetworks, setOrganicNetworks] = useState([]);
+  const [MakeLoading, setMakeLoading] = useState(false);
+
+  const [offset, setOffset] = useState(0);
+  const [data, setData] = useState([]);
+  const [perPage] = useState(10);
+  const [pageCount, setPageCount] = useState(0);
+
+  const [valueOfGameName, setValueOfGameName] = useState([]);
+  const [isloading, setIsloading] = useState(false);
+
+  useEffect(() => {
+    setIsloading(true);
+    //console.log(Filters);
+    setTournaments([]);
+    setMakeLoading(true);
+    fetch(API.baseUrl + API.getTournamentFromSpacificNetwork, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ filters: Filters }),
+    })
+      .then((json) => json.json())
+      .then((response) => {
+        // console.log(response);
+        setMakeLoading(false);
+        setTournaments(response.result);
+        // setTournamentList(response.result);
+        setOrganicNetworks(response.network);
+        setPageCount(Math.ceil(data.length / perPage));
+        // setValueOfGameName({
+        //   filter: Array.from(response.result.name)
+        // })
+        setValueOfGameName(response.result);
+        setHoldedList(response.result);
+        setIsloading(false);
+      })
+
+      .catch((err) => {
+        console.log(err.message);
+      });
+  }, [Filters]);
+
+  useEffect(() => {
+    var allFilters = [];
+    ValuesOfNetworks.map(async (value) => {
+      await allFilters.push(value);
+    });
+
+    ValuesOfGameType.map(async (value) => {
+      await allFilters.push(value);
+    });
+
+    ValuesOfSpeed.map(async (value) => {
+      await allFilters.push(value);
+    });
+
+    ValuesOfState.map(async (value) => {
+      await allFilters.push(value);
+    });
+
+    setFilters(allFilters);
+    console.log(allFilters);
+  }, [ValuesOfNetworks, ValuesOfGameType, ValuesOfSpeed, ValuesOfState]);
+
+  const handleFilterChanges = (value, key) => {
+    var allFilters = [];
+    if (value === null) {
+      value = [];
+    }
+    switch (key) {
+      case "network":
+        setValuesOfNetworks(value);
+
+        break;
+
+      case "game":
+        setValuesOfGameType(value);
+
+        break;
+
+      case "flag":
+        setValuesOfSpeed(value);
+
+        break;
+
+      case "state":
+        setValuesOfState(value);
+
+        break;
+    }
+
+    // console.log(key);
+
+    // console.log(value);
+    // if (value !== null) {
+    //   var f = [];
+    //   f = Filters;
+    //   await Promise.all(
+    //     value.map(async (v, i) => {
+    //       var found = await f.some(
+    //         (el) => el.label === v.label && el.key === key
+    //       );
+    //       if (found) {
+    //       } else {
+    //         f.push(v);
+    //       }
+    //     })
+    //   );
+
+    //   setFilters(f);
+    //   console.log(f);
+    // } else {
+    //   var f = [];
+    //   f = Filters;
+    //   var index = f.findIndex((x) => x.key === key);
+    //   f.splice(index);
+
+    //   // await Promise.all(
+    //   //   value.map(async (v, i) => {
+
+    //   //     var found = await f.some((el) => el.label === v.label);
+    //   //     if (found) {
+    //   //     } else {
+    //   //       f.push(v);
+    //   //     }
+    //   //   })
+
+    //   // );
+    //   console.log(f);
+    //   setFilters(f);
+    // }
   };
-  const handleSorting = (e) => {
-    //console.log(e.target.value);
-    setHoldedList(tournamentList);
 
+  const handleSorting = (e) => {
+    // console.log(e.target.value);
+    // setHoldedList(tournamentList);
+    // console.log(holdedList);
     switch (e.target.value) {
       case "prize_pool_low_to_high":
-        var arr = [...holdedList];
+        var arr = holdedList;
         arr.sort((a, b) => {
-          return (a.guarantee - b.guarantee);
+          return a.guarantee - b.guarantee;
         });
-
         setHoldedList(arr);
-        // console.log(arr);
+        setTournaments(arr);
         break;
 
       case "prize_pool_high_to_low":
         //console.log("running");
-        var arr = [...holdedList];
+        var arr = holdedList;
 
         arr.sort((a, b) => {
           return b.guarantee - a.guarantee;
         });
         setHoldedList(arr);
+        setTournaments(arr);
         break;
 
       case "name_a_to_z":
-        var arr = [...holdedList];
-
+        var arr = holdedList;
         arr.sort((a, b) => {
           let fa = a.name.toLowerCase(),
             fb = b.name.toLowerCase();
@@ -270,10 +299,13 @@ const FindTournamentPage = () => {
           return 0;
         });
         setHoldedList(arr);
+        setTournaments(arr);
+        // console.log(Tournaments)
+        console.log(arr);
         break;
 
       case "name_z_to_a":
-        var arr = [...holdedList];
+        var arr = holdedList;
         arr.sort((a, b) => {
           let fa = b.name.toLowerCase(),
             fb = a.name.toLowerCase();
@@ -287,19 +319,20 @@ const FindTournamentPage = () => {
           return 0;
         });
         setHoldedList(arr);
-
+        setTournaments(arr);
         break;
 
       case "entrants_low_to_high":
-        var arr = [...holdedList];
+        var arr = holdedList;
         arr.sort((a, b) => {
           return a.totalEntrants - b.totalEntrants;
         });
         setHoldedList(arr);
+        setTournaments(arr);
         break;
 
       case "entrants_high_to_row":
-        var arr = [...holdedList];
+        var arr = holdedList;
         arr.sort((a, b) => {
           return b.totalEntrants - a.totalEntrants;
         });
@@ -307,7 +340,7 @@ const FindTournamentPage = () => {
         break;
 
       case "game_id_low_to_high":
-        var arr = [...holdedList];
+        var arr = holdedList;
         arr.sort((a, b) => {
           return a.sharkscope_id - b.sharkscope_id;
         });
@@ -315,7 +348,7 @@ const FindTournamentPage = () => {
         break;
 
       case "game_id_high_to_low":
-        var arr = [...holdedList];
+        var arr = holdedList;
         arr.sort((a, b) => {
           return b.sharkscope_id - a.sharkscope_id;
         });
@@ -323,299 +356,559 @@ const FindTournamentPage = () => {
         break;
 
       case "recent_date":
-        var arr = [...holdedList];
+        var arr = holdedList;
         arr.sort((a, b) => {
-          let da = new Date(a.scheduledStartUnixTime*1000),
-            db = new Date(b.scheduledStartUnixTime*1000);
+          let da = new Date(a.scheduledStartUnixTime * 1000),
+            db = new Date(b.scheduledStartUnixTime * 1000);
           return db - da;
         });
         setHoldedList(arr);
         break;
 
       case "late_date":
-        var arr = [...holdedList];
+        var arr = holdedList;
         arr.sort((a, b) => {
-          let da = new Date(a.scheduledStartUnixTime*1000),
-            db = new Date(b.scheduledStartUnixTime*1000);
+          let da = new Date(a.scheduledStartUnixTime * 1000),
+            db = new Date(b.scheduledStartUnixTime * 1000);
           return da - db;
         });
         setHoldedList(arr);
         break;
     }
-    // var arr = _.sortBy(holdedList, (o) => {
-    //   return o[e.target.value];
-    // });
-    // setHoldedList(arr);
   };
 
-  const onChangePage = (pageOfItems) => {
-    // update state with new page of items
-    setPageOfItems(pageOfItems);
+  function getDates(date) {
+    // unix timestamp
+    var ts = date;
+
+    // convert unix timestamp to milliseconds
+    var ts_ms = ts * 1000;
+
+    // initialize new Date object
+    var date_ob = new Date(ts_ms);
+
+    // year as 4 digits (YYYY)
+    var year = date_ob.getFullYear();
+
+    // month as 2 digits (MM)
+    var month = ("0" + (date_ob.getMonth() + 1)).slice(-2);
+
+    // date as 2 digits (DD)
+    var date = ("0" + date_ob.getDate()).slice(-2);
+
+    // hours as 2 digits (hh)
+    var hours = ("0" + date_ob.getHours()).slice(-2);
+
+    // minutes as 2 digits (mm)
+    var minutes = ("0" + date_ob.getMinutes()).slice(-2);
+
+    // seconds as 2 digits (ss)
+
+    var seconds = ("0" + date_ob.getSeconds()).slice(-2);
+
+    return (
+      year +
+      "-" +
+      month +
+      "-" +
+      date +
+      " " +
+      hours +
+      ":" +
+      minutes +
+      ":" +
+      seconds
+    );
+
+    // date as YYYY-MM-DD format
+    //console.log("Date as YYYY-MM-DD Format: " + year + "-" + month + "-" + date);
+
+    //console.log("\r\n");
+
+    // date & time as YYYY-MM-DD hh:mm:ss format:
+    //console.log("Date as YYYY-MM-DD hh:mm:ss Format: " + year + "-" + month + "-" + date + " " + hours + ":" + minutes + ":" + seconds);
+
+    //console.log("\r\n");
+
+    // time as hh:mm format:
+    //console.log("Time as hh:mm Format: " + hours + ":" + minutes);
+  }
+
+  const setRangeValue = (value, key) => {
+    // console.log(value, key);
   };
 
-  const handlePaginationValue = (page) => {
-    setActivePages(page);
-    //console.log(page);
-    setStartPaginationValues(activePage * 10);
-    //console.log(startPaginationValues);
-
-    setEndPaginationValue(activePage * 10 + 10);
-    //console.log(endPaginationValue);
-  };
-
-  const handleSingleIdTournamentQuery = async (e) => {
-    setShowSpinner(true);
-    e.preventDefault();
-    await fetch(API.baseUrl + API.getTournamentById + "?id=" + tournamentId, {
-      method: "get",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    })
-      .then((res) => res.json())
-      .then(async (json) => {
-        //console.log(json);
-        // var arr = [];
-        if (json.status === "ok") {
-          //console.log(json);
-          await setHoldedList([]);
-          await setHoldedList([...holdedList, json.result]);
-          setShowSpinner(false);
-          //console.log(holdedList);
-          //console.log(json.result);
-        } else {
-          setNoData(true);
-          //setHoldedList([]);
-          setShowSpinner(true);
-        }
-      });
-  };
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   return (
-    <Box component="span" m={5}>
-      <Row style={{ marginBottom: "40px" }}>
-        <Col lg={12} style={{ textAlign: "left" }}>
+    <Box>
+      <Modal show={show} onHide={handleClose} style={{ zIndex: 99999 }}>
+        <Modal.Header closeButton>
+          <Modal.Title className="text-center justify-content-center align-items-center">
+            Share This tournament
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <ReactShareSocial
+            url="https://www.pokerswapping.com/findtournaments"
+            socialTypes={["facebook", "twitter", "reddit", "linkedin", "Email"]}
+          />
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            Close
+          </Button>
+          {/* <Button variant="primary" onClick={handleClose}>
+            Save Changes
+          </Button> */}
+        </Modal.Footer>
+      </Modal>
+
+      <Row>
+        <Col lg={12}>
           <Typography
             variant="h4"
-            style={{ fontWeight: "600", color: "white" }}
-          >
-            Find Tournaments
+            style={{ color: "white", fontWeight: "600" }}>
+            Find - Tournaments
           </Typography>
         </Col>
       </Row>
-      <Row style={{ marginTop: "-10px" }}>
-        <Col lg={12}>
-          <Card>
-            <Card.Body>
-              <Card.Title>Apply Filters</Card.Title>
-              <Card.Subtitle className="mb-2 text-muted">
-                <Form.Label style={{ fontSize: "14px" }}>
-                  Filters Games by currency, type, buy-in and more.
-                </Form.Label>
-              </Card.Subtitle>
-              <Divider />
+      <Row style={{ marginTop: "30px" }}>
+        <Col lg={4}>
+          <Paper style={{ padding: "20px" }}>
+            <Row>
+              <Col lg={12} style={{ padding: "10px" }}>
+                <div className="d-flex align-items-center">
+                  <span className="svg-icon svg-icon-primary">
+                    <SVG
+                      className="h-50 align-self-center"
+                      src={toAbsoluteUrl(
+                        "/media/svg/icons/Text/Filter.svg"
+                      )}></SVG>
+                  </span>
+                  <Typography variant="h6">Filters</Typography>
+                </div>
+              </Col>
+            </Row>
 
-              <MultipleInputField
-                selectedNetwork={selectedNetwork}
-                setSelectedNetworks={setSelectedNetworks}
-                selectedFilters={selectedFilters}
-                setSelectedFilters={setSelectedFilters}
-                networkWhichSelected={networkWhichSelected}
-                setNeworksWhichSelected={setNeworksWhichSelected}
-                enrolmentWhichSelected={enrolmentWhichSelected}
-                setEnrolmentWhichSelected={setEnrolmentWhichSelected}
-                stateWhichSelected={stateWhichSelected}
-                setStateWhichSelected={setStateWhichSelected}
-                speedWhichSelected={speedWhichSelected}
-                setSpeedWhichSelected={setSpeedWhichSelected}
-                gameTypeWhichSelected={gameTypeWhichSelected}
-                setGameTypeWhichSelected={setGameTypeWhichSelected}
-                prizePoolWhichSelected={prizePoolWhichSelected}
-                setPrizePoolWhichSelected={setPrizePoolWhichSelected}
-                tournamentId={tournamentId}
-                setTournamentId={setTournamentId}
-                handleSingleIdTournamentQuery={handleSingleIdTournamentQuery}
-              />
-            </Card.Body>
-          </Card>
-        </Col>
-      </Row>
+            <Row>
+              <Col lg={12} style={{ padding: "10px" }}>
+                <Typography variant="button">Networks</Typography>
+                <br />
+                <div
+                  className=" align-items-center"
+                  style={{ width: "100%", marginTop: "10px" }}>
+                  <Select
+                    defaultValue={[]}
+                    isMulti
+                    name="colors"
+                    options={Networks}
+                    onChange={(value) => handleFilterChanges(value, "network")}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12} style={{ padding: "10px" }}>
+                <Typography variant="button">Game Type</Typography>
+                <br />
+                <div
+                  className=" align-items-center"
+                  style={{ width: "100%", marginTop: "10px" }}>
+                  <Select
+                    defaultValue={[]}
+                    isMulti
+                    name="colors"
+                    options={GameType}
+                    onChange={(value) => handleFilterChanges(value, "game")}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                  />
+                </div>
+              </Col>
+            </Row>
 
-      <Row style={{ marginTop: "25px" }}>
-        <Col lg={12}>
-          <Paper className={classes.paper}>
-            <div className="bg-light-primy round" style={{ padding: "20px" }}>
-              <Row>
-                <Col lg={4}>
+            <Row>
+              <Col lg={12} style={{ padding: "10px" }}>
+                <Typography variant="button">Speed</Typography>
+                <br />
+                <div
+                  className=" align-items-center"
+                  style={{ width: "100%", marginTop: "10px" }}>
+                  <Select
+                    defaultValue={[]}
+                    isMulti
+                    name="colors"
+                    options={Speed}
+                    onChange={(value) => handleFilterChanges(value, "flag")}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                  />
+                </div>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col lg={12} style={{ padding: "10px" }}>
+                <Typography variant="button">Prize Pool</Typography>
+                <br />
+                <div
+                  className=" align-items-center"
+                  style={{
+                    width: "100%",
+                    marginTop: "20px",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                  }}>
+                  <InputRange
+                    maxValue={5000}
+                    minValue={10}
+                    value={PrizePool}
+                    onChange={(value) => setRangeValue(value, "guarantee")}
+                  />
+                </div>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col lg={12} style={{ padding: "10px" }}>
+                <Typography variant="button">Enrolment</Typography>
+                <br />
+                <div
+                  className=" align-items-center"
+                  style={{
+                    width: "100%",
+                    marginTop: "20px",
+                    paddingLeft: "10px",
+                    paddingRight: "10px",
+                  }}>
+                  <InputRange
+                    maxValue={5000}
+                    minValue={10}
+                    value={Enrolments}
+                    onChange={(value) => setRangeValue(value, "totalEntrants")}
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12} style={{ padding: "10px" }}>
+                <Typography variant="button">State</Typography>
+                <br />
+                <div
+                  className=" align-items-center"
+                  style={{ width: "100%", marginTop: "10px" }}>
+                  <Select
+                    defaultValue={[]}
+                    isMulti
+                    name="colors"
+                    options={States}
+                    onChange={(value) => setRangeValue(value, "state")}
+                    className="basic-multi-select"
+                    classNamePrefix="select"
+                  />
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12} style={{ padding: "10px" }}>
+                <Button
+                  variant="primary"
+                  style={{
+                    width: "100%",
+                    height: "40px",
+                    fontWeight: "600",
+                  }}>
+                  <span className="svg-icon svg-icon-white">
+                    <Image
+                      style={{ width: "20px", height: "20px" }}
+                      src={toAbsoluteUrl(
+                        "/media/svg/icons/General/Search.svg"
+                      )}></Image>
+                  </span>
+                  Search
+                </Button>
+              </Col>
+            </Row>
+
+            <Row>
+              <Col lg={12}>
+                <div className="d-flex align-items-center justify-content-center">
+                  <Typography variant="button" style={{ color: "#c4c4c4" }}>
+                    or
+                  </Typography>
+                </div>
+              </Col>
+            </Row>
+            <Row>
+              <Col lg={12}>
+                <Typography variant="button">Tournament ID</Typography>
+                <br />
+                <div
+                  className=" align-items-center"
+                  style={{ width: "100%", marginTop: "10px" }}>
                   <Form>
-                    <label>View Type</label>
-                    <br />
+                    <Form.Group>
+                      <Form.Control
+                        type="text"
+                        placeholder="Tournament ID (Sharkscope Platform)"
+                      />
+                    </Form.Group>
                     <Button
-                      onClick={() => setViewType("box")}
-                      variant={viewType === "box" ? "primary" : "secondary"}
-                    >
-                      <i class="fas fa-stream" style={{ fontSize: "12px" }}></i>{" "}
-                    </Button>
-
-                    <Button
-                      style={{ marginLeft: "10px" }}
-                      onClick={() => setViewType("list")}
-                      variant={viewType === "list" ? "primary" : "secondary"}
-                    >
-                      <i class="fas fa-list" style={{ fontSize: "12px" }}></i>
+                      variant="primary"
+                      style={{
+                        width: "100%",
+                        height: "40px",
+                        fontWeight: "600",
+                      }}>
+                      <span className="svg-icon svg-icon-white">
+                        <Image
+                          style={{ width: "20px", height: "20px" }}
+                          src={toAbsoluteUrl(
+                            "/media/svg/icons/General/Search.svg"
+                          )}></Image>
+                      </span>
+                      Search
                     </Button>
                   </Form>
-                </Col>
-
-                <Col lg={4}>
-                  <Form style={{ float: "right" }}>
-                    <label style={{ float: "right" }}>Pages</label>
-                    <br />
-                    {/* <Pagination style={{ marginTop: "10px" }}>
-                      <Pagination.First />
-                      <Pagination.Prev />
-                      {pages.length > 15 &&
-                        pages.slice(0, 15).map((page, index) => {
-                          return (
-                            <Pagination.Item
-                              active={activePage === page ? true : false}
-                              onClick={() => handlePaginationValue(page)}
-                            >
-                              {" "}
-                              {page}
-                            </Pagination.Item>
-                          );
-                        })}
-                      <Pagination.Ellipsis />;
-                      <Pagination.Next />
-                      <Pagination.Last />
-                    </Pagination> */}
-
-                    <CustomPagination
-                      items={holdedList.reverse()}
-                      onChangePage={onChangePage}
-                    />
-                  </Form>
-                </Col>
-                <Col lg={4}>
-                  <Form style={{ float: "right" }}>
-                    <label style={{ float: "right" }}>Sorting</label>
-                    <br />
-
+                </div>
+              </Col>
+            </Row>
+          </Paper>
+        </Col>
+        <Col lg={8}>
+          {" "}
+          <Row style={{ marginBottom: "20px" }}>
+            <Col lg={12}>
+              <Paper
+                style={{
+                  paddingLeft: "20px",
+                  paddingRight: "20px",
+                  paddingTop: "10px",
+                  paddingBottom: "10px",
+                }}>
+                <div
+                  className="d-flex align-items-center row"
+                  style={{ width: "100%" }}>
+                  <div className="col-lg-6">
+                    <Typography
+                      variant="h6"
+                      style={{ float: "left" }}
+                      gutterBottom>
+                      {Tournaments.length} tournaments found
+                    </Typography>
+                  </div>
+                  <div className="col-lg-6  justify-content-right">
                     <Form.Control
                       as="select"
-                      placeholder="select"
-                      onChange={(e) => handleSorting(e)}
-                    >
-                      <option> Select</option>
+                      placeholder="Sort"
+                      style={{ width: "60%", float: "right" }}
+                      onChange={(e) => handleSorting(e)}>
+                      <option> Sort By</option>
                       {sortingValues.map((option) => {
                         return (
                           <option value={option.value}>{option.label}</option>
                         );
                       })}
                     </Form.Control>
-                  </Form>
-                </Col>
-              </Row>
-            </div>
-          </Paper>
-        </Col>
-      </Row>
-      <Row style={{ marginTop: "25px" }}>
-        <Col lg={12}>
-          {showSpinner && (
-            <Spinner animation="border" role="status">
-              <span className="sr-only">Loading...</span>
-            </Spinner>
+                  </div>
+                </div>
+              </Paper>
+            </Col>
+          </Row>
+          {MakeLoading && (
+            <Row>
+              <Col lg={12}>
+                <div>
+                  {/* <Spinner animation="border" role="status" variant="primary">
+                    <span className="sr-only">Loading...</span>
+                  </Spinner> */}
+                  <SkeletonCard />
+                </div>
+              </Col>
+            </Row>
           )}
-          {viewType === "box"
-            ? holdedList.length > 0 &&
-              // holdedList
-              //   .slice(startPaginationValues, endPaginationValue)
-              //   .map((obj) => {
-              //     return (
-              //       <BoxItem
-              //         obj={obj}
-              //         setViewTournamentMode={openTournamentView}
-              //         networks={organicNetworks}
-              //       />
-              //     );
-              //   })
-              pageOfItems.map((obj) => {
-                return (
-                  <BoxItem
-                    obj={obj}
-                    setViewTournamentMode={openTournamentView}
-                    networks={organicNetworks}
-                  />
-                );
-              })
-            : // pageOfItems.map((obj) => {
+          {Tournaments.length !== 0 &&
+            Tournaments.map((game) => {
+              return (
+                <Row style={{ marginBottom: "30px" }}>
+                  <Col lg={12}>
+                    <a>
+                      <div
+                        className=" card bg-light-primay rounded "
+                        style={{ padding: "20px" }}
+                        onClick={() => {
+                          setViewTournamentMode(true);
+                          setCurrentViewTournaments(game);
+                        }}>
+                        <Row>
+                          <Col lg={6}>
+                            <Badge variant="success">
+                              #{game.sharkscope_id}{" "}
+                            </Badge>
+                          </Col>
+                          <Col lg={6}>
+                            <Form
+                              inline
+                              style={{ textAlign: "right", float: "right" }}>
+                              <Badge variant="primary">
+                                <i
+                                  class="far fa-calendar"
+                                  style={{
+                                    color: "#fff",
+                                    fontSize: "12px",
+                                    marginRight: "5px",
+                                  }}></i>
+                                {getDates(game.scheduledStartUnixTime)}
+                              </Badge>
+                              <Badge
+                                variant="danger"
+                                style={{
+                                  marginLeft: "10px",
+                                  color: "#FFF",
+                                  fontWeight: "600",
+                                }}>
+                                <i
+                                  class="far fa-clock"
+                                  style={{
+                                    color: "#fff",
+                                    fontSize: "12px",
+                                    marginRight: "5px",
+                                  }}></i>
+                                <Countdown
+                                  date={
+                                    new Date(game.scheduledStartUnixTime * 1000)
+                                  }
+                                  renderer={renderer}
+                                />
+                              </Badge>
+                            </Form>
+                          </Col>
+                        </Row>
+                        <Row style={{ marginTop: "10px" }}>
+                          <Col>
+                            <span className="font-weight-bold text-dark-75 text-hover-primary font-size-lg mb-1">
+                              {game.name}
+                            </span>
+                            <br />
+                            <span className="text-muted font-weight-bold">
+                              {game.network}
+                            </span>
+                          </Col>
+                        </Row>
 
-              // })
-              pageOfItems.length > 0 && (
-                <TournamentItem
-                  tournamentList={pageOfItems.filter(
-                    (item) =>
-                      new Date(item.scheduledStartUnixTime * 1000) > new Date()
-                  )}
-                />
-              )}
-
-          {/* {tournamentList.length > 0 &&
-                tournamentList.map((obj) => {
-                  return <BoxItem obj={obj} />;
-                })}
-        
-           
-              {tournamentList.length > 0 && (
-                <TournamentItem tournamentList={tournamentList} />
-              )} */}
+                        <Row style={{ marginTop: "20px" }}>
+                          <Col lg={3}>
+                            <label>
+                              CURRENCY{" "}
+                              <i
+                                style={{
+                                  color: "#000",
+                                  fontSize: "12px",
+                                  marginLeft: "5px",
+                                }}
+                                class="fas fa-info-circle"></i>
+                            </label>
+                            <br />
+                            <span className="text-muted font-weight-bold">
+                              {game.currency}
+                            </span>
+                          </Col>
+                          <Col lg={3}>
+                            <label>
+                              GUARENTEE{" "}
+                              <i
+                                style={{
+                                  color: "#000",
+                                  fontSize: "12px",
+                                  marginLeft: "5px",
+                                }}
+                                class="fas fa-info-circle"></i>
+                            </label>
+                            <br />
+                            <span className="text-muted font-weight-bold">
+                              {game.guarantee}
+                            </span>
+                          </Col>
+                          <Col lg={2}>
+                            <label>
+                              OVERLAY{" "}
+                              <i
+                                style={{
+                                  color: "#000",
+                                  fontSize: "12px",
+                                  marginLeft: "5px",
+                                }}
+                                class="fas fa-info-circle"></i>
+                            </label>
+                            <br />
+                            <span className="text-muted font-weight-bold">
+                              {game.overlay}
+                            </span>
+                          </Col>
+                          <Col lg={2}>
+                            <label>
+                              GAME{" "}
+                              <i
+                                style={{
+                                  color: "#000",
+                                  fontSize: "12px",
+                                  marginLeft: "5px",
+                                }}
+                                class="fas fa-info-circle"></i>
+                            </label>
+                            <br />
+                            <span className="text-muted font-weight-bold">
+                              {game.game}
+                            </span>
+                          </Col>
+                          <Col lg={2}>
+                            <label>
+                              STATE{" "}
+                              <i
+                                style={{
+                                  color: "#000",
+                                  fontSize: "12px",
+                                  marginLeft: "5px",
+                                }}
+                                class="fas fa-info-circle"></i>
+                            </label>
+                            <br />
+                            <span className="text-muted font-weight-bold">
+                              {game.state}
+                            </span>
+                          </Col>
+                        </Row>
+                      </div>
+                    </a>
+                  </Col>
+                </Row>
+              );
+            })}
         </Col>
       </Row>
+
       <Drawer
         anchor="right"
         open={viewTournamentMode}
-        onClose={() => setViewTournamentMode(false)}
-      >
-        <DrawerTournamentsView
+        onClose={() => setViewTournamentMode(false)}>
+         
+        <DrawerTournamentsViewWl
+          // playerInfo
+          // currentAllot
+          showModal={handleShow}
           setViewTournamentMode={setViewTournamentMode}
           obj={currentViewTournament}
           networks={organicNetworks}
         />
+
       </Drawer>
     </Box>
   );
-};
-
-const styles = {
-  paginationItem: {
-    background: "#fff",
-    color: "#000",
-
-    width: "auto",
-    outlineShadow: "none",
-  },
-  activeItemPage: {
-    color: "#FFF",
-    borderRadius: "0px",
-
-    width: "auto",
-  },
-  viewBtn: {
-    fontSize: "10px",
-    padding: "5px",
-    border: "1px solid #0275d8",
-    background: "#fff",
-    color: "#0275d8",
-  },
-  activeView: {
-    fontSize: "10px",
-    padding: "5px",
-    border: "1px solid #0275d8",
-
-    color: "#fff",
-  },
 };
 
 export default FindTournamentPage;

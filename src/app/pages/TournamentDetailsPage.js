@@ -10,24 +10,16 @@ import _ from "lodash";
 
 const TournamentDetailsPage = (props) => {
   const [id, setId] = useState("");
+
   const [networks, setNetworks] = useState();
   const [dataa, setData] = useState([]);
   const [details, setDetails] = useState({});
+  const [isLogged, setIsLogged] = useState();
   const [url, setUrl] = useState();
   const Json = {};
   useEffect(() => {
     var info = props.match.params;
     setId(info.id);
-    //setNetwork(info.network);
-    // console.log(
-    //   API.baseUrl +
-    //     API.getTournamentById +
-    //     "?id=" +
-    //     info.id +
-    //     "&network=" +
-    //     info.network
-    // );
-
     fetch(API.baseUrl + API.getTournamentById + "?id=" + info.id, {
       method: "GET",
       headers: {
@@ -43,6 +35,14 @@ const TournamentDetailsPage = (props) => {
         var url = "https://pokerswapping.com/networks/" + data.page_slug;
         setUrl(url);
       });
+
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    if (userInfo === undefined || userInfo === null) {
+      setIsLogged(false);
+    } else {
+      setIsLogged(true);
+    }
+
     //setNetworks(Json);
   }, []);
 
@@ -59,8 +59,7 @@ const TournamentDetailsPage = (props) => {
           <Col>
             <Typography
               variant="h4"
-              style={{ fontWeight: "600", color: "#FFF" }}
-            >
+              style={{ fontWeight: "600", color: "#FFF" }}>
               Tournament Details
             </Typography>
           </Col>
@@ -73,35 +72,54 @@ const TournamentDetailsPage = (props) => {
               networks={dataa}
             />
           </Col>
-
           <Col lg={3}>
-            <Paper style={{ padding: "30px" }}>
-              <Link to={`/add-swap/${details.sharkscope_id}`}>
-                <Button
-                  variant="primary"
-                  style={{
-                    marginTop: "20px",
-                    width: "100%",
-                    textAlign: "center",
-                    fontSize: "12px",
-                  }}
-                >
-                  Poker Swapping{" "}
-                  <i
-                    class="fas fa-exchange-alt"
+            {isLogged && (
+              <Paper style={{ padding: "30px" }}>
+                <Link to={`/add-swap/${details.sharkscope_id}`}>
+                  <Button
+                    variant="primary"
                     style={{
-                      color: "#FFF",
-                      marginLeft: "15px",
+                      marginTop: "20px",
+                      width: "100%",
+                      textAlign: "center",
+                      fontSize: "12px",
+                    }}>
+                    Poker Swapping{" "}
+                    <i
+                      class="fas fa-exchange-alt"
+                      style={{
+                        color: "#FFF",
+                        marginLeft: "15px",
 
-                      fontSize: "13px",
-                      float: "right",
-                      marginRight: "15px",
-                    }}
-                  ></i>
-                </Button>
-              </Link>
-              <br />
-              <Link to={`/sponsorship/create/${details.sharkscope_id}`}>
+                        fontSize: "13px",
+                        float: "right",
+                        marginRight: "15px",
+                      }}></i>
+                  </Button>
+                </Link>
+                <br />
+                <Link to={`/sponsorship/create/${details.sharkscope_id}`}>
+                  <Button
+                    variant="primary"
+                    style={{
+                      marginTop: "20px",
+                      width: "100%",
+                      textAlign: "center",
+                      fontSize: "12px",
+                    }}>
+                    Add sponsors{" "}
+                    <i
+                      class="fas fa-plus"
+                      style={{
+                        color: "#FFF",
+                        marginLeft: "15px",
+                        fontSize: "13px",
+                        float: "right",
+                        marginRight: "15px",
+                      }}></i>
+                  </Button>
+                </Link>
+                <br />
                 <Button
                   variant="primary"
                   style={{
@@ -109,44 +127,39 @@ const TournamentDetailsPage = (props) => {
                     width: "100%",
                     textAlign: "center",
                     fontSize: "12px",
-                  }}
-                >
-                  Add sponsors{" "}
+                  }}>
+                  View Live{" "}
                   <i
-                    class="fas fa-plus"
+                    class="fas fa-tv"
                     style={{
                       color: "#FFF",
                       marginLeft: "15px",
                       fontSize: "13px",
                       float: "right",
                       marginRight: "15px",
-                    }}
-                  ></i>
+                    }}></i>
                 </Button>
-              </Link>
-              <br />
-              <Button
-                variant="primary"
-                style={{
-                  marginTop: "20px",
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "12px",
-                }}
-              >
-                View Live{" "}
-                <i
-                  class="fas fa-tv"
-                  style={{
-                    color: "#FFF",
-                    marginLeft: "15px",
-                    fontSize: "13px",
-                    float: "right",
-                    marginRight: "15px",
-                  }}
-                ></i>
-              </Button>
-              <a href={url} target="_blank">
+                <a href={url} target="_blank">
+                  <Button
+                    variant="primary"
+                    style={{
+                      marginTop: "20px",
+                      width: "100%",
+                      textAlign: "center",
+                      fontSize: "12px",
+                    }}>
+                    {details.network}{" "}
+                    <i
+                      class="fas fa-external-link-alt"
+                      style={{
+                        color: "#FFF",
+                        marginLeft: "15px",
+                        fontSize: "13px",
+                        float: "right",
+                        marginRight: "15px",
+                      }}></i>
+                  </Button>
+                </a>
                 <Button
                   variant="primary"
                   style={{
@@ -154,64 +167,39 @@ const TournamentDetailsPage = (props) => {
                     width: "100%",
                     textAlign: "center",
                     fontSize: "12px",
-                  }}
-                >
-                  {details.network}{" "}
+                  }}>
+                  Add to calender{" "}
                   <i
-                    class="fas fa-external-link-alt"
+                    class="fas fa-calendar-check"
                     style={{
                       color: "#FFF",
                       marginLeft: "15px",
                       fontSize: "13px",
                       float: "right",
                       marginRight: "15px",
-                    }}
-                  ></i>
+                    }}></i>
                 </Button>
-              </a>
-              <Button
-                variant="primary"
-                style={{
-                  marginTop: "20px",
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "12px",
-                }}
-              >
-                Add to calender{" "}
-                <i
-                  class="fas fa-calendar-check"
+                <Button
+                  variant="primary"
                   style={{
-                    color: "#FFF",
-                    marginLeft: "15px",
-                    fontSize: "13px",
-                    float: "right",
-                    marginRight: "15px",
-                  }}
-                ></i>
-              </Button>
-              <Button
-                variant="primary"
-                style={{
-                  marginTop: "20px",
-                  width: "100%",
-                  textAlign: "center",
-                  fontSize: "12px",
-                }}
-              >
-                Share Tournament{" "}
-                <i
-                  class="fas fa-share"
-                  style={{
-                    color: "#FFF",
-                    marginLeft: "15px",
-                    fontSize: "13px",
-                    float: "right",
-                    marginRight: "15px",
-                  }}
-                ></i>
-              </Button>
-            </Paper>
+                    marginTop: "20px",
+                    width: "100%",
+                    textAlign: "center",
+                    fontSize: "12px",
+                  }}>
+                  Share Tournament{" "}
+                  <i
+                    class="fas fa-share"
+                    style={{
+                      color: "#FFF",
+                      marginLeft: "15px",
+                      fontSize: "13px",
+                      float: "right",
+                      marginRight: "15px",
+                    }}></i>
+                </Button>
+              </Paper>
+            )}
           </Col>
         </Row>
         <Row>
