@@ -6,7 +6,7 @@ import Grid from "@material-ui/core/Grid";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
 import { Image } from "react-bootstrap";
-import { toAbsoluteUrl } from "../../../_metronic/_helpers";
+import { toAbsoluteUrl } from "../../_metronic/_helpers";
 import CardMedia from "@material-ui/core/CardMedia";
 import { makeStyles } from "@material-ui/core/styles";
 import CardActionArea from "@material-ui/core/CardActionArea";

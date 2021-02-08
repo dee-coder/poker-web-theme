@@ -385,3 +385,5 @@ function getChartOptions(layoutProps) {
   //   };
   //return options;
 }
+
+export default PlayerStatisticsGraph;

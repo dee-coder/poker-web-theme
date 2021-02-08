@@ -152,7 +152,7 @@ export function NotificationsToggle() {
                 }`}
               >
                 <div className="navi navi-icon-circle navi-spacer-x-0">
-                  <a href="#" className="navi-item">
+                  {/* <a href="#" className="navi-item">
                     <div className="navi-link rounded">
                       <div className="symbol symbol-50 mr-3">
                         <div className="symbol-label">
@@ -355,7 +355,7 @@ export function NotificationsToggle() {
                         <div className="text-muted">Fostest is Barry</div>
                       </div>
                     </div>
-                  </a>
+                  </a> */}
                 </div>
               </div>
               <div

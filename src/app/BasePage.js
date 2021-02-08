@@ -12,6 +12,8 @@ import SettingHome from "./pages/SettingsPlayer/SettingHome";
 import SettingHomeSponsor from "./pages/SettingSponsor/SettingHomeSponsor";
 import PlayerProfilePage from "./pages/PlayerProfilePage";
 import Logout from "./mycomponents/logoutComponent";
+import PlayerStatisticsGraph from "./mycomponents/playerStatisticsGraph";
+import SponsorStatistics from "./pages/SponsorStatistics";
 import AdminSection from "./admin/adminSection";
 import TournamentDetailsPage from "./pages/TournamentDetailsPage";
 import NetworkDetailsPage from "./pages/NetworkDetailsPage";
@@ -110,7 +112,9 @@ export default function BasePage() {
       <ContentRoute path="/addCredits" component={AddCredits} />
       <ContentRoute path="/result/:id" component={TournamentSummary} />
       <ContentRoute path="/settings/" component={SettingHome} />
-      <ContentRoute path="/settingsSp/" component={SettingHomeSponsor} />
+      <ContentRoute path="/statistics" component={PlayerStatisticsGraph}/>
+      <ContentRoute path="/sp-stat" component={SponsorStatistics}/>
+      <ContentRoute path="/settingsSp/" component={SettingHomeSponsor}/>
       <ContentRoute
         path="/sponsor/profile/:id"
         component={ViewProfileSponsor}

@@ -901,7 +901,7 @@ const FindTournamentsPage = () => {
         </Col>
       </Row>
 
-      <Drawer
+      {/* <Drawer
         anchor="right"
         open={viewTournamentMode}
         onClose={() => setViewTournamentMode(false)}>
@@ -913,7 +913,7 @@ const FindTournamentsPage = () => {
           obj={currentViewTournament}
           networks={organicNetworks}
         />
-      </Drawer>
+      </Drawer> */}
     </Box>
   );
 };

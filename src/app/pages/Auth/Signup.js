@@ -246,8 +246,7 @@ function Signup(props) {
               <Tab.Pane eventKey="player">
                 <form
                   id="kt_login_signin_form"
-                  className="form fv-plugins-bootstrap fv-plugins-framework animated animate__animated animate__backInUp"
-                >
+                  className="form fv-plugins-bootstrap fv-plugins-framework animated animate__animated animate__backInUp">
                   {/* begin: Alert */}
 
                   {/* end: Alert */}
@@ -318,11 +317,12 @@ function Signup(props) {
 
                   <div className="form-group fv-plugins-icon-container">
                     <select
-                  
-                      onChange={(e) =>{ setPlayerNetwork(e.target.value)
-                        setSignupDrawer(true)}}
-                      className={`form-control form-control-solid h-auto py-5 px-6 `}
-                    >
+                      onChange={(e) => {
+                        setPlayerNetwork(e.target.value);
+                       
+                        setSignupDrawer(e.target.value === "Select Network" ? false : true );
+                      }}
+                      className={`form-control form-control-solid h-auto py-5 px-6 `}>
                       <option value={null}>Select Network</option>
                       {Networks.map((network) => {
                         return (
@@ -347,8 +347,7 @@ function Signup(props) {
                         to="/terms"
                         target="_blank"
                         className="mr-1"
-                        rel="noopener noreferrer"
-                      >
+                        rel="noopener noreferrer">
                         I agree the Terms & Conditions
                       </Link>
                       <span />
@@ -363,8 +362,7 @@ function Signup(props) {
                       type="submit"
                       disabled={!goAhead ? true : false}
                       onClick={(e) => handleSignup(e)}
-                      className="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"
-                    >
+                      className="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">
                       <span>Signup</span>
                       {loading && (
                         <span className="ml-3 spinner spinner-white"></span>
@@ -374,8 +372,7 @@ function Signup(props) {
                     <Link to="/auth/login">
                       <button
                         type="button"
-                        className="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4"
-                      >
+                        className="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4">
                         Cancel
                       </button>
                     </Link>
@@ -386,8 +383,7 @@ function Signup(props) {
                 {" "}
                 <form
                   id="kt_login_signin_form"
-                  className="form fv-plugins-bootstrap fv-plugins-framework animated animate__animated animate__backInUp"
-                >
+                  className="form fv-plugins-bootstrap fv-plugins-framework animated animate__animated animate__backInUp">
                   {/* begin: Alert */}
 
                   {/* end: Alert */}
@@ -463,8 +459,7 @@ function Signup(props) {
                         to="/terms"
                         target="_blank"
                         className="mr-1"
-                        rel="noopener noreferrer"
-                      >
+                        rel="noopener noreferrer">
                         I agree the Terms & Conditions
                       </Link>
                       <span />
@@ -479,8 +474,7 @@ function Signup(props) {
                       type="submit"
                       disabled={!goAhead ? true : false}
                       onClick={(e) => handleSignup(e)}
-                      className="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4"
-                    >
+                      className="btn btn-primary font-weight-bold px-9 py-4 my-3 mx-4">
                       <span>Signup</span>
                       {loading && (
                         <span className="ml-3 spinner spinner-white"></span>
@@ -490,8 +484,7 @@ function Signup(props) {
                     <Link to="/auth/login">
                       <button
                         type="button"
-                        className="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4"
-                      >
+                        className="btn btn-light-primary font-weight-bold px-9 py-4 my-3 mx-4">
                         Cancel
                       </button>
                     </Link>
@@ -501,21 +494,19 @@ function Signup(props) {
             </Tab.Content>
           </Col>
         </Row>
-
+ 
+        
         <Drawer
-        anchor="left"
-        open={signupDrawer}
-        onClose={() => setSignupDrawer(false)}>
-        <DrawerSignup
-          setViewTournamentMode={setSignupDrawer}
-          network= {PlayerNetwork}
-        />
-
-      </Drawer>
+          anchor="left"
+          open={signupDrawer}
+          onClose={() => setSignupDrawer(false)}>
+          <DrawerSignup
+            setViewTournamentMode={setSignupDrawer}
+            network={PlayerNetwork}
+          />
+        </Drawer>
+        
       </Tab.Container>
-       
-
-
     </div>
   );
 }

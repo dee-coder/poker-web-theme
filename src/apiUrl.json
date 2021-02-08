@@ -8,6 +8,7 @@
   "validateToken":"/auth/validate_token",
   "resetPassword":"/auth/set_new_password",
   "sponsorshipEligibility":"/sponsorship/eligibility",
+  "subscriptionVerify":"/subscription/verify",
   "reviewSponser":"/ratings/get",
   "playerInfo":"/players/info",
   "getTournamentById": "/tournaments/getTournamentById",

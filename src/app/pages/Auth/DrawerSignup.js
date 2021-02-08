@@ -11,7 +11,7 @@ import { Button, Container } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../../_metronic/_helpers";
 import { makeStyles } from "@material-ui/core/styles";
 
-const DrawerSignup = () => {
+const DrawerSignup = ({network}) => {
   const [Tnc, setTnc] = useState(false);
   const [loading, setLoading] = useState();
   const [goAhead, setGoAhead] = useState(false);
@@ -44,7 +44,7 @@ const DrawerSignup = () => {
                   fontWeight: "600",
                   color: "#000",
                 }}>
-                Network SignUp Verification Process 
+                {network} SignUp Verification Process 
               </Typography>
             </Col>
           </Row>

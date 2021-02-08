@@ -51,7 +51,7 @@ const AddSwapperPage = (props) => {
       })
         .then((res) => res.json())
         .then((json) => {
-          //console.log(json);
+          console.log(json);
           setTournamentData(json.result);
         })
         .catch((err) => console.log(err));

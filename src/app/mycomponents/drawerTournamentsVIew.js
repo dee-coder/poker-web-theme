@@ -3,6 +3,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import React, { useState, useEffect } from "react";
 import AddToCalendar from "react-add-to-calendar";
 import API from "../../apiUrl.json";
+import SkeletonCard from "./SkeltonContent";
+import { Alert } from "react-bootstrap";
+
 import {
   Row,
   Col,
@@ -69,7 +72,11 @@ const DrawerTournamentsView = ({
   const [url, seturl] = useState();
   const [proceed, setProceed] = useState(false);
   const [showModalForBalance, setShowModalForBalance] = useState(false);
-  const [resMessage, setResMessage] = useState();  
+  const [resMessage, setResMessage] = useState();
+
+  const [loading, setLoading] = useState(false);
+  const [checkSubscription, setCheckSubscription] = useState();
+  const [subMessage, setSubMessage] = useState("");
 
   useEffect(() => {
     console.log("this:", networks);
@@ -80,7 +87,7 @@ const DrawerTournamentsView = ({
   }, []);
 
   const CheckBalance = () => {
-    var url = API.baseUrl+API.sponsorshipEligibility;
+    var url = API.baseUrl + API.sponsorshipEligibility;
     fetch(url, {
       method: "POST",
       headers: {
@@ -100,8 +107,6 @@ const DrawerTournamentsView = ({
           setProceed(true);
           console.log(response);
           // console.log(response.message);
-          
-          
         } else {
           setProceed(false);
           setShowModalForBalance(true);
@@ -111,6 +116,38 @@ const DrawerTournamentsView = ({
       })
       .catch((err) => console.log(err));
   };
+
+  useEffect(() => {
+    var url = API.baseUrl + API.subscriptionVerify;
+    fetch(url, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        player_id:
+          localStorage.getItem("role") === "player"
+            ? JSON.parse(localStorage.getItem("userInfo")).player_id
+            : JSON.parse(localStorage.getItem("userInfo")).sponsor_id,
+      }),
+    })
+      .then((response) => response.json())
+      .then((response) => {
+        if (response.status === "found") {
+          console.log("found", response);
+          setLoading(false);
+          setCheckSubscription(true);
+          setSubMessage(response.message);
+        }
+        if (response.status === "not_found") {
+          console.log("not found", response);
+          setLoading(false);
+          setCheckSubscription(false);
+          setSubMessage(response.message);
+        }
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   // const [show, setShow] = useState(false);
   const handleClose = () => setShowModalForBalance(false);
@@ -133,157 +170,164 @@ const DrawerTournamentsView = ({
   };
 
   if (localStorage.getItem("role") === "player") {
-    return (
-      <div className={classes.list}>
-        <div className={classes.viewBoxCont} style={{ padding: "20px" }}>
-          <Container>
-            <Row>
-              <Col>
-                <Typography
-                  variant="h4"
-                  style={{
-                    fontWeight: "600",
-                    color: "#000",
-                  }}>
-                  Tournament Details
-                </Typography>
-              </Col>
-              <Col>
-                <Row>
-                  <Col lg={11}>
-                    <a
-                      href={`https://pokerswapping.com/tournament/${obj.sharkscope_id}`}
-                      target="_blank"
-                      style={{ float: "right" }}>
-                      {" "}
+    if (loading) {
+      return <SkeletonCard />;
+    } else {
+      return (
+        <div className={classes.list}>
+          <div className={classes.viewBoxCont} style={{ padding: "20px" }}>
+            <Container>
+              <Row>
+                <Col>
+                  <Typography
+                    variant="h4"
+                    style={{
+                      fontWeight: "600",
+                      color: "#000",
+                    }}>
+                    Tournament Details
+                  </Typography>
+                </Col>
+                <Col>
+                  <Row>
+                    <Col lg={11}>
+                      <a
+                        href={`https://pokerswapping.com/tournament/${obj.sharkscope_id}`}
+                        target="_blank"
+                        style={{ float: "right" }}>
+                        {" "}
+                        <Badge
+                          variant="secondary"
+                          style={{ fontSize: "12px", fontWeight: "200" }}>
+                          <i
+                            class="fas fa-external-link-alt"
+                            style={{ marginRight: "10px", fontSize: "12px" }}
+                          />
+                          Open in new page
+                        </Badge>
+                      </a>
+                    </Col>
+                    <Col lg={1}>
                       <Badge
                         variant="secondary"
-                        style={{ fontSize: "12px", fontWeight: "200" }}>
+                        style={{ float: "right" }}
+                        onClick={() => setViewTournamentMode(false)}>
+                        {" "}
                         <i
-                          class="fas fa-external-link-alt"
-                          style={{ marginRight: "10px", fontSize: "12px" }}
-                        />
-                        Open in new page
+                          style={{ float: "right", fontSize: "14px" }}
+                          class="fas fa-times"></i>
                       </Badge>
-                    </a>
-                  </Col>
-                  <Col lg={1}>
-                    <Badge
-                      variant="secondary"
-                      style={{ float: "right" }}
-                      onClick={() => setViewTournamentMode(false)}>
-                      {" "}
-                      <i
-                        style={{ float: "right", fontSize: "14px" }}
-                        class="fas fa-times"></i>
-                    </Badge>
-                  </Col>
-                </Row>
-              </Col>
-            </Row>
-
-            <Row>
-              <Col>
-                {/* <TournamentHeader className="card-stretch gutter-b" obj={obj} /> */}
-                <Box component="span" m={5}>
-                  <Row style={{ marginTop: "10px" }}>
-                    <Col lg={9}>
-                      <TournamentHeader
-                        className="card-stretch gutter-b"
-                        obj={obj}
-                        networks={networks}
-                      />
                     </Col>
+                  </Row>
+                </Col>
+              </Row>
 
-                    <Col lg={3}>
-                      <Card>
-                        <Card.Body>
-                          <Link to={`/add-swap/${obj.sharkscope_id}`}>
-                            <Button
-                              variant="primary"
-                              style={{
-                                marginTop: "20px",
-                                width: "100%",
-                                textAlign: "center",
-                                fontSize: "12px",
-                              }}>
-                              Swapping{" "}
-                              <i
-                                class="fas fa-exchange-alt"
-                                style={{
-                                  color: "#FFF",
-                                  marginLeft: "15px",
+              <Row>
+                <Col>
+                  {/* <TournamentHeader className="card-stretch gutter-b" obj={obj} /> */}
+                  <Box component="span" m={5}>
+                    <Row style={{ marginTop: "10px" }}>
+                      <Col lg={8}>
+                        <TournamentHeader
+                          className="card-stretch gutter-b"
+                          obj={obj}
+                          networks={networks}
+                        />
+                      </Col>
 
-                                  fontSize: "13px",
-                                  float: "right",
-                                  marginRight: "15px",
-                                }}></i>
-                            </Button>
-                          </Link>
-                          <br />
-                          <Link to={`/sponsorship/create/${obj.sharkscope_id}`}>
-                            <Button
-                              variant="primary"
-                              style={{
-                                marginTop: "20px",
-                                width: "100%",
-                                textAlign: "center",
-                                fontSize: "12px",
-                              }}>
-                              Add sponsors{" "}
-                              <i
-                                class="fas fa-plus"
+                      <Col lg={4}>
+                        <Card>
+                          {checkSubscription === true ? (
+                            <Card.Body>
+                              <Link
+                              // to={`/add-swap/${obj.sharkscope_id}`}
+                              >
+                                <Button
+                                  variant="primary"
+                                  style={{
+                                    marginTop: "20px",
+                                    width: "100%",
+                                    textAlign: "center",
+                                    fontSize: "12px",
+                                  }}>
+                                  Swapping{" "}
+                                  <i
+                                    class="fas fa-exchange-alt"
+                                    style={{
+                                      color: "#FFF",
+                                      marginLeft: "15px",
+
+                                      fontSize: "13px",
+                                      float: "right",
+                                      marginRight: "15px",
+                                    }}></i>
+                                </Button>
+                              </Link>
+                              <br />
+                              <Link
+                                to={`/sponsorship/create/${obj.sharkscope_id}`}>
+                                <Button
+                                  variant="primary"
+                                  style={{
+                                    marginTop: "20px",
+                                    width: "100%",
+                                    textAlign: "center",
+                                    fontSize: "12px",
+                                  }}>
+                                  Add sponsors{" "}
+                                  <i
+                                    class="fas fa-plus"
+                                    style={{
+                                      color: "#FFF",
+                                      marginLeft: "15px",
+                                      fontSize: "13px",
+                                      float: "right",
+                                      marginRight: "15px",
+                                    }}></i>
+                                </Button>
+                              </Link>
+                              <br />
+                              <Button
+                                variant="primary"
                                 style={{
-                                  color: "#FFF",
-                                  marginLeft: "15px",
-                                  fontSize: "13px",
-                                  float: "right",
-                                  marginRight: "15px",
-                                }}></i>
-                            </Button>
-                          </Link>
-                          <br />
-                          <Button
-                            variant="primary"
-                            style={{
-                              marginTop: "20px",
-                              width: "100%",
-                              textAlign: "center",
-                              fontSize: "12px",
-                            }}>
-                            View Live{" "}
-                            <i
-                              class="fas fa-tv"
-                              style={{
-                                color: "#FFF",
-                                marginLeft: "15px",
-                                fontSize: "13px",
-                                float: "right",
-                                marginRight: "15px",
-                              }}></i>
-                          </Button>
-                          <a href="#">
-                            <Button
-                              variant="primary"
-                              style={{
-                                marginTop: "20px",
-                                width: "100%",
-                                textAlign: "center",
-                                fontSize: "12px",
-                              }}>
-                              {obj.network}{" "}
-                              <i
-                                class="fas fa-external-link-alt"
-                                style={{
-                                  color: "#FFF",
-                                  marginLeft: "15px",
-                                  fontSize: "13px",
-                                  float: "right",
-                                  marginRight: "15px",
-                                }}></i>
-                            </Button>
-                          </a>
-                          {/* <Button
+                                  marginTop: "20px",
+                                  width: "100%",
+                                  textAlign: "center",
+                                  fontSize: "12px",
+                                }}>
+                                View Live{" "}
+                                <i
+                                  class="fas fa-tv"
+                                  style={{
+                                    color: "#FFF",
+                                    marginLeft: "15px",
+                                    fontSize: "13px",
+                                    float: "right",
+                                    marginRight: "15px",
+                                  }}></i>
+                              </Button>
+                              <a href="#">
+                                <Button
+                                  variant="primary"
+                                  style={{
+                                    marginTop: "20px",
+                                    width: "100%",
+                                    textAlign: "center",
+                                    fontSize: "12px",
+                                  }}>
+                                  {obj.network}{" "}
+                                  <i
+                                    class="fas fa-external-link-alt"
+                                    style={{
+                                      color: "#FFF",
+                                      marginLeft: "15px",
+                                      fontSize: "13px",
+                                      float: "right",
+                                      marginRight: "15px",
+                                    }}></i>
+                                </Button>
+                              </a>
+                              {/* <Button
                             variant="primary"
                             style={{
                               marginTop: "20px",
@@ -302,7 +346,7 @@ const DrawerTournamentsView = ({
                                 marginRight: "15px",
                               }}></i>
                           </Button> */}
-                          {/* <Button
+                              {/* <Button
                             // variant="primary"
                             style={{
                               marginTop: "20px",
@@ -311,43 +355,43 @@ const DrawerTournamentsView = ({
                               fontSize: "12px",
                               color: "white",
                             }}> */}
-                          <div
-                            style={{
-                              marginTop: "20px",
-                              width: "100%",
-                              textAlign: "center",
-                              fontSize: "12px",
-                            }}>
-                            <AddToCalendar
-                              event={event}
-                              displayItemIcons={false}
-                            />
-                          </div>
-                          {/* </Button> */}
+                              <div
+                                style={{
+                                  marginTop: "20px",
+                                  width: "100%",
+                                  textAlign: "center",
+                                  fontSize: "12px",
+                                }}>
+                                <AddToCalendar
+                                  event={event}
+                                  displayItemIcons={false}
+                                />
+                              </div>
+                              {/* </Button> */}
 
-                          <Button
-                            variant="primary"
-                            onClick={(e) => showModal(e)}
-                            // onClick={() => setViewTournamentMode(false)}
-                            style={{
-                              marginTop: "20px",
-                              width: "100%",
-                              textAlign: "center",
-                              fontSize: "12px",
-                            }}>
-                            Share Tournament{" "}
-                            <i
-                              class="fas fa-share"
-                              style={{
-                                color: "#FFF",
-                                marginLeft: "15px",
-                                fontSize: "13px",
-                                float: "right",
-                                marginRight: "15px",
-                              }}></i>
-                          </Button>
+                              <Button
+                                variant="primary"
+                                onClick={(e) => showModal(e)}
+                                // onClick={() => setViewTournamentMode(false)}
+                                style={{
+                                  marginTop: "20px",
+                                  width: "100%",
+                                  textAlign: "center",
+                                  fontSize: "12px",
+                                }}>
+                                Share Tournament{" "}
+                                <i
+                                  class="fas fa-share"
+                                  style={{
+                                    color: "#FFF",
+                                    marginLeft: "15px",
+                                    fontSize: "13px",
+                                    float: "right",
+                                    marginRight: "15px",
+                                  }}></i>
+                              </Button>
 
-                          {/* <ReactShareSocial
+                              {/* <ReactShareSocial
                             url="url_to_share.com"
                             socialTypes={[
                               "facebook",
@@ -356,17 +400,36 @@ const DrawerTournamentsView = ({
                               "linkedin",
                             ]}
                           /> */}
-                        </Card.Body>
-                      </Card>
-                    </Col>
-                  </Row>
-                </Box>
-              </Col>
-            </Row>
-          </Container>
+                            </Card.Body>
+                          ) : (
+                            <div className="d-flex align-items-center bg-light-warning rounded p-5 mb-5">
+                              <Alert >
+                                <Alert.Heading>Subscription Not found!</Alert.Heading>
+                                <p style={{marginTop:"20px"}}>
+                                 {subMessage}
+                                </p>
+                                <hr />
+                                <div className="d-flex justify-content-end">
+                                  <Button
+                                    // onClick={() => setShow(false)}
+                                    variant="outline-success">
+                                    Close me y'all!
+                                  </Button>
+                                </div>
+                              </Alert>
+                            </div>
+                          )}
+                        </Card>
+                      </Col>
+                    </Row>
+                  </Box>
+                </Col>
+              </Row>
+            </Container>
+          </div>
         </div>
-      </div>
-    );
+      );
+    }
   } else {
     return (
       <div className={classes.list}>
@@ -384,19 +447,17 @@ const DrawerTournamentsView = ({
                   You Have Not Enough Balance to Sponsor This tournament
                 </Modal.Title>
               </Modal.Header>
-              <Modal.Body>
-                {resMessage}
-              </Modal.Body>
+              <Modal.Body>{resMessage}</Modal.Body>
               <Modal.Footer>
-                <Button variant="secondary">
+                <Button href="/addCredits" variant="primary">
                   Add Credits
                 </Button>
                 <Button variant="secondary" onClick={handleClose}>
                   Close
                 </Button>
                 {/* <Button variant="primary" onClick={handleClose}>
-            Save Changes
-          </Button> */}
+                 Save Changes
+             </Button> */}
               </Modal.Footer>
             </Modal>
 

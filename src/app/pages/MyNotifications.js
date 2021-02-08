@@ -1,4 +1,4 @@
-import { Box, Typography } from "@material-ui/core";
+import { Box, Typography,Button } from "@material-ui/core";
 import React, { useState, useEffect } from "react";
 import { Col } from "react-bootstrap";
 import { Row } from "react-bootstrap";
@@ -54,8 +54,7 @@ const MyNotifications = () => {
           <div className="d-flex align-items-center justify-content-start">
             <Typography
               variant="h4"
-              style={{ fontWeight: "600", color: "white" }}
-            >
+              style={{ fontWeight: "600", color: "white" }}>
               My Notifications
             </Typography>
           </div>
@@ -67,8 +66,7 @@ const MyNotifications = () => {
             <div className="card-header">
               <Typography
                 variant="h4"
-                style={{ fontSize: "20px", fontWeight: "600", color: "black" }}
-              >
+                style={{ fontSize: "20px", fontWeight: "600", color: "black" }}>
                 Today
               </Typography>
             </div>
@@ -85,8 +83,7 @@ const MyNotifications = () => {
             <div className="card-header">
               <Typography
                 variant="h4"
-                style={{ fontSize: "20px", fontWeight: "600", color: "black" }}
-              >
+                style={{ fontSize: "20px", fontWeight: "600", color: "black" }}>
                 Earlier
               </Typography>
             </div>
@@ -99,43 +96,48 @@ const MyNotifications = () => {
                         src={toAbsoluteUrl(
                           "/media//svg/icons/Home/Library.svg"
                         )}
-                        className="svg-icon svg-icon-lg"
-                      ></SVG>
+                        className="svg-icon svg-icon-lg"></SVG>
                     </span>
 
                     <div className="d-flex flex-column flex-grow-1 mr-2">
                       <span className="text-muted font-size-sm">
                         {not.type}
                       </span>
-                      <a
+                      <div> 
+                      <span
                         href={not.links}
                         target="_blank"
-                        className="font-weight-normal text-dark-75 text-hover-primary font-size-lg mb-1"
-                      >
+                        className="font-weight-normal text-dark-75 text-hover-primary font-size-lg mb-1">
                         {not.content}
-                      </a>
+                      </span>
+                      </div>
                     </div>
+                    {Notifications.links &&
+                      <Button>
+                        <a 
+                        href={Notifications.links}
+                        view Link
+                        ></a>
+                      </Button>
+                    }
                     <div>
                       <span
                         className="text-muted font-size-sm"
-                        style={{ float: "right", fontSize: "10px" }}
-                      >
+                        style={{ float: "right", fontSize: "10px" }}>
                         {getDates(not.created)}
                       </span>
                       <br />
 
                       <a
                         onClick={() => handleDeleteNotifications(not)}
-                        style={{ float: "right" }}
-                      >
+                        style={{ float: "right" }}>
                         <span className="svg-icon svg-icon-primary mr-5">
                           <SVG
                             style={{ float: "right" }}
                             src={toAbsoluteUrl(
                               "/media//svg/icons/Navigation/Close.svg"
                             )}
-                            className="svg-icon svg-icon-lg"
-                          ></SVG>
+                            className="svg-icon svg-icon-lg"></SVG>
                         </span>
                       </a>
                     </div>
