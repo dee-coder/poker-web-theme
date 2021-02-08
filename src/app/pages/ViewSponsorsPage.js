@@ -19,10 +19,11 @@ import _ from "lodash";
 
 import { Button, Col, Row, Form, Badge, Spinner } from "react-bootstrap";
 
+const Completionist = () => <span>Finished</span>;
 const renderer = ({ days, hours, minutes, seconds, completed }) => {
   if (completed) {
     // Render a completed state
-    //return <Completionist />;
+    return <Completionist />;
   } else {
     // Render a countdown
     return (
@@ -654,7 +655,7 @@ const ViewSponsorsPage = (props) => {
                         variant="caption"
                         style={{ fontWeight: "600" }}
                       >
-                        {getDates(tournamentData.scheduledStartUnixTime*1000)}
+                        {getDates(tournamentData.scheduledStartUnixTime * 1000)}
                       </Typography>
                     </Badge>
                   </Col>
@@ -674,7 +675,11 @@ const ViewSponsorsPage = (props) => {
                         ></i>
                         <Countdown
                           style={{ float: "right" }}
-                          date={new Date(tournamentData.scheduledStartUnixTime*1000)}
+                          date={
+                            new Date(
+                              tournamentData.scheduledStartUnixTime * 1000
+                            )
+                          }
                           renderer={renderer}
                         />
                       </Typography>
