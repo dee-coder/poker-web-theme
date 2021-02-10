@@ -28,6 +28,59 @@ const AddCredits = () => {
         console.log(err);
       });
   }, []);
+
+  const selectCredits = () => {};
+  var currencies = [
+    "CAD",
+    "HKD",
+    "ISK",
+    "PHP",
+    "DKK",
+    "HUF",
+    "CZK",
+    "GBP",
+    "RON",
+    "SEK",
+    "IDR",
+    "INR",
+   " BRL",
+    "RUB",
+    "HRK",
+    "JPY",
+    "THB",
+    "CHF",
+    "EUR",
+    "MYR",
+    "BGN",
+    "TRY",
+    "CNY",
+    "NOK",
+    "NZD",
+    "ZAR",
+    "USD",
+    "MXN",
+    "SGD",
+    "AUD",
+    "ILS",
+    "KRW",
+   " PLN",
+  ];
+  const getCurrency=() => {
+    var url = "https://api.exchangeratesapi.io/latest?base=USD";
+
+    fetch(url, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((json) => json.json())
+      .then((res) => {
+        console.log(res);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const tabs = [
     { name: " Internal Transactions", key: "internal" },
     { name: " External Transactions", key: "external" },
@@ -35,6 +88,9 @@ const AddCredits = () => {
 
   const [SelectedTab, setSelectedTab] = useState("internal");
   const [WalletInfo, setWalletInfo] = useState({});
+  const [credits, setCredits] = useState();
+  const [validCredit, setValidCredit] = useState();
+  const [currency, setCurrency] = useState();
 
   return (
     <Box>
@@ -184,6 +240,12 @@ const AddCredits = () => {
                     <Col style={{ padding: "0" }}>
                       <div className="form-group fv-plugins-icon-container">
                         <select
+                          onChange={(e) => {
+                            setCredits(e.target.value);
+                            setValidCredit(
+                              e.target.value === "Select Credits" ? false : true
+                            );
+                          }}
                           className={`form-control form-control-solid h-auto py-5 px-6 `}>
                           <option value={null}>Select Credits</option>
                           <option value="15">$ 15</option>
@@ -214,10 +276,9 @@ const AddCredits = () => {
                         </Col>
                       </Row>
 
-                      <Row style={{ marginBottom: "20px" }}>
-                        <Col>
-                          <div
-                            style={{ paddingBottom: "5px", paddingTop: "5px" }}>
+                      {validCredit && (
+                        <Row style={{ marginBottom: "20px" }}>
+                          <Col>
                             <Typography
                               variant="h6"
                               style={{
@@ -226,18 +287,79 @@ const AddCredits = () => {
                                 color: "black",
                                 float: "left",
                               }}>
-                              Your Account Will be Charged
+                              Select Your Desire Currency
                             </Typography>
-                          </div>
-                          <div style={{ padding: "15px", margin: "20px" }}>
-                            <p>$ 100</p>
-                          </div>
-                        </Col>
-                      </Row>
+
+                            <div className="form-group fv-plugins-icon-container">
+                              <select
+                                onChange={(e) => {
+                                  setCurrency(
+                                    e.target.value === "Select Your Currency"
+                                      ? false
+                                      : e.target.value
+                                  );
+                                }}
+                                className={`form-control form-control-solid h-auto py-5 px-6 `}>
+                                <option value={null}>
+                                  Select Your Currency
+                                </option>
+                                {currencies.map((cur)=>{ 
+
+                                return <option value={cur}>{cur}</option>
+                              })}
+
+                              </select>
+                            </div>
+
+                            <div
+                              style={{
+                                paddingBottom: "5px",
+                                paddingTop: "5px",
+                              }}>
+                              <Typography
+                                variant="h6"
+                                style={{
+                                  marginLeft: "10px",
+                                  fontWeight: "600",
+                                  color: "black",
+                                  float: "left",
+                                }}>
+                                Your Account Will be Charged
+                              </Typography>
+                            </div>
+                            <div style={{ padding: "15px", margin: "20px" }}>
+                              <p>
+                                {" "}
+                                Your selected credits: &emsp;{" "}
+                                {!currency ? "USD" : currency} &nbsp; {credits}
+                              </p>
+                              <p>
+                                {" "}
+                                Include GST: &emsp;{" "}
+                                {!currency ? "USD" : currency} &nbsp; {credits}
+                              </p>
+                              <p>
+                                {" "}
+                                Include Tax Charge: &emsp;{" "}
+                                {!currency ? "USD" : currency} &nbsp; {credits}
+                              </p>
+                              <br />
+                              <p>
+                                {" "}
+                                Your Total Chargeble amount is: &emsp;{" "}
+                                {!currency ? "USD" : currency} &nbsp;
+                                {credits}{" "}
+                              </p>
+                            </div>
+                          </Col>
+                        </Row>
+                      )}
                     </Col>
                   </Row>
                   <Col>
-                    <Button variant="danger">Continue</Button>
+                    <Button
+                    onClick={()=>getCurrency()}
+                     variant="danger">Continue</Button>
                   </Col>
                 </div>
               </Paper>
