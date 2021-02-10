@@ -5,7 +5,18 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Image, Form } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../../_metronic/_helpers";
 import API from "../../../apiUrl.json";
+import _, { set } from "lodash";
+
+import axios from "axios";
+
 const AddCredits = () => {
+  const [SelectedTab, setSelectedTab] = useState("internal");
+  const [WalletInfo, setWalletInfo] = useState({});
+  const [credits, setCredits] = useState();
+  const [validCredit, setValidCredit] = useState();
+  const [currency, setCurrency] = useState();
+  const [changeCurrency, setChangeCurrency] = useState();
+  const [variable, setVariable] = useState(0.00);
   useEffect(() => {
     let role = localStorage.getItem("role");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -29,12 +40,11 @@ const AddCredits = () => {
       });
   }, []);
 
-  const selectCredits = () => {};
   var currencies = [
     "CAD",
     "HKD",
-    "ISK",
     "PHP",
+    "ISK",
     "DKK",
     "HUF",
     "CZK",
@@ -43,7 +53,7 @@ const AddCredits = () => {
     "SEK",
     "IDR",
     "INR",
-   " BRL",
+    "BRL",
     "RUB",
     "HRK",
     "JPY",
@@ -63,34 +73,53 @@ const AddCredits = () => {
     "AUD",
     "ILS",
     "KRW",
-   " PLN",
+    " PLN",
   ];
-  const getCurrency=() => {
+  const axios = require("axios");
+  useEffect(() => {
     var url = "https://api.exchangeratesapi.io/latest?base=USD";
 
     fetch(url, {
       method: "GET",
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "application/x-www-form-urlencoded",
       },
     })
       .then((json) => json.json())
       .then((res) => {
-        console.log(res);
+        setChangeCurrency(res.rates);
+        // console.log(res.rates.AUD);
       })
       .catch((err) => console.log(err));
-  };
+  }, [variable]);
 
   const tabs = [
     { name: " Internal Transactions", key: "internal" },
     { name: " External Transactions", key: "external" },
   ];
 
-  const [SelectedTab, setSelectedTab] = useState("internal");
-  const [WalletInfo, setWalletInfo] = useState({});
-  const [credits, setCredits] = useState();
-  const [validCredit, setValidCredit] = useState();
-  const [currency, setCurrency] = useState();
+  const selectCredits = (value) => {
+    setCurrency(
+      value === "Select Your Currency"
+        ? null
+        : value
+    );
+    console.log(changeCurrency);
+    console.log(currency);
+    let Index;
+    //  const result =  changeCurrency.filter(item=>typeof item[currency] !== "undefined");
+    //  setVariable(result[currency]);
+    //  console.log(variable);
+    //console.log(result);
+    let index;
+    const result = _.filter(changeCurrency, function(value, key) {
+      //console.log(value,key);
+
+      return key === currency ? value : null;
+    });
+      console.log(result);
+      setVariable(result[0]*credits)
+  };
 
   return (
     <Box>
@@ -194,7 +223,7 @@ const AddCredits = () => {
                                 2
                               )}
                             </Typography>
-                            <br />
+                            <hr />
                             <Typography
                               variant="body1"
                               style={{ color: "gray" }}>
@@ -231,12 +260,6 @@ const AddCredits = () => {
                     </Col>
                   </Row>
                   <Row>
-                    {/* <Button style={{ margin: "10px" }}>100</Button>
-                    <Button style={{ margin: "10px" }}>500</Button>
-                    <Button style={{ margin: "10px" }}>1000</Button>
-                    <Button style={{ margin: "10px" }}>2000</Button>
-                    <Button style={{ margin: "10px" }}>10000</Button> */}
-
                     <Col style={{ padding: "0" }}>
                       <div className="form-group fv-plugins-icon-container">
                         <select
@@ -245,6 +268,7 @@ const AddCredits = () => {
                             setValidCredit(
                               e.target.value === "Select Credits" ? false : true
                             );
+                            
                           }}
                           className={`form-control form-control-solid h-auto py-5 px-6 `}>
                           <option value={null}>Select Credits</option>
@@ -293,21 +317,19 @@ const AddCredits = () => {
                             <div className="form-group fv-plugins-icon-container">
                               <select
                                 onChange={(e) => {
-                                  setCurrency(
-                                    e.target.value === "Select Your Currency"
-                                      ? false
-                                      : e.target.value
-                                  );
+                                  
+                                  selectCredits(e.target.value)
                                 }}
+
+
+                                // onChange={(e)=>selectCredits()}
                                 className={`form-control form-control-solid h-auto py-5 px-6 `}>
                                 <option value={null}>
                                   Select Your Currency
                                 </option>
-                                {currencies.map((cur)=>{ 
-
-                                return <option value={cur}>{cur}</option>
-                              })}
-
+                                {currencies.map((cur) => {
+                                  return <option value={cur}>{cur}</option>;
+                                })}
                               </select>
                             </div>
 
@@ -327,6 +349,8 @@ const AddCredits = () => {
                                 Your Account Will be Charged
                               </Typography>
                             </div>
+
+                            {currency &&
                             <div style={{ padding: "15px", margin: "20px" }}>
                               <p>
                                 {" "}
@@ -348,9 +372,10 @@ const AddCredits = () => {
                                 {" "}
                                 Your Total Chargeble amount is: &emsp;{" "}
                                 {!currency ? "USD" : currency} &nbsp;
-                                {credits}{" "}
+                                {variable}{" "}
                               </p>
                             </div>
+                          }
                           </Col>
                         </Row>
                       )}
@@ -358,8 +383,11 @@ const AddCredits = () => {
                   </Row>
                   <Col>
                     <Button
-                    onClick={()=>getCurrency()}
-                     variant="danger">Continue</Button>
+                      // onClick={() => getCurrency()}
+                      // onClick={() => selectCredits()}
+                      variant="danger">
+                      Continue
+                    </Button>
                   </Col>
                 </div>
               </Paper>
