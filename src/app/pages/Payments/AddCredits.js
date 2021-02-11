@@ -73,7 +73,7 @@ const AddCredits = () => {
     "AUD",
     "ILS",
     "KRW",
-    " PLN",
+    "PLN",
   ];
   const axios = require("axios");
   useEffect(() => {

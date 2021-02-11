@@ -90,7 +90,7 @@ const SponsorsActiveTournamentsPage = () => {
                           <BoxItemActiveTournamentsForSponsor
                             obj={tournament.gameData}
                             allot={tournament.data}
-                            playerInfo={tournament.playerInfo}
+                            playerInfo={tournament.playerInfo[0]}
                             setCurrentTournamentObj={setCurrentTournamentObj}
                             currentTournamentShowObj={currentTournamentShowObj}
                             setViewTournamentMode={setViewTournamentMode}
@@ -106,7 +106,8 @@ const SponsorsActiveTournamentsPage = () => {
            </Col>
           </Row>
       </Paper>
-      
+
+
       <Drawer
         anchor="right"
         open={viewTournamentMode}
@@ -119,6 +120,8 @@ const SponsorsActiveTournamentsPage = () => {
           playerInfo={currentPlayerInfo}
         />
       </Drawer>
+
+      
     </Box>
   );
 };
