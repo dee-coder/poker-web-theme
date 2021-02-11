@@ -121,7 +121,6 @@ const SponsorsActiveTournamentsPage = () => {
         />
       </Drawer>
 
-      
     </Box>
   );
 };

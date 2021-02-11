@@ -584,6 +584,7 @@ const ViewProfilePlayer = (props) => {
                                             </a>
 
                                             <Button
+                                              href={window.location.href}
                                               style={{ marginLeft: "20px" }}
                                               variant="primary"
                                             >

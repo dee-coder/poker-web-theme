@@ -10,6 +10,7 @@
   "sponsorshipEligibility":"/sponsorship/eligibility",
   "subscriptionVerify":"/subscription/verify",
   "reviewSponser":"/ratings/get",
+  "submitReview":"/ratings/submit",
   "playerInfo":"/players/info",
   "getTournamentById": "/tournaments/getTournamentById",
   "getRegisteringTournaments": "/tournaments/all",
