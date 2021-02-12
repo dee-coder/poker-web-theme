@@ -13,10 +13,10 @@ const AddCredits = () => {
   const [SelectedTab, setSelectedTab] = useState("internal");
   const [WalletInfo, setWalletInfo] = useState({});
   const [credits, setCredits] = useState();
-  const [validCredit, setValidCredit] = useState();
+  const [validCredit, setValidCredit] = useState(0);
   const [currency, setCurrency] = useState();
   const [changeCurrency, setChangeCurrency] = useState();
-  const [variable, setVariable] = useState(0.00);
+  const [variable, setVariable] = useState(0.0);
   useEffect(() => {
     let role = localStorage.getItem("role");
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
@@ -98,27 +98,20 @@ const AddCredits = () => {
     { name: " External Transactions", key: "external" },
   ];
 
-  const selectCredits = (value) => {
-    setCurrency(
-      value === "Select Your Currency"
-        ? null
-        : value
-    );
+  const selectCredits = (Value) => {
+    console.log(Value);
+    console.log(variable);
     console.log(changeCurrency);
-    console.log(currency);
-    let Index;
-    //  const result =  changeCurrency.filter(item=>typeof item[currency] !== "undefined");
-    //  setVariable(result[currency]);
-    //  console.log(variable);
-    //console.log(result);
-    let index;
+
+    setCurrency(Value === "Select Your Currency" ? null : Value);
+
     const result = _.filter(changeCurrency, function(value, key) {
       //console.log(value,key);
 
-      return key === currency ? value : null;
+      return key === Value ? value : null;
     });
-      console.log(result);
-      setVariable(result[0]*credits)
+    console.log(result);
+    setVariable(result[0] * validCredit);
   };
 
   return (
@@ -128,7 +121,8 @@ const AddCredits = () => {
           <div className="d-flex align-items-center justify-content-start">
             <Typography
               variant="h4"
-              style={{ fontWeight: "600", color: "white" }}>
+              style={{ fontWeight: "600", color: "white" }}
+            >
               Add Credits In Your Wallets
             </Typography>
           </div>
@@ -143,7 +137,8 @@ const AddCredits = () => {
                   className="d-flex flex-column"
                   style={{
                     padding: "30px",
-                  }}>
+                  }}
+                >
                   <Row style={{ marginBottom: "20px" }}>
                     <Col lg={12}>
                       <div style={{ paddingBottom: "5px", paddingTop: "5px" }}>
@@ -153,7 +148,8 @@ const AddCredits = () => {
                             fontWeight: "600",
                             color: "black",
                             float: "left",
-                          }}>
+                          }}
+                        >
                           Your Available Credits is
                         </Typography>
                         {/* <Link to="addCredits">
@@ -176,7 +172,8 @@ const AddCredits = () => {
                               marginTop: "10px",
                               marginBottom: "10px",
                               marginRight: "20px",
-                            }}>
+                            }}
+                          >
                             <Typography variant="button">
                               Sponsor Credits
                             </Typography>
@@ -187,7 +184,8 @@ const AddCredits = () => {
                                 fontWeight: "800",
                                 marginTop: "10px",
                                 color: "black",
-                              }}>
+                              }}
+                            >
                               {parseFloat(WalletInfo.sponsor_credits).toFixed(
                                 2
                               )}
@@ -195,7 +193,8 @@ const AddCredits = () => {
                             <br />
                             <Typography
                               variant="body1"
-                              style={{ color: "gray" }}>
+                              style={{ color: "gray" }}
+                            >
                               Sponsor Credits
                             </Typography>
                           </div>
@@ -207,7 +206,8 @@ const AddCredits = () => {
                               marginRight: "20px",
                               paddingRight: "40px",
                               borderRight: "1px solid #c4c4c4",
-                            }}>
+                            }}
+                          >
                             <Typography variant="button">
                               Payment Credits
                             </Typography>
@@ -218,7 +218,8 @@ const AddCredits = () => {
                                 fontWeight: "800",
                                 marginTop: "10px",
                                 color: "black",
-                              }}>
+                              }}
+                            >
                               {parseFloat(WalletInfo.payment_credits).toFixed(
                                 2
                               )}
@@ -226,7 +227,8 @@ const AddCredits = () => {
                             <hr />
                             <Typography
                               variant="body1"
-                              style={{ color: "gray" }}>
+                              style={{ color: "gray" }}
+                            >
                               Sponsor Credits
                             </Typography>
                           </div>
@@ -243,152 +245,274 @@ const AddCredits = () => {
                   className="d-flex flex-column"
                   style={{
                     padding: "30px",
-                  }}>
-                  <Row style={{ marginBottom: "20px" }}>
-                    <Col lg={4}>
-                      <div style={{ paddingBottom: "5px", paddingTop: "5px" }}>
-                        <Typography
-                          variant="h6"
+                  }}
+                >
+                  <Row>
+                    <Col lg={12}>
+                      <Typography
+                        variant="h6"
+                        style={{
+                          fontWeight: "600",
+                          color: "black",
+                          float: "left",
+                        }}
+                      >
+                        Enter Credit Amount
+                      </Typography>
+                    </Col>
+                  </Row>
+
+                  <Row style={{ marginTop: "10px" }}>
+                    <Col lg={12}>
+                      <div className="form-group fv-plugins-icon-container">
+                        <input
+                          placeholder="Credits"
+                          type="number"
+                          className={`form-control form-control-solid h-auto py-5 px-6`}
+                          name="email"
                           style={{
+                            fontSize: "15px",
                             fontWeight: "600",
                             color: "black",
-                            float: "left",
-                          }}>
-                          Choose An Amount
-                        </Typography>
+                            width: "300px",
+                          }}
+                          value={validCredit}
+                          onChange={(e) => setValidCredit(e.target.value)}
+                        />
                       </div>
                     </Col>
                   </Row>
-                  <Row>
-                    <Col style={{ padding: "0" }}>
-                      <div className="form-group fv-plugins-icon-container">
-                        <select
-                          onChange={(e) => {
-                            setCredits(e.target.value);
-                            setValidCredit(
-                              e.target.value === "Select Credits" ? false : true
-                            );
-                            
-                          }}
-                          className={`form-control form-control-solid h-auto py-5 px-6 `}>
-                          <option value={null}>Select Credits</option>
-                          <option value="15">$ 15</option>
-                          <option value="25">$ 25</option>
-                          <option value="50">$ 50</option>
-                          <option value="100">$ 100</option>
-                        </select>
-                      </div>
 
-                      <Row style={{ marginBottom: "5px" }}>
-                        <Col>
+                  {validCredit !== 0 && (
+                    <div>
+                      <Row>
+                        <Col lg={12}>
+                          <Typography
+                            variant="h6"
+                            style={{
+                              fontWeight: "600",
+                              color: "black",
+                              float: "left",
+                            }}
+                          >
+                            Select Your Desire Currency
+                          </Typography>
+                        </Col>
+                      </Row>
+
+                      <Row>
+                        <Col lg={12}>
                           <div
-                            style={{ paddingBottom: "5px", paddingTop: "5px" }}>
-                            <Typography
-                              variant="h6"
+                            className="form-group fv-plugins-icon-container"
+                            style={{ marginTop: "20px" }}
+                          >
+                            <select
+                              onChange={(e) => {
+                                selectCredits(e.target.value);
+                              }}
+                              // onChange={(e)=>selectCredits()}
+                              className={`form-control form-control-solid h-auto py-5 px-6`}
                               style={{
-                                marginLeft: "10px",
-                                fontWeight: "600",
                                 color: "black",
-                                float: "left",
-                              }}>
-                              Your Credits Will Expiry On
-                            </Typography>
-                          </div>
-                          <div style={{ padding: "15px", margin: "20px" }}>
-                            <p>12/12/2021</p>
+                                width: "300px",
+                                height: "40px",
+                              }}
+                            >
+                              <option value={null}>Select Your Currency</option>
+                              {currencies.map((cur) => {
+                                return <option value={cur}>{cur}</option>;
+                              })}
+                            </select>
                           </div>
                         </Col>
                       </Row>
 
-                      {validCredit && (
-                        <Row style={{ marginBottom: "20px" }}>
-                          <Col>
-                            <Typography
-                              variant="h6"
-                              style={{
-                                marginLeft: "10px",
-                                fontWeight: "600",
-                                color: "black",
-                                float: "left",
-                              }}>
-                              Select Your Desire Currency
-                            </Typography>
-
-                            <div className="form-group fv-plugins-icon-container">
-                              <select
-                                onChange={(e) => {
-                                  
-                                  selectCredits(e.target.value)
-                                }}
-
-
-                                // onChange={(e)=>selectCredits()}
-                                className={`form-control form-control-solid h-auto py-5 px-6 `}>
-                                <option value={null}>
-                                  Select Your Currency
-                                </option>
-                                {currencies.map((cur) => {
-                                  return <option value={cur}>{cur}</option>;
-                                })}
-                              </select>
-                            </div>
-
-                            <div
-                              style={{
-                                paddingBottom: "5px",
-                                paddingTop: "5px",
-                              }}>
-                              <Typography
-                                variant="h6"
+                      {currency && (
+                        <div>
+                          <Row style={{ marginTop: "20px" }}>
+                            <Col lg={12}>
+                              <div
                                 style={{
-                                  marginLeft: "10px",
-                                  fontWeight: "600",
-                                  color: "black",
-                                  float: "left",
-                                }}>
-                                Your Account Will be Charged
-                              </Typography>
-                            </div>
+                                  paddingBottom: "5px",
+                                  paddingTop: "5px",
+                                }}
+                              >
+                                <Typography
+                                  variant="h6"
+                                  style={{
+                                    fontWeight: "600",
+                                    color: "black",
+                                    float: "left",
+                                  }}
+                                >
+                                  Total Amount
+                                </Typography>
+                              </div>
+                            </Col>
+                          </Row>
 
-                            {currency &&
-                            <div style={{ padding: "15px", margin: "20px" }}>
-                              <p>
-                                {" "}
-                                Your selected credits: &emsp;{" "}
-                                {!currency ? "USD" : currency} &nbsp; {credits}
-                              </p>
-                              <p>
-                                {" "}
-                                Include GST: &emsp;{" "}
-                                {!currency ? "USD" : currency} &nbsp; {credits}
-                              </p>
-                              <p>
-                                {" "}
-                                Include Tax Charge: &emsp;{" "}
-                                {!currency ? "USD" : currency} &nbsp; {credits}
-                              </p>
-                              <br />
-                              <p>
-                                {" "}
-                                Your Total Chargeble amount is: &emsp;{" "}
-                                {!currency ? "USD" : currency} &nbsp;
-                                {variable}{" "}
-                              </p>
-                            </div>
-                          }
-                          </Col>
-                        </Row>
+                          <Row style={{ marginTop: "10px" }}>
+                            <Col lg={12}>
+                              {currency && (
+                                <Typography variant="H6">
+                                  {!currency ? "USD" : currency} &nbsp;
+                                  {variable.toFixed(2)}{" "}
+                                </Typography>
+                              )}
+                            </Col>
+                          </Row>
+
+                          <Row style={{ marginTop: "20px" }}>
+                            <Col lg={12}>
+                              <div
+                                style={{
+                                  paddingBottom: "5px",
+                                  paddingTop: "5px",
+                                }}
+                              >
+                                <Typography
+                                  variant="h6"
+                                  style={{
+                                    fontWeight: "600",
+                                    color: "black",
+                                    float: "left",
+                                  }}
+                                >
+                                  Charges
+                                </Typography>
+                              </div>
+                            </Col>
+                          </Row>
+
+                          <Row style={{ marginTop: "10px" }}>
+                            <Col lg={12}>
+                              {currency && (
+                                <Typography variant="H6">
+                                  {!currency ? "USD" : currency} &nbsp;
+                                  {(variable * (5 / 100)).toFixed(2)}{" "}
+                                </Typography>
+                              )}
+                            </Col>
+                          </Row>
+
+                          <Row style={{ marginTop: "20px" }}>
+                            <Col lg={12}>
+                              <div
+                                style={{
+                                  paddingBottom: "5px",
+                                  paddingTop: "5px",
+                                }}
+                              >
+                                <Typography
+                                  variant="h6"
+                                  style={{
+                                    fontWeight: "600",
+                                    color: "black",
+                                    float: "left",
+                                  }}
+                                >
+                                  You balance after this
+                                </Typography>
+                              </div>
+                            </Col>
+                          </Row>
+
+                          <Row style={{ marginTop: "10px" }}>
+                            <Col lg={12}>
+                              {currency && (
+                                <Typography variant="body">
+                                  {(
+                                    parseFloat(WalletInfo.sponsor_credits) +
+                                    parseFloat(validCredit)
+                                  ).toFixed(2)}{" "}
+                                </Typography>
+                              )}
+                            </Col>
+                          </Row>
+
+                          <Row style={{ marginTop: "20px" }}>
+                            <Col lg={12}>
+                              <div
+                                style={{
+                                  paddingBottom: "5px",
+                                  paddingTop: "5px",
+                                }}
+                              >
+                                <Typography
+                                  variant="h6"
+                                  style={{
+                                    fontWeight: "600",
+                                    color: "black",
+                                    float: "left",
+                                  }}
+                                >
+                                  Total Payable Amount
+                                </Typography>
+                              </div>
+                            </Col>
+                          </Row>
+
+                          <Row style={{ marginTop: "10px" }}>
+                            <Col lg={12}>
+                              {currency && (
+                                <Typography variant="h5">
+                                  {!currency ? "USD" : currency} &nbsp;
+                                  <span style={{ fontWeight: "900" }}>
+                                    {(variable * (5 / 100) + variable).toFixed(
+                                      2
+                                    )}{" "}
+                                  </span>
+                                </Typography>
+                              )}
+                            </Col>
+                          </Row>
+
+                          <Row
+                            style={{ marginTop: "20px", marginBottom: "30px" }}
+                          >
+                            <Col lg={12}>
+                              <Typography
+                                variant="body"
+                                style={{
+                                  fontWeight: "400",
+                                  fontSize: "12px",
+                                  color: "gray",
+                                }}
+                              >
+                                Lorem ipsum dolor sit amet, et est docendi
+                                definitionem, at odio saepe nostro eam, id duo
+                                iudicabit iracundia sententiae. Eirmod invenire
+                                indoctum vel ne, nec meis option fabellas ei. No
+                                altera definitiones sit, pri fugit assentior te.
+                                Qui te mutat paulo oratio, vero decore nostrud
+                                duo ea. Pro facer volumus adversarium ne.
+                              </Typography>
+                            </Col>
+                          </Row>
+
+                          <Row style={{ marginTop: "20px" }}>
+                            <Col lg={12}>
+                              <Button
+                                variant="primary"
+                                className="d-flex align-items-center"
+                                style={{
+                                  height: "50px",
+                                  fontSize: "18px",
+                                  fontWeight: "400",
+                                }}
+                              >
+                                Pay Securely{" "}
+                                <i
+                                  style={{ marginLeft: "10px" }}
+                                  class="fas fa-lock"
+                                ></i>
+                              </Button>
+                            </Col>
+                          </Row>
+                        </div>
                       )}
-                    </Col>
-                  </Row>
-                  <Col>
-                    <Button
-                      // onClick={() => getCurrency()}
-                      // onClick={() => selectCredits()}
-                      variant="danger">
-                      Continue
-                    </Button>
-                  </Col>
+                    </div>
+                  )}
                 </div>
               </Paper>
             </Col>
