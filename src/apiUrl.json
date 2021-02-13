@@ -45,5 +45,6 @@
   "getSummaryofSponsorship":"/sponsorship/summary",
   "getPlayersActiveTournaments":"/players/get_active_tournaments",
   "getActiveSponsorshipsPlayer":"/players/active_sponsorships",
-  "getSponsoredSponsorshipsPlayer":"/players/sponsored_sponsorships"
+  "getSponsoredSponsorshipsPlayer":"/players/sponsored_sponsorships",
+  "internTransaction":"/payment/get_internal_transaction_details"
 }

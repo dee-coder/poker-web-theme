@@ -5,6 +5,7 @@ import React, { useState, useEffect } from "react";
 import { Row, Col, Image } from "react-bootstrap";
 import { toAbsoluteUrl } from "../../../_metronic/_helpers";
 import API from "../../../apiUrl.json";
+import InternalTransactionSponsor from "./InternalTransactionComponentSponsor";
 const WalletAndTransactionPage = () => {
   useEffect(() => {
     let role = localStorage.getItem("role");
@@ -75,9 +76,9 @@ const WalletAndTransactionPage = () => {
                           Wallet
                         </Typography>
                         <Link to="addCredits">
-                        <Button variant="primary" style={{ float: "right" }}>
-                          Add Credits to Wallet +
-                        </Button>
+                          <Button variant="primary" style={{ float: "right" }}>
+                            Add Credits to Wallet +
+                          </Button>
                         </Link>
                       </div>
                       {/* <Typography variant="body1">
@@ -363,7 +364,8 @@ const WalletAndTransactionPage = () => {
                 </Row>
 
                 {SelectedTab === "internal" && (
-                  <Row>
+                  <div>
+                    {/* <Row>
                     <Col
                       lg={12}
                       style={{ paddingTop: "100px", paddingBottom: "100px" }}
@@ -382,7 +384,10 @@ const WalletAndTransactionPage = () => {
                         </Typography>
                       </div>
                     </Col>
-                  </Row>
+                  </Row> */}
+
+                    <InternalTransactionSponsor />
+                  </div>
                 )}
 
                 {SelectedTab === "external" && (
