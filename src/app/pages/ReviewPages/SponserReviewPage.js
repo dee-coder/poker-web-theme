@@ -58,10 +58,11 @@ function SponserReviewPage(props) {
       });
   }, []);
 
-  const submitReview = () => {
+  const submitReview = (e) => {
+    e.preventDefault();
     var url = API.baseUrl + API.submitReview;
     var body = {
-      rating_id: reviewDetails.rating_id,
+      rating_id: props.match.params.id,
       sponsor_id: JSON.parse(localStorage.getItem("userInfo")).sponsor_id,
       sponsorship_id: sponsorshipDetails.sponsorship_id,
       sponsor_name: JSON.parse(localStorage.getItem("userInfo")).sponsor_name,
@@ -72,6 +73,8 @@ function SponserReviewPage(props) {
       written_review: writtenReview,
     };
 
+    console.log(body);
+
     fetch(url, {
       method: "POST",
       headers: {
@@ -81,16 +84,15 @@ function SponserReviewPage(props) {
     })
       .then((json) => json.json())
       .then((res) => {
+        console.log(res);
         if (res.status === "OK") {
           console.log(res);
           setMessage(res.message);
-        }
-        else{
+        } else {
           console.log("Message");
         }
       })
       .catch((err) => console.log(err));
-
   };
 
   function getDates(date) {
@@ -113,7 +115,8 @@ function SponserReviewPage(props) {
               fontSize: "40px",
               marginTop: "20px",
               marginBottom: "40px",
-            }}>
+            }}
+          >
             Rating And Reviews
           </Typography>
         </Col>
@@ -138,7 +141,8 @@ function SponserReviewPage(props) {
                         <Badge variant="secondary" style={{ float: "left" }}>
                           <Typography
                             variant="caption"
-                            style={{ fontWeight: "600" }}>
+                            style={{ fontWeight: "600" }}
+                          >
                             {getDates(tournamentData.scheduledStartUnixTime)}
                           </Typography>
                         </Badge>
@@ -148,7 +152,8 @@ function SponserReviewPage(props) {
                     <Row
                       style={{
                         marginTop: "20px",
-                      }}>
+                      }}
+                    >
                       <Col>
                         <Typography variant="h5" gutterBottom>
                           {" "}
@@ -160,7 +165,8 @@ function SponserReviewPage(props) {
                       style={{
                         marginTop: "5px",
                         marginBottom: "20px",
-                      }}>
+                      }}
+                    >
                       <Col>
                         <Typography variant="button" gutterBottom>
                           {" "}
@@ -189,14 +195,16 @@ function SponserReviewPage(props) {
                             <Typography
                               variant="body1"
                               style={{ fontWeight: "600", fontSize: "20px" }}
-                              gutterBottom>
+                              gutterBottom
+                            >
                               {playerDetails.player_name}
                               {/* {sponsorshipDetails.network} */}
                             </Typography>
                             <Typography
                               variant="body2"
                               style={{ fontWeight: "600", color: "gray" }}
-                              gutterBottom>
+                              gutterBottom
+                            >
                               {playerDetails.player_email}
                               {/* {sponsorshipDetails.total_amount} */}
                             </Typography>
@@ -308,13 +316,15 @@ function SponserReviewPage(props) {
                             <Typography
                               variant="body1"
                               style={{ fontWeight: "600", fontSize: "20px" }}
-                              gutterBottom>
+                              gutterBottom
+                            >
                               {playerDetails.player_name}
                             </Typography>
                             <Typography
                               variant="body2"
                               style={{ fontWeight: "600", color: "gray" }}
-                              gutterBottom>
+                              gutterBottom
+                            >
                               {playerDetails.player_email}
                             </Typography>
                             <ReactStars
@@ -385,7 +395,8 @@ function SponserReviewPage(props) {
                               class="form-control form-control-sm mb-3"
                               rows="8"
                               placeholder="eg. I like the player's stratagies"
-                              name="message"></textarea>
+                              name="message"
+                            ></textarea>
                           </div>
                         </div>
                       </Col>
@@ -409,7 +420,12 @@ function SponserReviewPage(props) {
                           to="/terms"
                           target="_blank"
                           className="mr-1"
+<<<<<<< HEAD
                           rel="no opener no referrer">
+=======
+                          rel="noopener noreferrer"
+                        >
+>>>>>>> 75332b3fe37b1f7af4603a390127906ba36492f9
                           do you want add auto describe heading
                         </h6>
                         <span />
@@ -418,7 +434,12 @@ function SponserReviewPage(props) {
                       <Col lg={12}>
                         <button
                           onClick={(e) => submitReview(e)}
+<<<<<<< HEAD
                           className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}>
+=======
+                          className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
+                        >
+>>>>>>> 75332b3fe37b1f7af4603a390127906ba36492f9
                           Submit Review
                         </button>
                       </Col>
