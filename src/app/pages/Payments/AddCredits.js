@@ -267,6 +267,7 @@ const AddCredits = () => {
                       <div className="form-group fv-plugins-icon-container">
                         <input
                           placeholder="Credits"
+                          onkeypress="return event.charCode >= 48" min="1"
                           type="number"
                           className={`form-control form-control-solid h-auto py-5 px-6`}
                           name="email"

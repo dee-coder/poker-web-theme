@@ -420,12 +420,8 @@ function SponserReviewPage(props) {
                           to="/terms"
                           target="_blank"
                           className="mr-1"
-<<<<<<< HEAD
                           rel="no opener no referrer">
-=======
-                          rel="noopener noreferrer"
-                        >
->>>>>>> 75332b3fe37b1f7af4603a390127906ba36492f9
+
                           do you want add auto describe heading
                         </h6>
                         <span />
@@ -434,12 +430,8 @@ function SponserReviewPage(props) {
                       <Col lg={12}>
                         <button
                           onClick={(e) => submitReview(e)}
-<<<<<<< HEAD
                           className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}>
-=======
-                          className={`btn btn-primary font-weight-bold px-9 py-4 my-3`}
-                        >
->>>>>>> 75332b3fe37b1f7af4603a390127906ba36492f9
+
                           Submit Review
                         </button>
                       </Col>
