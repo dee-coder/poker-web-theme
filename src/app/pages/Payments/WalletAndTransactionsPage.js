@@ -7,9 +7,13 @@ import { toAbsoluteUrl } from "../../../_metronic/_helpers";
 import API from "../../../apiUrl.json";
 import InternalTransactionSponsor from "./InternalTransactionComponentSponsor";
 const WalletAndTransactionPage = () => {
+  const [userInfo, setUserInfo] = useState({});
+  const [role, setRole] = useState("");
   useEffect(() => {
     let role = localStorage.getItem("role");
+    setRole(role);
     let userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setUserInfo(userInfo);
 
     fetch(API.baseUrl + API.getWalletAndTransactions, {
       method: "POST",
@@ -365,28 +369,36 @@ const WalletAndTransactionPage = () => {
 
                 {SelectedTab === "internal" && (
                   <div>
-                    {/* <Row>
-                    <Col
-                      lg={12}
-                      style={{ paddingTop: "100px", paddingBottom: "100px" }}
-                    >
-                      <div className="d-flex align-items-center justify-content-center">
-                        <Image
-                          src={toAbsoluteUrl("/media/svg/empty.svg")}
+                    {role === "sponsor" ? (
+                      <InternalTransactionSponsor />
+                    ) : (
+                      <Row>
+                        <Col
+                          lg={12}
                           style={{
-                            width: "50px",
-                            height: "50px",
-                            marginRight: "20px",
+                            paddingTop: "100px",
+                            paddingBottom: "100px",
                           }}
-                        />
-                        <Typography variant="h6" style={{ color: "#c4c4c4" }}>
-                          No internal transactions yet.
-                        </Typography>
-                      </div>
-                    </Col>
-                  </Row> */}
-
-                    <InternalTransactionSponsor />
+                        >
+                          <div className="d-flex align-items-center justify-content-center">
+                            <Image
+                              src={toAbsoluteUrl("/media/svg/empty.svg")}
+                              style={{
+                                width: "50px",
+                                height: "50px",
+                                marginRight: "20px",
+                              }}
+                            />
+                            <Typography
+                              variant="h6"
+                              style={{ color: "#c4c4c4" }}
+                            >
+                              No internal transactions yet.
+                            </Typography>
+                          </div>
+                        </Col>
+                      </Row>
+                    )}
                   </div>
                 )}
 
